@@ -1,11 +1,9 @@
-// This sample shows adding an action to an [AppBar] that opens a shopping cart.
-
 import 'package:flutter/material.dart';
 
-class ControlWidget extends StatelessWidget {
+class PeopleEditWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final title = 'Verwaltung';
+    final title = 'Bearbeiten';
 
     return MaterialApp(
       title: title,
@@ -17,7 +15,10 @@ class ControlWidget extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.person_pin),
-              title: Text('Models'),
+              title: Text('Modelss'),
+              onTap: (){
+
+              },
             ),
             ListTile(
               leading: Icon(Icons.person_pin),

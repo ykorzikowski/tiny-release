@@ -1,7 +1,8 @@
 // This sample shows adding an action to an [AppBar] that opens a shopping cart.
 
 import 'package:flutter/material.dart';
-import 'package:tiny_release/screens/control.dart';
+import 'package:tiny_release/screens/control/control_master.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,7 +35,7 @@ class MyStatelessWidget extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => new ControlWidget()),
+                MaterialPageRoute(builder: (context) => new MasterControlWidget()),
               );
             },
           ),
@@ -44,7 +45,7 @@ class MyStatelessWidget extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => new ControlWidget()),
+                MaterialPageRoute(builder: (context) => new MasterControlWidget()),
               );
             },
 
