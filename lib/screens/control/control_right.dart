@@ -27,7 +27,7 @@ class _ControlRightWidgetState extends State<ControlRightWidget> {
     return Navigator(
       key: navigatorKeyLargeScreen,
       onGenerateRoute: (RouteSettings settings) {
-        MaterialPageRoute(builder: (context) => ControlHelper.getListWidgetByControlItem(controlState) );
+        return MaterialPageRoute(builder: (context) => ControlHelper.getListWidgetByControlItem(controlState) );
       },
     );
   }
