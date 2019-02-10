@@ -17,12 +17,13 @@ class _MasterControlState extends State<MasterControlWidget> {
   var _showNavBackButton = false;
   var _showEditButton = false;
   var _showAddButton = true;
+  var _showSaveButton = false;
 
   final GlobalKey<NavigatorState> _navigatorKeyLargeScreen = new GlobalKey<NavigatorState>();
   ControlScreenState controlState;
 
   _MasterControlState() {
-    controlState = new ControlScreenState( _setShowNavBackButton, _setShowAddButton, _setShowEditButton );
+    controlState = new ControlScreenState( _setShowNavBackButton, _setShowAddButton, _setShowEditButton, _setShowSaveButton );
   }
 
   @override
@@ -51,6 +52,14 @@ class _MasterControlState extends State<MasterControlWidget> {
             onPressed: () {
               controlState.setToolbarButtonsOnEdit();
               ControlHelper.handleEditButton( controlState, _navigatorKeyLargeScreen.currentState );
+            },
+          ) : Container(),
+          _showSaveButton && _isLargeScreen ? IconButton(
+            icon: Icon(Icons.save_alt),
+            tooltip: 'Save',
+            onPressed: () {
+              controlState.setToolbarButtonsOnList();
+              ControlHelper.handleSaveButton( controlState, _navigatorKeyLargeScreen.currentState );
             },
           ) : Container(),
         ],
@@ -91,16 +100,15 @@ class _MasterControlState extends State<MasterControlWidget> {
     });
   }
 
+  void _setShowSaveButton( bool val ) {
+    setState(() {
+      _showSaveButton = val;
+    });
+  }
+
   void handleRightNavigationBackButton(context) {
     _navigatorKeyLargeScreen.currentState.pop();
-    _navigatorKeyLargeScreen.currentState.popUntil( (route) {
-      if ( route.isFirst ) {
-        controlState.setToolbarButtonsOnList();
-      } else {
-        controlState.setToolbarButtonsOnPreview();
-      }
-      return true;
-    });
+    ControlHelper.setToolbarButtonsBasedOnNavState(controlState, _navigatorKeyLargeScreen.currentState);
   }
 
   /// called when the control item on the left side of the display is selected

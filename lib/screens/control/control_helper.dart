@@ -23,10 +23,13 @@ class ControlHelper {
   }
 
   static void handleEditButton( final ControlScreenState controlScreenState, final NavigatorState navigatorState) {
+    // todo get from navigatorState.selectedItemId
+    final TinyContact tinyContact = new TinyContact();
+
     navigatorState.push(
         MaterialPageRoute(
             builder: (context) {
-              return PeopleEditWidget(controlScreenState, new TinyContact());
+              return PeopleEditWidget(controlScreenState, tinyContact);
             }
         ),
     );
@@ -58,7 +61,36 @@ class ControlHelper {
     }
   }
 
-  static void handleAddButton( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) {
+  static void setToolbarButtonsBasedOnNavState( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) {
+    navigatorState.popUntil((route) {
+      if ( route.isFirst ) {
+        controlScreenState.setToolbarButtonsOnList();
+      } else {
+        controlScreenState.setToolbarButtonsOnPreview();
+      }
+      return true;
+    });
+  }
 
+  static void handleSaveButton( final ControlScreenState controlScreenState, final NavigatorState navigatorState) {
+    // todo save item
+
+    navigatorState.pop();
+    setToolbarButtonsBasedOnNavState( controlScreenState, navigatorState );
+  }
+
+    static void handleAddButton( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) {
+    final TinyContact tinyContact = new TinyContact();
+    controlScreenState.setToolbarButtonsOnEdit();
+
+    navigatorState.push(
+      MaterialPageRoute(
+          builder: (context) {
+            return PeopleEditWidget(controlScreenState, tinyContact);
+          }
+      ),
+    );
+
+    //todo switch for controlIds
   }
 }
