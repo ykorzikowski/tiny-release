@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:tiny_release/data/contact_repository.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -12,31 +13,43 @@ typedef Null ItemSelectedCallback(int value);
 
 class PeopleListWidget extends StatefulWidget {
 
-  final ControlScreenState peopleTypeState;
+  final ControlScreenState _controlState;
 
-  PeopleListWidget(this.peopleTypeState);
+  PeopleListWidget(this._controlState);
 
   @override
-  _ListWidgetState createState() => _ListWidgetState(peopleTypeState);
+  _ListWidgetState createState() => _ListWidgetState(_controlState);
 }
 
 class _ListWidgetState extends State<PeopleListWidget> {
   static const int PAGE_SIZE = 10;
   final ContactRepository contactRepository = new ContactRepository();
-  final ControlScreenState peopleTypeState;
+  final ControlScreenState _controlState;
   PagewiseLoadController pageLoadController;
 
-  _ListWidgetState(this.peopleTypeState);
+  _ListWidgetState(this._controlState);
 
   @override
   Widget build(BuildContext context) {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            contactRepository.getContacts(peopleTypeState.selectedControlItem, pageIndex * PAGE_SIZE, PAGE_SIZE)
+            contactRepository.getContacts(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
     );
 
     return Scaffold(
+        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
+          title: Text("Verwaltung"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              tooltip: 'Add new',
+              onPressed: () {
+                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
+              },
+            )
+          ],
+        ): null,
         body: PagewiseListView(
         itemBuilder: this._itemBuilder,
         pageLoadController: this.pageLoadController,
@@ -53,7 +66,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
           ),
           title: Text(entry.displayName),
           onTap: () {
-            peopleDetailView( entry, context );
+            openPeopleDetailView( entry, context );
           },
         ),
         Divider()
@@ -61,16 +74,16 @@ class _ListWidgetState extends State<PeopleListWidget> {
     );
   }
 
-  void peopleDetailView(contact, context) {
-    peopleTypeState.setShowNavBackButton( true );
+  void openPeopleDetailView(contact, context) {
+    _controlState.setToolbarButtonsOnPreview();
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           if( BaseUtil.isLargeScreen(context) ) {
-            return PeoplePreviewWidget(peopleTypeState);
+            return PeoplePreviewWidget( _controlState );
           } else {
             return Scaffold(
-                appBar: AppBar(title: Text(peopleTypeState.selectedControlItem),),
-                body: PeoplePreviewWidget(peopleTypeState)
+                appBar: AppBar(title: Text( ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ) ),),
+                body: PeoplePreviewWidget( _controlState )
             );
           }
         }
