@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
 
 void main() => runApp(MyApp());
 

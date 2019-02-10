@@ -13,9 +13,16 @@ class MasterControlWidget extends StatefulWidget {
 }
 
 class _MasterControlState extends State<MasterControlWidget> {
-  var selectedControlEntry = 0;
-  var isLargeScreen = false;
-  ControlState controlState = new ControlState();
+  var _selectedControlEntry = 0;
+  var _isLargeScreen = false;
+  var _showNavBackButton = false;
+
+  final GlobalKey<NavigatorState> _navigatorKeyLargeScreen = new GlobalKey<NavigatorState>();
+  ControlScreenState controlState;
+
+  _MasterControlState() {
+    controlState = new ControlScreenState(_setShowNavBackButton);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,13 @@ class _MasterControlState extends State<MasterControlWidget> {
       appBar: AppBar(
         title: Text("Verwaltung"),
         actions: <Widget>[
+          _showNavBackButton && _isLargeScreen ? IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            tooltip: 'Back',
+            onPressed: () {
+              handleRightNavigationBackButton(context);
+            },
+          ) : Container(),
           IconButton(
             icon: Icon(Icons.add),
             tooltip: 'Add new',
@@ -30,35 +44,34 @@ class _MasterControlState extends State<MasterControlWidget> {
               handleAddButton();
             },
           ),
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            tooltip: 'Back',
-            onPressed: () {
-              handleRightNavigationBackButton(context);
-            },
-          ),
         ],
       ),
       body: OrientationBuilder(builder: (context, orientation) {
-        isLargeScreen = BaseUtil.isLargeScreen(context);
+        _isLargeScreen = BaseUtil.isLargeScreen(context);
 
         return Row(children: <Widget>[
           Expanded(
             child: ControlLeftListWidget((position) {
-              controlState.value = getListTypeForPosition( position );
-              isLargeScreen ? largeScreenTransition( position ) : smallScreenTransition( position );
+              controlState.selectedControlItem = getListTypeForPosition( position );
+              _isLargeScreen ? largeScreenTransition( position ) : smallScreenTransition( position );
             }),
           ),
-          isLargeScreen ? Expanded(
-              child: ControlRightWidget(controlState)
+          _isLargeScreen ? Expanded(
+              child: ControlRightWidget(controlState, _navigatorKeyLargeScreen)
           ) : Container(),
         ]);
       }),
     );
   }
 
+  void _setShowNavBackButton( bool val ) {
+    setState(() {
+      _showNavBackButton = val;
+    });
+  }
+
   void handleAddButton() {
-    switch (selectedControlEntry) {
+    switch (_selectedControlEntry) {
       case 0:
       // TODO add model
         break;
@@ -86,22 +99,31 @@ class _MasterControlState extends State<MasterControlWidget> {
   }
 
   void handleRightNavigationBackButton(context) {
-    controlState.navBack = true;
-    setState(() {});
-    // todo
+    _navigatorKeyLargeScreen.currentState.pop();
+    _navigatorKeyLargeScreen.currentState.popUntil( (route) {
+      if ( route.isFirst ) {
+        _setShowNavBackButton( false );
+      }
+      return true;
+    });
   }
 
   void largeScreenTransition( int position ) {
-    selectedControlEntry = position;
-    setState(() {});
+    _navigatorKeyLargeScreen.currentState.popUntil( (route) {
+      return route.isFirst;
+    });
+    setState(() {
+      _showNavBackButton = false;
+      _selectedControlEntry = position;
+    });
   }
 
   void smallScreenTransition(int position) {
-    // todo switch case 
+    // todo switch case
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return Scaffold(
-              appBar: AppBar(title: Text(controlState.value),),
+              appBar: AppBar(title: Text(controlState.selectedControlItem),),
               body: PeopleListWidget(controlState)
           );
         }

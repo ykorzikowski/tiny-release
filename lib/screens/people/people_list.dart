@@ -12,7 +12,7 @@ typedef Null ItemSelectedCallback(int value);
 
 class PeopleListWidget extends StatefulWidget {
 
-  final ControlState peopleTypeState;
+  final ControlScreenState peopleTypeState;
 
   PeopleListWidget(this.peopleTypeState);
 
@@ -23,7 +23,7 @@ class PeopleListWidget extends StatefulWidget {
 class _ListWidgetState extends State<PeopleListWidget> {
   static const int PAGE_SIZE = 10;
   final ContactRepository contactRepository = new ContactRepository();
-  final ControlState peopleTypeState;
+  final ControlScreenState peopleTypeState;
   PagewiseLoadController pageLoadController;
 
   _ListWidgetState(this.peopleTypeState);
@@ -33,7 +33,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            contactRepository.getContacts(peopleTypeState.value, pageIndex * PAGE_SIZE, PAGE_SIZE)
+            contactRepository.getContacts(peopleTypeState.selectedControlItem, pageIndex * PAGE_SIZE, PAGE_SIZE)
     );
 
     return Scaffold(
@@ -62,13 +62,14 @@ class _ListWidgetState extends State<PeopleListWidget> {
   }
 
   void peopleDetailView(contact, context) {
+    peopleTypeState.setShowNavBackButton( true );
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           if( BaseUtil.isLargeScreen(context) ) {
             return PeoplePreviewWidget(peopleTypeState);
           } else {
             return Scaffold(
-                appBar: AppBar(title: Text(peopleTypeState.value),),
+                appBar: AppBar(title: Text(peopleTypeState.selectedControlItem),),
                 body: PeoplePreviewWidget(peopleTypeState)
             );
           }

@@ -6,34 +6,26 @@ typedef Null ItemSelectedCallback(int value);
 
 class ControlRightWidget extends StatefulWidget {
 
-  final ControlState controlState;
+  final ControlScreenState controlState;
+  final GlobalKey<NavigatorState> navigatorKeyLargeScreen;
 
-  ControlRightWidget( this.controlState );
+  ControlRightWidget( this.controlState, this.navigatorKeyLargeScreen );
 
   @override
-  _ControlRightWidgetState createState() => _ControlRightWidgetState(controlState);
+  _ControlRightWidgetState createState() => _ControlRightWidgetState(controlState, navigatorKeyLargeScreen);
 }
 
 class _ControlRightWidgetState extends State<ControlRightWidget> {
 
-  final ControlState controlState;
+  final ControlScreenState controlState;
+  final GlobalKey<NavigatorState> navigatorKeyLargeScreen;
 
-  _ControlRightWidgetState( this.controlState );
-
-//  @override
-//  void setState(fn) {
-//    Navigator.pushNamed(context, controlState.value);
-//    if ( controlState.navBack ) {
-//      Navigator.pop(context);
-//      controlState.navBack = false;
-//    }
-//
-//    super.setState(fn);
-//  }
+  _ControlRightWidgetState( this.controlState, this.navigatorKeyLargeScreen );
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      key: navigatorKeyLargeScreen,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
         // todo models, photographer routes

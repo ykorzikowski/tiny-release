@@ -7,7 +7,7 @@ typedef Null ItemSelectedCallback(int value);
 
 class PeoplePreviewWidget extends StatefulWidget {
 
-  final ControlState peopleTypeState;
+  final ControlScreenState peopleTypeState;
 
   PeoplePreviewWidget(this.peopleTypeState);
 
@@ -18,7 +18,7 @@ class PeoplePreviewWidget extends StatefulWidget {
 class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
   static const int PAGE_SIZE = 10;
   final ContactRepository contactRepository = new ContactRepository();
-  final ControlState peopleTypeState;
+  final ControlScreenState peopleTypeState;
 
   _PeoplePreviewWidgetState(this.peopleTypeState);
 
