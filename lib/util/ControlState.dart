@@ -1,11 +1,16 @@
+import 'package:tiny_release/data/tiny_dbo.dart';
+
 class ControlScreenState {
   /// the selected item databasedId
   int selectedItemId = -1;
 
   /// the selected control item
-  int selectedControlItem = -1;
+  int selectedControlItem = 0;
 
-  bool navBack = false;
+  /// the current selected data item
+  TinyDBO curDBO;
+
+  /// used to manage split view on large displays
   Function setShowNavBackButton;
   Function setShowEditButton;
   Function setShowAddButton;
@@ -13,6 +18,7 @@ class ControlScreenState {
 
   ControlScreenState( this.setShowNavBackButton, this.setShowAddButton, this.setShowEditButton, this.setShowSaveButton );
 
+  /// sets the toolbar active buttons when in splitscreen mode
   void setToolbarButtonsOnList() {
     setShowEditButton( false );
     setShowAddButton( true );

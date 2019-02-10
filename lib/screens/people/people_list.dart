@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/repo/tiny_contact_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
-import 'package:tiny_release/data/contact_repository.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:http/http.dart' as http;
 import 'package:tiny_release/screens/people/people_preview.dart';
@@ -23,7 +23,7 @@ class PeopleListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<PeopleListWidget> {
   static const int PAGE_SIZE = 10;
-  final ContactRepository contactRepository = new ContactRepository();
+  final TinyContactRepo contactRepository = new TinyContactRepo();
   final ControlScreenState _controlState;
   PagewiseLoadController pageLoadController;
 
@@ -34,7 +34,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            contactRepository.getContacts(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
+            contactRepository.getAll(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
     );
 
     return Scaffold(
@@ -74,8 +74,10 @@ class _ListWidgetState extends State<PeopleListWidget> {
     );
   }
 
-  void openPeopleDetailView(contact, context) {
+  void openPeopleDetailView(item, context) {
     _controlState.setToolbarButtonsOnPreview();
+    _controlState.curDBO = item;
+
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return PeoplePreviewWidget( _controlState );

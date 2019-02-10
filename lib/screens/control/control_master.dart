@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/control/control_right.dart';
-import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:tiny_release/screens/control/control_left_list.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -39,7 +38,7 @@ class _MasterControlState extends State<MasterControlWidget> {
               handleRightNavigationBackButton(context);
             },
           ) : Container(),
-          _showAddButton ? IconButton(
+          selectedControlNotWording() && _showAddButton ? IconButton(
             icon: Icon(Icons.add),
             tooltip: 'Add new',
             onPressed: () {
@@ -70,7 +69,6 @@ class _MasterControlState extends State<MasterControlWidget> {
         return Row(children: <Widget>[
           Expanded(
             child: ControlLeftListWidget((position) {
-              controlState.selectedControlItem = position;
               _isLargeScreen ? largeScreenTransition( position ) : smallScreenTransition( position );
             }),
           ),
@@ -80,6 +78,10 @@ class _MasterControlState extends State<MasterControlWidget> {
         ]);
       }),
     );
+  }
+
+  bool selectedControlNotWording() {
+    return controlState.selectedControlItem < 7;
   }
 
   void _setShowAddButton( bool val ) {
@@ -124,13 +126,8 @@ class _MasterControlState extends State<MasterControlWidget> {
   }
 
   void smallScreenTransition(int position) {
-    // todo switch case
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-          return PeopleListWidget(controlState);
-        }
-    )
-    );
+    controlState.selectedControlItem = position;
+    ControlHelper.handleControlListTap(controlState, Navigator.of(context));
   }
 
 }

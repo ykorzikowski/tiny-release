@@ -6,21 +6,21 @@ import 'package:tiny_release/util/ControlState.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
-class PeopleEditWidget extends StatefulWidget {
+class PresetEditWidget extends StatefulWidget {
 
   final ControlScreenState _controlState;
 
-  PeopleEditWidget(this._controlState);
+  PresetEditWidget( this._controlState );
 
   @override
-  _PeopleEditWidgetState createState() => _PeopleEditWidgetState(_controlState);
+  _PresetEditWidgetState createState() => _PresetEditWidgetState(_controlState);
 }
 
-class _PeopleEditWidgetState extends State<PeopleEditWidget> {
+class _PresetEditWidgetState extends State<PresetEditWidget> {
   final ControlScreenState _controlState;
 
-  _PeopleEditWidgetState(this._controlState);
-  
+  _PresetEditWidgetState(this._controlState);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             ),
           ],
         ) : null,
-        body: Text("Edit People")
+        body: Text("Edit Preset")
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
-import 'package:tiny_release/screens/people/people_list.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -27,11 +27,7 @@ class _ControlRightWidgetState extends State<ControlRightWidget> {
     return Navigator(
       key: navigatorKeyLargeScreen,
       onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-        // todo models, photographer routes
-          default:
-            return MaterialPageRoute(builder: (context) => PeopleListWidget(controlState) );
-        }
+        MaterialPageRoute(builder: (context) => ControlHelper.getListWidgetByControlItem(controlState) );
       },
     );
   }
