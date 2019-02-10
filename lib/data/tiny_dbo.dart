@@ -1,4 +1,7 @@
 class TinyDBO {
+
+  TinyDBO({this.id, this.displayName});
+
   /// database id
   int id;
 

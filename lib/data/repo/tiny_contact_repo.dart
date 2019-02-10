@@ -3,12 +3,13 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class TinyContactRepo extends TinyRepo< TinyContact > {
 
-  TinyContact get( final int id ) {
+  Future< TinyContact > get( final int id ) {
     // todo load from database
-    return TinyContact();
+    return Future(() {TinyContact.fromMap(Map());});
   }
 
   List<TinyContact> getContactsSync( String type, int index ) {
+    return List();
     var contact = new TinyContact();
     contact.displayName = type + " Foo Bar";
 

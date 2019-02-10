@@ -17,7 +17,7 @@ class TinyLayoutRepo extends TinyRepo< TinyLayout >{
   }
 
   @override
-  TinyLayout get(int id) {
+  Future< TinyLayout > get(int id) {
     // TODO: implement get
     return null;
   }

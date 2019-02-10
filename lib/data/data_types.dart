@@ -4,7 +4,7 @@ class DataType {
   static const String PHOTOGRAPHER = "photographer";
   static const String WITNESS = "witness";
   static const String PARENT = "parent";
-  static const String PRESET = "preset";
+  static const String PRESET = "Preset";
   static const String RECEPTION = "reception_area";
   static const String LAYOUT = "layout";
   static const String WORDING = "wording";

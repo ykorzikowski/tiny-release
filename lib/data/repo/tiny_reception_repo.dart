@@ -17,7 +17,7 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
   }
 
   @override
-  TinyReception get(int id) {
+  Future< TinyReception > get(int id) {
     // TODO: implement get
     return null;
   }

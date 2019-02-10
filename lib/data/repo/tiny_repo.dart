@@ -1,6 +1,6 @@
 abstract class TinyRepo< T > {
   /// get item for id
-  T get( int id );
+  Future< T > get( int id );
 
   /// save item
   void save( T item );

@@ -37,7 +37,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
 
     return Scaffold(
         appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Aufnahmebereiche"),
+          title: Text("Vorlagen"),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),

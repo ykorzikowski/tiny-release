@@ -111,7 +111,13 @@ class ControlHelper {
         widget = PeopleEditWidget( controlScreenState );
         break;
       case 4:
-        controlScreenState.curDBO = new TinyPreset();
+        TinyPreset tinyPreset = new TinyPreset();
+
+        tinyPreset.description = "Test 123";
+        tinyPreset.displayName = "Blijad";
+
+        controlScreenState.curDBO = tinyPreset;
+
         widget = PresetEditWidget( controlScreenState );
         break;
       case 5:
