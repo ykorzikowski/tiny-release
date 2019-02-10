@@ -119,10 +119,7 @@ class _MasterControlState extends State<MasterControlWidget> {
     // todo switch case
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
-          return Scaffold(
-              appBar: AppBar(title: Text( ControlHelper.getListTypeForPosition( controlState.selectedControlItem ) ),),
-              body: PeopleListWidget(controlState)
-          );
+          return PeopleListWidget(controlState);
         }
     )
     );

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,6 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Code Sample for material.AppBar.actions',
+      routes: {
+        NavRoutes.CONTROL_LIST: (context) => MasterControlWidget()
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -32,9 +36,9 @@ class MyStatelessWidget extends StatelessWidget {
             icon: Icon(Icons.settings),
             tooltip: 'Open control screen',
             onPressed: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => new MasterControlWidget()),
+                NavRoutes.CONTROL_LIST,
               );
             },
           ),

@@ -78,14 +78,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     _controlState.setToolbarButtonsOnPreview();
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
-          if( BaseUtil.isLargeScreen(context) ) {
-            return PeoplePreviewWidget( _controlState );
-          } else {
-            return Scaffold(
-                appBar: AppBar(title: Text( ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ) ),),
-                body: PeoplePreviewWidget( _controlState )
-            );
-          }
+          return PeoplePreviewWidget( _controlState );
         }
     )
     );
