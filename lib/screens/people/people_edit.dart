@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/contact_full.dart';
+import 'package:tiny_release/data/tiny_contact.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/ControlState.dart';

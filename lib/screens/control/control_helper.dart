@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/contact_full.dart';
+import 'package:tiny_release/data/tiny_contact.dart';
 import 'package:tiny_release/screens/control/controls_str.dart';
 import 'package:tiny_release/screens/people/people_edit.dart';
 import 'package:tiny_release/util/ControlState.dart';
