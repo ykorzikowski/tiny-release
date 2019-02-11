@@ -14,7 +14,7 @@ class ControlLeftListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ControlLeftListWidget> {
 
-  var items = const ["Models", "Fotografen", "Zeugen", "Erziehungsberechtigte", "Vorlagen", "Aufnahmebereiche", "Layouts", "Wording"];
+  var items = const ["People", "Vorlagen", "Aufnahmebereiche", "Layouts", "Wording"];
   var icons = const [Icons.person_pin, Icons.person_pin, Icons.person_pin, Icons.wallpaper, Icons.camera, Icons.camera, Icons.layers, Icons.speaker_notes];
 
   @override

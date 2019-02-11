@@ -49,11 +49,22 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   padding: EdgeInsets.only(left: 15.0),
                   child:
                   TextField(
-                    onChanged: (t) => _tinyPeople.displayName = t,
-                    controller: initialValue(_tinyPeople.displayName),
+                    onChanged: (t) => _tinyPeople.givenName = t,
+                    controller: initialValue(_tinyPeople.givenName),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'name',
+                      hintText: 'givenname',
+                    ),
+                  ),),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0),
+                  child:
+                  TextField(
+                    onChanged: (t) => _tinyPeople.familyName = t,
+                    controller: initialValue(_tinyPeople.familyName),
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      hintText: 'familyName',
                     ),
                   ),),
                 Padding(

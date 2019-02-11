@@ -112,20 +112,14 @@ class ControlHelper {
   static String getListTypeForPosition( final int position ) {
     switch (position) {
       case 0:
-        return DataType.MODEL;
+        return DataType.PEOPLE;
       case 1:
-        return DataType.PHOTOGRAPHER;
-      case 2:
-        return DataType.WITNESS;
-      case 3:
-        return DataType.PARENT;
-      case 4:
         return DataType.PRESET;
-      case 5:
+      case 2:
         return DataType.RECEPTION;
-      case 6:
+      case 3:
         return DataType.LAYOUT;
-      case 7:
+      case 4:
         return DataType.WORDING;
       default:
         return "notImplYet";
@@ -192,15 +186,12 @@ class ControlHelper {
 
     switch (controlScreenState.selectedControlItem) {
       case 0:
-      case 1:
-      case 2:
-      case 3:
         var tinyPeople = new TinyPeople();
         tinyPeople.type = controlScreenState.selectedControlItem;
         controlScreenState.curDBO = tinyPeople;
         widget = PeopleEditWidget( controlScreenState );
         break;
-      case 4:
+      case 1:
         //todo remove when edit window implemented
         TinyPreset tinyPreset = new TinyPreset();
         Paragraph p = new Paragraph();
@@ -220,7 +211,7 @@ class ControlHelper {
 
         widget = PresetEditWidget( controlScreenState );
         break;
-      case 5:
+      case 2:
         //todo remove when edit window implemented
         var tinyReception = new TinyReception();
         tinyReception.displayName = "tinyRec";
@@ -228,7 +219,7 @@ class ControlHelper {
         controlScreenState.curDBO = tinyReception;
         widget = ReceptionEditWidget( controlScreenState );
         break;
-      case 6:
+      case 3:
         controlScreenState.curDBO = new TinyLayout();
         widget = LayoutEditWidget( controlScreenState );
         break;
@@ -249,9 +240,6 @@ class ControlHelper {
   static Widget getListWidgetByControlItem( final ControlScreenState controlScreenState ) {
     switch (controlScreenState.selectedControlItem) {
       case 0:
-      case 1:
-      case 2:
-      case 3:
         return PeopleListWidget(
           controlScreenState,
               (pageIndex) {
@@ -273,13 +261,13 @@ class ControlHelper {
         },
 
       );
-      case 4:
+      case 1:
         return PresetListWidget( controlScreenState );
-      case 5:
+      case 2:
         return ReceptionListWidget( controlScreenState );
-      case 6:
+      case 3:
         return new LayoutListWidget( controlScreenState );
-      case 7:
+      case 4:
         return new WordingSettingsWidget( controlScreenState );
     }
     return null;

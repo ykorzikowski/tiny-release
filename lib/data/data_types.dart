@@ -3,10 +3,6 @@ class DataType {
   static const String PEOPLE_ITEM = "PeopleItem";
   static const String PEOPLE_ADDRESS = "PeopleAddress";
   static const String PEOPLE = "People";
-  static const String MODEL = "Model";
-  static const String PHOTOGRAPHER = "Photographer";
-  static const String WITNESS = "Witness";
-  static const String PARENT = "Parent";
   static const String PRESET = "Preset";
   static const String PARAGRAPH = "Paragraph";
   static const String RECEPTION = "Reception_area";
