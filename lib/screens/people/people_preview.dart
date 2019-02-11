@@ -44,7 +44,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                   fontWeight: FontWeight.w600,
                   fontSize: 22.0,
                 ),),
-              Text(tinyPeople.company),
+              tinyPeople.company != null ? Text(tinyPeople.company) : Container(),
             ],
       );
 

@@ -63,7 +63,7 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      update( item );
+      return update( item );
     }
 
     var map = TinyPeople.toMap( item );
@@ -72,7 +72,7 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     map.remove('postalAddresses');
     var peopleId = await db.insert(TYPE, map );
 
-    _putAdress(item.postalAddresses, peopleId);
+    _putAddress(item.postalAddresses, peopleId);
     _putEmail(item.emails, peopleId);
     _putPhone(item.phones, peopleId);
 
@@ -86,18 +86,21 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     map.remove('phones');
     map.remove('emails');
     map.remove('postalAddresses');
-    var peopleId = await db.insert(TYPE, map );
 
-    _putAdress(item.postalAddresses, peopleId);
-    _putEmail(item.emails, peopleId);
-    _putPhone(item.phones, peopleId);
+    _putAddress(item.postalAddresses, item.id);
+    _putEmail(item.emails, item.id);
+    _putPhone(item.phones, item.id);
 
-    db.update(TYPE, map );
+    db.update(TYPE, map, where: "id = ?", whereArgs: [item.id] );
   }
 
   @override
   Future delete(TinyPeople item) async {
     final db = await SQLiteProvider.db.database;
+
+    item.postalAddresses.forEach((i) => tinyAddressRepo.delete(i));
+    item.emails.forEach((i) => tinyPeopleItemRepo.delete(i));
+    item.phones.forEach((i) => tinyPeopleItemRepo.delete(i));
 
     var res = await db.delete(TYPE, where: "id = ?", whereArgs: [item.id]);
 
@@ -112,7 +115,7 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     }
   }
 
-  Future _putAdress( var addresses, int peopleId  ) async {
+  Future _putAddress( var addresses, int peopleId  ) async {
     for (TinyAddress value in addresses) {
       value.peopleId = peopleId;
       await tinyAddressRepo.save(value);

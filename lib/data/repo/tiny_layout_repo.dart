@@ -12,7 +12,7 @@ class TinyLayoutRepo extends TinyRepo< TinyLayout >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      update( item );
+      return update( item );
     }
 
     return db.insert(TYPE, TinyLayout.toMap( item ) );
@@ -21,7 +21,7 @@ class TinyLayoutRepo extends TinyRepo< TinyLayout >{
   void update( TinyLayout item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, TinyLayout.toMap( item ) );
+    db.update(TYPE, TinyLayout.toMap( item ), where: "id = ?", whereArgs: [item.id] );
   }
 
 

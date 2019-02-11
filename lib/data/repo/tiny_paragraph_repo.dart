@@ -21,7 +21,7 @@ class ParagraphRepo extends TinyRepo< Paragraph >{
   void update( Paragraph item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, Paragraph.toMap( item ) );
+    db.update(TYPE, Paragraph.toMap( item ), where: "id = ?", whereArgs: [item.id] );
   }
 
   @override

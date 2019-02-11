@@ -30,8 +30,8 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
 
     // remove paragraphs from map
     var map = TinyPreset.toMap(item);
-    map['paragraphs'] = null;
-    db.update(TYPE, TinyPreset.toMap(item));
+    map.remove('paragraphs');
+    db.update(TYPE, map, where: "id = ?", whereArgs: [item.id] );
 
     _putParagraphs( item );
   }

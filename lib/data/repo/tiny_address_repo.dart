@@ -46,7 +46,7 @@ class TinyAddressRepo extends TinyRepo< TinyAddress > {
   void update( TinyAddress item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, TinyAddress.toMap( item ) );
+    db.update(TYPE, TinyAddress.toMap( item ), where: "id = ?", whereArgs: [item.id] );
   }
 
   Future<List<TinyAddress>> getAllByPeopleId( int peopleId ) async {

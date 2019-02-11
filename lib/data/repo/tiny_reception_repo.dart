@@ -14,7 +14,7 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-       update( item );
+       return update( item );
     }
 
     return db.insert(TYPE, TinyReception.toMap( item ) );
@@ -23,7 +23,7 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
   void update( TinyReception item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, TinyReception.toMap( item ) );
+    db.update(TYPE, TinyReception.toMap( item ) , where: "id = ?", whereArgs: [item.id] );
   }
 
   @override

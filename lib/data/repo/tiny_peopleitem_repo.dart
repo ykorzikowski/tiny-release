@@ -46,7 +46,7 @@ class TinyPeopleItemRepo extends TinyRepo< TinyPeopleItem > {
   void update( TinyPeopleItem item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, TinyPeopleItem.toMap( item ) );
+    db.update(TYPE, TinyPeopleItem.toMap( item ), where: "id = ?", whereArgs: [item.id] );
   }
 
   Future<List<TinyPeopleItem>> getAllByTypeAndPeopleId( int peopleId, int type ) async {
