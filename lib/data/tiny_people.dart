@@ -40,10 +40,10 @@ class TinyPeople extends TinyDBO {
     jobTitle = m["jobTitle"];
     idType = m["idType"];
     idNumber = m["idNumber"];
-    emails = (m["emails"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
-    phones = (m["phones"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
+    emails = (m["emails"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m))?.toList();
+    phones = (m["phones"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m))?.toList();
     postalAddresses = (m["postalAddresses"] as Iterable)
-        ?.map((m) => TinyAddress.fromMap(m));
+        ?.map((m) => TinyAddress.fromMap(m))?.toList();
     avatar = m["avatar"];
   }
 

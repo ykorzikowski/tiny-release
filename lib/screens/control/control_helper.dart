@@ -76,10 +76,17 @@ class ControlHelper {
                   (pageIndex) async {
                     Iterable<Contact> contacts = await ContactsService.getContacts();
 
-                    var list = List();
-                    contacts.forEach((contact) => list.add( mapContactToPeople(contact) ));
+                    var start = pageIndex * PeopleListWidget.PAGE_SIZE;
+                    var end = (pageIndex+1) * PeopleListWidget.PAGE_SIZE;
 
-                    return list;
+                    if (contacts.length < end) {
+                      end = contacts.length;
+                    }
+
+                    var data = contacts.toList();
+                    data.sort((a, b) => a.familyName.toLowerCase().compareTo(b.familyName.toLowerCase()));
+
+                    return data.sublist(start, end).map((value) => mapContactToPeople(value) ).toList();
               },
                   (item, context) {
                     controlScreenState.setToolbarButtonsOnEdit();
@@ -190,10 +197,6 @@ class ControlHelper {
       case 3:
         var tinyPeople = new TinyPeople();
         tinyPeople.type = controlScreenState.selectedControlItem;
-        tinyPeople.displayName = "Han Solo";
-        tinyPeople.postalAddresses = List();
-        tinyPeople.emails = List();
-        tinyPeople.phones = List();
         controlScreenState.curDBO = tinyPeople;
         widget = PeopleEditWidget( controlScreenState );
         break;

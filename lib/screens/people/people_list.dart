@@ -45,7 +45,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
 
     return Scaffold(
         appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Verwaltung"),
+          title: Text(ControlHelper.getListTypeForPosition(_controlState.selectedControlItem)),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
@@ -57,9 +57,22 @@ class _ListWidgetState extends State<PeopleListWidget> {
           ],
         ): null,
         body: PagewiseListView(
-        itemBuilder: this._itemBuilder,
-        pageLoadController: this.pageLoadController,
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          itemBuilder: this._itemBuilder,
+          pageLoadController: this.pageLoadController,
     ) );
+  }
+
+  Widget leadingElement(var entry) {
+    return CircleAvatar(
+      child: entry.avatar == null ? Icon(
+        Icons.person,
+        color: Colors.brown[200],
+      ) : null,
+      backgroundImage: entry.avatar != null ? new MemoryImage(entry.avatar) : null,
+      backgroundColor: Colors.lightGreen,
+      radius: 32.0,
+    );
   }
 
   Widget _itemBuilder(context, entry, _) {
@@ -76,10 +89,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
                 .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
           },
           child:  ListTile(
-            leading: Icon(
-              Icons.person,
-              color: Colors.brown[200],
-            ),
+            leading: leadingElement( entry ),
             title: Text(entry.displayName),
             onTap: () {
               _onPeopleTap( entry, context );
