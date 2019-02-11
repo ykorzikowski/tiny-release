@@ -25,11 +25,13 @@ class SQLiteProvider {
     return await openDatabase(path, version: 2, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
 
+      /// Reception area
       await db.execute("CREATE TABLE Reception_area ("
           "id INTEGER PRIMARY KEY,"
           "displayName TEXT"
           ")");
 
+      /// Preset
       await db.execute("CREATE TABLE Preset ("
           "id INTEGER PRIMARY KEY,"
           "displayName TEXT,"
@@ -39,6 +41,7 @@ class SQLiteProvider {
           "description TEXT"
           ")");
 
+      /// Paragraph
       await db.execute("CREATE TABLE Paragraph ("
           "id INTEGER PRIMARY KEY,"
           "title TEXT,"
@@ -46,7 +49,49 @@ class SQLiteProvider {
           "position INTEGER,"
           "presetId INTEGER,"
           "FOREIGN KEY (presetId) REFERENCES Preset (id)"
-            "ON DELETE NO ACTION ON UPDATE NO ACTION"
+            "ON DELETE CASCADE ON UPDATE NO ACTION"
+          ")");
+
+      /// People
+      await db.execute("CREATE TABLE People ("
+          "id INTEGER PRIMARY KEY,"
+          "displayName TEXT,"
+          "type INTEGER,"
+          "avatar BLOB,"
+          "identifier TEXT,"
+          "givenName TEXT,"
+          "middleName TEXT,"
+          "prefix TEXT,"
+          "suffix TEXT,"
+          "familyName TEXT,"
+          "company TEXT,"
+          "jobTitle TEXT,"
+          "position INTEGER,"
+          ")");
+
+      /// Email & Phone
+      await db.execute("CREATE TABLE PeopleItem ("
+          "id INTEGER PRIMARY KEY,"
+          "label TEXT,"
+          "value TEXT,"
+          "type INTEGER,"
+          "peopleId INTEGER,"
+          "FOREIGN KEY (peopleId) REFERENCES People (id)"
+          "ON DELETE CASCADE ON UPDATE NO ACTION"
+          ")");
+
+      /// postal address
+      await db.execute("CREATE TABLE PeopleAddress ("
+          "id INTEGER PRIMARY KEY,"
+          "label TEXT,"
+          "street TEXT,"
+          "city TEXT,"
+          "postcode TEXT,"
+          "region TEXT,"
+          "country TEXT,"
+          "peopleId INTEGER,"
+          "FOREIGN KEY (peopleId) REFERENCES People (id)"
+          "ON DELETE CASCADE ON UPDATE NO ACTION"
           ")");
     });
   }

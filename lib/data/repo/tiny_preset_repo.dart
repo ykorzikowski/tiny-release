@@ -21,10 +21,8 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     map.remove('paragraphs');
     var presetId = await db.insert(TYPE, map );
 
-    for ( Paragraph p in item.paragraphs ) {
-      p.presetId = presetId;
-      paragraphRepo.save(p);
-    }
+    item.id = presetId;
+    _putParagraphs( item );
   }
 
   void update(TinyPreset item) async {
@@ -35,10 +33,19 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     map['paragraphs'] = null;
     db.update(TYPE, TinyPreset.toMap(item));
 
-    for ( Paragraph p in item.paragraphs ) {
-      p.presetId = item.id;
+    _putParagraphs( item );
+  }
+
+  void _putParagraphs( var tinyPreset ) {
+    for ( Paragraph p in tinyPreset.paragraphs ) {
+      p.presetId = tinyPreset.id;
       paragraphRepo.save(p);
     }
+  }
+
+  Future _getParagraphs( var tinyPreset ) async {
+    var paragraphs = await paragraphRepo.getAllByPresetId(tinyPreset.id);
+    tinyPreset.paragraphs = paragraphs;
   }
 
   @override
@@ -49,8 +56,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     var list = res.isNotEmpty ? List.of( res.map((c) => TinyPreset.fromMap(c)) ) : List<TinyPreset>();
 
     for ( TinyPreset tp in list ) {
-      var paragraphs = await paragraphRepo.getAllByPresetId(tp.id);
-      tp.paragraphs = paragraphs;
+      await _getParagraphs(tp);
     }
 
     return list;
@@ -63,8 +69,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     var res = await db.query(TYPE, where: "id = ?", whereArgs: [id]);
 
     var tp = TinyPreset.fromMap(res.first);
-    var paragraphs = await paragraphRepo.getAllByPresetId(tp.id);
-    tp.paragraphs = paragraphs;
+    await _getParagraphs(tp);
 
     return res.isNotEmpty ? TinyPreset.fromMap(res.first) : Null ;
   }

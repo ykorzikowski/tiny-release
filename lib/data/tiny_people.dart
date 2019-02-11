@@ -2,9 +2,8 @@ import 'dart:typed_data';
 
 import 'package:tiny_release/data/tiny_dbo.dart';
 
-class TinyContact extends TinyDBO {
-  String type,
-      identifier,
+class TinyPeople extends TinyDBO {
+  String identifier,
       givenName,
       middleName,
       prefix,
@@ -12,18 +11,20 @@ class TinyContact extends TinyDBO {
       familyName,
       company,
       jobTitle;
-  Iterable<Item> emails = [];
-  Iterable<Item> phones = [];
-  Iterable<PostalAddress> postalAddresses = [];
+  int type;
+  List<TinyPeopleItem> emails = List();
+  List<TinyPeopleItem> phones = List();
+  List<TinyAddress> postalAddresses = List();
   Uint8List avatar;
 
-  TinyContact({id, displayName, this.type, this.identifier, this.givenName, this.middleName, this.prefix,
+  TinyPeople({id, displayName, this.type, this.identifier, this.givenName, this.middleName, this.prefix,
     this.suffix, this.familyName, this.company, this.jobTitle, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
 
-  TinyContact.fromMap(Map<String, dynamic> m) {
+  TinyPeople.fromMap(Map<String, dynamic> m) {
     id = m["id"];
+    type = m["type"];
     identifier = m["identifier"];
     displayName = m["displayName"];
     givenName = m["givenName"];
@@ -33,28 +34,29 @@ class TinyContact extends TinyDBO {
     suffix = m["suffix"];
     company = m["company"];
     jobTitle = m["jobTitle"];
-    emails = (m["emails"] as Iterable)?.map((m) => Item.fromMap(m));
-    phones = (m["phones"] as Iterable)?.map((m) => Item.fromMap(m));
+    emails = (m["emails"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
+    phones = (m["phones"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
     postalAddresses = (m["postalAddresses"] as Iterable)
-        ?.map((m) => PostalAddress.fromMap(m));
+        ?.map((m) => TinyAddress.fromMap(m));
     avatar = m["avatar"];
   }
 
-  static Map<String, dynamic> toMap(TinyContact contact) {
+  static Map<String, dynamic> toMap(TinyPeople contact) {
     var emails = [];
-    for (Item email in contact.emails ?? []) {
-      emails.add(Item._toMap(email));
+    for (TinyPeopleItem email in contact.emails ?? []) {
+      emails.add(TinyPeopleItem.toMap(email));
     }
     var phones = [];
-    for (Item phone in contact.phones ?? []) {
-      phones.add(Item._toMap(phone));
+    for (TinyPeopleItem phone in contact.phones ?? []) {
+      phones.add(TinyPeopleItem.toMap(phone));
     }
     var postalAddresses = [];
-    for (PostalAddress address in contact.postalAddresses ?? []) {
-      postalAddresses.add(PostalAddress._toMap(address));
+    for (TinyAddress address in contact.postalAddresses ?? []) {
+      postalAddresses.add(TinyAddress.toMap(address));
     }
     return {
       "id": contact.id,
+      "type": contact.type,
       "identifier": contact.identifier,
       "displayName": contact.displayName,
       "givenName": contact.givenName,
@@ -72,31 +74,39 @@ class TinyContact extends TinyDBO {
   }
 }
 
-class Item extends TinyDBO {
-  Item({id, this.label, this.value}) : super(id: id, displayName: "");
+class TinyPeopleItem extends TinyDBO {
+  TinyPeopleItem({id, this.type, this.peopleId, this.label, this.value}) : super(id: id, displayName: "TinyPeopleItem");
 
+  static const TYPE_EMAIL = 1;
+  static const TYPE_PHONE = 2;
+
+  int type, peopleId;
   String label, value;
 
-  static Map _toMap(Item i) => {"label": i.label, "value": i.value};
+  static Map toMap(TinyPeopleItem i) => {"type": i.type, "peopleId": i.peopleId, "label": i.label, "value": i.value};
 
-  Item.fromMap(Map m) {
+  TinyPeopleItem.fromMap(Map m) {
+    type = m["type"];
     label = m["label"];
     value = m["value"];
+    peopleId = m["peopleId"];
   }
 
 }
 
-class PostalAddress extends TinyDBO{
-  PostalAddress({id, this.label,
+class TinyAddress extends TinyDBO{
+  TinyAddress({id, this.peopleId, this.label,
     this.street,
     this.city,
     this.postcode,
     this.region,
-    this.country}) : super(id: id, displayName: "");
+    this.country}) : super(id: id, displayName: "TinyAddress");
 
+  int peopleId;
   String label, street, city, postcode, region, country;
 
-  PostalAddress.fromMap(Map m) {
+  TinyAddress.fromMap(Map m) {
+    peopleId = m["peopleId"];
     label = m["label"];
     street = m["street"];
     city = m["city"];
@@ -105,8 +115,9 @@ class PostalAddress extends TinyDBO{
     country = m["country"];
   }
 
-  static Map _toMap(PostalAddress address) =>
+  static Map toMap(TinyAddress address) =>
       {
+        "peopleId": address.peopleId,
         "label": address.label,
         "street": address.street,
         "city": address.city,

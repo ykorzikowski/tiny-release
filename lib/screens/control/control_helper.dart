@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
-import 'package:tiny_release/data/tiny_contact.dart';
+import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_layout.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
@@ -108,7 +108,13 @@ class ControlHelper {
       case 1:
       case 2:
       case 3:
-        controlScreenState.curDBO = new TinyContact();
+        var tinyPeople = new TinyPeople();
+        tinyPeople.type = controlScreenState.selectedControlItem;
+        tinyPeople.displayName = "Han Solo";
+        tinyPeople.postalAddresses = List();
+        tinyPeople.emails = List();
+        tinyPeople.phones = List();
+        controlScreenState.curDBO = tinyPeople;
         widget = PeopleEditWidget( controlScreenState );
         break;
       case 4:

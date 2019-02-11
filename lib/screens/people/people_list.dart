@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/repo/tiny_contact_repo.dart';
+import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -23,7 +23,7 @@ class PeopleListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<PeopleListWidget> {
   static const int PAGE_SIZE = 10;
-  final TinyContactRepo contactRepository = new TinyContactRepo();
+  final TinyPeopleRepo contactRepository = new TinyPeopleRepo();
   final ControlScreenState _controlState;
   PagewiseLoadController pageLoadController;
 
@@ -34,7 +34,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            contactRepository.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
+            contactRepository.getAllByType( _controlState.selectedControlItem, pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return Scaffold(
