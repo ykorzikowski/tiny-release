@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/ControlState.dart';
@@ -24,7 +25,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Preset Preview"),
+      body: Text("Preset Preview - " + getText()),
       appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
         title: Text("Preview"),
         actions: <Widget>[
@@ -38,6 +39,14 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
         ],
       ) : null,
     );
+  }
+
+  String getText() {
+    TinyPreset curDBO = _controlState.curDBO;
+    if ( curDBO.paragraphs == null) {
+      return "NULL";
+    }
+    return curDBO.paragraphs.first != null ? curDBO.paragraphs.first.displayName : "NULL";
   }
 
 }

@@ -114,10 +114,19 @@ class ControlHelper {
       case 4:
         //todo remove when edit window implemented
         TinyPreset tinyPreset = new TinyPreset();
+        Paragraph p = new Paragraph();
 
         tinyPreset.description = "Test 123";
         tinyPreset.displayName = "Blijad";
 
+        p.displayName = "P1";
+        p.title = "paragraph";
+        p.content = "blabli";
+
+        var list = new List<Paragraph>();
+        list.add(p);
+
+        tinyPreset.paragraphs = list;
         controlScreenState.curDBO = tinyPreset;
 
         widget = PresetEditWidget( controlScreenState );

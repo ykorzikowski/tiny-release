@@ -44,7 +44,9 @@ class SQLiteProvider {
           "title TEXT,"
           "content TEXT,"
           "position INTEGER,"
-          "preset_id INTEGER"
+          "presetId INTEGER,"
+          "FOREIGN KEY (presetId) REFERENCES Preset (id)"
+            "ON DELETE NO ACTION ON UPDATE NO ACTION"
           ")");
     });
   }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
+import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:tiny_release/screens/people/people_preview.dart';
@@ -88,7 +89,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
 
     Navigator.push(context, MaterialPageRoute(
         builder: (context) {
-          return PeoplePreviewWidget( _controlState );
+          return PresetPreviewWidget( _controlState );
         }
     )
     );

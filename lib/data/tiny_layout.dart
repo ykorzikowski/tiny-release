@@ -9,12 +9,12 @@ class TinyLayout extends TinyDBO {
   TinyLayout({id, displayName, this.layout}) : super(id: id, displayName: displayName);
 
 
-  TinyLayout.fromMap(Map m) {
+  TinyLayout.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     displayName = m["displayName"];
   }
 
-  static Map toMap(TinyLayout item) {
+  static Map<String, dynamic> toMap(TinyLayout item) {
     return {
       "id": item.id,
       "displayName": item.displayName,

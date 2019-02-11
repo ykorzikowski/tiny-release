@@ -22,7 +22,7 @@ class TinyContact extends TinyDBO {
   this.postalAddresses, this.avatar} );
 
 
-  TinyContact.fromMap(Map m) {
+  TinyContact.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     identifier = m["identifier"];
     displayName = m["displayName"];
@@ -40,7 +40,7 @@ class TinyContact extends TinyDBO {
     avatar = m["avatar"];
   }
 
-  static Map toMap(TinyContact contact) {
+  static Map<String, dynamic> toMap(TinyContact contact) {
     var emails = [];
     for (Item email in contact.emails ?? []) {
       emails.add(Item._toMap(email));
