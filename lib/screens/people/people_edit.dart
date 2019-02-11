@@ -30,10 +30,12 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             IconButton(
               icon: Icon(Icons.save_alt),
               tooltip: 'Save',
-              onPressed: () {
-                _controlState.setToolbarButtonsOnEdit();
-                ControlHelper.handleSaveButton( _controlState, Navigator.of(context) );
-              },
+              onPressed: () => ControlHelper.handleSaveButton( _controlState, Navigator.of(context) ),
+            ),
+            IconButton(
+              icon: Icon(Icons.contacts),
+              tooltip: 'Import',
+              onPressed: () => ControlHelper.initContactImport( _controlState, Navigator.of(context) ),
             ),
           ],
         ) : null,

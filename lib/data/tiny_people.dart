@@ -83,9 +83,9 @@ class TinyPeopleItem extends TinyDBO {
   int type, peopleId;
   String label, value;
 
-  static Map toMap(TinyPeopleItem i) => {"type": i.type, "peopleId": i.peopleId, "label": i.label, "value": i.value};
+  static Map<String, dynamic> toMap(TinyPeopleItem i) => {"type": i.type, "peopleId": i.peopleId, "label": i.label, "value": i.value};
 
-  TinyPeopleItem.fromMap(Map m) {
+  TinyPeopleItem.fromMap(Map<String, dynamic> m) {
     type = m["type"];
     label = m["label"];
     value = m["value"];
@@ -105,7 +105,7 @@ class TinyAddress extends TinyDBO{
   int peopleId;
   String label, street, city, postcode, region, country;
 
-  TinyAddress.fromMap(Map m) {
+  TinyAddress.fromMap(Map<String, dynamic> m) {
     peopleId = m["peopleId"];
     label = m["label"];
     street = m["street"];
@@ -115,7 +115,7 @@ class TinyAddress extends TinyDBO{
     country = m["country"];
   }
 
-  static Map toMap(TinyAddress address) =>
+  static Map<String, dynamic> toMap(TinyAddress address) =>
       {
         "peopleId": address.peopleId,
         "label": address.label,

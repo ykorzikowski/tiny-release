@@ -17,12 +17,13 @@ class _MasterControlState extends State<MasterControlWidget> {
   var _showEditButton = false;
   var _showAddButton = true;
   var _showSaveButton = false;
+  var _showContactImportButton = false;
 
   final GlobalKey<NavigatorState> _navigatorKeyLargeScreen = new GlobalKey<NavigatorState>();
   ControlScreenState controlState;
 
   _MasterControlState() {
-    controlState = new ControlScreenState( _setShowNavBackButton, _setShowAddButton, _setShowEditButton, _setShowSaveButton );
+    controlState = new ControlScreenState( _setShowNavBackButton, _setShowAddButton, _setShowEditButton, _setShowSaveButton, _setShowContactImportButton );
   }
 
   @override
@@ -60,6 +61,11 @@ class _MasterControlState extends State<MasterControlWidget> {
               controlState.setToolbarButtonsOnList();
               ControlHelper.handleSaveButton( controlState, _navigatorKeyLargeScreen.currentState );
             },
+          ) : Container(),
+          _showContactImportButton && _isLargeScreen ? IconButton(
+            icon: Icon(Icons.contacts),
+            tooltip: 'Import',
+            onPressed: () => ControlHelper.initContactImport( controlState, _navigatorKeyLargeScreen.currentState ),
           ) : Container(),
         ],
       ),
@@ -105,6 +111,12 @@ class _MasterControlState extends State<MasterControlWidget> {
   void _setShowSaveButton( bool val ) {
     setState(() {
       _showSaveButton = val;
+    });
+  }
+
+  void _setShowContactImportButton( bool val ) {
+    setState(() {
+      _showContactImportButton = val;
     });
   }
 

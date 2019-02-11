@@ -1,7 +1,8 @@
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/data_types.dart';
-import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
+import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_layout.dart';
@@ -12,6 +13,7 @@ import 'package:tiny_release/screens/layout/layout_edit.dart';
 import 'package:tiny_release/screens/layout/layout_list.dart';
 import 'package:tiny_release/screens/people/people_edit.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
+import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/screens/preset/preset_edit.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/screens/reception_area/reception_edit.dart';
@@ -21,6 +23,81 @@ import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/ControlState.dart';
 
 class ControlHelper {
+
+  static TinyPeople mapContactToPeople( Contact contact ) {
+    var tinyPeople = new TinyPeople();
+
+    tinyPeople.identifier = contact.identifier;
+    tinyPeople.givenName = contact.givenName;
+    tinyPeople.middleName = contact.middleName;
+    tinyPeople.prefix = contact.prefix;
+    tinyPeople.suffix = contact.suffix;
+    tinyPeople.familyName = contact.familyName;
+    tinyPeople.company = contact.company;
+    tinyPeople.jobTitle = contact.jobTitle;
+    tinyPeople.displayName = contact.displayName;
+    tinyPeople.avatar = contact.avatar;
+
+    tinyPeople.emails = contact.emails.map((i) {
+      TinyPeopleItem tinyItem = new TinyPeopleItem();
+      tinyItem.label = i.label;
+      tinyItem.value = i.value;
+      return tinyItem;
+    }).toList();
+
+    tinyPeople.phones = contact.phones.map((i) {
+      TinyPeopleItem tinyItem = new TinyPeopleItem();
+      tinyItem.label = i.label;
+      tinyItem.value = i.value;
+      return tinyItem;
+    }).toList();
+
+    tinyPeople.postalAddresses = contact.postalAddresses.map((i) {
+      TinyAddress tinyAddress = new TinyAddress();
+      tinyAddress.street = i.street;
+      tinyAddress.label = i.label;
+      tinyAddress.city = i.city;
+      tinyAddress.postcode = i.postcode;
+      tinyAddress.region = i.region;
+      tinyAddress.country = i.country;
+      return tinyAddress;
+    }).toList();
+
+    return tinyPeople;
+  }
+
+  static Future initContactImport( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) async {
+    controlScreenState.setToolbarButtonsOnImport();
+    navigatorState.push(
+       MaterialPageRoute(
+          builder: (context) {
+            return PeopleListWidget( controlScreenState,
+                  (pageIndex) async {
+                    Iterable<Contact> contacts = await ContactsService.getContacts();
+
+                    var list = List();
+                    contacts.forEach((contact) => list.add( mapContactToPeople(contact) ));
+
+                    return list;
+              },
+                  (item, context) {
+                    controlScreenState.setToolbarButtonsOnEdit();
+                    // keep type id of dbo created before import
+                    TinyPeople beforeImportDBO = controlScreenState.curDBO;
+                    item.type = beforeImportDBO.type;
+                    controlScreenState.curDBO = item;
+
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return PeopleEditWidget(controlScreenState);
+                        }
+                    ) );
+                  }
+            );
+          }
+      ),
+    );
+  }
 
   /// could be implemented directly in DataType if enum is supported
   static String getListTypeForPosition( final int position ) {
@@ -168,7 +245,27 @@ class ControlHelper {
       case 1:
       case 2:
       case 3:
-        return PeopleListWidget( controlScreenState );
+        return PeopleListWidget(
+          controlScreenState,
+              (pageIndex) {
+                return new TinyPeopleRepo().getAllByType(
+                    controlScreenState.selectedControlItem,
+                    pageIndex * PeopleListWidget.PAGE_SIZE,
+                    PeopleListWidget.PAGE_SIZE);
+                },
+
+              (item, context) {
+                    controlScreenState.setToolbarButtonsOnPreview();
+                    controlScreenState.curDBO = item;
+
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return PeoplePreviewWidget(controlScreenState);
+                      }
+                    ) );
+        },
+
+      );
       case 4:
         return PresetListWidget( controlScreenState );
       case 5:

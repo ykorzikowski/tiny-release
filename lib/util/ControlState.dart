@@ -15,8 +15,9 @@ class ControlScreenState {
   Function setShowEditButton;
   Function setShowAddButton;
   Function setShowSaveButton;
+  Function setShowContactImportButton;
 
-  ControlScreenState( this.setShowNavBackButton, this.setShowAddButton, this.setShowEditButton, this.setShowSaveButton );
+  ControlScreenState( this.setShowNavBackButton, this.setShowAddButton, this.setShowEditButton, this.setShowSaveButton, this.setShowContactImportButton );
 
   /// sets the toolbar active buttons when in splitscreen mode
   void setToolbarButtonsOnList() {
@@ -24,6 +25,7 @@ class ControlScreenState {
     setShowAddButton( true );
     setShowNavBackButton( false );
     setShowSaveButton( false );
+    setShowContactImportButton( false );
   }
 
   void setToolbarButtonsOnPreview() {
@@ -31,6 +33,7 @@ class ControlScreenState {
     setShowAddButton( false );
     setShowNavBackButton( true );
     setShowSaveButton( false );
+    setShowContactImportButton( false );
   }
 
   void setToolbarButtonsOnEdit() {
@@ -38,5 +41,14 @@ class ControlScreenState {
     setShowAddButton( false );
     setShowNavBackButton( true );
     setShowSaveButton( true );
+    setShowContactImportButton( true );
+  }
+
+  void setToolbarButtonsOnImport() {
+    setShowEditButton( false );
+    setShowAddButton( false );
+    setShowNavBackButton( true );
+    setShowSaveButton( false );
+    setShowContactImportButton( false );
   }
 }
