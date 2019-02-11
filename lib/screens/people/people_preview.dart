@@ -26,8 +26,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
   }
 
   Widget imageAndNameSection() =>
-      Flexible(
-          child: Column(
+      Column(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -47,62 +46,88 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                 ),),
               Text(tinyPeople.company),
             ],
-          )
       );
 
-  Widget phoneSection() =>
-      Flexible(
-          child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: tinyPeople.phones.length,
-            itemBuilder: (ctxt, index) =>
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
-                  child: Column(
-                      children: <Widget>[
-                        Text(tinyPeople.phones[index].label),
-                        Text(tinyPeople.phones[index].value,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.0,
-                          ),)
-                      ]
-                  ),
-                ),
-          ));
+  /// get phone widgets
+  List< Widget > getPhoneWidgets() =>
+      tinyPeople.phones.map((phone) =>
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: getPhoneWidget(phone),
+          ),
+      ).toList();
 
-  Widget mailSection() => Flexible(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: tinyPeople.emails.length,
-          itemBuilder: (ctxt, index) =>
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(tinyPeople.emails[index].label),
-                    Text(tinyPeople.emails[index].value,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.0,
-                      ),)
-                  ],
-                ),),
+  /// get single phone widget
+  Widget getPhoneWidget(phone) =>
+      Column(
+        children: <Widget>[
+          Text(phone.label),
+          Text(phone.value,
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0,
+            ),)
+        ],
+      );
+
+  /// phone section
+  Widget phoneSection() =>
+      Container(
+        child: Column(
+          children: getPhoneWidgets(),
         ),
       );
 
-  List<Widget> getAddressWidgets() {
-    var list = List();
+  /// get mail widgets
+  List< Widget > getMailWidgets() =>
+      tinyPeople.emails.map((mail) =>
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: getMailWidget(mail),
+          ),
+      ).toList();
 
-    for( var address in tinyPeople.postalAddresses ) {
-      list.add(
-          Column(
+  /// get single mail widget
+  Widget getMailWidget(mail) =>
+      Column(
         children: <Widget>[
-          Text(address.label),
+          Text(mail.label),
+          Text(mail.value,
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0,
+            ),)
+        ],
+      );
+
+  /// mail section
+  Widget mailSection() =>
+      Container(
+        child: Column(
+          children: getMailWidgets(),
+        ),
+      );
+
+  /// get address widgets
+  List<Widget> getAddressWidgets() =>
+      tinyPeople.postalAddresses.map((ta) =>
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: getAddressWidget(ta),
+          ),
+      ).toList();
+
+  /// get single address widget
+  Widget getAddressWidget(address) =>
+      Column(
+        children: <Widget>[
+          Text(address.label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14.0,
+          ),),
           Text(address.street),
           Text(
               address.postcode +
@@ -111,33 +136,13 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
           Text(address.region),
           Text(address.country),
         ],
-      ) );
-    }
+      );
 
-    return list;
-  }
-
+  /// address section
   Widget addressSection() =>
-      Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: tinyPeople.postalAddresses.length,
-          itemBuilder: (ctxt, index) =>
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Column(
-                    children: <Widget>[
-                      Text(tinyPeople.postalAddresses[index].label),
-                      Text(tinyPeople.postalAddresses[index].street),
-                      Text(
-                          tinyPeople.postalAddresses[index].postcode +
-                              " " +
-                              tinyPeople.postalAddresses[index].city),
-                      Text(tinyPeople.postalAddresses[index].region),
-                      Text(tinyPeople.postalAddresses[index].country),
-                    ]
-                ),),
+      Container(
+        child: Column(
+            children: getAddressWidgets(),
         ),
       );
 
@@ -148,12 +153,20 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
           children: <Widget>[
             imageAndNameSection(),
             Divider(),
-            mailSection(),
-            tinyPeople.emails.length > 0 ? Divider() : Container(),
-            phoneSection(),
-            tinyPeople.phones.length > 0 ? Divider() : Container(),
-            addressSection(),
-            tinyPeople.postalAddresses.length > 0 ? Divider() : Container(),
+            new Expanded(
+                child: new ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    mailSection(),
+                    tinyPeople.emails.length > 0 ? Divider() : Container(),
+                    phoneSection(),
+                    tinyPeople.phones.length > 0 ? Divider() : Container(),
+                    addressSection(),
+                    tinyPeople.postalAddresses.length > 0 ? Divider() : Container(),
+                  ],
+                )
+            )
+
           ],
         ),
         appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
