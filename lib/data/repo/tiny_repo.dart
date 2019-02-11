@@ -5,8 +5,9 @@ abstract class TinyRepo< T > {
   /// save item
   Future save( T item );
 
+  /// delete item
   Future delete( T item );
 
   /// get All items for given type, limit from offset to limit
-  Future<List<T>> getAll( String type, int offset, int limit );
+  Future<List<T>> getAll( int offset, int limit );
 }

@@ -32,7 +32,7 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            tinyLayoutRepo.getAll(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
+            tinyLayoutRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return Scaffold(

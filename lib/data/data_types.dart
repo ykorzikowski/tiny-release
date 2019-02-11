@@ -1,5 +1,6 @@
 /// Used to map list index to specific entry.
 class DataType {
+  static const String PEOPLE = "People";
   static const String MODEL = "Model";
   static const String PHOTOGRAPHER = "Photographer";
   static const String WITNESS = "Witness";

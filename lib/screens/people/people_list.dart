@@ -34,7 +34,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            contactRepository.getAll(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
+            contactRepository.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return Scaffold(

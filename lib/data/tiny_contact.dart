@@ -40,7 +40,7 @@ class TinyContact extends TinyDBO {
     avatar = m["avatar"];
   }
 
-  static Map _toMap(TinyContact contact) {
+  static Map toMap(TinyContact contact) {
     var emails = [];
     for (Item email in contact.emails ?? []) {
       emails.add(Item._toMap(email));

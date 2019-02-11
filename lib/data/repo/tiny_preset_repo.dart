@@ -25,7 +25,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
   }
 
   @override
-  Future<List<TinyPreset>> getAll( String type, int offset, int limit ) async {
+  Future<List<TinyPreset>> getAll( int offset, int limit ) async {
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, limit: limit, offset: offset);

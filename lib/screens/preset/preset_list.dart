@@ -32,7 +32,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            tinyPresetRepo.getAll(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
+            tinyPresetRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return Scaffold(

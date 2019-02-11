@@ -33,7 +33,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            receptionRepository.getAll(ControlHelper.getListTypeForPosition( _controlState.selectedControlItem ), pageIndex * PAGE_SIZE, PAGE_SIZE)
+            receptionRepository.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return Scaffold(

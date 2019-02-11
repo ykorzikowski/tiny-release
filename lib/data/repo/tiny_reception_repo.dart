@@ -27,7 +27,7 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
   }
 
   @override
-  Future<List<TinyReception>> getAll( String type, int offset, int limit ) async {
+  Future<List<TinyReception>> getAll( int offset, int limit ) async {
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, limit: limit, offset: offset);
