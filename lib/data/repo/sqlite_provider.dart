@@ -66,6 +66,8 @@ class SQLiteProvider {
           "familyName TEXT,"
           "company TEXT,"
           "jobTitle TEXT,"
+          "idType TEXT,"
+          "idNumber TEXT,"
           "position INTEGER"
           ")");
 

@@ -10,7 +10,9 @@ class TinyPeople extends TinyDBO {
       suffix,
       familyName,
       company,
-      jobTitle;
+      jobTitle,
+      idType,
+      idNumber;
   int type;
   List<TinyPeopleItem> emails = List();
   List<TinyPeopleItem> phones = List();
@@ -18,7 +20,7 @@ class TinyPeople extends TinyDBO {
   Uint8List avatar;
 
   TinyPeople({id, displayName, this.type, this.identifier, this.givenName, this.middleName, this.prefix,
-    this.suffix, this.familyName, this.company, this.jobTitle, this.emails, this.phones,
+    this.suffix, this.familyName, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
 
@@ -34,6 +36,8 @@ class TinyPeople extends TinyDBO {
     suffix = m["suffix"];
     company = m["company"];
     jobTitle = m["jobTitle"];
+    idType = m["idType"];
+    idNumber = m["idNumber"];
     emails = (m["emails"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
     phones = (m["phones"] as Iterable)?.map((m) => TinyPeopleItem.fromMap(m));
     postalAddresses = (m["postalAddresses"] as Iterable)
@@ -66,6 +70,8 @@ class TinyPeople extends TinyDBO {
       "suffix": contact.suffix,
       "company": contact.company,
       "jobTitle": contact.jobTitle,
+      "idNumber": contact.idNumber,
+      "idType": contact.idType,
       "emails": emails,
       "phones": phones,
       "postalAddresses": postalAddresses,
