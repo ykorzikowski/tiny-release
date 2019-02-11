@@ -64,6 +64,7 @@ class SQLiteProvider {
           "prefix TEXT,"
           "suffix TEXT,"
           "familyName TEXT,"
+          "birthday TEXT,"
           "company TEXT,"
           "jobTitle TEXT,"
           "idType TEXT,"

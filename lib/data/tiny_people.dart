@@ -9,6 +9,7 @@ class TinyPeople extends TinyDBO {
       prefix,
       suffix,
       familyName,
+      birthday,
       company,
       jobTitle,
       idType,
@@ -20,7 +21,7 @@ class TinyPeople extends TinyDBO {
   Uint8List avatar;
 
   TinyPeople({id, displayName, this.type, this.identifier, this.givenName, this.middleName, this.prefix,
-    this.suffix, this.familyName, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
+    this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
 
@@ -35,6 +36,7 @@ class TinyPeople extends TinyDBO {
     prefix = m["prefix"];
     suffix = m["suffix"];
     company = m["company"];
+    birthday = m["birthday"];
     jobTitle = m["jobTitle"];
     idType = m["idType"];
     idNumber = m["idNumber"];
@@ -66,6 +68,7 @@ class TinyPeople extends TinyDBO {
       "givenName": contact.givenName,
       "middleName": contact.middleName,
       "familyName": contact.familyName,
+      "birthday": contact.birthday,
       "prefix": contact.prefix,
       "suffix": contact.suffix,
       "company": contact.company,
