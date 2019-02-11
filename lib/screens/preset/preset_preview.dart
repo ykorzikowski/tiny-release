@@ -46,7 +46,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
     if ( curDBO.paragraphs == null) {
       return "NULL";
     }
-    return curDBO.paragraphs.first != null ? curDBO.paragraphs.first.displayName : "NULL";
+    return curDBO.paragraphs.first != null ? curDBO.paragraphs.first.title : "NULL";
   }
 
 }

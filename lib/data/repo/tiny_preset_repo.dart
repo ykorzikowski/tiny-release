@@ -17,7 +17,9 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
       return update( item );
     }
 
-    var presetId = await db.insert(TYPE, TinyPreset.toMap( item ) );
+    var map = TinyPreset.toMap( item );
+    map.remove('paragraphs');
+    var presetId = await db.insert(TYPE, map );
 
     for ( Paragraph p in item.paragraphs ) {
       p.presetId = presetId;
@@ -30,7 +32,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
 
     // remove paragraphs from map
     var map = TinyPreset.toMap(item);
-    map.remove('paragraphs');
+    map['paragraphs'] = null;
     db.update(TYPE, TinyPreset.toMap(item));
 
     for ( Paragraph p in item.paragraphs ) {
@@ -44,14 +46,14 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, limit: limit, offset: offset);
-    var list = res.isNotEmpty ? res.map((c) => TinyPreset.fromMap(c)) : List<TinyPreset>();
+    var list = res.isNotEmpty ? List.of( res.map((c) => TinyPreset.fromMap(c)) ) : List<TinyPreset>();
 
     for ( TinyPreset tp in list ) {
       var paragraphs = await paragraphRepo.getAllByPresetId(tp.id);
       tp.paragraphs = paragraphs;
     }
 
-    return List.of( list );
+    return list;
   }
 
   @override

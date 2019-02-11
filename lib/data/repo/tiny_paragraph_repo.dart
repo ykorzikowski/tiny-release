@@ -45,8 +45,8 @@ class ParagraphRepo extends TinyRepo< Paragraph >{
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, where: "presetId = ?", whereArgs: [presetId]);
-    List<Paragraph> list = res.isNotEmpty ? res.toList().map((c) => Paragraph.fromMap(c)) : List<Paragraph>();
-    return List<Paragraph>.of( list );
+    var list = res.isNotEmpty ? res.toList().map((c) => Paragraph.fromMap(c)) : List<Paragraph>();
+    return List.of( list );
   }
 
   Future deleteByPresetId(int presetId) async {

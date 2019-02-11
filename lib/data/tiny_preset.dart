@@ -13,9 +13,16 @@ class TinyPreset extends TinyDBO {
     subtitle = m["subtitle"];
     language = m["language"];
     description = m["description"];
+    paragraphs = (m["paragraphs"] as Iterable)
+        ?.map((m) => Paragraph.fromMap(m));
   }
 
   static Map<String, dynamic> toMap(TinyPreset tinyPreset) {
+    var paragraphs = List();
+    for (Paragraph p in tinyPreset.paragraphs ?? []) {
+      paragraphs.add(Paragraph.toMap(p));
+    }
+
     return {
       "id": tinyPreset.id,
       "displayName": tinyPreset.displayName,
@@ -23,6 +30,7 @@ class TinyPreset extends TinyDBO {
       "subtitle": tinyPreset.subtitle,
       "language": tinyPreset.language,
       "description": tinyPreset.description,
+      "paragraphs": tinyPreset.paragraphs
     };
   }
 
