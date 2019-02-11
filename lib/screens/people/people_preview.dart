@@ -48,6 +48,19 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
             ],
       );
 
+
+  /// get info widget
+  Widget infoWidget() =>
+      Column(
+        children: <Widget>[
+          tinyPeople.idType != null ? Text(tinyPeople.idType) : Container(),
+          tinyPeople.idNumber != null ? Text(tinyPeople.idNumber) : Container(),
+          tinyPeople.birthday != null ? Text("Geburtstag") : Container(),
+          tinyPeople.birthday != null ? Text(tinyPeople.birthday) : Container(),
+
+        ],
+      );
+
   /// get phone widgets
   List< Widget > getPhoneWidgets() =>
       tinyPeople.phones.map((phone) =>
@@ -152,6 +165,8 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
         body:  Column(
           children: <Widget>[
             imageAndNameSection(),
+            Divider(),
+            infoWidget(),
             Divider(),
             new Expanded(
                 child: new ListView(
