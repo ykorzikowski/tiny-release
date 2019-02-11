@@ -1,4 +1,4 @@
-class TinyDBO {
+abstract class TinyDBO {
 
   TinyDBO({this.id, this.displayName});
 

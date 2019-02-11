@@ -8,7 +8,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
   static const TYPE = DataType.PRESET;
 
   @override
-  void save( TinyPreset item ) async {
+  Future save( TinyPreset item ) async {
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
@@ -37,8 +37,17 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
   Future< TinyPreset > get(int id) async {
     final db = await SQLiteProvider.db.database;
 
-    var res =await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
+    var res = await db.query(TYPE, where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? TinyPreset.fromMap(res.first) : Null ;
+  }
+
+  @override
+  Future delete(TinyPreset item) async {
+      final db = await SQLiteProvider.db.database;
+
+      var res = await db.delete(TYPE, where: "id = ?", whereArgs: [item.id]);
+
+      return res;
   }
 
 }

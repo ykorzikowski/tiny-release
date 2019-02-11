@@ -9,7 +9,6 @@ class TinyContactRepo extends TinyRepo< TinyContact > {
   }
 
   List<TinyContact> getContactsSync( String type, int index ) {
-    return List();
     var contact = new TinyContact();
     contact.displayName = type + " Foo Bar";
 
@@ -23,7 +22,13 @@ class TinyContactRepo extends TinyRepo< TinyContact > {
   }
 
   @override
-  void save(TinyContact item) {
+  Future save(TinyContact item) {
     // TODO: implement save
+  }
+
+  @override
+  Future delete(TinyContact item) {
+    // TODO: implement delete
+    return null;
   }
 }

@@ -57,16 +57,26 @@ class _PresetListWidgetState extends State<PresetListWidget> {
   Widget _itemBuilder(context, entry, _) {
     return Column(
       children: <Widget>[
-        ListTile(
-          leading: Icon(
-            Icons.person,
-            color: Colors.brown[200],
-          ),
-          title: Text(entry.displayName),
-          onTap: () {
-            openDetailView( entry, context );
-          },
-        ),
+        Dismissible(
+            background: Container(color: Colors.red),
+            key: Key(entry.displayName),
+            onDismissed: (direction) {
+              tinyPresetRepo.delete(entry);
+
+              Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
+            },
+            child: ListTile(
+              leading: Icon(
+                Icons.person,
+                color: Colors.brown[200],
+              ),
+              title: Text(entry.displayName),
+              onTap: () {
+                openDetailView( entry, context );
+              },
+            ),),
         Divider()
       ],
     );

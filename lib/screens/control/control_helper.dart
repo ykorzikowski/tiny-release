@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/data_types.dart';
+import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
 import 'package:tiny_release/data/tiny_contact.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_layout.dart';
@@ -111,6 +112,7 @@ class ControlHelper {
         widget = PeopleEditWidget( controlScreenState );
         break;
       case 4:
+        //todo remove when edit window implemented
         TinyPreset tinyPreset = new TinyPreset();
 
         tinyPreset.description = "Test 123";
@@ -121,7 +123,11 @@ class ControlHelper {
         widget = PresetEditWidget( controlScreenState );
         break;
       case 5:
-        controlScreenState.curDBO = new TinyReception();
+        //todo remove when edit window implemented
+        var tinyReception = new TinyReception();
+        tinyReception.displayName = "tinyRec";
+
+        controlScreenState.curDBO = tinyReception;
         widget = ReceptionEditWidget( controlScreenState );
         break;
       case 6:

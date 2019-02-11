@@ -4,10 +4,11 @@ class TinyPreset extends TinyDBO {
   String title, subtitle, language, description;
   List< Paragraph > paragraphs;
 
-  TinyPreset( {this.title, this.subtitle, this.language, this.description, this.paragraphs} );
+  TinyPreset( {id, displayName, this.title, this.subtitle, this.language, this.description, this.paragraphs} ) : super(id: id, displayName: displayName);
 
   TinyPreset.fromMap(Map m) {
     id = m["id"];
+    displayName = m["displayName"];
     title = m["title"];
     subtitle = m["subtitle"];
     language = m["language"];
@@ -37,7 +38,7 @@ class Paragraph extends TinyDBO {
   String title, content;
   int position;
 
-  Paragraph({this.title, this.content, this.position});
+  Paragraph({id, this.title, this.content, this.position}) : super(id: id, displayName: "");
 
   Paragraph.fromMap(Map m) {
     title = m["title"];

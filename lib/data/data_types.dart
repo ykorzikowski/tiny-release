@@ -1,11 +1,11 @@
 /// Used to map list index to specific entry.
 class DataType {
-  static const String MODEL = "model";
-  static const String PHOTOGRAPHER = "photographer";
-  static const String WITNESS = "witness";
-  static const String PARENT = "parent";
+  static const String MODEL = "Model";
+  static const String PHOTOGRAPHER = "Photographer";
+  static const String WITNESS = "Witness";
+  static const String PARENT = "Parent";
   static const String PRESET = "Preset";
-  static const String RECEPTION = "reception_area";
-  static const String LAYOUT = "layout";
-  static const String WORDING = "wording";
+  static const String RECEPTION = "Reception_area";
+  static const String LAYOUT = "Layout";
+  static const String WORDING = "Wording";
 }

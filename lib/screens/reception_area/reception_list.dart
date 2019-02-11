@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
+import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -57,16 +58,26 @@ class _ListWidgetState extends State<ReceptionListWidget> {
   Widget _itemBuilder(context, entry, _) {
     return Column(
       children: <Widget>[
-        ListTile(
-          leading: Icon(
-            Icons.person,
-            color: Colors.brown[200],
-          ),
-          title: Text(entry.displayName),
-          onTap: () {
-            openDetailView( entry, context );
-          },
-        ),
+        Dismissible(
+            background: Container(color: Colors.red),
+            key: Key(entry.displayName),
+            onDismissed: (direction) {
+              receptionRepository.delete(entry);
+
+              Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
+            },
+            child: ListTile(
+              leading: Icon(
+                Icons.camera,
+                color: Colors.brown[200],
+              ),
+              title: Text(entry.displayName),
+              onTap: () {
+                openDetailView(entry, context);
+              },
+            )),
         Divider()
       ],
     );

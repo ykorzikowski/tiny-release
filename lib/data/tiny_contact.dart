@@ -72,8 +72,8 @@ class TinyContact extends TinyDBO {
   }
 }
 
-class Item {
-  Item({this.label, this.value});
+class Item extends TinyDBO {
+  Item({id, this.label, this.value}) : super(id: id, displayName: "");
 
   String label, value;
 
@@ -86,13 +86,13 @@ class Item {
 
 }
 
-class PostalAddress {
-  PostalAddress({this.label,
+class PostalAddress extends TinyDBO{
+  PostalAddress({id, this.label,
     this.street,
     this.city,
     this.postcode,
     this.region,
-    this.country});
+    this.country}) : super(id: id, displayName: "");
 
   String label, street, city, postcode, region, country;
 

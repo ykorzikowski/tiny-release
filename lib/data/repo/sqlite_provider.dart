@@ -22,16 +22,21 @@ class SQLiteProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "Tiny_Release.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {
+    return await openDatabase(path, version: 2, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
+
+      await db.execute("CREATE TABLE Reception_area ("
+          "id INTEGER PRIMARY KEY,"
+          "displayName TEXT"
+          ")");
 
       await db.execute("CREATE TABLE Preset ("
           "id INTEGER PRIMARY KEY,"
+          "displayName TEXT,"
           "title TEXT,"
           "subtitle TEXT,"
           "language TEXT,"
-          "description TEXT,"
-          "blocked BIT"
+          "description TEXT"
           ")");
 
       await db.execute("CREATE TABLE Paragraph ("
@@ -39,8 +44,7 @@ class SQLiteProvider {
           "title TEXT,"
           "content TEXT,"
           "position INTEGER,"
-          "preset_id INTEGER,"
-          "blocked BIT"
+          "preset_id INTEGER"
           ")");
     });
   }
