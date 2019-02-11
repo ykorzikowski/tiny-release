@@ -21,6 +21,7 @@ import 'package:tiny_release/screens/reception_area/reception_list.dart';
 import 'package:tiny_release/screens/wording/wording_settings.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 class ControlHelper {
 
@@ -88,6 +89,7 @@ class ControlHelper {
                     controlScreenState.curDBO = item;
 
                     Navigator.push(context, MaterialPageRoute(
+                        settings: new RouteSettings(name: NavRoutes.CONTROL_CONTACT_IMPORT, isInitialRoute: false),
                         builder: (context) {
                           return PeopleEditWidget(controlScreenState);
                         }
@@ -149,6 +151,7 @@ class ControlHelper {
 
     navigatorState.push(
       MaterialPageRoute(
+          settings: new RouteSettings(name: NavRoutes.CONTROL_EDIT, isInitialRoute: false),
           builder: (context) {
             return widget;
           }
@@ -172,7 +175,7 @@ class ControlHelper {
     TinyRepo repoForDataType = BaseUtil.getRepoForDataType(curDBO);
     repoForDataType.save(curDBO);
 
-    navigatorState.pop();
+    navigatorState.popUntil((route) => route.settings.name == NavRoutes.CONTROL_SUB_LIST);
     setToolbarButtonsBasedOnNavState( controlScreenState, navigatorState );
   }
 
@@ -232,6 +235,7 @@ class ControlHelper {
 
     navigatorState.push(
       MaterialPageRoute(
+          settings: new RouteSettings(name: NavRoutes.CONTROL_EDIT, isInitialRoute: false),
           builder: (context) {
             return widget;
           }
@@ -284,6 +288,7 @@ class ControlHelper {
 
     navigatorState.push(
       MaterialPageRoute(
+          settings: new RouteSettings(name: NavRoutes.CONTROL_SUB_LIST, isInitialRoute: true),
           builder: (context) {
             return widget;
           }

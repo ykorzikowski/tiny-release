@@ -66,7 +66,7 @@ class SQLiteProvider {
           "familyName TEXT,"
           "company TEXT,"
           "jobTitle TEXT,"
-          "position INTEGER,"
+          "position INTEGER"
           ")");
 
       /// Email & Phone

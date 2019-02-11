@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -27,7 +28,7 @@ class _ControlRightWidgetState extends State<ControlRightWidget> {
     return Navigator(
       key: navigatorKeyLargeScreen,
       onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (context) => ControlHelper.getListWidgetByControlItem(controlState) );
+        return MaterialPageRoute(settings: new RouteSettings(name: NavRoutes.CONTROL_SUB_LIST, isInitialRoute: true), builder: (context) => ControlHelper.getListWidgetByControlItem(controlState) );
       },
     );
   }
