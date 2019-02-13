@@ -2,8 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 
 typedef Null ItemSelectedCallback(int value);
@@ -11,7 +12,7 @@ typedef Null ItemSelectedCallback(int value);
 class PeopleListWidget extends StatefulWidget {
   static const int PAGE_SIZE = 10;
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   final Function _getPeople;
   final Function _onPeopleTap;
 
@@ -23,7 +24,7 @@ class PeopleListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<PeopleListWidget> {
   final TinyPeopleRepo contactRepository = new TinyPeopleRepo();
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   PagewiseLoadController pageLoadController;
 
   /// called by list to get people
@@ -50,16 +51,23 @@ class _ListWidgetState extends State<PeopleListWidget> {
             trailing:CupertinoButton(
               child: Text("Hinzufügen"),
               onPressed: () {
-                ControlHelper.handleAddButton( _controlState, Navigator.of(context) );
+                var _tinyPeople = TinyPeople();
+                _tinyPeople.type = this._controlState.selectedControlItem;
+                _tinyPeople.emails = List();
+                _tinyPeople.postalAddresses = List();
+                _tinyPeople.phones = List();
+                _controlState.curDBO = _tinyPeople;
+                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
               },
             ),),
-          child: Scaffold(
-            body: PagewiseListView(
-              padding: EdgeInsets.only(top: 80.0),
-              itemBuilder: this._itemBuilder,
-              pageLoadController: this.pageLoadController,
-            ),
-          ));
+        child: Scaffold(
+          body: PagewiseListView(
+            padding: EdgeInsets.only(top: 80.0),
+            itemBuilder: this._itemBuilder,
+            pageLoadController: this.pageLoadController,
+          ),
+        ),
+      );
   }
 
   Widget leadingElement(var entry) {
@@ -88,7 +96,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
             },
             child: ListTile(
               leading: leadingElement( entry ),
-              title: Text(entry.displayName),
+              title: Text(entry.givenName + " " + entry.familyName),
               onTap: () {
                 _onPeopleTap( entry, context );
               },

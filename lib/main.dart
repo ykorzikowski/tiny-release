@@ -3,19 +3,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final TinyState tinyState = new TinyState();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Code Sample for material.AppBar.actions',
-      routes: {
-        NavRoutes.CONTROL_LIST: (context) => MasterControlWidget()
-      },
+      routes: tinyState.routes,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

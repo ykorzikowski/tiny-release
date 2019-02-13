@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_layout_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -12,7 +13,7 @@ typedef Null ItemSelectedCallback(int value);
 
 class LayoutListWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   LayoutListWidget(this._controlState);
 
@@ -23,7 +24,7 @@ class LayoutListWidget extends StatefulWidget {
 class _LayoutListWidgetState extends State<LayoutListWidget> {
   static const int PAGE_SIZE = 10;
   final TinyLayoutRepo tinyLayoutRepo = new TinyLayoutRepo();
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   PagewiseLoadController pageLoadController;
 
   _LayoutListWidgetState(this._controlState);
@@ -44,7 +45,7 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
               icon: Icon(Icons.add),
               tooltip: 'Add new',
               onPressed: () {
-                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
+//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
               },
             )
           ],
@@ -74,15 +75,9 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
   }
 
   void openDetailView(item, context) {
-    _controlState.setToolbarButtonsOnPreview();
     _controlState.curDBO = item;
 
-    Navigator.push(context, CupertinoPageRoute(
-        builder: (context) {
-          return PeoplePreviewWidget( _controlState );
-        }
-    )
-    );
+    Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
     // todo
   }
 }

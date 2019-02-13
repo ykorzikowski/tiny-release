@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class WordingSettingsWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   WordingSettingsWidget(this._controlState);
 
@@ -17,7 +17,7 @@ class WordingSettingsWidget extends StatefulWidget {
 }
 
 class _WordingSettingsWidgetState extends State<WordingSettingsWidget> {
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   _WordingSettingsWidgetState(this._controlState);
 

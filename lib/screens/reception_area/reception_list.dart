@@ -2,19 +2,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
-import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/tiny_page_wrapper.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class ReceptionListWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   ReceptionListWidget(this._controlState);
 
@@ -25,7 +23,7 @@ class ReceptionListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ReceptionListWidget> {
   static const int PAGE_SIZE = 10;
   final TinyReceptionRepo receptionRepository = new TinyReceptionRepo();
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   PagewiseLoadController pageLoadController;
 
   _ListWidgetState(this._controlState);
@@ -46,7 +44,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
               icon: Icon(Icons.add),
               tooltip: 'Add new',
               onPressed: () {
-                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
+//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
               },
             )
           ],
@@ -86,19 +84,10 @@ class _ListWidgetState extends State<ReceptionListWidget> {
   }
 
   void openDetailView(item, context) {
-    _controlState.setToolbarButtonsOnPreview();
     _controlState.curDBO = item;
 
-    var myBuilder = (context) {
-    return PeoplePreviewWidget( _controlState );
-    };
+    Navigator.of(context).pushNamed(NavRoutes.RECEPTION_PREVIEW);
 
-    Navigator.push(context,
-        TinyPageWrapper(
-          builder: myBuilder,
-
-        )
-    );
     // todo
   }
 }

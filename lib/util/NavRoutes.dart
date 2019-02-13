@@ -1,12 +1,23 @@
 class NavRoutes {
   static const String ROOT = "/";
-  static const SPLIT = "/split";
   static const CONTROL_LIST = "control/list";
-  static const CONTROL_PEOPLE = "control/people";
-  static const CONTROL_PRESET = "control/preset";
-  static const CONTROL_CONTACT_IMPORT = "control/contactimport";
 
-  static const CONTROL_EDIT = "control/edit";
-  static const CONTROL_PREVIEW = "control/preview";
-  static const CONTROL_SUB_LIST = "control/sublist";
+  static const PEOPLE_LIST = "people/list";
+  static const PEOPLE_PREVIEW = "people/preview";
+  static const PEOPLE_EDIT = "people/edit";
+  static const PEOPLE_IMPORT = "people/import";
+
+  static const LAYOUT_LIST = "layout/list";
+  static const LAYOUT_PREVIEW = "layout/preview";
+  static const LAYOUT_EDIT = "layout/edit";
+
+  static const PRESET_LIST = "preview/list";
+  static const PRESET_PREVIEW = "preview/preview";
+  static const PRESET_EDIT = "preview/edit";
+
+  static const RECEPTION_LIST = "reception/list";
+  static const RECEPTION_PREVIEW = "reception/preview";
+  static const RECEPTION_EDIT = "reception/edit";
+
+  static const WORDING = "wording";
 }

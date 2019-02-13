@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class LayoutPreviewWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   LayoutPreviewWidget(this._controlState);
 
@@ -17,7 +17,7 @@ class LayoutPreviewWidget extends StatefulWidget {
 }
 
 class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   _LayoutPreviewWidgetState(this._controlState);
 
@@ -32,8 +32,8 @@ class _LayoutPreviewWidgetState extends State<LayoutPreviewWidget> {
             icon: Icon(Icons.edit),
             tooltip: 'Edit',
             onPressed: () {
-              ControlHelper.handleEditButton( _controlState, Navigator.of(context) );
-            },
+              Navigator.of(context).pushNamed(NavRoutes.LAYOUT_EDIT);
+              },
           ),
         ],
       ) : null,

@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class PresetEditWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   PresetEditWidget( this._controlState );
 
@@ -17,7 +17,7 @@ class PresetEditWidget extends StatefulWidget {
 }
 
 class _PresetEditWidgetState extends State<PresetEditWidget> {
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   _PresetEditWidgetState(this._controlState);
 
@@ -31,7 +31,6 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
               icon: Icon(Icons.save_alt),
               tooltip: 'Save',
               onPressed: () {
-                _controlState.setToolbarButtonsOnEdit();
                 ControlHelper.handleSaveButton( _controlState, Navigator.of(context) );
               },
             ),

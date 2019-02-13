@@ -1,16 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class PeopleEditWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   PeopleEditWidget(this._controlState);
 
@@ -19,7 +20,7 @@ class PeopleEditWidget extends StatefulWidget {
 }
 
 class _PeopleEditWidgetState extends State<PeopleEditWidget> {
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   TinyPeople _tinyPeople;
 
   _PeopleEditWidgetState(this._controlState) {
@@ -329,6 +330,13 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         ),
       );
 
+  bool validContact() {
+    return
+      _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty &&
+          _tinyPeople.givenName != null && _tinyPeople.givenName.isNotEmpty &&
+            _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -336,10 +344,16 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         middle: Text("People hinzufügen"),
         trailing: CupertinoButton(
           child: Text("Speichern"),
-          onPressed: () {
-            ControlHelper.handleSaveButton(
-                _controlState, Navigator.of(context));
-          },),),
+          onPressed: validContact() ? () {
+            if (!validContact()) {
+              return;
+            }
+            new TinyPeopleRepo().save(_tinyPeople);
+            Navigator.of(context).popUntil((route) =>
+            !Navigator.of(context)
+                .canPop());
+            Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
+          } : null,),),
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -380,7 +394,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                     CupertinoButton(
                       child: Text("Aus Kontakten importieren"),
                       onPressed: (){
-                        ControlHelper.initContactImport( _controlState, Navigator.of(context) );
+                        Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
                       },
                     )
                   ],

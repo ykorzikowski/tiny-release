@@ -2,15 +2,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
 class PeoplePreviewWidget extends StatefulWidget {
 
-  final ControlScreenState peopleTypeState;
+  final TinyState peopleTypeState;
 
   PeoplePreviewWidget(this.peopleTypeState);
 
@@ -19,7 +18,7 @@ class PeoplePreviewWidget extends StatefulWidget {
 }
 
 class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
-  final ControlScreenState peopleTypeState;
+  final TinyState peopleTypeState;
   TinyPeople tinyPeople;
 
   _PeoplePreviewWidgetState(this.peopleTypeState) {
@@ -39,7 +38,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                   radius: 32.0,
                 ),
               ),
-              Text(tinyPeople.displayName,
+              Text(tinyPeople.givenName + " " + tinyPeople.familyName,
                 style: new TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
@@ -58,7 +57,6 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
           tinyPeople.idNumber != null ? Text(tinyPeople.idNumber) : Container(),
           tinyPeople.birthday != null ? Text("Geburtstag") : Container(),
           tinyPeople.birthday != null ? Text(tinyPeople.birthday) : Container(),
-
         ],
       );
 
@@ -168,38 +166,36 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
           border: null,
         trailing: CupertinoButton(
           child: Text("Bearbeiten"),
-          onPressed: () {
-            peopleTypeState.setToolbarButtonsOnEdit();
-            ControlHelper.handleEditButton(
-                peopleTypeState, Navigator.of(context));
-          },
+          onPressed: () => Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT),
         ),),
       child:
-      Padding(
-        padding: EdgeInsets.only(top: 30.0),
-        child: Column(
-          children: <Widget>[
-            imageAndNameSection(),
-            Divider(),
-            infoWidget(),
-            Divider(),
-            new Expanded(
-                child: new ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    mailSection(),
-                    tinyPeople.emails.length > 0 ? Divider() : Container(),
-                    phoneSection(),
-                    tinyPeople.phones.length > 0 ? Divider() : Container(),
-                    addressSection(),
-                    tinyPeople.postalAddresses.length > 0
-                        ? Divider()
-                        : Container(),
-                  ],
-                )
-            )
-          ],
-        ),),
+      Scaffold(
+        body: Padding(
+          padding: EdgeInsets.only(top: 30.0),
+          child: Column(
+            children: <Widget>[
+              imageAndNameSection(),
+              Divider(),
+              infoWidget(),
+              Divider(),
+              new Expanded(
+                  child: new ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      mailSection(),
+                      tinyPeople.emails.length > 0 ? Divider() : Container(),
+                      phoneSection(),
+                      tinyPeople.phones.length > 0 ? Divider() : Container(),
+                      addressSection(),
+                      tinyPeople.postalAddresses.length > 0
+                          ? Divider()
+                          : Container(),
+                    ],
+                  )
+              )
+            ],
+          ),),
+      ),
     );
   }
 

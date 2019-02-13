@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/control/control_right.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/screens/control/control_left_list.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 
@@ -13,17 +13,12 @@ class MasterControlWidget extends StatefulWidget {
 
 class _MasterControlState extends State<MasterControlWidget> {
   var _isLargeScreen = false;
-  var _showEditButton = false;
-  var _showNavBackButton = false;
-  var _showAddButton = true;
-  var _showSaveButton = false;
-  var _showContactImportButton = false;
 
   final GlobalKey<NavigatorState> _navigatorKeyLargeScreen = new GlobalKey<NavigatorState>();
-  ControlScreenState controlState;
+  TinyState controlState;
 
   _MasterControlState() {
-    controlState = new ControlScreenState( _setShowNavBackButton, _setShowAddButton, _setShowEditButton, _setShowSaveButton, _setShowContactImportButton );
+    controlState = new TinyState( );
   }
 
   @override
@@ -49,43 +44,8 @@ class _MasterControlState extends State<MasterControlWidget> {
     ), );
   }
 
-  bool selectedControlNotWording() {
-    return controlState.selectedControlItem < 7;
-  }
-
-  void _setShowAddButton( bool val ) {
-    setState(() {
-      _showAddButton = val;
-    });
-  }
-
-  void _setShowNavBackButton( bool val ) {
-    setState(() {
-      _showNavBackButton = val;
-    });
-  }
-
-  void _setShowEditButton( bool val ) {
-    setState(() {
-      _showEditButton = val;
-    });
-  }
-
-  void _setShowSaveButton( bool val ) {
-    setState(() {
-      _showSaveButton = val;
-    });
-  }
-
-  void _setShowContactImportButton( bool val ) {
-    setState(() {
-      _showContactImportButton = val;
-    });
-  }
-
   void handleRightNavigationBackButton(context) {
     _navigatorKeyLargeScreen.currentState.pop();
-    ControlHelper.setToolbarButtonsBasedOnNavState(controlState, _navigatorKeyLargeScreen.currentState);
   }
 
   /// called when the control item on the left side of the display is selected
@@ -94,14 +54,13 @@ class _MasterControlState extends State<MasterControlWidget> {
     _navigatorKeyLargeScreen.currentState.popUntil( (route) {
       return route.isFirst;
     });
-    setState(() {
-      controlState.selectedControlItem = position;
-    });
+    controlState.selectedControlItem = position;
+    _navigatorKeyLargeScreen.currentState.pushNamed(ControlHelper.getControlRouteByIndex(position));
   }
 
   void smallScreenTransition(int position) {
     controlState.selectedControlItem = position;
-    ControlHelper.handleControlListTap(controlState, context);
+    Navigator.of(context).pushNamed(ControlHelper.getControlRouteByIndex(position));
   }
 
 }

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
-import 'package:tiny_release/util/ControlState.dart';
+import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -13,7 +14,7 @@ typedef Null ItemSelectedCallback(int value);
 
 class PresetListWidget extends StatefulWidget {
 
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
 
   PresetListWidget(this._controlState);
 
@@ -24,7 +25,7 @@ class PresetListWidget extends StatefulWidget {
 class _PresetListWidgetState extends State<PresetListWidget> {
   static const int PAGE_SIZE = 10;
   final TinyPresetRepo tinyPresetRepo = new TinyPresetRepo();
-  final ControlScreenState _controlState;
+  final TinyState _controlState;
   PagewiseLoadController pageLoadController;
 
   _PresetListWidgetState(this._controlState);
@@ -45,7 +46,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
               icon: Icon(Icons.add),
               tooltip: 'Add new',
               onPressed: () {
-                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
+//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
               },
             )
           ],
@@ -85,15 +86,10 @@ class _PresetListWidgetState extends State<PresetListWidget> {
   }
 
   void openDetailView(item, context) {
-    _controlState.setToolbarButtonsOnPreview();
     _controlState.curDBO = item;
 
-    Navigator.push(context, CupertinoPageRoute(
-        builder: (context) {
-          return PresetPreviewWidget( _controlState );
-        }
-    )
-    );
+    Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
+
     // todo
   }
 }
