@@ -1,10 +1,10 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -43,60 +43,58 @@ class _ListWidgetState extends State<PeopleListWidget> {
             _getPeople(pageIndex)
     );
 
-    return Scaffold(
-        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text(ControlHelper.getListTypeForPosition(_controlState.selectedControlItem)),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              tooltip: 'Add new',
+    return
+      CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: Text("People"),
+            trailing:CupertinoButton(
+              child: Text("Hinzufügen"),
               onPressed: () {
-                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
+                ControlHelper.handleAddButton( _controlState, Navigator.of(context) );
               },
-            )
-          ],
-        ): null,
-        body: PagewiseListView(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
-          itemBuilder: this._itemBuilder,
-          pageLoadController: this.pageLoadController,
-    ) );
+            ),),
+          child: Scaffold(
+            body: PagewiseListView(
+              padding: EdgeInsets.only(top: 80.0),
+              itemBuilder: this._itemBuilder,
+              pageLoadController: this.pageLoadController,
+            ),
+          ));
   }
 
   Widget leadingElement(var entry) {
     return CircleAvatar(
       child: entry.avatar == null ? Icon(
-        Icons.person,
-        color: Colors.brown[200],
+        CupertinoIcons.person,
       ) : null,
       backgroundImage: entry.avatar != null ? new MemoryImage(entry.avatar) : null,
-      backgroundColor: Colors.lightGreen,
+//      backgroundColor: Colors.lightGreen,
       radius: 32.0,
     );
   }
 
   Widget _itemBuilder(context, entry, _) {
     return Column(
-      children: <Widget>[
-        Dismissible(
-          background: Container(color: Colors.red),
-          key: Key(entry.displayName),
-          onDismissed: (direction) {
-            contactRepository.delete(entry);
+        children: <Widget>[
+          Dismissible(
+            background: Container(color: Colors.red),
+            key: Key(entry.displayName),
+            onDismissed: (direction) {
+              contactRepository.delete(entry);
 
-            Scaffold
-                .of(context)
-                .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
-          },
-          child:  ListTile(
-            leading: leadingElement( entry ),
-            title: Text(entry.displayName),
-            onTap: () {
-              _onPeopleTap( entry, context );
+              Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
             },
-          ),),
-        Divider()
-      ],
+            child: ListTile(
+              leading: leadingElement( entry ),
+              title: Text(entry.displayName),
+              onTap: () {
+                _onPeopleTap( entry, context );
+              },
+            ),),
+          Divider()
+        ],
     );
   }
 }

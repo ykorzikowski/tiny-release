@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
@@ -87,7 +88,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
     _controlState.setToolbarButtonsOnPreview();
     _controlState.curDBO = item;
 
-    Navigator.push(context, MaterialPageRoute(
+    Navigator.push(context, CupertinoPageRoute(
         builder: (context) {
           return PresetPreviewWidget( _controlState );
         }

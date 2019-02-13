@@ -22,6 +22,7 @@ import 'package:tiny_release/screens/wording/wording_settings.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/ControlState.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/tiny_page_wrapper.dart';
 
 class ControlHelper {
 
@@ -70,38 +71,41 @@ class ControlHelper {
   static Future initContactImport( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) async {
     controlScreenState.setToolbarButtonsOnImport();
     navigatorState.push(
-       MaterialPageRoute(
+      TinyPageWrapper(
+          transitionDuration: getScreenSizeBasedDuration(navigatorState.context),
           builder: (context) {
             return PeopleListWidget( controlScreenState,
-                  (pageIndex) async {
-                    Iterable<Contact> contacts = await ContactsService.getContacts();
+                    (pageIndex) async {
+                      Iterable<Contact> contacts = await ContactsService.getContacts();
 
-                    var start = pageIndex * PeopleListWidget.PAGE_SIZE;
-                    var end = (pageIndex+1) * PeopleListWidget.PAGE_SIZE;
+                      var start = pageIndex * PeopleListWidget.PAGE_SIZE;
+                      var end = (pageIndex+1) * PeopleListWidget.PAGE_SIZE;
 
-                    if (contacts.length < end) {
-                      end = contacts.length;
+                      if (contacts.length < end) {
+                        end = contacts.length;
+                      }
+
+                      var data = contacts.toList();
+                      data.sort((a, b) => a.familyName.toLowerCase().compareTo(b.familyName.toLowerCase()));
+
+                      return data.sublist(start, end).map((value) => mapContactToPeople(value) ).toList();
+                },
+                    (item, context) {
+                      controlScreenState.setToolbarButtonsOnEdit();
+                      // keep type id of dbo created before import
+                      TinyPeople beforeImportDBO = controlScreenState.curDBO;
+                      item.type = beforeImportDBO.type;
+                      controlScreenState.curDBO = item;
+
+                      Navigator.push(context, TinyPageWrapper(
+                          title: "Kontakt importieren",
+                          transitionDuration: getScreenSizeBasedDuration(context),
+                          settings: new RouteSettings(name: NavRoutes.CONTROL_CONTACT_IMPORT, isInitialRoute: false),
+                          builder: (context) {
+                            return PeopleEditWidget(controlScreenState);
+                          }
+                      ) );
                     }
-
-                    var data = contacts.toList();
-                    data.sort((a, b) => a.familyName.toLowerCase().compareTo(b.familyName.toLowerCase()));
-
-                    return data.sublist(start, end).map((value) => mapContactToPeople(value) ).toList();
-              },
-                  (item, context) {
-                    controlScreenState.setToolbarButtonsOnEdit();
-                    // keep type id of dbo created before import
-                    TinyPeople beforeImportDBO = controlScreenState.curDBO;
-                    item.type = beforeImportDBO.type;
-                    controlScreenState.curDBO = item;
-
-                    Navigator.push(context, MaterialPageRoute(
-                        settings: new RouteSettings(name: NavRoutes.CONTROL_CONTACT_IMPORT, isInitialRoute: false),
-                        builder: (context) {
-                          return PeopleEditWidget(controlScreenState);
-                        }
-                    ) );
-                  }
             );
           }
       ),
@@ -151,7 +155,8 @@ class ControlHelper {
     }
 
     navigatorState.push(
-      MaterialPageRoute(
+      TinyPageWrapper(
+          transitionDuration: getScreenSizeBasedDuration(navigatorState.context),
           settings: new RouteSettings(name: NavRoutes.CONTROL_EDIT, isInitialRoute: false),
           builder: (context) {
             return widget;
@@ -176,8 +181,8 @@ class ControlHelper {
     TinyRepo repoForDataType = BaseUtil.getRepoForDataType(curDBO);
     repoForDataType.save(curDBO);
 
+    navigatorState.pop();
     navigatorState.popUntil((route) => route.settings.name == NavRoutes.CONTROL_SUB_LIST);
-    setToolbarButtonsBasedOnNavState( controlScreenState, navigatorState );
   }
 
   static void handleAddButton( final ControlScreenState controlScreenState, final NavigatorState navigatorState ) {
@@ -228,7 +233,9 @@ class ControlHelper {
     }
 
     navigatorState.push(
-      MaterialPageRoute(
+      TinyPageWrapper(
+          title: "Neu",
+          transitionDuration: getScreenSizeBasedDuration(navigatorState.context),
           settings: new RouteSettings(name: NavRoutes.CONTROL_EDIT, isInitialRoute: false),
           builder: (context) {
             return widget;
@@ -253,11 +260,15 @@ class ControlHelper {
                     controlScreenState.setToolbarButtonsOnPreview();
                     controlScreenState.curDBO = item;
 
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return PeoplePreviewWidget(controlScreenState);
-                      }
-                    ) );
+                    Navigator.push(context,
+                      TinyPageWrapper(
+                        transitionDuration: getScreenSizeBasedDuration(context),
+                        builder: (context) =>
+                            PeoplePreviewWidget(controlScreenState),
+                        title: "Kontakt",
+//                        opaque: false,
+                      ),
+                    );
         },
 
       );
@@ -273,17 +284,19 @@ class ControlHelper {
     return null;
   }
 
-  static void handleControlListTap(final ControlScreenState controlScreenState, final NavigatorState navigatorState) {
-    Widget widget = getListWidgetByControlItem( controlScreenState );
-    controlScreenState.setToolbarButtonsOnList();
-
-    navigatorState.push(
-      MaterialPageRoute(
-          settings: new RouteSettings(name: NavRoutes.CONTROL_SUB_LIST, isInitialRoute: true),
+  static void handleControlListTap(final ControlScreenState controlScreenState, final BuildContext context) {
+    Widget widget = getListWidgetByControlItem(controlScreenState);
+    Navigator.push(context,
+      TinyPageWrapper(
+          settings: new RouteSettings(name: NavRoutes.CONTROL_SUB_LIST, isInitialRoute: false),
+          transitionDuration: getScreenSizeBasedDuration(context),
           builder: (context) {
             return widget;
           }
       ),
     );
   }
+
+  static Duration getScreenSizeBasedDuration(context) => BaseUtil.isLargeScreen(context) ? Duration.zero : Duration(milliseconds: 325);
+
 }

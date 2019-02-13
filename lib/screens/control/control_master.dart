@@ -13,8 +13,8 @@ class MasterControlWidget extends StatefulWidget {
 
 class _MasterControlState extends State<MasterControlWidget> {
   var _isLargeScreen = false;
-  var _showNavBackButton = false;
   var _showEditButton = false;
+  var _showNavBackButton = false;
   var _showAddButton = true;
   var _showSaveButton = false;
   var _showContactImportButton = false;
@@ -28,47 +28,10 @@ class _MasterControlState extends State<MasterControlWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Verwaltung"),
-        actions: <Widget>[
-          _showNavBackButton && _isLargeScreen ? IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            tooltip: 'Back',
-            onPressed: () {
-              handleRightNavigationBackButton(context);
-            },
-          ) : Container(),
-          selectedControlNotWording() && _showAddButton ? IconButton(
-            icon: Icon(Icons.add),
-            tooltip: 'Add new',
-            onPressed: () {
-              ControlHelper.handleAddButton( controlState, _navigatorKeyLargeScreen.currentState );
-            },
-          ) : Container(),
-          _showEditButton && _isLargeScreen ? IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: 'Edit',
-            onPressed: () {
-              controlState.setToolbarButtonsOnEdit();
-              ControlHelper.handleEditButton( controlState, _navigatorKeyLargeScreen.currentState );
-            },
-          ) : Container(),
-          _showSaveButton && _isLargeScreen ? IconButton(
-            icon: Icon(Icons.save_alt),
-            tooltip: 'Save',
-            onPressed: () {
-              controlState.setToolbarButtonsOnList();
-              ControlHelper.handleSaveButton( controlState, _navigatorKeyLargeScreen.currentState );
-            },
-          ) : Container(),
-          _showContactImportButton && _isLargeScreen ? IconButton(
-            icon: Icon(Icons.contacts),
-            tooltip: 'Import',
-            onPressed: () => ControlHelper.initContactImport( controlState, _navigatorKeyLargeScreen.currentState ),
-          ) : Container(),
-        ],
-      ),
+    return
+      CupertinoPageScaffold(
+        child:
+      Scaffold(
       body: OrientationBuilder(builder: (context, orientation) {
         _isLargeScreen = BaseUtil.isLargeScreen(context);
 
@@ -83,7 +46,7 @@ class _MasterControlState extends State<MasterControlWidget> {
           ) : Container(),
         ]);
       }),
-    );
+    ), );
   }
 
   bool selectedControlNotWording() {
@@ -132,14 +95,13 @@ class _MasterControlState extends State<MasterControlWidget> {
       return route.isFirst;
     });
     setState(() {
-      controlState.setToolbarButtonsOnList();
       controlState.selectedControlItem = position;
     });
   }
 
   void smallScreenTransition(int position) {
     controlState.selectedControlItem = position;
-    ControlHelper.handleControlListTap(controlState, Navigator.of(context));
+    ControlHelper.handleControlListTap(controlState, context);
   }
 
 }

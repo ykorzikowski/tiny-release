@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
@@ -161,8 +162,22 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body:  Column(
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: Colors.transparent,
+          border: null,
+        trailing: CupertinoButton(
+          child: Text("Bearbeiten"),
+          onPressed: () {
+            peopleTypeState.setToolbarButtonsOnEdit();
+            ControlHelper.handleEditButton(
+                peopleTypeState, Navigator.of(context));
+          },
+        ),),
+      child:
+      Padding(
+        padding: EdgeInsets.only(top: 30.0),
+        child: Column(
           children: <Widget>[
             imageAndNameSection(),
             Divider(),
@@ -177,25 +192,14 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                     phoneSection(),
                     tinyPeople.phones.length > 0 ? Divider() : Container(),
                     addressSection(),
-                    tinyPeople.postalAddresses.length > 0 ? Divider() : Container(),
+                    tinyPeople.postalAddresses.length > 0
+                        ? Divider()
+                        : Container(),
                   ],
                 )
             )
-
           ],
-        ),
-        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Preview"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.edit),
-              tooltip: 'Edit',
-              onPressed: () {
-                ControlHelper.handleEditButton( peopleTypeState, Navigator.of(context) );
-              },
-            ),
-          ],
-        ) : null,
+        ),),
     );
   }
 

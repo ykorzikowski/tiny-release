@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
@@ -330,67 +331,65 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:  Column(
-        children: <Widget>[
-          new Expanded(
-              child: new ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  imageAndNameSection(),
-                  Divider(),
-                  infoWidget(),
-                  Divider(),
-                  mailSection(),
-                  FlatButton.icon(
-                    icon: Icon(Icons.add),
-                    label: Text("Add Mail"),
-                    onPressed: () =>
-                        setState(() { _tinyPeople.emails.add(TinyPeopleItem()); })
-                  ),
-                  Divider(),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text("People hinzufügen"),
+        trailing: CupertinoButton(
+          child: Text("Speichern"),
+          onPressed: () {
+            ControlHelper.handleSaveButton(
+                _controlState, Navigator.of(context));
+          },),),
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            new Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    imageAndNameSection(),
+                    Divider(),
+                    infoWidget(),
+                    Divider(),
+                    mailSection(),
+                    FlatButton.icon(
+                      icon: Icon(Icons.add),
+                      label: Text("Add Mail"),
+                      onPressed: () =>
+                          setState(() { _tinyPeople.emails.add(TinyPeopleItem()); })
+                    ),
+                    Divider(),
 
-                  phoneSection(),
-                  FlatButton.icon(
-                    icon: Icon(Icons.add),
-                    label: Text("Add Phone"),
-                    onPressed: () =>
-                        setState(() { _tinyPeople.phones.add(TinyPeopleItem()); })
-                  ),
-                  Divider(),
+                    phoneSection(),
+                    FlatButton.icon(
+                      icon: Icon(Icons.add),
+                      label: Text("Add Phone"),
+                      onPressed: () =>
+                          setState(() { _tinyPeople.phones.add(TinyPeopleItem()); })
+                    ),
+                    Divider(),
 
-                  addressSection(),
-                  FlatButton.icon(
-                    icon: Icon(Icons.add),
-                    label: Text("Add Address"),
-                    onPressed: () =>
-                        setState(() { _tinyPeople.postalAddresses.add(TinyAddress()); })
-                  ),
-                  Divider(),
-                ],
-              )
-          )
+                    addressSection(),
+                    FlatButton.icon(
+                      icon: Icon(Icons.add),
+                      label: Text("Add Address"),
+                      onPressed: () =>
+                          setState(() { _tinyPeople.postalAddresses.add(TinyAddress()); })
+                    ),
+                    Divider(),
+                    CupertinoButton(
+                      child: Text("Aus Kontakten importieren"),
+                      onPressed: (){
+                        ControlHelper.initContactImport( _controlState, Navigator.of(context) );
+                      },
+                    )
+                  ],
+                )
+            )
 
-        ],
+          ],
+        ),
       ),
-      appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-        title: Text("Edit"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save_alt),
-            tooltip: 'Save',
-            onPressed: () {
-              _controlState.curDBO = _tinyPeople;
-              ControlHelper.handleSaveButton(_controlState, Navigator.of(context));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.contacts),
-            tooltip: 'Import',
-            onPressed: () => ControlHelper.initContactImport( _controlState, Navigator.of(context) ),
-          ),
-        ],
-      ) : null,
     );
   }
 }
