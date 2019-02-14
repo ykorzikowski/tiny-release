@@ -29,22 +29,26 @@ class _MasterControlState extends State<MasterControlWidget> {
     return
       CupertinoPageScaffold(
         child:
-      Scaffold(
-      body: OrientationBuilder(builder: (context, orientation) {
-        _isLargeScreen = BaseUtil.isLargeScreen(context);
+        Scaffold(
+          body: OrientationBuilder(builder: (context, orientation) {
+            _isLargeScreen = BaseUtil.isLargeScreen(context);
 
-        return Row(children: <Widget>[
-          Expanded(
-            child: ControlLeftListWidget((position) {
-              _isLargeScreen ? largeScreenTransition( position ) : smallScreenTransition( position );
-            }, _controlState),
-          ),
-          _isLargeScreen ? Expanded(
-              child: ControlRightWidget(_controlState, _navigatorKeyLargeScreen)
-          ) : Container(),
-        ]);
-      }),
-    ), );
+            return Row(children: <Widget>[
+              Expanded(
+                child: ControlLeftListWidget((position) {
+                  _isLargeScreen
+                      ? largeScreenTransition(position)
+                      : smallScreenTransition(position);
+                }, _controlState),
+              ),
+              _isLargeScreen ? Expanded(
+                  flex: 2,
+                  child: ControlRightWidget(
+                      _controlState, _navigatorKeyLargeScreen)
+              ) : Container(),
+            ]);
+          }),
+        ),);
   }
 
   void handleRightNavigationBackButton(context) {
