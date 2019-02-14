@@ -31,23 +31,25 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  backgroundImage: tinyPeople.avatar == null
-                      ? null
-                      : new MemoryImage(tinyPeople.avatar),
-                  backgroundColor: Colors.lightGreen,
+                  backgroundColor: Colors.lightBlue,
+                  child: tinyPeople.avatar == null ? Text(
+                    tinyPeople.givenName.substring(0, 1) + tinyPeople.familyName.substring(0, 1),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ) : null,
+                  backgroundImage: tinyPeople.avatar != null ? new MemoryImage(tinyPeople.avatar) : null,
                   radius: 32.0,
                 ),
               ),
-              Text(tinyPeople.givenName + " " + tinyPeople.familyName,
-                style: new TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22.0,
-                ),),
-              tinyPeople.company != null ? Text(tinyPeople.company) : Container(),
             ],
       );
 
+  bool shouldPrintInfoDivider() {
+    return tinyPeople.idType != null ||
+        tinyPeople.idNumber != null ||
+        tinyPeople.birthday != null;
+  }
 
   /// get info widget
   Widget infoWidget() =>
@@ -162,39 +164,58 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: Colors.transparent,
-          border: null,
+        border: null,
         trailing: CupertinoButton(
           child: Text("Bearbeiten"),
-          onPressed: () => Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT),
         ),),
       child:
       Scaffold(
-        body: Padding(
-          padding: EdgeInsets.only(top: 30.0),
-          child: Column(
-            children: <Widget>[
-              imageAndNameSection(),
-              Divider(),
-              infoWidget(),
-              Divider(),
-              new Expanded(
-                  child: new ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      mailSection(),
-                      tinyPeople.emails.length > 0 ? Divider() : Container(),
-                      phoneSection(),
-                      tinyPeople.phones.length > 0 ? Divider() : Container(),
-                      addressSection(),
-                      tinyPeople.postalAddresses.length > 0
-                          ? Divider()
-                          : Container(),
-                    ],
-                  )
-              )
-            ],
-          ),),
+        body: SafeArea(
+          child: CustomScrollView(slivers: [
+            SliverAppBar(
+              flexibleSpace:
+              LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return FlexibleSpaceBar(
+                      background: imageAndNameSection(),
+                      title: Text(tinyPeople.displayName, style: TextStyle(
+                        color: CupertinoColors.black,
+                      ),),
+                    );
+                  }),
+              expandedHeight: 125,
+              leading: Container(),
+              backgroundColor: CupertinoColors.white,
+              primary: false,
+              snap: false,
+              floating: false,
+              pinned: true,
+            ),
+            SliverList(delegate:
+            SliverChildListDelegate([
+              Column(
+                children: <Widget>[
+                  Divider(),
+                  tinyPeople.company != null ? Text(tinyPeople.company) : Container(),
+                  infoWidget(),
+                  shouldPrintInfoDivider() ? Divider() : Container(),
+                  mailSection(),
+                  tinyPeople.emails.length > 0 ? Divider() : Container(),
+                  phoneSection(),
+                  tinyPeople.phones.length > 0 ? Divider() : Container(),
+                  addressSection(),
+                  tinyPeople.postalAddresses.length > 0
+                      ? Divider()
+                      : Container(),
+                ],
+              ),
+            ]),
+            )
+          ]),
+        ),
+
       ),
     );
   }

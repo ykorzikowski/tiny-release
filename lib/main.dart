@@ -19,13 +19,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyStatelessWidget(),
+      home: MyStatelessWidget(tinyState),
     );
   }
 }
 
 class MyStatelessWidget extends StatelessWidget {
-  MyStatelessWidget({Key key}) : super(key: key);
+  TinyState tinyState = new TinyState();
+
+  MyStatelessWidget(this.tinyState, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,9 @@ class MyStatelessWidget extends StatelessWidget {
 
                 switch(index) {
                   case 0:
-                    return new MasterControlWidget();
+                    return new MasterControlWidget(tinyState);
                   case 1:
-                    return new MasterControlWidget();
+                    return new MasterControlWidget(tinyState);
                 }
               },
         );

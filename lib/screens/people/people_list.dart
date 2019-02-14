@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -47,6 +48,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     return
       CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
+            leading: BaseUtil.isLargeScreen(context) ? Container() : null,
             middle: Text("People"),
             trailing:CupertinoButton(
               child: Text("Hinzufügen"),
@@ -60,23 +62,33 @@ class _ListWidgetState extends State<PeopleListWidget> {
                 Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
               },
             ),),
-        child: Scaffold(
+    child: SafeArea(  child: Scaffold(
           body: PagewiseListView(
-            padding: EdgeInsets.only(top: 80.0),
+            padding: EdgeInsets.only(top: 10.0),
             itemBuilder: this._itemBuilder,
             pageLoadController: this.pageLoadController,
           ),
-        ),
+        ),),
       );
   }
 
-  Widget leadingElement(var entry) {
+  String getCircleText(TinyPeople entry) {
+    var result = "";
+    entry.givenName.isNotEmpty ? result += entry.givenName.substring(0, 1) : "";
+    entry.familyName.isNotEmpty ? result += entry.familyName.substring(0, 1) : "";
+    return result;
+  }
+
+  Widget leadingElement(TinyPeople entry) {
     return CircleAvatar(
-      child: entry.avatar == null ? Icon(
-        CupertinoIcons.person,
+      backgroundColor: Colors.lightBlue,
+      child: entry.avatar == null ? Text(
+        getCircleText(entry),
+        style: TextStyle(
+          color: Colors.white,
+        ),
       ) : null,
       backgroundImage: entry.avatar != null ? new MemoryImage(entry.avatar) : null,
-//      backgroundColor: Colors.lightGreen,
       radius: 32.0,
     );
   }

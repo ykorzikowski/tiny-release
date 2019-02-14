@@ -7,19 +7,22 @@ import 'package:tiny_release/screens/control/control_left_list.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 
 class MasterControlWidget extends StatefulWidget {
+
+  TinyState _controlState;
+
+  MasterControlWidget(this._controlState);
+
   @override
-  _MasterControlState createState() => _MasterControlState();
+  _MasterControlState createState() => _MasterControlState(_controlState);
 }
 
 class _MasterControlState extends State<MasterControlWidget> {
   var _isLargeScreen = false;
 
   final GlobalKey<NavigatorState> _navigatorKeyLargeScreen = new GlobalKey<NavigatorState>();
-  TinyState controlState;
+  TinyState _controlState;
 
-  _MasterControlState() {
-    controlState = new TinyState( );
-  }
+  _MasterControlState(this._controlState);
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +37,10 @@ class _MasterControlState extends State<MasterControlWidget> {
           Expanded(
             child: ControlLeftListWidget((position) {
               _isLargeScreen ? largeScreenTransition( position ) : smallScreenTransition( position );
-            }),
+            }, _controlState),
           ),
           _isLargeScreen ? Expanded(
-              child: ControlRightWidget(controlState, _navigatorKeyLargeScreen)
+              child: ControlRightWidget(_controlState, _navigatorKeyLargeScreen)
           ) : Container(),
         ]);
       }),
@@ -54,12 +57,12 @@ class _MasterControlState extends State<MasterControlWidget> {
     _navigatorKeyLargeScreen.currentState.popUntil( (route) {
       return route.isFirst;
     });
-    controlState.selectedControlItem = position;
+    _controlState.selectedControlItem = position;
     _navigatorKeyLargeScreen.currentState.pushNamed(ControlHelper.getControlRouteByIndex(position));
   }
 
   void smallScreenTransition(int position) {
-    controlState.selectedControlItem = position;
+    _controlState.selectedControlItem = position;
     Navigator.of(context).pushNamed(ControlHelper.getControlRouteByIndex(position));
   }
 

@@ -4,11 +4,11 @@ import 'package:tiny_release/data/tiny_dbo.dart';
 
 class TinyPeople extends TinyDBO {
   String identifier,
-      givenName,
+      givenName = "",
       middleName,
       prefix,
       suffix,
-      familyName,
+      familyName = "",
       birthday,
       company,
       jobTitle,
@@ -24,12 +24,13 @@ class TinyPeople extends TinyDBO {
     this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
+  @override
+  String get displayName => this.givenName + " " + this.familyName;
 
   TinyPeople.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     type = m["type"];
     identifier = m["identifier"];
-    displayName = m["displayName"];
     givenName = m["givenName"];
     middleName = m["middleName"];
     familyName = m["familyName"];
@@ -64,7 +65,6 @@ class TinyPeople extends TinyDBO {
       "id": contact.id,
       "type": contact.type,
       "identifier": contact.identifier,
-      "displayName": contact.displayName,
       "givenName": contact.givenName,
       "middleName": contact.middleName,
       "familyName": contact.familyName,
