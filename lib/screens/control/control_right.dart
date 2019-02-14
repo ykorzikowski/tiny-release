@@ -29,6 +29,7 @@ class _ControlRightWidgetState extends State<ControlRightWidget> {
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKeyLargeScreen,
+      initialRoute: NavRoutes.PEOPLE_LIST,
       onGenerateRoute: (RouteSettings settings) {
         return TinyPageWrapper(
           settings: settings,
