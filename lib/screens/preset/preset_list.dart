@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
+import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -38,23 +39,27 @@ class _PresetListWidgetState extends State<PresetListWidget> {
             tinyPresetRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
-    return Scaffold(
-        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Vorlagen"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              tooltip: 'Add new',
-              onPressed: () {
-//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
-              },
-            )
-          ],
-        ): null,
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+        middle: Text("Vorlagen"),
+        trailing:CupertinoButton(
+          child: Text("Hinzufügen"),
+          onPressed: () {
+            var _tinyPreset = TinyPreset();
+            _tinyPreset.paragraphs = List();
+            _controlState.curDBO = _tinyPreset;
+            Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
+          },
+        ),),
+      child: SafeArea(  child: Scaffold(
         body: PagewiseListView(
+          padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
-        ) );
+        ),
+      ),),
+    );
   }
 
   Widget _itemBuilder(context, entry, _) {
@@ -62,20 +67,20 @@ class _PresetListWidgetState extends State<PresetListWidget> {
       children: <Widget>[
         Dismissible(
             background: Container(color: Colors.red),
-            key: Key(entry.displayName),
+            key: Key(entry.title),
             onDismissed: (direction) {
               tinyPresetRepo.delete(entry);
 
               Scaffold
                   .of(context)
-                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
+                  .showSnackBar(SnackBar(content: Text(entry.title + " dismissed")));
             },
             child: ListTile(
               leading: Icon(
-                Icons.person,
+                CupertinoIcons.collections,
                 color: Colors.brown[200],
               ),
-              title: Text(entry.displayName),
+              title: Text(entry.title),
               onTap: () {
                 openDetailView( entry, context );
               },
@@ -89,7 +94,5 @@ class _PresetListWidgetState extends State<PresetListWidget> {
     _controlState.curDBO = item;
 
     Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
-
-    // todo
   }
 }

@@ -1,9 +1,7 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/screens/preset/preset_edit.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -21,25 +19,66 @@ class PresetPreviewWidget extends StatefulWidget {
 
 class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
   final TinyState _controlState;
+  TinyPreset _tinyPreset;
 
-  _PresetPreviewWidgetState(this._controlState);
+  _PresetPreviewWidgetState(this._controlState) {
+    _tinyPreset = _controlState.curDBO;
+  }
+
+  List< Widget > _getParagraphWidgets() =>
+      _tinyPreset.paragraphs.map((para) =>
+          Container(
+            child:
+              Column(
+                children: <Widget>[
+                  Divider(),
+                  Text(para.title, style: TextStyle(
+                    fontSize: 26.0,
+                  ),),
+                  Container(
+                      child: Text(para.content,softWrap: true,)
+                  ),
+                ],
+              ),
+          ),
+      ).toList();
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text("Preset Preview - " + getText()),
-      appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-        title: Text("Preview"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: 'Edit',
-            onPressed: () {
-              Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
-            },
-          ),
-        ],
-      ) : null,
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        border: null,
+        middle: Text(_tinyPreset.title),
+        trailing: CupertinoButton(
+          child: Text("Bearbeiten"),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT),
+        ),),
+      child:
+      Scaffold(
+        body: SafeArea(
+            child: ListView(children: <Widget>[
+              _tinyPreset.subtitle != null ? Text(
+                _tinyPreset.subtitle,
+                style: TextStyle(fontSize: 26.0,),
+                textAlign: TextAlign.center,
+              ) : Container(),
+              _tinyPreset.language != null ? Text(
+                _tinyPreset.language,
+                style: TextStyle(fontSize: 26.0,),
+                textAlign: TextAlign.center,
+              ) : Container(),
+              _tinyPreset.description != null ? Text(
+                _tinyPreset.description,
+                style: TextStyle(fontSize: 26.0,),
+                textAlign: TextAlign.center,
+              ) : Container(),
+          Column(children: _getParagraphWidgets(),),
+            ],)
+        ),
+
+      ),
     );
   }
 
