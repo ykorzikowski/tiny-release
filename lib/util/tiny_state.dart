@@ -13,9 +13,7 @@ import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/screens/preset/preset_edit.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
-import 'package:tiny_release/screens/reception_area/reception_edit.dart';
 import 'package:tiny_release/screens/reception_area/reception_list.dart';
-import 'package:tiny_release/screens/reception_area/reception_preview.dart';
 import 'package:tiny_release/screens/wording/wording_settings.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -47,8 +45,6 @@ class TinyState {
       NavRoutes.PRESET_EDIT: (context) => PresetEditWidget(this),
 
       NavRoutes.RECEPTION_LIST: (context) => ReceptionListWidget(this),
-      NavRoutes.RECEPTION_PREVIEW: (context) => ReceptionPreviewWidget(this),
-      NavRoutes.RECEPTION_EDIT: (context) => ReceptionEditWidget(this),
 
       NavRoutes.LAYOUT_LIST: (context) => LayoutListWidget(this),
       NavRoutes.LAYOUT_PREVIEW: (context) => LayoutPreviewWidget(this),

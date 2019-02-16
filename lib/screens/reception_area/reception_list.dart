@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
+import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -22,7 +22,8 @@ class ReceptionListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ReceptionListWidget> {
   static const int PAGE_SIZE = 10;
-  final TinyReceptionRepo receptionRepository = new TinyReceptionRepo();
+  final TinyReceptionRepo _tinyRepo = new TinyReceptionRepo();
+  TinyReception _tinyReception;
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
 
@@ -33,26 +34,52 @@ class _ListWidgetState extends State<ReceptionListWidget> {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            receptionRepository.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
+            _tinyRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
-    return Scaffold(
-        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Aufnahmebereiche"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              tooltip: 'Add new',
-              onPressed: () {
-//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
-              },
-            )
-          ],
-        ): null,
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+        middle: Text("Aufnahmebereiche"),
+        trailing:CupertinoButton(
+          child: Text("Hinzufügen"),
+          onPressed: () {
+            _tinyReception = TinyReception();
+            _controlState.curDBO = _tinyReception;
+            showCupertinoDialog(context: context, builder: (context) => CupertinoAlertDialog(
+              title: Text("Aufnahmebereich hinzufügen"),
+              content: CupertinoTextField(
+                onChanged: (t) => _tinyReception.displayName = t,
+                onSubmitted: (t) => _tinyReception.displayName = t,
+              ),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: Text("Speichern"),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    _tinyRepo.save(_tinyReception);
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                ),
+                CupertinoDialogAction(
+                  isDestructiveAction: true,
+                  child: Text("Abbrechen"),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                )
+              ],
+            ));
+          },
+        ),),
+      child: SafeArea(  child: Scaffold(
         body: PagewiseListView(
+          padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
-        ) );
+        ),
+      ),),
+    );
   }
 
   Widget _itemBuilder(context, entry, _) {
@@ -62,7 +89,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
             background: Container(color: Colors.red),
             key: Key(entry.displayName),
             onDismissed: (direction) {
-              receptionRepository.delete(entry);
+              _tinyRepo.delete(entry);
 
               Scaffold
                   .of(context)
@@ -74,9 +101,6 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                 color: Colors.brown[200],
               ),
               title: Text(entry.displayName),
-              onTap: () {
-                openDetailView(entry, context);
-              },
             )),
         Divider()
       ],
