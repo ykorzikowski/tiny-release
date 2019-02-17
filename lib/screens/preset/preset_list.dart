@@ -63,31 +63,35 @@ class _PresetListWidgetState extends State<PresetListWidget> {
   }
 
   Widget _itemBuilder(context, entry, _) {
-    return Column(
-      children: <Widget>[
-        Dismissible(
-            background: Container(color: Colors.red),
-            key: Key(entry.title),
-            onDismissed: (direction) {
-              tinyPresetRepo.delete(entry);
+    return
+      Dismissible(
+        direction: DismissDirection.endToStart,
+        background: BaseUtil.getDismissibleBackground(),
+        key: Key(entry.title),
+        onDismissed: (direction) {
+          tinyPresetRepo.delete(entry);
 
-              Scaffold
-                  .of(context)
-                  .showSnackBar(SnackBar(content: Text(entry.title + " dismissed")));
-            },
-            child: ListTile(
+          Scaffold
+              .of(context)
+              .showSnackBar(
+              SnackBar(content: Text(entry.title + " dismissed")));
+        },
+        child:
+        Column(
+          children: <Widget>[
+            ListTile(
               leading: Icon(
                 CupertinoIcons.collections,
                 color: Colors.brown[200],
               ),
               title: Text(entry.title),
               onTap: () {
-                openDetailView( entry, context );
+                openDetailView(entry, context);
               },
-            ),),
-        Divider()
-      ],
-    );
+            ),
+            Divider()
+          ],
+        ),);
   }
 
   void openDetailView(item, context) {

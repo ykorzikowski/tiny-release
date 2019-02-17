@@ -83,28 +83,30 @@ class _ListWidgetState extends State<ReceptionListWidget> {
   }
 
   Widget _itemBuilder(context, entry, _) {
-    return Column(
-      children: <Widget>[
-        Dismissible(
-            background: Container(color: Colors.red),
-            key: Key(entry.displayName),
-            onDismissed: (direction) {
-              _tinyRepo.delete(entry);
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      background: BaseUtil.getDismissibleBackground(),
+      key: Key(entry.displayName),
+      onDismissed: (direction) {
+        _tinyRepo.delete(entry);
 
-              Scaffold
-                  .of(context)
-                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
-            },
-            child: ListTile(
-              leading: Icon(
-                Icons.camera,
-                color: Colors.brown[200],
-              ),
-              title: Text(entry.displayName),
-            )),
-        Divider()
-      ],
-    );
+        Scaffold
+            .of(context)
+            .showSnackBar(
+            SnackBar(content: Text(entry.displayName + " dismissed")));
+      },
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.camera,
+              color: Colors.brown[200],
+            ),
+            title: Text(entry.displayName),
+          ),
+          Divider()
+        ],
+      ),);
   }
 
   void openDetailView(item, context) {

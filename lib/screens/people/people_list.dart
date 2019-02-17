@@ -96,27 +96,31 @@ class _ListWidgetState extends State<PeopleListWidget> {
   }
 
   Widget _itemBuilder(context, entry, _) {
-    return Column(
-        children: <Widget>[
-          Dismissible(
-            background: Container(color: Colors.red),
-            key: Key(entry.displayName),
-            onDismissed: (direction) {
-              contactRepository.delete(entry);
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      background: BaseUtil.getDismissibleBackground(),
+      key: Key(entry.hashCode.toString()),
+      onDismissed: (direction) {
+        contactRepository.delete(entry);
 
-              Scaffold
-                  .of(context)
-                  .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
+        Scaffold
+            .of(context)
+            .showSnackBar(
+            SnackBar(content: Text(entry.displayName + " dismissed")));
+      },
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: PeopleListWidget.getCircleAvatar(
+                entry, PeopleListWidget.getCircleText(entry)),
+            title: Text(entry.givenName + " " + entry.familyName),
+            onTap: () {
+              _onPeopleTap(entry, context);
             },
-            child: ListTile(
-              leading: PeopleListWidget.getCircleAvatar( entry, PeopleListWidget.getCircleText(entry) ),
-              title: Text(entry.givenName + " " + entry.familyName),
-              onTap: () {
-                _onPeopleTap( entry, context );
-              },
-            ),),
-          Divider()
+          ),
+          Divider(),
+
         ],
-    );
+      ),);
   }
 }

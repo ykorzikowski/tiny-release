@@ -61,26 +61,28 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   }
 
   Widget _itemBuilder(context, entry, _) {
-    return Column(
-      children: <Widget>[
-        Dismissible(
-          background: Container(color: Colors.red),
-          key: Key(entry.id.toString()),
-          onDismissed: (direction) {
-            _tinyContractRepo.delete(entry);
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      background: BaseUtil.getDismissibleBackground(),
+      key: Key(entry.id.toString()),
+      onDismissed: (direction) {
+        _tinyContractRepo.delete(entry);
 
-            Scaffold
-                .of(context)
-                .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
-          },
-          child: ListTile(
+        Scaffold
+            .of(context)
+            .showSnackBar(
+            SnackBar(content: Text(entry.displayName + " dismissed")));
+      },
+      child: Column(
+        children: <Widget>[
+          ListTile(
             title: Text(entry.displayName),
             onTap: () {
               // todo if isFinished = directly go to generated widget
             },
-          ),),
-        Divider()
-      ],
-    );
+          ),
+          Divider()
+        ],
+      ),);
   }
 }

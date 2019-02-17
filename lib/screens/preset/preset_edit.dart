@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -70,7 +71,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
                 padding: EdgeInsets.symmetric(vertical: 4.0),
                 child:
                 Dismissible(
-                    background: Container(color: Colors.red),
+                    direction: DismissDirection.endToStart,
+                    background: BaseUtil.getDismissibleBackground(),
                     key: Key(para.hashCode.toString()),
                     onDismissed: (direction) =>
                         setState(() {

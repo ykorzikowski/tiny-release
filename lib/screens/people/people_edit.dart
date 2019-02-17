@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -136,7 +137,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: Dismissible(
-                background: Container(color: Colors.red),
+                direction: DismissDirection.endToStart,
+                background: BaseUtil.getDismissibleBackground(),
                 key: Key(phone.hashCode.toString()),
                 onDismissed: (direction) => setState(() {_tinyPeople.phones.remove(phone); }),
                 child: getPhoneWidget(phone)
@@ -188,7 +190,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: Dismissible(
-                background: Container(color: Colors.red),
+                direction: DismissDirection.endToStart,
+                background: BaseUtil.getDismissibleBackground(),
                 key: Key(mail.hashCode.toString()),
                 onDismissed: (direction) => setState(() {_tinyPeople.emails.remove(mail); }),
                 child: getMailWidget(mail)
@@ -239,7 +242,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: Dismissible(
-                background: Container(color: Colors.red),
+                direction: DismissDirection.endToStart,
+                background: BaseUtil.getDismissibleBackground(),
                 key: Key(ta.hashCode.toString()),
                 onDismissed: (direction) => setState(() {_tinyPeople.postalAddresses.remove(ta); }),
                 child: getAddressWidget(ta)

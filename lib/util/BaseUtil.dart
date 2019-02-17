@@ -33,4 +33,12 @@ class BaseUtil {
     }
     return null;
   }
+
+  static Widget getDismissibleBackground() =>
+      Container(
+        color: CupertinoColors.destructiveRed,
+        child: Align(alignment: Alignment.centerRight, child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(
+            CupertinoIcons.delete, color: CupertinoColors.white,),),),);
 }
