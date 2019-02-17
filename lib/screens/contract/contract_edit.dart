@@ -105,16 +105,11 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         child: SafeArea(
           child:
           Column(children: <Widget>[
-            TextField(
-              onChanged: (t) => _tinyContract.displayName = t,
-              controller: initialValue(_tinyContract.displayName),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: 'Betreff',
-              ),),
             Text("Es wird ein Vertrag geschlossen zwischen", style: TextStyle(
               fontSize: 24.0,
             ), textAlign: TextAlign.center),
+
+            Divider(),
 
             _getPeopleView(
                 _tinyPhotographer, _tinyPeopleRepo, "Fotograf wählen", (people, item, context) {
@@ -123,9 +118,15 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             }, () {
               setState(() {_tinyPhotographer = null;});
             }),
+
+            Divider(),
+
             Text("und", style: TextStyle(
               fontSize: 24.0,
             ), textAlign: TextAlign.center,),
+
+            Divider(),
+
             _getPeopleView(
                 _tinyModel, _tinyPeopleRepo, "Model wählen", (people, item, context) {
               _tinyModel = item;
@@ -133,6 +134,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             }, () {
               setState(() {_tinyModel = null;});
             }),
+
+            Divider(),
 
             MergeSemantics(
               child: ListTile(
@@ -160,6 +163,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             }, () {
               setState(() {_tinyParent = null;});
             }) : Container(),
+
+            Divider(),
 
             MergeSemantics(
               child: ListTile(
@@ -189,6 +194,46 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
             Divider(),
 
+            Text("in den Aufnahmebereichen", style: TextStyle(
+              fontSize: 24.0,
+            ), textAlign: TextAlign.center,),
+
+            Divider(),
+
+            Padding(
+              padding: EdgeInsets.only(left: 15.0),
+              child:
+              TextField(
+                onChanged: (t) => _tinyContract.location = t,
+                controller: initialValue(_tinyContract.location),
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  hintText: 'Location',
+                ),),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(left: 15.0),
+              child:
+              TextField(
+                onChanged: (t) => _tinyContract.displayName = t,
+                controller: initialValue(_tinyContract.displayName),
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  hintText: 'Betreff des Shootings',
+                ),),
+            ),
+
+            CupertinoButton(
+              child: Text("Wähle Aufnahmedatum"),
+              onPressed: () {
+//                CupertinoDatePicker(
+//                  initialDateTime: DateTime.now(),
+//                  mode: CupertinoDatePickerMode.dateAndTime,
+//                  onDateTimeChanged: (dateTime) {_tinyContract.date = dateTime.toIso8601String(); },
+//                )
+              },
+            ),
 
             CupertinoButton(
               child: Text("Vertrag generieren"),

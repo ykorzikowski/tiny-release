@@ -36,7 +36,9 @@ class SQLiteProvider {
       /// Contracts
       await db.execute("CREATE TABLE Contract ("
           "id INTEGER PRIMARY KEY,"
-          "displayName TEXT"
+          "displayName TEXT,"
+          "location TEXT,"
+          "date TEXT,"
           "presetId INTEGER,"
           "photographerId INTEGER,"
           "modelId INTEGER,"
