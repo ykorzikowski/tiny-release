@@ -363,52 +363,55 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 .canPop());
             Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          imageAndNameSection(),
-          Divider(),
-          infoWidget(),
-          Divider(),
-          mailSection(),
-          FlatButton.icon(
-              icon: Icon(Icons.add),
-              label: Text("Add Mail"),
-              onPressed: () =>
-                  setState(() {
-                    _tinyPeople.emails.add(TinyPeopleItem());
-                  })
-          ),
-          Divider(),
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            imageAndNameSection(),
+            Divider(),
+            infoWidget(),
+            Divider(),
+            mailSection(),
+            FlatButton.icon(
+                icon: Icon(Icons.add),
+                label: Text("Add Mail"),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.emails.add(TinyPeopleItem());
+                    })
+            ),
+            Divider(),
 
-          phoneSection(),
-          FlatButton.icon(
-              icon: Icon(Icons.add),
-              label: Text("Add Phone"),
-              onPressed: () =>
-                  setState(() {
-                    _tinyPeople.phones.add(TinyPeopleItem());
-                  })
-          ),
-          Divider(),
+            phoneSection(),
+            FlatButton.icon(
+                icon: Icon(Icons.add),
+                label: Text("Add Phone"),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.phones.add(TinyPeopleItem());
+                    })
+            ),
+            Divider(),
 
-          addressSection(),
-          FlatButton.icon(
-              icon: Icon(Icons.add),
-              label: Text("Add Address"),
-              onPressed: () =>
-                  setState(() {
-                    _tinyPeople.postalAddresses.add(TinyAddress());
-                  })
-          ),
-          Divider(),
-          CupertinoButton(
-            child: Text("Aus Kontakten importieren"),
-            onPressed: () {
-              Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
-            },
-          )
-        ],
+            addressSection(),
+            FlatButton.icon(
+                icon: Icon(Icons.add),
+                label: Text("Add Address"),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.postalAddresses.add(TinyAddress());
+                    })
+            ),
+            Divider(),
+            CupertinoButton(
+              child: Text("Aus Kontakten importieren"),
+              onPressed: () {
+                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
