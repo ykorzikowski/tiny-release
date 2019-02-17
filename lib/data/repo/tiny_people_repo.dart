@@ -43,21 +43,6 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     return list;
   }
 
-  Future<List<TinyPeople>> getAllByType(int type, int offset, int limit) async{
-    final db = await SQLiteProvider.db.database;
-
-    var res = await db.query(TYPE, where: "type = ?", whereArgs: [type], limit: limit, offset: offset);
-    var list = res.isNotEmpty ? List.of( res.map((c) => TinyPeople.fromMap(c)))  : List<TinyPeople>();
-
-    for( var tc in list ) {
-      tc.postalAddresses = await _getAddress(tc.id);
-      tc.emails = await _getEmail(tc.id);
-      tc.phones = await _getPhone(tc.id);
-    }
-
-    return list;
-  }
-
   @override
   Future save(TinyPeople item) async {
     final db = await SQLiteProvider.db.database;

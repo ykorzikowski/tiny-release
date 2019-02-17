@@ -15,8 +15,7 @@ class PeopleListCallback {
   /// called by list to get people
   /// getPeople(pageIndex)
   Future<List<TinyPeople>> getPeople(pageIndex) async {
-    return _tinyPeopleRepo.getAllByType(
-        _controlState.selectedControlItem,
+    return _tinyPeopleRepo.getAll(
         pageIndex * PeopleListWidget.PAGE_SIZE,
         PeopleListWidget.PAGE_SIZE);
   }

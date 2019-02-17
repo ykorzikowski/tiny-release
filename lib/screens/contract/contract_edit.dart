@@ -93,7 +93,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         transitionBetweenRoutes: false,
         middle: Text("Contract hinzufügen"),
         trailing: CupertinoButton(
-          child: Text("Speichern"),
+          child: Text("Vorschau"),
           onPressed: validContract() ? () {
             if (!validContract()) {
               return;
@@ -103,146 +103,160 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
             Navigator.of(context).pushNamed(NavRoutes.CONTRACT_PREVIEW);
           } : null,),),
-        child: SafeArea(
-          child:
-          Column(children: <Widget>[
-            Text("Es wird ein Vertrag geschlossen zwischen", style: TextStyle(
-              fontSize: 24.0,
-            ), textAlign: TextAlign.center),
-
-            Divider(),
-
-            _getPeopleView(
-                _tinyPhotographer, _tinyPeopleRepo, "Fotograf wählen", (people, item, context) {
-              _tinyPhotographer = item;
-              Navigator.pop(context);
-            }, () {
-              setState(() {_tinyPhotographer = null;});
-            }),
-
-            Divider(),
-
-            Text("und", style: TextStyle(
-              fontSize: 24.0,
-            ), textAlign: TextAlign.center,),
-
-            Divider(),
-
-            _getPeopleView(
-                _tinyModel, _tinyPeopleRepo, "Model wählen", (people, item, context) {
-              _tinyModel = item;
-              Navigator.pop(context);
-            }, () {
-              setState(() {_tinyModel = null;});
-            }),
-
-            Divider(),
-
-            MergeSemantics(
-              child: ListTile(
-                title: Text('Vertreten durch'),
-                trailing: CupertinoSwitch(
-                  value: _enabledParent,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _enabledParent = value;
-                    });
-                  },
-                ),
-                onTap: () {
-                  setState(() {
-                    _enabledParent = !_enabledParent;
-                  });
-                },
-              ),
-            ),
-            _enabledParent ? _getPeopleView(
-                _tinyParent, _tinyPeopleRepo, "Gesetzl. Vertretung\n wählen", (people, item, context)
-            {
-              _tinyParent = item;
-              Navigator.pop(context);
-            }, () {
-              setState(() {_tinyParent = null;});
-            }) : Container(),
-
-            Divider(),
-
-            MergeSemantics(
-              child: ListTile(
-                title: Text('Bezeugt durch'),
-                trailing: CupertinoSwitch(
-                  value: _enabledWitness,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _enabledWitness = value;
-                    });
-                  },
-                ),
-                onTap: () {
-                  setState(() {
-                    _enabledWitness = !_enabledWitness;
-                  });
-                },
-              ),
-            ),
-            _enabledWitness ? _getPeopleView(
-                _tinyWitness, _tinyPeopleRepo, "Zeuge wählen", (people, item, context) {
-              _tinyWitness = item;
-              Navigator.pop(context);
-            }, () {
-              setState(() {_tinyWitness = null;});
-            }) : Container(),
-
-            Divider(),
-
-            Text("in den Aufnahmebereichen", style: TextStyle(
-              fontSize: 24.0,
-            ), textAlign: TextAlign.center,),
-
-            Divider(),
-
-            Padding(
-              padding: EdgeInsets.only(left: 15.0),
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: ListView(
+            children: <Widget>[
+              SafeArea(
               child:
-              TextField(
-                onChanged: (t) => _tinyContract.location = t,
-                controller: initialValue(_tinyContract.location),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: 'Location',
-                ),),
-            ),
+              Column(children: <Widget>[
+                Text("Es wird ein Vertrag geschlossen zwischen", style: TextStyle(
+                  fontSize: 24.0,
+                ), textAlign: TextAlign.center),
 
-            Padding(
-              padding: EdgeInsets.only(left: 15.0),
-              child:
-              TextField(
-                onChanged: (t) => _tinyContract.displayName = t,
-                controller: initialValue(_tinyContract.displayName),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: 'Betreff des Shootings',
-                ),),
-            ),
+                Divider(),
 
-            CupertinoButton(
-              child: Text("Wähle Aufnahmedatum"),
-              onPressed: () {
+                _getPeopleView(
+                    _tinyPhotographer, _tinyPeopleRepo, "Fotograf wählen", (people, item, context) {
+                  setState(() {
+                    _tinyPhotographer = item;
+                  });
+                  Navigator.pop(context);
+                }, () {
+                  setState(() {_tinyPhotographer = null;});
+                }),
+
+                Divider(),
+
+                Text("und", style: TextStyle(
+                  fontSize: 24.0,
+                ), textAlign: TextAlign.center,),
+
+                Divider(),
+
+                _getPeopleView(
+                    _tinyModel, _tinyPeopleRepo, "Model wählen", (people, item, context) {
+                  setState(() {
+                    _tinyModel = item;
+                  });
+                  Navigator.pop(context);
+                }, () {
+                  setState(() {_tinyModel = null;});
+                }),
+
+                Divider(),
+
+                MergeSemantics(
+                  child: ListTile(
+                    title: Text('Vertreten durch'),
+                    trailing: CupertinoSwitch(
+                      value: _enabledParent,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _enabledParent = value;
+                        });
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _enabledParent = !_enabledParent;
+                      });
+                    },
+                  ),
+                ),
+                _enabledParent ? _getPeopleView(
+                    _tinyParent, _tinyPeopleRepo, "Gesetzl. Vertretung\n wählen", (people, item, context)
+                {
+                  setState(() {
+                    _tinyParent = item;
+                  });
+                  Navigator.pop(context);
+                }, () {
+                  setState(() {_tinyParent = null;});
+                }) : Container(),
+
+                Divider(),
+
+                MergeSemantics(
+                  child: ListTile(
+                    title: Text('Bezeugt durch'),
+                    trailing: CupertinoSwitch(
+                      value: _enabledWitness,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _enabledWitness = value;
+                        });
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _enabledWitness = !_enabledWitness;
+                      });
+                    },
+                  ),
+                ),
+                _enabledWitness ? _getPeopleView(
+                    _tinyWitness, _tinyPeopleRepo, "Zeuge wählen", (people, item, context) {
+                  setState(() {
+                    _tinyWitness = item;
+                  });
+                  Navigator.pop(context);
+                }, () {
+                  setState(() {_tinyWitness = null;});
+                }) : Container(),
+
+                Divider(),
+
+                Text("in den Aufnahmebereichen", style: TextStyle(
+                  fontSize: 24.0,
+                ), textAlign: TextAlign.center,),
+
+                Divider(),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0),
+                  child:
+                  TextField(
+                    onChanged: (t) => _tinyContract.location = t,
+                    controller: initialValue(_tinyContract.location),
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      hintText: 'Location',
+                    ),),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0),
+                  child:
+                  TextField(
+                    onChanged: (t) => _tinyContract.displayName = t,
+                    controller: initialValue(_tinyContract.displayName),
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      hintText: 'Betreff des Shootings',
+                    ),),
+                ),
+
+                CupertinoButton(
+                  child: Text("Wähle Aufnahmedatum"),
+                  onPressed: () {
 //                CupertinoDatePicker(
 //                  initialDateTime: DateTime.now(),
 //                  mode: CupertinoDatePickerMode.dateAndTime,
 //                  onDateTimeChanged: (dateTime) {_tinyContract.date = dateTime.toIso8601String(); },
 //                )
-              },
-            ),
+                  },
+                ),
 
-            CupertinoButton(
-              child: Text("Vertrag generieren"),
-              onPressed: validContract() ? () {
-                // todo generate contract
-              } : null,
-            ),
-          ],),
+                CupertinoButton(
+                  child: Text("Vertrag generieren"),
+                  onPressed: validContract() ? () {
+                    // todo generate contract
+                  } : null,
+                ),
+              ],),
+            ),],
+          ),
         )
     );
   }

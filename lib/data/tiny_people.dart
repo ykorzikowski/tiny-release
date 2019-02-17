@@ -20,7 +20,7 @@ class TinyPeople extends TinyDBO {
   List<TinyAddress> postalAddresses = List();
   Uint8List avatar;
 
-  TinyPeople({id, displayName, this.type, this.identifier, this.givenName, this.middleName, this.prefix,
+  TinyPeople({id, displayName, this.identifier, this.givenName, this.middleName, this.prefix,
     this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
@@ -39,7 +39,6 @@ class TinyPeople extends TinyDBO {
 
   TinyPeople.fromMap(Map<String, dynamic> m) {
     id = m["id"];
-    type = m["type"];
     identifier = m["identifier"];
     givenName = m["givenName"];
     middleName = m["middleName"];
@@ -73,7 +72,6 @@ class TinyPeople extends TinyDBO {
     }
     return {
       "id": contact.id,
-      "type": contact.type,
       "identifier": contact.identifier,
       "givenName": contact.givenName,
       "middleName": contact.middleName,

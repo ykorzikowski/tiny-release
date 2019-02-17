@@ -46,7 +46,7 @@ class TinyState {
       NavRoutes.CONTROL_LIST: (context) => MasterControlWidget(this),
       /// PEOPLE ROUTE
       NavRoutes.PEOPLE_LIST: (context) => PeopleListWidget(this, peopleListCallback.getPeople, peopleListCallback.onPeopleTap),
-      NavRoutes.PEOPLE_IMPORT: (context) => PeopleListWidget(this, peopleImportCallback.getPeople, peopleImportCallback.onPeopleTap),
+      NavRoutes.PEOPLE_IMPORT: (context) => PeopleListWidget(this, peopleImportCallback.getPeople, peopleImportCallback.onPeopleTap, dismissible: false,),
       NavRoutes.PEOPLE_EDIT: (context) => PeopleEditWidget(this),
       NavRoutes.PEOPLE_PREVIEW: (context) => PeoplePreviewWidget(this),
 

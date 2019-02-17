@@ -358,9 +358,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               return;
             }
             new TinyPeopleRepo().save(_tinyPeople);
-            Navigator.of(context).popUntil((route) =>
-            !Navigator.of(context)
-                .canPop());
+            Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PEOPLE_LIST);
             Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),
       child: Scaffold(

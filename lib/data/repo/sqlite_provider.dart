@@ -28,9 +28,9 @@ class SQLiteProvider {
       /// Settings
       await db.execute("CREATE TABLE Settings ("
           "id INTEGER PRIMARY KEY,"
-          "key TEXT"
+          "key TEXT,"
           "value INTEGER,"
-          "contractId INTEGER,"
+          "contractId INTEGER"
           ")");
 
       /// Contracts
@@ -43,7 +43,7 @@ class SQLiteProvider {
           "photographerId INTEGER,"
           "modelId INTEGER,"
           "parentId INTEGER,"
-          "witnessId INTEGER,"
+          "witnessId INTEGER"
           ")");
 
       /// Reception area
@@ -78,7 +78,6 @@ class SQLiteProvider {
       await db.execute("CREATE TABLE People ("
           "id INTEGER PRIMARY KEY,"
           "displayName TEXT,"
-          "type INTEGER,"
           "avatar BLOB,"
           "identifier TEXT,"
           "givenName TEXT,"

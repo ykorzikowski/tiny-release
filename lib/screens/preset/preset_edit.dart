@@ -189,10 +189,12 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
             Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
           } : null,),),
-      child: ListView(
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: ListView(
           shrinkWrap: true,
           children: _getFields(),
-      ),
+      ),),
     );
   }
 

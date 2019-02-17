@@ -16,8 +16,9 @@ class PeopleListWidget extends StatefulWidget {
   final TinyState _controlState;
   final Function _getPeople;
   final Function _onPeopleTap;
+  final bool dismissible;
 
-  PeopleListWidget(this._controlState, this._getPeople, this._onPeopleTap);
+  PeopleListWidget(this._controlState, this._getPeople, this._onPeopleTap, {this.dismissible: true});
 
   static Widget getCircleAvatar(TinyPeople entry, String circleText) =>
       CircleAvatar(
@@ -43,13 +44,14 @@ class PeopleListWidget extends StatefulWidget {
 
 
   @override
-  _ListWidgetState createState() => _ListWidgetState(_controlState, _getPeople, _onPeopleTap);
+  _ListWidgetState createState() => _ListWidgetState(_controlState, _getPeople, _onPeopleTap, dismissible: dismissible);
 }
 
 class _ListWidgetState extends State<PeopleListWidget> {
   final TinyPeopleRepo contactRepository = new TinyPeopleRepo();
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
+  final bool dismissible;
 
   /// called by list to get people
   /// getPeople(pageIndex)
@@ -58,7 +60,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
   /// onPeopleTap(item, context)
   final Function _onPeopleTap;
 
-  _ListWidgetState(this._controlState, this._getPeople, this._onPeopleTap);
+  _ListWidgetState(this._controlState, this._getPeople, this._onPeopleTap, {this.dismissible: true});
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +95,13 @@ class _ListWidgetState extends State<PeopleListWidget> {
       );
   }
 
-  Widget _itemBuilder(context, entry, index) {
-    return Dismissible(
+  /// wrap child with dismissible if bool is ture
+  Widget dismissibleDistinctive(child, entry, key) {
+    return dismissible ?
+    Dismissible(
+      key: Key(key),
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
-      key: Key('People_$index'),
       onDismissed: (direction) {
         contactRepository.delete(entry);
 
@@ -106,7 +110,11 @@ class _ListWidgetState extends State<PeopleListWidget> {
             .showSnackBar(
             SnackBar(content: Text(entry.displayName + " dismissed")));
       },
-      child: Column(
+      child: child,) : Container(child: child,);
+  }
+
+  Widget _itemBuilder(context, entry, index) {
+    return dismissibleDistinctive (Column(
         children: <Widget>[
           ListTile(
             leading: PeopleListWidget.getCircleAvatar(
@@ -119,6 +127,6 @@ class _ListWidgetState extends State<PeopleListWidget> {
           Divider(),
 
         ],
-      ),);
+      ), entry, 'people_$index');
   }
 }
