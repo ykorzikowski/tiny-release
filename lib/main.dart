@@ -34,14 +34,15 @@ class MyStatelessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
               tabBar: CupertinoTabBar(
+                key: Key('tap_bar'),
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.add),
+                    icon: Icon(CupertinoIcons.add),
                     title: Text("Model Release"),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    title: Text("Settings"),
+                    icon: Icon(CupertinoIcons.settings),
+                    title: Text("Verwaltung"),
                   ),
 
                 ],),
