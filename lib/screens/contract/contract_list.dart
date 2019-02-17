@@ -39,6 +39,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'contract',
           transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
           middle: Text("Contracts"),

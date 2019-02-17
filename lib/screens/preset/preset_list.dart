@@ -41,6 +41,8 @@ class _PresetListWidgetState extends State<PresetListWidget> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text("Vorlagen"),
         trailing:CupertinoButton(

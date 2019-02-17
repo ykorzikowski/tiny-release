@@ -48,6 +48,8 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         border: null,
         middle: Text(_tinyPreset.title),
         trailing: CupertinoButton(

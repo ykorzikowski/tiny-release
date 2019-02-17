@@ -26,6 +26,8 @@ class _WordingSettingsWidgetState extends State<WordingSettingsWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text("Wording"),
 

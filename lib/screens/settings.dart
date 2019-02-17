@@ -26,6 +26,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        transitionBetweenRoutes: false,
+        heroTag: 'control',
         middle: Text("Einstellungen"),
       ),
       child: Scaffold(

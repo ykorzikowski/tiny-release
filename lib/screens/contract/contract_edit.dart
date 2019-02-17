@@ -90,6 +90,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'contract',
         transitionBetweenRoutes: false,
         middle: Text("Contract hinzufügen"),
         trailing: CupertinoButton(

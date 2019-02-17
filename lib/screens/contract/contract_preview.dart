@@ -30,6 +30,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'contract',
         transitionBetweenRoutes: false,
         border: null,
         middle: Text("Contact Preview"),

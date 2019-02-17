@@ -30,6 +30,8 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'control',
+          transitionBetweenRoutes: false,
           middle: Text("Verwaltung"),
         ),
         child:

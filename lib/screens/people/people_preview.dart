@@ -164,6 +164,8 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         border: null,
         trailing: CupertinoButton(
           child: Text("Bearbeiten"),

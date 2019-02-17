@@ -39,6 +39,8 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text("Layout"),
         trailing:CupertinoButton(

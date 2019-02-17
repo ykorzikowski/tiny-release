@@ -72,6 +72,8 @@ class _ListWidgetState extends State<PeopleListWidget> {
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'control',
+          transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
           middle: Text("People"),
           trailing: isContactImportDialog ? CupertinoButton(

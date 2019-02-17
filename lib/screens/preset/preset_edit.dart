@@ -177,6 +177,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         middle: Text("Vorlage hinzufügen"),
         trailing: CupertinoButton(
           child: Text("Speichern"),

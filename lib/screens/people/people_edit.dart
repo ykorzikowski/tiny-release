@@ -350,6 +350,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         middle: Text("People hinzufügen"),
         trailing: CupertinoButton(
           child: Text("Speichern", key: Key('btn_navbar_save')),

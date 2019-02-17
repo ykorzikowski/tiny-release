@@ -39,6 +39,8 @@ class _ListWidgetState extends State<ReceptionListWidget> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text("Aufnahmebereiche"),
         trailing:CupertinoButton(
