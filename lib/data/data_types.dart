@@ -8,4 +8,7 @@ class DataType {
   static const String RECEPTION = "Reception_area";
   static const String LAYOUT = "Layout";
   static const String WORDING = "Wording";
+  static const String CONTRACT = "Contract";
+  static const String SETTINGS = "Settings";
+
 }

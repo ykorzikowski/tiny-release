@@ -19,6 +19,29 @@ class PeopleListWidget extends StatefulWidget {
 
   PeopleListWidget(this._controlState, this._getPeople, this._onPeopleTap);
 
+  static Widget getCircleAvatar(TinyPeople entry, String circleText) =>
+      CircleAvatar(
+        backgroundColor: Colors.lightBlue,
+        child: entry?.avatar == null ? Text(
+          circleText,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ) : null,
+        backgroundImage: entry?.avatar != null
+            ? new MemoryImage(entry.avatar)
+            : null,
+        radius: 32.0,
+      );
+
+  static String getCircleText(TinyPeople entry) {
+    var result = "";
+    entry.givenName.isNotEmpty ? result += entry.givenName.substring(0, 1) : "";
+    entry.familyName.isNotEmpty ? result += entry.familyName.substring(0, 1) : "";
+    return result;
+  }
+
+
   @override
   _ListWidgetState createState() => _ListWidgetState(_controlState, _getPeople, _onPeopleTap);
 }
@@ -72,27 +95,6 @@ class _ListWidgetState extends State<PeopleListWidget> {
       );
   }
 
-  String getCircleText(TinyPeople entry) {
-    var result = "";
-    entry.givenName.isNotEmpty ? result += entry.givenName.substring(0, 1) : "";
-    entry.familyName.isNotEmpty ? result += entry.familyName.substring(0, 1) : "";
-    return result;
-  }
-
-  Widget leadingElement(TinyPeople entry) {
-    return CircleAvatar(
-      backgroundColor: Colors.lightBlue,
-      child: entry.avatar == null ? Text(
-        getCircleText(entry),
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ) : null,
-      backgroundImage: entry.avatar != null ? new MemoryImage(entry.avatar) : null,
-      radius: 32.0,
-    );
-  }
-
   Widget _itemBuilder(context, entry, _) {
     return Column(
         children: <Widget>[
@@ -107,7 +109,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
                   .showSnackBar(SnackBar(content: Text(entry.displayName + " dismissed")));
             },
             child: ListTile(
-              leading: leadingElement( entry ),
+              leading: PeopleListWidget.getCircleAvatar( entry, PeopleListWidget.getCircleText(entry) ),
               title: Text(entry.givenName + " " + entry.familyName),
               onTap: () {
                 _onPeopleTap( entry, context );

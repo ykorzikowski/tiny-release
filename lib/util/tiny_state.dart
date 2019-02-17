@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
+import 'package:tiny_release/screens/contract/contract_edit.dart';
+import 'package:tiny_release/screens/contract/contract_list.dart';
+import 'package:tiny_release/screens/contract/contract_master.dart';
+import 'package:tiny_release/screens/contract/contract_preview.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
 import 'package:tiny_release/screens/layout/layout_edit.dart';
 import 'package:tiny_release/screens/layout/layout_list.dart';
@@ -33,6 +37,12 @@ class TinyState {
     this.peopleImportCallback = PeopleImportCallback(this);
     this.peopleListCallback = PeopleListCallback(this);
     this.routes = {
+      NavRoutes.CONTRACT_MASTER: (context) => ContractMasterWidget(this),
+      NavRoutes.CONTRACT_LIST: (context) => ContractListWidget(this),
+      NavRoutes.CONTRACT_EDIT: (context) => ContractEditWidget(this),
+      NavRoutes.CONTRACT_PREVIEW: (context) => ContractPreviewWidget(this),
+      NavRoutes.CONTRACT_GENERATED: (context) => MasterControlWidget(this),
+
       NavRoutes.CONTROL_LIST: (context) => MasterControlWidget(this),
       /// PEOPLE ROUTE
       NavRoutes.PEOPLE_LIST: (context) => PeopleListWidget(this, peopleListCallback.getPeople, peopleListCallback.onPeopleTap),

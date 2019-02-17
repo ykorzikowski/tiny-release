@@ -2,12 +2,14 @@ import 'package:tiny_release/data/tiny_dbo.dart';
 
 class TinyPreset extends TinyDBO {
   String title, subtitle, language, description;
+  int isManualEdited;
   List< Paragraph > paragraphs;
 
-  TinyPreset( {id, displayName, this.title, this.subtitle, this.language, this.description, this.paragraphs} ) : super(id: id, displayName: displayName);
+  TinyPreset( {id, displayName, this.title, this.isManualEdited, this.subtitle, this.language, this.description, this.paragraphs} ) : super(id: id, displayName: displayName);
 
   TinyPreset.fromMap(Map<String, dynamic> m) {
     id = m["id"];
+    isManualEdited = m["isManualEdited"];
     displayName = m["displayName"];
     title = m["title"];
     subtitle = m["subtitle"];
@@ -25,6 +27,7 @@ class TinyPreset extends TinyDBO {
 
     return {
       "id": tinyPreset.id,
+      "isManualEdited": tinyPreset.isManualEdited,
       "displayName": tinyPreset.displayName,
       "title": tinyPreset.title,
       "subtitle": tinyPreset.subtitle,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/screens/contract/contract_list.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -48,7 +49,7 @@ class MyStatelessWidget extends StatelessWidget {
 
                 switch(index) {
                   case 0:
-                    return new MasterControlWidget(tinyState);
+                    return new ContractListWidget(tinyState);
                   case 1:
                     return new MasterControlWidget(tinyState);
                 }

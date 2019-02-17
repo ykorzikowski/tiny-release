@@ -25,6 +25,25 @@ class SQLiteProvider {
     return await openDatabase(path, version: 2, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
 
+      /// Settings
+      await db.execute("CREATE TABLE Settings ("
+          "id INTEGER PRIMARY KEY,"
+          "key TEXT"
+          "value INTEGER,"
+          "contractId INTEGER,"
+          ")");
+
+      /// Contracts
+      await db.execute("CREATE TABLE Contract ("
+          "id INTEGER PRIMARY KEY,"
+          "displayName TEXT"
+          "presetId INTEGER,"
+          "photographerId INTEGER,"
+          "modelId INTEGER,"
+          "parentId INTEGER,"
+          "witnessId INTEGER,"
+          ")");
+
       /// Reception area
       await db.execute("CREATE TABLE Reception_area ("
           "id INTEGER PRIMARY KEY,"
@@ -34,6 +53,7 @@ class SQLiteProvider {
       /// Preset
       await db.execute("CREATE TABLE Preset ("
           "id INTEGER PRIMARY KEY,"
+          "isManualEdited INTEGER,"
           "displayName TEXT,"
           "title TEXT,"
           "subtitle TEXT,"

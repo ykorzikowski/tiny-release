@@ -1,5 +1,11 @@
 class NavRoutes {
   static const String ROOT = "/";
+  static const CONTRACT_MASTER = "contract/master";
+  static const CONTRACT_LIST = "contract/list";
+  static const CONTRACT_EDIT = "contract/edit";
+  static const CONTRACT_PREVIEW = "contract/preview";
+  static const CONTRACT_GENERATED = "contract/generated";
+
   static const CONTROL_LIST = "control/list";
 
   static const PEOPLE_LIST = "people/list";
