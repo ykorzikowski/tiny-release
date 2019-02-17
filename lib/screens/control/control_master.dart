@@ -30,6 +30,7 @@ class _MasterControlState extends State<MasterControlWidget> {
       CupertinoPageScaffold(
         child:
         Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: OrientationBuilder(builder: (context, orientation) {
             _isLargeScreen = BaseUtil.isLargeScreen(context);
 

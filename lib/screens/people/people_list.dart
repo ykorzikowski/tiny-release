@@ -73,19 +73,17 @@ class _ListWidgetState extends State<PeopleListWidget> {
           navigationBar: CupertinoNavigationBar(
             leading: BaseUtil.isLargeScreen(context) ? Container() : null,
             middle: Text("People"),
-            trailing:CupertinoButton(
-              child: Text("Hinzufügen"),
+            trailing: CupertinoButton(
+              child: Text("Hinzufügen", key: Key('navbar_btn_add'),),
               onPressed: () {
-                var _tinyPeople = TinyPeople();
-                _tinyPeople.type = this._controlState.selectedControlItem;
-                _tinyPeople.emails = List();
-                _tinyPeople.postalAddresses = List();
-                _tinyPeople.phones = List();
+                var _tinyPeople = TinyPeople.factory();
                 _controlState.curDBO = _tinyPeople;
                 Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
               },
             ),),
-    child: SafeArea(  child: Scaffold(
+    child: SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: PagewiseListView(
             padding: EdgeInsets.only(top: 10.0),
             itemBuilder: this._itemBuilder,
@@ -95,11 +93,11 @@ class _ListWidgetState extends State<PeopleListWidget> {
       );
   }
 
-  Widget _itemBuilder(context, entry, _) {
+  Widget _itemBuilder(context, entry, index) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
-      key: Key(entry.hashCode.toString()),
+      key: Key('People_$index'),
       onDismissed: (direction) {
         contactRepository.delete(entry);
 

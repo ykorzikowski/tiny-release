@@ -39,6 +39,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
         ) : null,),
       child:
       Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
             child: Text("Text")
         ),

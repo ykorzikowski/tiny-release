@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -52,6 +51,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   padding: EdgeInsets.only(left: 15.0),
                   child:
                   TextField(
+                    key: Key('tf_givenName'),
                     onChanged: (t) => _tinyPeople.givenName = t,
                     controller: initialValue(_tinyPeople.givenName),
                     decoration: InputDecoration(
@@ -63,6 +63,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   padding: EdgeInsets.only(left: 15.0),
                   child:
                   TextField(
+                    key: Key('tf_familyName'),
                     onChanged: (t) => _tinyPeople.familyName = t,
                     controller: initialValue(_tinyPeople.familyName),
                     decoration: InputDecoration(
@@ -74,6 +75,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   padding: EdgeInsets.only(left: 15.0),
                   child:
                   TextField(
+                    key: Key('tf_company'),
                     onChanged: (t) => _tinyPeople.company = t,
                     controller: initialValue(_tinyPeople.company),
                     decoration: InputDecoration(
@@ -97,6 +99,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             TextField(
+              key: Key('tf_idType'),
               onChanged: (t) => _tinyPeople.idType = t,
               controller: initialValue(_tinyPeople.idType),
               decoration: InputDecoration(
@@ -108,6 +111,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             TextField(
+              key: Key('tf_idNumber'),
               onChanged: (t) => _tinyPeople.idNumber = t,
               controller: initialValue(_tinyPeople.idNumber),
               decoration: InputDecoration(
@@ -119,6 +123,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             TextField(
+              key: Key('tf_birthday'),
               onChanged: (t) => _tinyPeople.birthday = t,
               controller: initialValue(_tinyPeople.birthday),
               keyboardType: TextInputType.datetime,
@@ -347,7 +352,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       navigationBar: CupertinoNavigationBar(
         middle: Text("People hinzufügen"),
         trailing: CupertinoButton(
-          child: Text("Speichern"),
+          child: Text("Speichern", key: Key('btn_navbar_save')),
           onPressed: validContact() ? () {
             if (!validContact()) {
               return;
@@ -358,55 +363,52 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 .canPop());
             Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),
-      child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            new Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    imageAndNameSection(),
-                    Divider(),
-                    infoWidget(),
-                    Divider(),
-                    mailSection(),
-                    FlatButton.icon(
-                      icon: Icon(Icons.add),
-                      label: Text("Add Mail"),
-                      onPressed: () =>
-                          setState(() { _tinyPeople.emails.add(TinyPeopleItem()); })
-                    ),
-                    Divider(),
+      child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          imageAndNameSection(),
+          Divider(),
+          infoWidget(),
+          Divider(),
+          mailSection(),
+          FlatButton.icon(
+              icon: Icon(Icons.add),
+              label: Text("Add Mail"),
+              onPressed: () =>
+                  setState(() {
+                    _tinyPeople.emails.add(TinyPeopleItem());
+                  })
+          ),
+          Divider(),
 
-                    phoneSection(),
-                    FlatButton.icon(
-                      icon: Icon(Icons.add),
-                      label: Text("Add Phone"),
-                      onPressed: () =>
-                          setState(() { _tinyPeople.phones.add(TinyPeopleItem()); })
-                    ),
-                    Divider(),
+          phoneSection(),
+          FlatButton.icon(
+              icon: Icon(Icons.add),
+              label: Text("Add Phone"),
+              onPressed: () =>
+                  setState(() {
+                    _tinyPeople.phones.add(TinyPeopleItem());
+                  })
+          ),
+          Divider(),
 
-                    addressSection(),
-                    FlatButton.icon(
-                      icon: Icon(Icons.add),
-                      label: Text("Add Address"),
-                      onPressed: () =>
-                          setState(() { _tinyPeople.postalAddresses.add(TinyAddress()); })
-                    ),
-                    Divider(),
-                    CupertinoButton(
-                      child: Text("Aus Kontakten importieren"),
-                      onPressed: (){
-                        Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
-                      },
-                    )
-                  ],
-                )
-            )
-
-          ],
-        ),
+          addressSection(),
+          FlatButton.icon(
+              icon: Icon(Icons.add),
+              label: Text("Add Address"),
+              onPressed: () =>
+                  setState(() {
+                    _tinyPeople.postalAddresses.add(TinyAddress());
+                  })
+          ),
+          Divider(),
+          CupertinoButton(
+            child: Text("Aus Kontakten importieren"),
+            onPressed: () {
+              Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
+            },
+          )
+        ],
       ),
     );
   }

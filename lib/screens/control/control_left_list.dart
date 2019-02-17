@@ -44,6 +44,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
                       : Colors.transparent,
               ),
               child: ListTile(
+                key: Key("control_$position"),
                 onTap: () {
                   widget.onItemSelected(position);
                 },

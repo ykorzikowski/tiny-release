@@ -24,6 +24,16 @@ class TinyPeople extends TinyDBO {
     this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
   this.postalAddresses, this.avatar} );
 
+  static TinyPeople factory() {
+    var _tinyPeople = TinyPeople();
+
+    _tinyPeople.emails = List();
+    _tinyPeople.postalAddresses = List();
+    _tinyPeople.phones = List();
+
+    return _tinyPeople;
+  }
+
   @override
   String get displayName => this.givenName + " " + this.familyName;
 

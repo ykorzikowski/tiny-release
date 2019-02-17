@@ -172,6 +172,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
         ),),
       child:
       Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
           child: CustomScrollView(slivers: [
             SliverAppBar(

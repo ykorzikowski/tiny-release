@@ -57,6 +57,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
         ),),
       child:
       Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
             child: ListView(children: <Widget>[
               _tinyPreset.subtitle != null ? Text(

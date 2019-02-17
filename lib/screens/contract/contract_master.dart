@@ -30,6 +30,7 @@ class _ContractMasterWidgetState extends State<ContractMasterWidget> {
       CupertinoPageScaffold(
         child:
         Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: OrientationBuilder(builder: (context, orientation) {
             return Row(children: <Widget>[
               Expanded(

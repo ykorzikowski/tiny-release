@@ -2,6 +2,21 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+
+void _gotoPeopleEdit(var driver) {
+  // go to Settings
+  var tapBar = find.byValueKey('tap_bar');
+  driver.tap(tapBar);
+
+  // tap on people
+  var peopleControlItem = find.byValueKey('control_0');
+  driver.tap(peopleControlItem);
+
+  // tap on add people
+  var addPeople = find.byValueKey('navbar_btn_add');
+  driver.tap(addPeople);
+}
+
 void main() {
   group('People Scroll', () {
     FlutterDriver driver;
@@ -18,6 +33,9 @@ void main() {
       }
     });
 
+    var saveBtn = find.byValueKey('navbar_btn_save');
+    var tfGivenName = find.byValueKey('tf_givenName');
+
     test('verifies people load', () async {
       // Create two SerializableFinders. We will use these to locate specific
       // Widgets displayed by the app. The names provided to the byValueKey
@@ -25,11 +43,11 @@ void main() {
       final listFinder = find.byValueKey('long_list');
       final itemFinder = find.byValueKey('item_50_text');
 
-      // go to Settings
-      var tapBar = find.byValueKey('tap_bar');
-      driver.tap(tapBar);
+      _gotoPeopleEdit(driver);
 
-      //TODO: stub code copied from flutter.io. 
+
+
+      //TODO: stub code copied from flutter.io.
       await driver.scrollUntilVisible(
         // Scroll through this list
         listFinder,
