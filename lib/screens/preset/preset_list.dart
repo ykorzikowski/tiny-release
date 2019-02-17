@@ -58,6 +58,9 @@ class _PresetListWidgetState extends State<PresetListWidget> {
           padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
+          noItemsFoundBuilder: (context) {
+            return Text('Erstellen oder importieren Sie eine neue Vorlage', style: TextStyle(color: CupertinoColors.inactiveGray));
+          },
         ),
       ),),
     );

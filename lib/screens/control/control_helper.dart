@@ -46,8 +46,10 @@ class ControlHelper {
         return NavRoutes.RECEPTION_LIST;
       case 3:
         return NavRoutes.LAYOUT_LIST;
-      case 3:
+      case 4:
         return NavRoutes.WORDING;
+      case 5:
+        return NavRoutes.SETTINGS;
     }
     return null;
   }

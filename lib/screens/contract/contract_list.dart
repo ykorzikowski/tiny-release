@@ -57,6 +57,9 @@ class _ContractListWidgetState extends State<ContractListWidget> {
               padding: EdgeInsets.only(top: 10.0),
               itemBuilder: this._itemBuilder,
               pageLoadController: this.pageLoadController,
+              noItemsFoundBuilder: (context) {
+                return Text('Erstellen Sie einen neuen Vertrag', style: TextStyle(color: CupertinoColors.inactiveGray));
+              },
           ),
         ),),
       );

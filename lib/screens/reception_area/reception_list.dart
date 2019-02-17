@@ -78,6 +78,9 @@ class _ListWidgetState extends State<ReceptionListWidget> {
           padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
+          noItemsFoundBuilder: (context) {
+            return Text('Legen Sie einen neuen Aufnahmebereich an', style: TextStyle(color: CupertinoColors.inactiveGray),);
+          },
         ),
       ),),
     );

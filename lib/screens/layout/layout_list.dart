@@ -37,23 +37,28 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
             tinyLayoutRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
-    return Scaffold(
-        appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Aufnahmebereiche"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              tooltip: 'Add new',
-              onPressed: () {
-//                ControlHelper.handleAddButton(_controlState, Navigator.of(context));
-              },
-            )
-          ],
-        ): null,
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+        middle: Text("Layout"),
+        trailing:CupertinoButton(
+          child: Text("Hinzufügen"),
+          onPressed: () {
+
+          },
+        ),),
+      child: SafeArea(  child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: PagewiseListView(
+          padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
-        ) );
+          noItemsFoundBuilder: (context) {
+            return Text('Erstellen Sie ein neues Layout', style: TextStyle(color: CupertinoColors.inactiveGray));
+          },
+        ),
+      ),),
+    );
   }
 
   Widget _itemBuilder(context, entry, _) {

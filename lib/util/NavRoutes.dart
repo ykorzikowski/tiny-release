@@ -26,4 +26,6 @@ class NavRoutes {
   static const RECEPTION_EDIT = "reception/edit";
 
   static const WORDING = "wording";
+  static const SETTINGS = "settings";
+
 }

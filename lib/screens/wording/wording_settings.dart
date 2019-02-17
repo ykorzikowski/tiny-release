@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -23,12 +24,17 @@ class _WordingSettingsWidgetState extends State<WordingSettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text("WordingSettings"),
-      appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-        title: Text("WordingSettings"),
-      ) : null,
-    );
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+        middle: Text("Wording"),
+
+        ),
+      child: SafeArea(  child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: Text("TODO"),
+      ),
+    ), );
   }
 
 }

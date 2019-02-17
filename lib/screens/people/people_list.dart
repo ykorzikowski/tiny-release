@@ -16,9 +16,9 @@ class PeopleListWidget extends StatefulWidget {
   final TinyState _controlState;
   final Function _getPeople;
   final Function _onPeopleTap;
-  final bool dismissible;
+  final bool isContactImportDialog;
 
-  PeopleListWidget(this._controlState, this._getPeople, this._onPeopleTap, {this.dismissible: true});
+  PeopleListWidget(this._controlState, this._getPeople, this._onPeopleTap, {this.isContactImportDialog: true});
 
   static Widget getCircleAvatar(TinyPeople entry, String circleText) =>
       CircleAvatar(
@@ -44,14 +44,14 @@ class PeopleListWidget extends StatefulWidget {
 
 
   @override
-  _ListWidgetState createState() => _ListWidgetState(_controlState, _getPeople, _onPeopleTap, dismissible: dismissible);
+  _ListWidgetState createState() => _ListWidgetState(_controlState, _getPeople, _onPeopleTap, isContactImportDialog: isContactImportDialog);
 }
 
 class _ListWidgetState extends State<PeopleListWidget> {
   final TinyPeopleRepo contactRepository = new TinyPeopleRepo();
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
-  final bool dismissible;
+  final bool isContactImportDialog;
 
   /// called by list to get people
   /// getPeople(pageIndex)
@@ -60,7 +60,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
   /// onPeopleTap(item, context)
   final Function _onPeopleTap;
 
-  _ListWidgetState(this._controlState, this._getPeople, this._onPeopleTap, {this.dismissible: true});
+  _ListWidgetState(this._controlState, this._getPeople, this._onPeopleTap, {this.isContactImportDialog: true});
 
   @override
   Widget build(BuildContext context) {
@@ -69,35 +69,37 @@ class _ListWidgetState extends State<PeopleListWidget> {
         pageFuture: (pageIndex) =>
             _getPeople(pageIndex)
     );
-
     return
       CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-            middle: Text("People"),
-            trailing: CupertinoButton(
-              child: Text("Hinzufügen", key: Key('navbar_btn_add'),),
-              onPressed: () {
-                var _tinyPeople = TinyPeople.factory();
-                _controlState.curDBO = _tinyPeople;
-                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
+        navigationBar: CupertinoNavigationBar(
+          leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+          middle: Text("People"),
+          trailing: isContactImportDialog ? CupertinoButton(
+            child: Text("Hinzufügen", key: Key('navbar_btn_add'),),
+            onPressed: () {
+              var _tinyPeople = TinyPeople.factory();
+              _controlState.curDBO = _tinyPeople;
+              Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
+            },
+          ) : null),
+        child: SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomPadding: false,
+            body: PagewiseListView(
+              padding: EdgeInsets.only(top: 10.0),
+              itemBuilder: this._itemBuilder,
+              noItemsFoundBuilder: (context) {
+                return Text('Fügen Sie Menschen aus Ihren Kontakten hinzu', style: TextStyle(color: CupertinoColors.inactiveGray));
               },
-            ),),
-    child: SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomPadding: false,
-          body: PagewiseListView(
-            padding: EdgeInsets.only(top: 10.0),
-            itemBuilder: this._itemBuilder,
-            pageLoadController: this.pageLoadController,
-          ),
-        ),),
+              pageLoadController: this.pageLoadController,
+            ),
+          ),),
       );
   }
 
   /// wrap child with dismissible if bool is ture
   Widget dismissibleDistinctive(child, entry, key) {
-    return dismissible ?
+    return isContactImportDialog ?
     Dismissible(
       key: Key(key),
       direction: DismissDirection.endToStart,

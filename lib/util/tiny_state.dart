@@ -18,6 +18,7 @@ import 'package:tiny_release/screens/preset/preset_edit.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/screens/reception_area/reception_list.dart';
+import 'package:tiny_release/screens/settings.dart';
 import 'package:tiny_release/screens/wording/wording_settings.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -46,7 +47,7 @@ class TinyState {
       NavRoutes.CONTROL_LIST: (context) => MasterControlWidget(this),
       /// PEOPLE ROUTE
       NavRoutes.PEOPLE_LIST: (context) => PeopleListWidget(this, peopleListCallback.getPeople, peopleListCallback.onPeopleTap),
-      NavRoutes.PEOPLE_IMPORT: (context) => PeopleListWidget(this, peopleImportCallback.getPeople, peopleImportCallback.onPeopleTap, dismissible: false,),
+      NavRoutes.PEOPLE_IMPORT: (context) => PeopleListWidget(this, peopleImportCallback.getPeople, peopleImportCallback.onPeopleTap, isContactImportDialog: false,),
       NavRoutes.PEOPLE_EDIT: (context) => PeopleEditWidget(this),
       NavRoutes.PEOPLE_PREVIEW: (context) => PeoplePreviewWidget(this),
 
@@ -60,6 +61,7 @@ class TinyState {
       NavRoutes.LAYOUT_PREVIEW: (context) => LayoutPreviewWidget(this),
       NavRoutes.LAYOUT_EDIT: (context) => LayoutEditWidget(this),
 
+      NavRoutes.SETTINGS: (context) => SettingsWidget(this),
       NavRoutes.WORDING: (context) => WordingSettingsWidget(this),
     };
   }

@@ -18,8 +18,8 @@ class ControlLeftListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ControlLeftListWidget> {
 
-  var items = const ["People", "Vorlagen", "Aufnahmebereiche", "Layouts", "Wording"];
-  var icons = const [CupertinoIcons.person_solid, CupertinoIcons.collections_solid, CupertinoIcons.photo_camera_solid, CupertinoIcons.create_solid, CupertinoIcons.tags_solid];
+  var items = const ["People", "Vorlagen", "Aufnahmebereiche", "Layouts", "Wording", "Einstellungen"];
+  var icons = const [CupertinoIcons.person_solid, CupertinoIcons.collections_solid, CupertinoIcons.photo_camera_solid, CupertinoIcons.create_solid, CupertinoIcons.tags_solid, CupertinoIcons.settings_solid];
 
   bool _isSelected(int pos) {
     return BaseUtil.isLargeScreen(context) && pos == widget.controlState.selectedControlItem;
