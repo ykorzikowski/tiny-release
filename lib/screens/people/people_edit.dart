@@ -375,7 +375,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             Divider(),
             mailSection(),
             FlatButton.icon(
-                icon: Icon(Icons.add),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_mail),
                 onPressed: () =>
                     setState(() {
@@ -386,7 +386,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
             phoneSection(),
             FlatButton.icon(
-                icon: Icon(Icons.add),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_phone),
                 onPressed: () =>
                     setState(() {
@@ -397,7 +397,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
             addressSection(),
             FlatButton.icon(
-                icon: Icon(Icons.add),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_address),
                 onPressed: () =>
                     setState(() {
