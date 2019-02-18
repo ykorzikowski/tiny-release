@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -33,9 +34,9 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
         heroTag: 'contract',
         transitionBetweenRoutes: false,
         border: null,
-        middle: Text("Contact Preview"),
+        middle: Text(S.of(context).tile_contact_preview),
         trailing: !BaseUtil.isLargeScreen(context) ? CupertinoButton(
-          child: Text("Bearbeiten"),
+          child: Text(S.of(context).btn_edit),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT),
         ) : null,),

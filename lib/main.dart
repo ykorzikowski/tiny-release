@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_list.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -15,6 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       title: 'Flutter Code Sample for material.AppBar.actions',
       routes: tinyState.routes,
       theme: ThemeData(
@@ -38,11 +46,11 @@ class MyStatelessWidget extends StatelessWidget {
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.add),
-                    title: Text("Model Release"),
+                    title: Text(S.of(context).model_release),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.settings),
-                    title: Text("Verwaltung"),
+                    title: Text(S.of(context).control),
                   ),
 
                 ],),

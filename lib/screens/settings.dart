@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/repo/sqlite_provider.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
@@ -28,7 +29,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       navigationBar: CupertinoNavigationBar(
         transitionBetweenRoutes: false,
         heroTag: 'control',
-        middle: Text("Einstellungen"),
+        middle: Text(S.of(context).title_settings),
       ),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -39,7 +40,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             Divider(),
 
             CupertinoButton(
-              child: Text("Lösche alle Daten"),
+              child: Text(S.of(context).btn_delete_all),
               color: CupertinoColors.destructiveRed,
               onPressed: () async {
                   final db = await SQLiteProvider.db.database;

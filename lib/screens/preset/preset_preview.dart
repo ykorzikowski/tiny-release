@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -53,7 +54,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
         border: null,
         middle: Text(_tinyPreset.title),
         trailing: CupertinoButton(
-          child: Text("Bearbeiten"),
+          child: Text(S.of(context).btn_edit),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT),
         ),),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -55,7 +56,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         child: Row(children: <Widget>[
           IconTheme(data: IconThemeData(color: CupertinoColors.activeGreen),
               child: Icon(CupertinoIcons.add_circled_solid)),
-          Text("Add Paragrpah"),
+          Text(S.of(context).btn_add_paragrpah),
         ],),
         onPressed: () =>
             setState(() => _tinyPreset.paragraphs.add(Paragraph())),
@@ -95,7 +96,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'title',
+              hintText: S.of(context).hint_title,
             ),
           ),
         ),
@@ -108,7 +109,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             maxLines: 12,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'content',
+              hintText: S.of(context).hint_content,
             ),
           ),
         ),
@@ -125,7 +126,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'title',
+              hintText: S.of(context).hint_title,
             ),
           ),
         ),
@@ -137,7 +138,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'subtitle',
+              hintText: S.of(context).hint_subtitle,
             ),
           ),
         ),
@@ -149,7 +150,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'language',
+              hintText: S.of(context).hint_language,
             ),
           ),
         ),
@@ -161,7 +162,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: 'description',
+              hintText: S.of(context).hint_description,
             ),
           ),
         ),
@@ -179,9 +180,9 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'control',
         transitionBetweenRoutes: false,
-        middle: Text("Vorlage hinzufügen"),
+        middle: Text(S.of(context).title_add_preset),
         trailing: CupertinoButton(
-          child: Text("Speichern"),
+          child: Text(S.of(context).btn_save),
           onPressed: validPreset() ? () {
             if (!validPreset()) {
               return;

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -18,7 +19,6 @@ class ControlLeftListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ControlLeftListWidget> {
 
-  var items = const ["People", "Vorlagen", "Aufnahmebereiche", "Layouts", "Wording", "Einstellungen"];
   var icons = const [CupertinoIcons.person_solid, CupertinoIcons.collections_solid, CupertinoIcons.photo_camera_solid, CupertinoIcons.create_solid, CupertinoIcons.tags_solid, CupertinoIcons.settings_solid];
 
   bool _isSelected(int pos) {
@@ -27,12 +27,14 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).item_wording, S.of(context).item_settings];
+
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           heroTag: 'control',
           transitionBetweenRoutes: false,
-          middle: Text("Verwaltung"),
+          middle: Text(S.of(context).control),
         ),
         child:
         ListView.builder(

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -25,7 +26,7 @@ class _LayoutEditWidgetState extends State<LayoutEditWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: !BaseUtil.isLargeScreen(context) ? AppBar(
-          title: Text("Edit"),
+          title: Text(S.of(context).btn_edit),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save_alt),

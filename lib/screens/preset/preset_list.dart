@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -44,9 +45,9 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         heroTag: 'control',
         transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-        middle: Text("Vorlagen"),
+        middle: Text(S.of(context).title_preset),
         trailing:CupertinoButton(
-          child: Text("Hinzufügen"),
+          child: Text(S.of(context).btn_add),
           onPressed: () {
             var _tinyPreset = TinyPreset();
             _tinyPreset.paragraphs = List();
@@ -61,7 +62,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
           noItemsFoundBuilder: (context) {
-            return Text('Erstellen oder importieren Sie eine neue Vorlage', style: TextStyle(color: CupertinoColors.inactiveGray));
+            return Text(S.of(context).no_items_presets, style: TextStyle(color: CupertinoColors.inactiveGray));
           },
         ),
       ),),
@@ -80,7 +81,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
           Scaffold
               .of(context)
               .showSnackBar(
-              SnackBar(content: Text(entry.title + " dismissed")));
+              SnackBar(content: Text(entry.title + S.of(context).scaff_deleted)));
         },
         child:
         Column(

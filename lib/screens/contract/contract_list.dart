@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -42,9 +43,9 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           heroTag: 'contract',
           transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-          middle: Text("Contracts"),
+          middle: Text(S.of(context).title_contracts),
           trailing:CupertinoButton(
-            child: Text("Hinzufügen"),
+            child: Text(S.of(context).title_add),
             onPressed: () {
               var _tinyContract = TinyContract();
               _controlState.curDBO = _tinyContract;
@@ -59,7 +60,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
               itemBuilder: this._itemBuilder,
               pageLoadController: this.pageLoadController,
               noItemsFoundBuilder: (context) {
-                return Text('Erstellen Sie einen neuen Vertrag', style: TextStyle(color: CupertinoColors.inactiveGray));
+                return Text(S.of(context).create_new_contract, style: TextStyle(color: CupertinoColors.inactiveGray));
               },
           ),
         ),),
@@ -77,7 +78,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
         Scaffold
             .of(context)
             .showSnackBar(
-            SnackBar(content: Text(entry.displayName + " dismissed")));
+            SnackBar(content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
       },
       child: Column(
         children: <Widget>[

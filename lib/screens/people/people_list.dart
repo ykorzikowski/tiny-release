@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -75,9 +76,9 @@ class _ListWidgetState extends State<PeopleListWidget> {
           heroTag: 'control',
           transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-          middle: Text("People"),
+          middle: Text(S.of(context).title_people),
           trailing: isContactImportDialog ? CupertinoButton(
-            child: Text("Hinzufügen", key: Key('navbar_btn_add'),),
+            child: Text(S.of(context).btn_add, key: Key('navbar_btn_add'),),
             onPressed: () {
               var _tinyPeople = TinyPeople.factory();
               _controlState.curDBO = _tinyPeople;
@@ -91,7 +92,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
               padding: EdgeInsets.only(top: 10.0),
               itemBuilder: this._itemBuilder,
               noItemsFoundBuilder: (context) {
-                return Text('Fügen Sie Menschen aus Ihren Kontakten hinzu', style: TextStyle(color: CupertinoColors.inactiveGray));
+                return Text(S.of(context).no_items_people, style: TextStyle(color: CupertinoColors.inactiveGray));
               },
               pageLoadController: this.pageLoadController,
             ),
@@ -112,7 +113,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
         Scaffold
             .of(context)
             .showSnackBar(
-            SnackBar(content: Text(entry.displayName + " dismissed")));
+            SnackBar(content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
       },
       child: child,) : Container(child: child,);
   }

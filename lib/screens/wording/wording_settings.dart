@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -29,7 +30,7 @@ class _WordingSettingsWidgetState extends State<WordingSettingsWidget> {
         heroTag: 'control',
         transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-        middle: Text("Wording"),
+        middle: Text(S.of(context).title_wording),
 
         ),
       child: SafeArea(  child: Scaffold(

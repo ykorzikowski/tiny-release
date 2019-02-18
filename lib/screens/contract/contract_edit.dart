@@ -6,6 +6,7 @@ import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -92,9 +93,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'contract',
         transitionBetweenRoutes: false,
-        middle: Text("Contract hinzufügen"),
+        middle: Text(S.of(context).add_contract),
         trailing: CupertinoButton(
-          child: Text("Vorschau"),
+          child: Text(S.of(context).preset),
           onPressed: validContract() ? () {
             if (!validContract()) {
               return;
@@ -111,14 +112,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               SafeArea(
               child:
               Column(children: <Widget>[
-                Text("Es wird ein Vertrag geschlossen zwischen", style: TextStyle(
+                Text(S.of(context).contract_will_made_between, style: TextStyle(
                   fontSize: 24.0,
                 ), textAlign: TextAlign.center),
 
                 Divider(),
 
                 _getPeopleView(
-                    _tinyPhotographer, _tinyPeopleRepo, "Fotograf wählen", (people, item, context) {
+                    _tinyPhotographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
                   setState(() {
                     _tinyPhotographer = item;
                   });
@@ -136,7 +137,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 Divider(),
 
                 _getPeopleView(
-                    _tinyModel, _tinyPeopleRepo, "Model wählen", (people, item, context) {
+                    _tinyModel, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
                   setState(() {
                     _tinyModel = item;
                   });
@@ -149,7 +150,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 MergeSemantics(
                   child: ListTile(
-                    title: Text('Vertreten durch'),
+                    title: Text(S.of(context).represented_by),
                     trailing: CupertinoSwitch(
                       value: _enabledParent,
                       onChanged: (bool value) {
@@ -166,7 +167,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledParent ? _getPeopleView(
-                    _tinyParent, _tinyPeopleRepo, "Gesetzl. Vertretung\n wählen", (people, item, context)
+                    _tinyParent, _tinyPeopleRepo, S.of(context).choose_parent, (people, item, context)
                 {
                   setState(() {
                     _tinyParent = item;
@@ -180,7 +181,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 MergeSemantics(
                   child: ListTile(
-                    title: Text('Bezeugt durch'),
+                    title: Text(S.of(context).witnessed_by),
                     trailing: CupertinoSwitch(
                       value: _enabledWitness,
                       onChanged: (bool value) {
@@ -197,7 +198,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledWitness ? _getPeopleView(
-                    _tinyWitness, _tinyPeopleRepo, "Zeuge wählen", (people, item, context) {
+                    _tinyWitness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
                   setState(() {
                     _tinyWitness = item;
                   });
@@ -208,7 +209,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
-                Text("in den Aufnahmebereichen", style: TextStyle(
+                Text(S.of(context).in_reception_areas, style: TextStyle(
                   fontSize: 24.0,
                 ), textAlign: TextAlign.center,),
 
@@ -222,7 +223,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     controller: initialValue(_tinyContract.location),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'Location',
+                      hintText: S.of(context).hint_location,
                     ),),
                 ),
 
@@ -234,12 +235,12 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     controller: initialValue(_tinyContract.displayName),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'Betreff des Shootings',
+                      hintText: S.of(context).shooting_subject,
                     ),),
                 ),
 
                 CupertinoButton(
-                  child: Text("Wähle Aufnahmedatum"),
+                  child: Text(S.of(context).choose_date),
                   onPressed: () {
 //                CupertinoDatePicker(
 //                  initialDateTime: DateTime.now(),
@@ -250,7 +251,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 ),
 
                 CupertinoButton(
-                  child: Text("Vertrag generieren"),
+                  child: Text(S.of(context).add_contract),
                   onPressed: validContract() ? () {
                     // todo generate contract
                   } : null,

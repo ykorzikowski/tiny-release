@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -56,7 +57,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                     controller: initialValue(_tinyPeople.givenName),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'givenname',
+                      hintText: S.of(context).hint_givenname,
                     ),
                   ),),
                 Padding(
@@ -68,7 +69,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                     controller: initialValue(_tinyPeople.familyName),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'familyName',
+                      hintText: S.of(context).hint_familyname,
                     ),
                   ),),
                 Padding(
@@ -80,7 +81,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                     controller: initialValue(_tinyPeople.company),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
-                      hintText: 'company',
+                      hintText: S.of(context).hint_company,
                     ),
                   ),),
               ],
@@ -104,7 +105,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(_tinyPeople.idType),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'id type',
+                hintText: S.of(context).hint_id_type,
               ),
             ),),
           Padding(
@@ -116,7 +117,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(_tinyPeople.idNumber),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'id number',
+                hintText: S.of(context).hint_id_number,
               ),
             ),),
           Padding(
@@ -129,7 +130,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               keyboardType: TextInputType.datetime,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'birthday',
+                hintText: S.of(context).hint_birthday,
               ),
             ),),
 
@@ -163,7 +164,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(phone.label),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'phone label',
+                hintText: S.of(context).hint_phone_label,
               ),
             ),),
           Padding(
@@ -175,7 +176,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'phone',
+                hintText: S.of(context).hint_phone,
               ),
             ),),
         ],
@@ -216,7 +217,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(mail.label),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'mail label',
+                hintText: S.of(context).hint_mail_label,
               ),
             ),),
           Padding(
@@ -227,7 +228,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'mail',
+                hintText: S.of(context).hint_mail,
               ),
             ),),
         ],
@@ -268,7 +269,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(address.label),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'adress_label',
+                hintText: S.of(context).hint_adresslabel,
               ),
             ),),
           Padding(
@@ -279,7 +280,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(address.street),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'street',
+                hintText: S.of(context).hint_street,
               ),
             ),),
           Padding(
@@ -293,7 +294,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
-                    hintText: 'postcode',
+                    hintText: S.of(context).hint_postcode,
                   ),
                 )),
                 Flexible(child: TextField(
@@ -301,7 +302,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   controller: initialValue(address.city),
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
-                    hintText: 'city',
+                    hintText: S.of(context).hint_city,
                   ),
                 )),
               ],
@@ -314,7 +315,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(address.region),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'region',
+                hintText: S.of(context).hint_region,
               ),
             ),),
           Padding(
@@ -325,7 +326,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               controller: initialValue(address.country),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'country',
+                hintText: S.of(context).hint_country,
               ),
             ),),
         ],
@@ -352,9 +353,9 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'control',
         transitionBetweenRoutes: false,
-        middle: Text("People hinzufügen"),
+        middle: Text(S.of(context).title_add_people),
         trailing: CupertinoButton(
-          child: Text("Speichern", key: Key('btn_navbar_save')),
+          child: Text(S.of(context).brn_save, key: Key('btn_navbar_save')),
           onPressed: validContact() ? () {
             if (!validContact()) {
               return;
@@ -375,7 +376,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             mailSection(),
             FlatButton.icon(
                 icon: Icon(Icons.add),
-                label: Text("Add Mail"),
+                label: Text(S.of(context).btn_add_mail),
                 onPressed: () =>
                     setState(() {
                       _tinyPeople.emails.add(TinyPeopleItem());
@@ -386,7 +387,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             phoneSection(),
             FlatButton.icon(
                 icon: Icon(Icons.add),
-                label: Text("Add Phone"),
+                label: Text(S.of(context).btn_add_phone),
                 onPressed: () =>
                     setState(() {
                       _tinyPeople.phones.add(TinyPeopleItem());
@@ -397,7 +398,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             addressSection(),
             FlatButton.icon(
                 icon: Icon(Icons.add),
-                label: Text("Add Address"),
+                label: Text(S.of(context).btn_add_address),
                 onPressed: () =>
                     setState(() {
                       _tinyPeople.postalAddresses.add(TinyAddress());
@@ -405,7 +406,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             ),
             Divider(),
             CupertinoButton(
-              child: Text("Aus Kontakten importieren"),
+              child: Text(S.of(context).btn_import_contacts),
               onPressed: () {
                 Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
               },

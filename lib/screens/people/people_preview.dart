@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -57,7 +58,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
         children: <Widget>[
           tinyPeople.idType != null ? Text(tinyPeople.idType) : Container(),
           tinyPeople.idNumber != null ? Text(tinyPeople.idNumber) : Container(),
-          tinyPeople.birthday != null ? Text("Geburtstag") : Container(),
+          tinyPeople.birthday != null ? Text(S.of(context).birthday) : Container(),
           tinyPeople.birthday != null ? Text(tinyPeople.birthday) : Container(),
         ],
       );
@@ -168,7 +169,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
         transitionBetweenRoutes: false,
         border: null,
         trailing: CupertinoButton(
-          child: Text("Bearbeiten"),
+          child: Text(S.of(context).btn_edit),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT),
         ),),

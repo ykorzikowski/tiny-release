@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
 import 'package:tiny_release/data/tiny_reception.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -42,21 +42,21 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         heroTag: 'control',
         transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-        middle: Text("Aufnahmebereiche"),
+        middle: Text(S.of(context).title_reception),
         trailing:CupertinoButton(
-          child: Text("Hinzufügen"),
+          child: Text(S.of(context).btn_add),
           onPressed: () {
             _tinyReception = TinyReception();
             _controlState.curDBO = _tinyReception;
             showCupertinoDialog(context: context, builder: (context) => CupertinoAlertDialog(
-              title: Text("Aufnahmebereich hinzufügen"),
+              title: Text(S.of(context).title_add_reception),
               content: CupertinoTextField(
                 onChanged: (t) => _tinyReception.displayName = t,
                 onSubmitted: (t) => _tinyReception.displayName = t,
               ),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  child: Text("Speichern"),
+                  child: Text(S.of(context).btn_save),
                   isDefaultAction: true,
                   onPressed: () {
                     _tinyRepo.save(_tinyReception);
@@ -65,7 +65,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                 ),
                 CupertinoDialogAction(
                   isDestructiveAction: true,
-                  child: Text("Abbrechen"),
+                  child: Text(S.of(context).btn_dialog_cancel),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
                   },
@@ -81,7 +81,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,
           noItemsFoundBuilder: (context) {
-            return Text('Legen Sie einen neuen Aufnahmebereich an', style: TextStyle(color: CupertinoColors.inactiveGray),);
+            return Text(S.of(context).no_items_reception, style: TextStyle(color: CupertinoColors.inactiveGray),);
           },
         ),
       ),),
@@ -99,7 +99,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         Scaffold
             .of(context)
             .showSnackBar(
-            SnackBar(content: Text(entry.displayName + " dismissed")));
+            SnackBar(content: Text(entry.displayName + S.of(context).scaff_deleted)));
       },
       child: Column(
         children: <Widget>[
@@ -113,13 +113,5 @@ class _ListWidgetState extends State<ReceptionListWidget> {
           Divider()
         ],
       ),);
-  }
-
-  void openDetailView(item, context) {
-    _controlState.curDBO = item;
-
-    Navigator.of(context).pushNamed(NavRoutes.RECEPTION_PREVIEW);
-
-    // todo
   }
 }
