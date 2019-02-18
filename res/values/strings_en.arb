@@ -73,5 +73,6 @@
   "choose_source": "Choose source",
   "camera": "Camera",
   "gallery": "Gallery",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "dateFormatPattern": "yyyy-MM-dd"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_layout_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
@@ -9,8 +10,16 @@ import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_layout.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/data/tiny_reception.dart';
+import 'package:tiny_release/generated/i18n.dart';
 
 class BaseUtil {
+
+  /// in db date is saved as yyyyMMdd
+  static String getLocalFormattedDate( final BuildContext context, final String dboStr ) {
+    DateFormat formatter = DateFormat(S.of(context).dateFormatPattern);
+    return formatter.format(DateTime.parse(dboStr));
+  }
+
   static bool isLargeScreen(context) {
     return MediaQuery.of(context).size.width > 600;
   }

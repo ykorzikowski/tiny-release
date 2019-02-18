@@ -44,6 +44,7 @@ class S implements WidgetsLocalizations {
   String get contract_will_made_between => "There will be a contract between";
   String get control => "Control";
   String get create_new_contract => "Create a new contract";
+  String get dateFormatPattern => "yyyy-MM-dd";
   String get gallery => "Gallery";
   String get hint_adresslabel => "adress_label";
   String get hint_birthday => "birthday";
@@ -104,6 +105,8 @@ class $de extends S {
 
   @override
   String get cancel => "Abbrechen";
+  @override
+  String get dateFormatPattern => "dd.MM.yyyy";
   @override
   String get item_reception => "Aufnahmebereiche";
   @override

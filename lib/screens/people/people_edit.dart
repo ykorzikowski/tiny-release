@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as IOImage;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -26,11 +26,13 @@ class PeopleEditWidget extends StatefulWidget {
 }
 
 class _PeopleEditWidgetState extends State<PeopleEditWidget> {
+  DateFormat formatter ;
   final TinyState _controlState;
   TinyPeople _tinyPeople;
 
   _PeopleEditWidgetState(this._controlState) {
     _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_controlState.curDBO ) );
+    formatter = new DateFormat("yyyyMMdd");
   }
 
   initialValue(val) {
@@ -151,6 +153,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   /// get info widget
   Widget infoWidget() =>
       Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(left: 15.0),
@@ -176,19 +179,43 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 hintText: S.of(context).hint_id_number,
               ),
             ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            TextField(
-              key: Key('tf_birthday'),
-              onChanged: (t) => _tinyPeople.birthday = t,
-              controller: initialValue(_tinyPeople.birthday),
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_birthday,
-              ),
-            ),),
+              CupertinoButton(
+                child: TextField(
+                  key: Key('tf_birthday'),
+                  enabled: false,
+                  controller: _tinyPeople.birthday == null ? initialValue("") : initialValue(BaseUtil.getLocalFormattedDate(context, _tinyPeople.birthday)),
+                  keyboardType: TextInputType.datetime,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: S.of(context).hint_birthday,
+                  ),
+                ),
+                onPressed: () =>
+                    showModalBottomSheet(
+                      context: context, builder: (context) =>
+                        Column(children: <Widget>[
+                          CupertinoNavigationBar(
+                            trailing: CupertinoButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            middle: Text("Select Birthday"),
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: CupertinoDatePicker(
+                              mode: CupertinoDatePickerMode.date,
+                              maximumYear: DateTime.now().year,
+                              minimumYear: 1900,
+                              initialDateTime: _tinyPeople.birthday != null ? DateTime.parse(_tinyPeople.birthday) : DateTime.now(),
+                              onDateTimeChanged: (t) => _tinyPeople.birthday = formatter.format(t),
+                            ),
+                          )
+
+                          ],)),
+              )
 
         ],
       );

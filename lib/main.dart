@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tiny_release/cupertino_localizations.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_list.dart';
 import 'package:tiny_release/screens/control/control_master.dart';
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: [
         S.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        FallbackCupertinoLocalisationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
