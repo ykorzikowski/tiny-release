@@ -130,7 +130,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
-                Text("und", style: TextStyle(
+                Text(S.of(context).and, style: TextStyle(
                   fontSize: 24.0,
                 ), textAlign: TextAlign.center,),
 

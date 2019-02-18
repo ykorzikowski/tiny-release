@@ -20,6 +20,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get add_contract => "Add Contract";
+  String get and => "und";
   String get birthday => "Birthday";
   String get brn_save => "Save";
   String get btn_add => "Add";
@@ -181,6 +182,8 @@ class $de extends S {
   String get hint_city => "Stad";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
+  @override
+  String get and => "und";
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override

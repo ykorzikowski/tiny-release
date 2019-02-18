@@ -68,5 +68,6 @@
   "title_wording": "Wording",
   "btn_delete_all": "Delete all data",
   "title_settings": "Settings",
-  "represented_by": "represented_by"
+  "represented_by": "represented_by",
+  "and": "und"
 }
