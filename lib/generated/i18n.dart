@@ -75,7 +75,7 @@ class S implements WidgetsLocalizations {
   String get item_settings => "Settings";
   String get item_wording => "Wording";
   String get model_release => "Model Release";
-  String get no_items_people => "Add people from your contracts";
+  String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
   String get preset => "Preset";

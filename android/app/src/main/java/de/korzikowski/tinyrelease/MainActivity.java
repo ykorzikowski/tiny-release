@@ -1,4 +1,4 @@
-package com.example.tinyrelease;
+package de.korzikowski.tinyrelease;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
