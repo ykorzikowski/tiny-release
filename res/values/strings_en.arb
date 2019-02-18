@@ -69,5 +69,9 @@
   "btn_delete_all": "Delete all data",
   "title_settings": "Settings",
   "represented_by": "represented_by",
-  "and": "und"
+  "and": "und",
+  "choose_source": "Choose source",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "cancel": "Cancel"
 }

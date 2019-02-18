@@ -47,6 +47,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSContactsUsageDescription</key>
-	<string>This app requires contacts access to function properly.</string>
+	<string>Required for importing contacts.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Required for importing image.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Required for taking image.</string>
 </dict>
 </plist>

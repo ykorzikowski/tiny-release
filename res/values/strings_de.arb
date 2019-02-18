@@ -69,5 +69,9 @@
   "btn_delete_all": "Lösche alle Daten",
   "title_settings": "Einstellungen",
   "represented_by": "Vertreten durch",
-  "and": "und"
+  "and": "und",
+  "choose_source": "Quelle wählen",
+  "camera": "Kamera",
+  "gallery": "Gallerie",
+  "cancel": "Abbrechen"
 }

@@ -1,6 +1,11 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as IOImage;
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -32,17 +37,68 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     return TextEditingController(text: val);
   }
 
+  Future getImage(ImageSource source) async {
+    File selectedFile = await ImagePicker.pickImage(source: source);
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: selectedFile.path,
+      ratioX: 1.0,
+      ratioY: 1.0,
+      maxWidth: 512,
+      maxHeight: 512,
+    );
+    if ( croppedFile != null ) {
+      setState(() {
+          _tinyPeople.avatar = croppedFile.readAsBytesSync();
+      });
+    }
+
+  }
+
   Widget imageAndNameSection() =>
       Row(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundImage: _tinyPeople.avatar == null
-                  ? null
-                  : new MemoryImage(_tinyPeople.avatar),
-              backgroundColor: Colors.lightGreen,
-              radius: 32.0,
+            child: CupertinoButton(
+              onPressed: () {
+                showCupertinoModalPopup(context: context, builder: (context) =>
+                    CupertinoActionSheet(
+                      title: Text(S.of(context).choose_source), actions: <Widget>[
+                      CupertinoActionSheetAction(
+                        child: Text(S.of(context).camera),
+                        onPressed: () {
+                          getImage(ImageSource.camera);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      CupertinoActionSheetAction(
+                        child: Text(S.of(context).gallery),
+                        onPressed: () {
+                          getImage(ImageSource.gallery);
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                      cancelButton: CupertinoActionSheetAction(
+                        child: Text(S
+                            .of(context)
+                            .cancel, style: TextStyle(
+                            color: CupertinoColors.destructiveRed),),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+
+                    ),);
+              },
+              child: CircleAvatar(
+                child: _tinyPeople.avatar == null ? Icon(CupertinoIcons.add, color: CupertinoColors.white,) : Container(),
+                backgroundImage: _tinyPeople.avatar == null
+                    ? null
+                    : new MemoryImage(_tinyPeople.avatar),
+                backgroundColor: CupertinoColors.activeBlue,
+                radius: 32.0,
+              ),
             ),
           ),
           Flexible(
@@ -361,6 +417,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               return;
             }
             new TinyPeopleRepo().save(_tinyPeople);
+            _controlState.curDBO = _tinyPeople;
             Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PEOPLE_LIST);
             Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),

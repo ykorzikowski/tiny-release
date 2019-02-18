@@ -33,14 +33,18 @@ class S implements WidgetsLocalizations {
   String get btn_edit => "Edit";
   String get btn_import_contacts => "Import from contracts";
   String get btn_save => "Speichern";
+  String get camera => "Camera";
+  String get cancel => "Cancel";
   String get choose_date => "Choose shooting date";
   String get choose_model => "Choose Model";
   String get choose_parent => "Choose Parent";
   String get choose_photographer => "Choose Photographer";
+  String get choose_source => "Choose source";
   String get choose_witness => "Choose Witness";
   String get contract_will_made_between => "There will be a contract between";
   String get control => "Control";
   String get create_new_contract => "Create a new contract";
+  String get gallery => "Gallery";
   String get hint_adresslabel => "adress_label";
   String get hint_birthday => "birthday";
   String get hint_city => "city";
@@ -99,6 +103,8 @@ class $de extends S {
   TextDirection get textDirection => TextDirection.ltr;
 
   @override
+  String get cancel => "Abbrechen";
+  @override
   String get item_reception => "Aufnahmebereiche";
   @override
   String get btn_add_address => "Adresse hinzufügen";
@@ -137,6 +143,8 @@ class $de extends S {
   @override
   String get hint_region => "Bundesland";
   @override
+  String get gallery => "Gallerie";
+  @override
   String get add_contract => "Vertrag hinzufügen";
   @override
   String get brn_save => "Speichern";
@@ -150,6 +158,8 @@ class $de extends S {
   String get btn_save => "Speichern";
   @override
   String get btn_add_paragrpah => "Paragraf hinzufügen";
+  @override
+  String get choose_source => "Quelle wählen";
   @override
   String get title_settings => "Einstellungen";
   @override
@@ -190,6 +200,8 @@ class $de extends S {
   String get btn_add_phone => "Telefon hnzufügen";
   @override
   String get scaff_deleted => "gelöscht";
+  @override
+  String get camera => "Kamera";
   @override
   String get title_add_preset => "Vorlage hinzufügen";
   @override

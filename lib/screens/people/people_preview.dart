@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -34,7 +35,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                 child: CircleAvatar(
                   backgroundColor: Colors.lightBlue,
                   child: tinyPeople.avatar == null ? Text(
-                    tinyPeople.givenName.substring(0, 1) + tinyPeople.familyName.substring(0, 1),
+                    PeopleListWidget.getCircleText(tinyPeople),
                     style: TextStyle(
                       color: Colors.white,
                     ),
