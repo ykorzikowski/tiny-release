@@ -14,9 +14,13 @@ import 'package:tiny_release/generated/i18n.dart';
 
 class BaseUtil {
 
-  /// in db date is saved as yyyyMMdd
   static String getLocalFormattedDate( final BuildContext context, final String dboStr ) {
     DateFormat formatter = DateFormat(S.of(context).dateFormatPattern);
+    return formatter.format(DateTime.parse(dboStr));
+  }
+
+  static String getLocalFormattedDateTime( final BuildContext context, final String dboStr ) {
+    DateFormat formatter = DateFormat(S.of(context).dateTimeFormatPattern);
     return formatter.format(DateTime.parse(dboStr));
   }
 

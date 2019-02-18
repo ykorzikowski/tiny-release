@@ -45,6 +45,7 @@ class S implements WidgetsLocalizations {
   String get control => "Control";
   String get create_new_contract => "Create a new contract";
   String get dateFormatPattern => "yyyy-MM-dd";
+  String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
   String get gallery => "Gallery";
   String get hint_adresslabel => "adress_label";
   String get hint_birthday => "birthday";
@@ -82,6 +83,9 @@ class S implements WidgetsLocalizations {
   String get preset => "Preset";
   String get represented_by => "represented_by";
   String get scaff_deleted => "dismissed";
+  String get select_birthday => "Select Birthday";
+  String get select_date_ok => "OK";
+  String get shooting_date => "Shooting Date";
   String get shooting_subject => "Subject of Shooting";
   String get tile_contact_preview => "Contact Preview";
   String get title_add => "Add";
@@ -119,6 +123,8 @@ class $de extends S {
   String get hint_street => "Straße";
   @override
   String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
+  @override
+  String get shooting_date => "Aufnahmedatum";
   @override
   String get hint_title => "Titel";
   @override
@@ -158,6 +164,8 @@ class $de extends S {
   @override
   String get btn_edit => "Bearbeiten";
   @override
+  String get select_birthday => "Geburtstag wählen";
+  @override
   String get btn_save => "Speichern";
   @override
   String get btn_add_paragrpah => "Paragraf hinzufügen";
@@ -167,6 +175,8 @@ class $de extends S {
   String get title_settings => "Einstellungen";
   @override
   String get hint_location => "Location";
+  @override
+  String get select_date_ok => "Wählen";
   @override
   String get hint_id_type => "Ausweisart";
   @override
@@ -231,6 +241,8 @@ class $de extends S {
   String get choose_model => "Model wählen";
   @override
   String get hint_country => "Land";
+  @override
+  String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
   @override
   String get btn_add_mail => "E-Mail hinzufügen";
   @override

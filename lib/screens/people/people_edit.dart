@@ -26,13 +26,11 @@ class PeopleEditWidget extends StatefulWidget {
 }
 
 class _PeopleEditWidgetState extends State<PeopleEditWidget> {
-  DateFormat formatter ;
   final TinyState _controlState;
   TinyPeople _tinyPeople;
 
   _PeopleEditWidgetState(this._controlState) {
     _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_controlState.curDBO ) );
-    formatter = new DateFormat("yyyyMMdd");
   }
 
   initialValue(val) {
@@ -196,12 +194,12 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                         Column(children: <Widget>[
                           CupertinoNavigationBar(
                             trailing: CupertinoButton(
-                              child: Text("OK"),
+                              child: Text(S.of(context).select_date_ok),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
                             ),
-                            middle: Text("Select Birthday"),
+                            middle: Text(S.of(context).select_birthday),
                           ),
                           Flexible(
                             fit: FlexFit.loose,
@@ -210,7 +208,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                               maximumYear: DateTime.now().year,
                               minimumYear: 1900,
                               initialDateTime: _tinyPeople.birthday != null ? DateTime.parse(_tinyPeople.birthday) : DateTime.now(),
-                              onDateTimeChanged: (t) => _tinyPeople.birthday = formatter.format(t),
+                              onDateTimeChanged: (t) => _tinyPeople.birthday = t.toIso8601String(),
                             ),
                           )
 

@@ -9,6 +9,7 @@ import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_page_wrapper.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -239,15 +240,42 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     ),),
                 ),
 
+
                 CupertinoButton(
-                  child: Text(S.of(context).choose_date),
-                  onPressed: () {
-//                CupertinoDatePicker(
-//                  initialDateTime: DateTime.now(),
-//                  mode: CupertinoDatePickerMode.dateAndTime,
-//                  onDateTimeChanged: (dateTime) {_tinyContract.date = dateTime.toIso8601String(); },
-//                )
-                  },
+                  child: TextField(
+                    key: Key('tf_shooting_date'),
+                    enabled: false,
+                    controller: _tinyContract.date == null ? initialValue("") : initialValue(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)),
+                    keyboardType: TextInputType.datetime,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      hintText: S.of(context).shooting_date,
+                    ),
+                  ),
+                  onPressed: () =>
+                      showModalBottomSheet(
+                          context: context, builder: (context) =>
+                          Column(children: <Widget>[
+                            CupertinoNavigationBar(
+                              trailing: CupertinoButton(
+                                child: Text(S.of(context).select_date_ok),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              middle: Text(S.of(context).choose_date),
+                            ),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.dateAndTime,
+                                minimumYear: 1900,
+                                initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
+                                onDateTimeChanged: (t) => _tinyContract.date = t.toIso8601String(),
+                              ),
+                            )
+
+                          ],)),
                 ),
 
                 CupertinoButton(

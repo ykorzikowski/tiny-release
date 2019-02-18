@@ -74,5 +74,9 @@
   "camera": "Kamera",
   "gallery": "Gallerie",
   "cancel": "Abbrechen",
-  "dateFormatPattern": "dd.MM.yyyy"
+  "dateFormatPattern": "dd.MM.yyyy",
+  "dateTimeFormatPattern": "dd.MM.yyyy HH:mm",
+  "select_birthday": "Geburtstag wählen",
+  "select_date_ok": "Wählen",
+  "shooting_date": "Aufnahmedatum",
 }
