@@ -89,6 +89,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             body: PagewiseListView(
+              showRetry: false,
               padding: EdgeInsets.only(top: 10.0),
               itemBuilder: this._itemBuilder,
               noItemsFoundBuilder: (context) {

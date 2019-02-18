@@ -46,6 +46,12 @@ class SQLiteProvider {
           "witnessId INTEGER"
           ")");
 
+      /// Layout
+      await db.execute("CREATE TABLE Layout ("
+          "id INTEGER PRIMARY KEY,"
+          "displayName TEXT"
+          ")");
+
       /// Reception area
       await db.execute("CREATE TABLE Reception_area ("
           "id INTEGER PRIMARY KEY,"

@@ -52,6 +52,7 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
       child: SafeArea(  child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: PagewiseListView(
+          showRetry: false,
           padding: EdgeInsets.only(top: 10.0),
           itemBuilder: this._itemBuilder,
           pageLoadController: this.pageLoadController,

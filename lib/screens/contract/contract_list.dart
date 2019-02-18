@@ -56,6 +56,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             body: PagewiseListView(
+              showRetry: false,
               padding: EdgeInsets.only(top: 10.0),
               itemBuilder: this._itemBuilder,
               pageLoadController: this.pageLoadController,

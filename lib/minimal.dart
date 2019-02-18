@@ -114,6 +114,7 @@ class PagewiseListViewExample extends StatelessWidget {
         child:
         Scaffold(
           body: PagewiseListView(
+              showRetry: false,
               pageSize: PAGE_SIZE,
               itemBuilder: this._itemBuilder,
               pageFuture: (pageIndex) =>
