@@ -107,38 +107,29 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child:
-                  TextField(
+                  CupertinoTextField(
                     key: Key('tf_givenName'),
                     onChanged: (t) => _tinyPeople.givenName = t,
                     controller: initialValue(_tinyPeople.givenName),
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).hint_givenname,
-                    ),
+                    placeholder: S.of(context).hint_givenname,
                   ),),
                 Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child:
-                  TextField(
+                  CupertinoTextField(
                     key: Key('tf_familyName'),
                     onChanged: (t) => _tinyPeople.familyName = t,
                     controller: initialValue(_tinyPeople.familyName),
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).hint_familyname,
-                    ),
+                    placeholder: S.of(context).hint_familyname,
                   ),),
                 Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child:
-                  TextField(
+                  CupertinoTextField(
                     key: Key('tf_company'),
                     onChanged: (t) => _tinyPeople.company = t,
                     controller: initialValue(_tinyPeople.company),
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).hint_company,
-                    ),
+                    placeholder:  S.of(context).hint_company,
                   ),),
               ],
             ) ,
@@ -156,63 +147,51 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               key: Key('tf_idType'),
               onChanged: (t) => _tinyPeople.idType = t,
               controller: initialValue(_tinyPeople.idType),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_id_type,
-              ),
+              placeholder:  S.of(context).hint_id_type,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               key: Key('tf_idNumber'),
               onChanged: (t) => _tinyPeople.idNumber = t,
               controller: initialValue(_tinyPeople.idNumber),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_id_number,
-              ),
+              placeholder:  S.of(context).hint_id_number,
             ),),
-              CupertinoButton(
-                child: TextField(
-                  key: Key('tf_birthday'),
-                  enabled: false,
-                  controller: _tinyPeople.birthday == null ? initialValue("") : initialValue(BaseUtil.getLocalFormattedDate(context, _tinyPeople.birthday)),
-                  keyboardType: TextInputType.datetime,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: S.of(context).hint_birthday,
-                  ),
-                ),
-                onPressed: () =>
-                    showModalBottomSheet(
-                      context: context, builder: (context) =>
-                        Column(children: <Widget>[
-                          CupertinoNavigationBar(
-                            trailing: CupertinoButton(
-                              child: Text(S.of(context).select_date_ok),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
+              ListTile(
+                leading: Text(S.of(context).hint_birthday),
+                title: CupertinoButton(
+                  child: _tinyPeople.birthday != null ? Text(BaseUtil.getLocalFormattedDate(context, _tinyPeople.birthday)) : Text(S.of(context).chose_brithday),
+                  onPressed: () =>
+                      showModalBottomSheet(
+                        context: context, builder: (context) =>
+                          Column(children: <Widget>[
+                            CupertinoNavigationBar(
+                              trailing: CupertinoButton(
+                                child: Text(S.of(context).select_date_ok),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              middle: Text(S.of(context).select_birthday),
                             ),
-                            middle: Text(S.of(context).select_birthday),
-                          ),
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.date,
-                              maximumYear: DateTime.now().year,
-                              minimumYear: 1900,
-                              initialDateTime: _tinyPeople.birthday != null ? DateTime.parse(_tinyPeople.birthday) : DateTime.now(),
-                              onDateTimeChanged: (t) => _tinyPeople.birthday = t.toIso8601String(),
-                            ),
-                          )
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.date,
+                                maximumYear: DateTime.now().year,
+                                minimumYear: 1900,
+                                initialDateTime: _tinyPeople.birthday != null ? DateTime.parse(_tinyPeople.birthday) : DateTime.now(),
+                                onDateTimeChanged: (t) => _tinyPeople.birthday = t.toIso8601String(),
+                              ),
+                            )
 
-                          ],)),
+                            ],)),
+                ),
               )
 
         ],
@@ -240,25 +219,19 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => phone.label = t,
               controller: initialValue(phone.label),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_phone_label,
-              ),
+              placeholder:  S.of(context).hint_phone_label,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => phone.value = t,
               controller: initialValue(phone.value),
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_phone,
-              ),
+              placeholder:  S.of(context).hint_phone,
             ),),
         ],
       );
@@ -293,24 +266,18 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => mail.label = t,
               controller: initialValue(mail.label),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_mail_label,
-              ),
+              placeholder:  S.of(context).hint_mail_label,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
-            child: TextField(
+            child: CupertinoTextField(
               onChanged: (t) => mail.value = t,
               controller: initialValue(mail.value),
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_mail,
-              ),
+              placeholder:  S.of(context).hint_mail,
             ),),
         ],
       );
@@ -345,70 +312,53 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => address.label = t,
               controller: initialValue(address.label),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_adresslabel,
+              placeholder:  S.of(context).hint_adresslabel,
               ),
-            ),),
+            ),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => address.street = t,
               controller: initialValue(address.street),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_street,
-              ),
+              placeholder:  S.of(context).hint_street,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
             Row(
               children: <Widget>[
-                Flexible(child: TextField(
+                Flexible(child: CupertinoTextField(
                   onChanged: (t) => address.postcode = t,
                   controller: initialValue(address.postcode),
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: S.of(context).hint_postcode,
-                  ),
+                  placeholder:  S.of(context).hint_postcode,
                 )),
-                Flexible(child: TextField(
+                Flexible(child: CupertinoTextField(
                   onChanged: (t) => address.city = t,
                   controller: initialValue(address.city),
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: S.of(context).hint_city,
-                  ),
+                  placeholder:  S.of(context).hint_city,
                 )),
               ],
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => address.region = t,
               controller: initialValue(address.region),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_region,
-              ),
+              placeholder:  S.of(context).hint_region,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
-            TextField(
+            CupertinoTextField(
               onChanged: (t) => address.country = t,
               controller: initialValue(address.country),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: S.of(context).hint_country,
-              ),
+              placeholder:  S.of(context).hint_country,
             ),),
         ],
       );

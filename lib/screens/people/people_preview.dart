@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -60,7 +61,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
           tinyPeople.idType != null ? Text(tinyPeople.idType) : Container(),
           tinyPeople.idNumber != null ? Text(tinyPeople.idNumber) : Container(),
           tinyPeople.birthday != null ? Text(S.of(context).birthday) : Container(),
-          tinyPeople.birthday != null ? Text(tinyPeople.birthday) : Container(),
+          tinyPeople.birthday != null ? Text(BaseUtil.getLocalFormattedDate(context, tinyPeople.birthday)) : Container(),
         ],
       );
 

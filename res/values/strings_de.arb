@@ -83,5 +83,6 @@
   "select_preset": "Vorlage wählen",
   "choose": "Wählen",
   "contract_images": "Anzahl Bilder",
-  "change_order_title": "Reihenfolge anpassen"
+  "change_order_title": "Reihenfolge anpassen",
+  "chose_brithday": "Geburtstag auswählen"
 }

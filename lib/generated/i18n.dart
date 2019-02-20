@@ -43,6 +43,7 @@ class S implements WidgetsLocalizations {
   String get choose_photographer => "Choose Photographer";
   String get choose_source => "Choose source";
   String get choose_witness => "Choose Witness";
+  String get chose_brithday => "Chose brithday";
   String get contract_images => "Images count";
   String get contract_will_made_between => "There will be a contract between";
   String get control => "Control";
@@ -130,6 +131,8 @@ class $de extends S {
   String get hint_street => "Straße";
   @override
   String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
+  @override
+  String get chose_brithday => "Geburtstag auswählen";
   @override
   String get shooting_date => "Aufnahmedatum";
   @override

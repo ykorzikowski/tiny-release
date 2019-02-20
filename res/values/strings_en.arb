@@ -83,5 +83,6 @@
   "select_preset": "Select Preset",
   "choose": "Choose",
   "contract_images": "Images count",
-  "change_order_title": "Change order"
+  "change_order_title": "Change order",
+  "chose_brithday": "Chose brithday"
 }
