@@ -12,13 +12,13 @@ class ParagraphRepo extends TinyRepo< Paragraph >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     db.insert(TYPE, Paragraph.toMap( item ) );
   }
 
-  void update( Paragraph item ) async {
+  void _update( Paragraph item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, Paragraph.toMap( item ), where: "id = ?", whereArgs: [item.id] );

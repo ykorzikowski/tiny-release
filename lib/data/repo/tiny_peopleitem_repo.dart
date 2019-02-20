@@ -37,13 +37,13 @@ class TinyPeopleItemRepo extends TinyRepo< TinyPeopleItem > {
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     db.insert(TYPE, TinyPeopleItem.toMap( item ) );
   }
 
-  void update( TinyPeopleItem item ) async {
+  void _update( TinyPeopleItem item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, TinyPeopleItem.toMap( item ), where: "id = ?", whereArgs: [item.id] );

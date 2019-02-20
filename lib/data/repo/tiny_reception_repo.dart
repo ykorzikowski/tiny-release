@@ -14,13 +14,13 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-       return update( item );
+       return _update( item );
     }
 
     return db.insert(TYPE, TinyReception.toMap( item ) );
   }
 
-  void update( TinyReception item ) async {
+  void _update( TinyReception item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, TinyReception.toMap( item ) , where: "id = ?", whereArgs: [item.id] );

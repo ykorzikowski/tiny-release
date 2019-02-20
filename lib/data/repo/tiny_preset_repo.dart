@@ -14,7 +14,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     var map = TinyPreset.toMap( item );
@@ -25,7 +25,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     _putParagraphs( item );
   }
 
-  void update(TinyPreset item) async {
+  void _update(TinyPreset item) async {
     final db = await SQLiteProvider.db.database;
 
     // remove paragraphs from map

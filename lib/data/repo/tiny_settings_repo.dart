@@ -48,14 +48,14 @@ class TinySettingsRepo  extends TinyRepo< TinySetting >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     return db.insert(TYPE, TinySetting.toMap( item ) );
 
   }
 
-  void update( TinySetting item ) async {
+  void _update( TinySetting item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, TinySetting.toMap( item ) , where: "id = ?", whereArgs: [item.id] );

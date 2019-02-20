@@ -33,6 +33,17 @@ class SQLiteProvider {
           "contractId INTEGER"
           ")");
 
+      /// ReceptionArea 2 Contract Releations
+      await db.execute("CREATE TABLE Reception_area_to_contract ("
+          "id INTEGER PRIMARY KEY,"
+          "contractId INTEGER,"
+          "receptionId INTEGER,"
+          "FOREIGN KEY (contractId) REFERENCES Contract (id)"
+          "ON DELETE CASCADE ON UPDATE NO ACTION,"
+          "FOREIGN KEY (receptionId) REFERENCES Reception_area (id)"
+          "ON DELETE CASCADE ON UPDATE NO ACTION"
+          ")");
+
       /// Contracts
       await db.execute("CREATE TABLE Contract ("
           "id INTEGER PRIMARY KEY,"

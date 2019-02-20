@@ -1,22 +1,25 @@
 
 import 'package:tiny_release/data/tiny_dbo.dart';
+import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/data/tiny_preset.dart';
 
 class TinyContract extends TinyDBO {
-  int presetId, photographerId, modelId, parentId, witnessId;
+  TinyPreset preset;
+  TinyPeople model, photographer, parent, witness;
   int imagesCount;
   String location, date;
   List<TinySetting> settings;
 
-  TinyContract( {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId, this.imagesCount, this.settings, this.location, this.date} ) : super(id: id, displayName: displayName);
+  TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date} ) : super(id: id, displayName: displayName);
 
   TinyContract.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     displayName = m["displayName"];
-    presetId = m["presetId"];
-    photographerId = m["photographerId"];
-    modelId = m["modelId"];
-    parentId = m["parentId"];
-    witnessId = m["witnessId"];
+    preset = m["preset"] != null ? TinyPreset.fromMap(m["preset"]) : null;
+    photographer = m["photographer"] != null ? TinyPeople.fromMap(m["photographer"]) : null;
+    model = m["model"] != null ? TinyPeople.fromMap(m["model"]) : null;
+    parent = m["parent"] != null ? TinyPeople.fromMap(m["parent"]) : null;
+    witness = m["witness"] != null ? TinyPeople.fromMap(m["witness"]) : null;
     imagesCount = m["imagesCount"];
     location = m["location"];
     date = m["date"];
@@ -33,11 +36,11 @@ class TinyContract extends TinyDBO {
     return {
       "id": tinyContract.id,
       "displayName": tinyContract.displayName,
-      "presetId": tinyContract.presetId,
-      "photographerId": tinyContract.photographerId,
-      "modelId": tinyContract.modelId,
-      "parentId": tinyContract.parentId,
-      "witnessId": tinyContract.witnessId,
+      "preset": tinyContract.preset != null ? TinyPreset.toMap(tinyContract?.preset) : null,
+      "photographer": tinyContract.photographer != null ? TinyPeople.toMap(tinyContract.photographer) : null,
+      "model": tinyContract.model != null ? TinyPeople.toMap(tinyContract.model) : null,
+      "parent": tinyContract.parent != null ? TinyPeople.toMap(tinyContract.parent) : null,
+      "witness": tinyContract.witness != null ? TinyPeople.toMap(tinyContract.witness) : null,
       "imagesCount": tinyContract.imagesCount,
       "location": tinyContract.location,
       "date": tinyContract.date,

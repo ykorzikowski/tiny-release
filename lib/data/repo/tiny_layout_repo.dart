@@ -12,13 +12,13 @@ class TinyLayoutRepo extends TinyRepo< TinyLayout >{
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     return db.insert(TYPE, TinyLayout.toMap( item ) );
   }
 
-  void update( TinyLayout item ) async {
+  void _update( TinyLayout item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, TinyLayout.toMap( item ), where: "id = ?", whereArgs: [item.id] );

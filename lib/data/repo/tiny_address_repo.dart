@@ -37,13 +37,13 @@ class TinyAddressRepo extends TinyRepo< TinyAddress > {
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     db.insert(TYPE, TinyAddress.toMap( item ) );
   }
 
-  void update( TinyAddress item ) async {
+  void _update( TinyAddress item ) async {
     final db = await SQLiteProvider.db.database;
 
     db.update(TYPE, TinyAddress.toMap( item ), where: "id = ?", whereArgs: [item.id] );

@@ -7,8 +7,6 @@ import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
@@ -35,26 +33,22 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   final TinyState _controlState;
   final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
   TinyContract _tinyContract;
-  TinyPeople _tinyModel;
-  TinyPeople _tinyPhotographer;
-  TinyPreset _tinyPreset;
   Map<int, Tag> _receptionAreas = Map();
   List<Tag> _tags = List();
 
   bool _enabledWitness = false;
-  TinyPeople _tinyWitness;
 
   bool _enabledParent = false;
-  TinyPeople _tinyParent;
 
   _ContractEditWidgetState(this._controlState) {
-    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
+//    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
+  _tinyContract = _controlState.curDBO;
   }
 
   bool validContract() {
     return _tinyContract.displayName != null && _tinyContract.displayName.isNotEmpty &&
-        _tinyContract.photographerId != null &&
-        _tinyContract.modelId != null;
+        _tinyContract.photographer != null &&
+        _tinyContract.model != null;
   }
 
   initialValue(val) {
@@ -102,7 +96,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         children: <Widget>[
           CupertinoButton(
             child:
-            _tinyPreset == null ? Text(S.of(context).choose) : Text(_tinyPreset.title),
+            _tinyContract.preset == null ? Text(S.of(context).choose) : Text( _tinyContract.preset.title),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
@@ -110,16 +104,16 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         context),
                     builder: (context) =>
                         PresetListWidget(_controlState, (item, context) {
-                          _tinyPreset = item;
+                          _tinyContract.preset = item;
                           Navigator.of(context).pop();
                         },)
                 ),
                 ),),
-          _tinyPreset != null ? CupertinoButton(
+          _tinyContract.preset != null ? CupertinoButton(
             child: Icon(CupertinoIcons.delete_solid),
             onPressed: () {
               setState(() {
-                _tinyPreset = null;
+                _tinyContract.preset = null;
               });
             },
           ) : Container()
@@ -261,26 +255,26 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 /// Photographer section
                 _getPeopleView(
-                    _tinyPhotographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
+                    _tinyContract.photographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
                   setState(() {
-                    _tinyPhotographer = item;
+                    _tinyContract.photographer = item;
                   });
                   Navigator.pop(context);
                 }, () {
-                  setState(() {_tinyPhotographer = null;});
+                  setState(() { _tinyContract.photographer = null;});
                 }),
 
                 Divider(),
 
                 /// Model section
                 _getPeopleView(
-                    _tinyModel, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
+                    _tinyContract.model, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
                   setState(() {
-                    _tinyModel = item;
+                    _tinyContract.model = item;
                   });
                   Navigator.pop(context);
                 }, () {
-                  setState(() {_tinyModel = null;});
+                  setState(() { _tinyContract.model = null;});
                 }),
 
                 Divider(),
@@ -305,14 +299,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledParent ? _getPeopleView(
-                    _tinyParent, _tinyPeopleRepo, S.of(context).choose_parent, (people, item, context)
+                    _tinyContract.parent, _tinyPeopleRepo, S.of(context).choose_parent, (people, item, context)
                 {
                   setState(() {
-                    _tinyParent = item;
+                    _tinyContract.parent = item;
                   });
                   Navigator.pop(context);
                 }, () {
-                  setState(() {_tinyParent = null;});
+                  setState(() {_tinyContract.parent = null;});
                 }) : Container(),
 
                 Divider(),
@@ -337,13 +331,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledWitness ? _getPeopleView(
-                    _tinyWitness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
+                    _tinyContract.witness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
                   setState(() {
-                    _tinyWitness = item;
+                    _tinyContract.witness = item;
                   });
                   Navigator.pop(context);
                 }, () {
-                  setState(() {_tinyWitness = null;});
+                  setState(() {_tinyContract.witness = null;});
                 }) : Container(),
 
                 Divider(),

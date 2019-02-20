@@ -1,7 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -27,6 +29,20 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
     _tinyContract = _controlState.curDBO;
   }
 
+  _getTitle(Paragraph p) {
+    return '§' + p.position.toString() + " " + p.title;
+  }
+
+  buildPreview() {
+    var widgetList = List<Widget>();
+    _tinyContract.preset.paragraphs.forEach((paragraph) {
+      widgetList.add(Text(_getTitle(paragraph), style: TextStyle( fontSize: 24 ),));
+      widgetList.add(Text(paragraph.content));
+    });
+
+    return widgetList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -44,7 +60,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: Text("Text")
+            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( children: buildPreview(), ),
         ),
       ),
     );

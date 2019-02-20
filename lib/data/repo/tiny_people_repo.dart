@@ -48,7 +48,7 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     final db = await SQLiteProvider.db.database;
 
     if ( item.id != null ) {
-      return update( item );
+      return _update( item );
     }
 
     var map = TinyPeople.toMap( item );
@@ -64,7 +64,7 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     return peopleId;
   }
 
-  void update( TinyPeople item ) async {
+  void _update( TinyPeople item ) async {
     final db = await SQLiteProvider.db.database;
 
     var map = TinyPeople.toMap( item );
