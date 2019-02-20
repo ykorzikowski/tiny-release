@@ -154,7 +154,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           child: Text(S.of(context).change_order_title),
           onPressed: validPreset() ? () {
             _controlState.curDBO = _tinyPreset;
-            _controlState.testCallback = () {
+            _controlState.presetEditCallback = () {
               _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
             };
             Navigator.of(context).pushNamed(NavRoutes.PRESET_PARAGRAPH_EDIT);

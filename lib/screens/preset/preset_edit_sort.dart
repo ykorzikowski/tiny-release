@@ -80,7 +80,7 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
             Navigator.of(context).pop();
             setState(() {
               _controlState.curDBO = _tinyPreset;
-              _controlState.testCallback();
+              _controlState.presetEditCallback();
             });
           }),),
       child: Scaffold(

@@ -25,7 +25,7 @@ import 'package:tiny_release/util/NavRoutes.dart';
 
 class TinyState {
 
-  Function testCallback;
+  Function presetEditCallback;
 
   /// callbacks for people widgets
   PeopleImportCallback peopleImportCallback;
