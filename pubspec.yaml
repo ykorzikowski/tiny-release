@@ -23,6 +23,7 @@ dependencies:
   image_cropper: 1.0.0
   sqflite: ^1.1.0
   flutter_pagewise: ^1.0.0
+  flutter_tags: ^0.1.8
   http:
 
   # The following adds the Cupertino Icons font to your application.

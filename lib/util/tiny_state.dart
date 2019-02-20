@@ -67,7 +67,7 @@ class TinyState {
       NavRoutes.PRESET_PREVIEW: (context) => PresetPreviewWidget(this),
       NavRoutes.PRESET_EDIT: (context) => PresetEditWidget(this),
 
-      NavRoutes.RECEPTION_LIST: (context) => ReceptionListWidget(this),
+      NavRoutes.RECEPTION_LIST: (context) => ReceptionListWidget(this, (){}),
 
       NavRoutes.LAYOUT_LIST: (context) => LayoutListWidget(this),
       NavRoutes.LAYOUT_PREVIEW: (context) => LayoutPreviewWidget(this),

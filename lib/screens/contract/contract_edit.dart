@@ -1,16 +1,19 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/selectable_tags.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
+import 'package:tiny_release/screens/reception_area/reception_list.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_page_wrapper.dart';
@@ -35,6 +38,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   TinyPeople _tinyModel;
   TinyPeople _tinyPhotographer;
   TinyPreset _tinyPreset;
+  Map<int, Tag> _receptionAreas = Map();
+  List<Tag> _tags = List();
 
   bool _enabledWitness = false;
   TinyPeople _tinyWitness;
@@ -119,7 +124,35 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             },
           ) : Container()
         ],);
-  
+
+  _getReceptionSelection() =>
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CupertinoButton(
+            child: Icon(CupertinoIcons.add_circled_solid,
+              color: CupertinoColors.activeGreen,),
+            onPressed: () =>
+                Navigator.of(context).push(TinyPageWrapper(
+                    transitionDuration: ControlHelper
+                        .getScreenSizeBasedDuration(context),
+                    builder: (context) =>
+                        ReceptionListWidget(_controlState, (context, item) {
+                          setState(() {
+                            // todo check if already in list
+                            var tag = new Tag(
+                                id: item.id,
+                                title: item.displayName
+                            );
+                            _receptionAreas.putIfAbsent(item.id, () => tag);
+                            _tags.clear();
+                            _tags.addAll( _receptionAreas.values.toList());
+                          });
+                          Navigator.of(context).pop();
+                        }))),
+          )
+        ],);
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -145,7 +178,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               SafeArea(
               child:
               Column(children: <Widget>[
-
                 /// text
                 Text(S.of(context).contract_will_made_between, style: TextStyle(
                   fontSize: 24.0,
@@ -256,17 +288,22 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
-                /// preset selection
-                ListTile(
-                  title: Text(S.of(context).in_reception_areas),
-                  trailing: _getPresetSelection(),
-                ),
-
                 /// Reception areas
-                Text(S.of(context).in_reception_areas, style: TextStyle(
-                  fontSize: 24.0,
-                ), textAlign: TextAlign.center,),
-
+                ListTile(
+                  title: Text(S.of(context).title_reception),
+                  trailing: _getReceptionSelection(),
+                ),
+                SelectableTags(
+                  // todo check on removal possible
+                  tags: _tags,
+                  backgroundContainer: Colors.transparent,
+                  onPressed: (tag) {
+                    setState(() {
+                      _receptionAreas.removeWhere((k, v) => v.title == tag.title);
+                      _tags.remove(tag);
+                    });
+                  },
+                ),
                 Divider(),
 
                 /// Location

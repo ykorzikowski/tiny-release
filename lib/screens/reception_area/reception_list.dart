@@ -13,11 +13,12 @@ typedef Null ItemSelectedCallback(int value);
 class ReceptionListWidget extends StatefulWidget {
 
   final TinyState _controlState;
+  final Function _onReceptionTap;
 
-  ReceptionListWidget(this._controlState);
+  ReceptionListWidget(this._controlState, this._onReceptionTap);
 
   @override
-  _ListWidgetState createState() => _ListWidgetState(_controlState);
+  _ListWidgetState createState() => _ListWidgetState(_controlState, _onReceptionTap);
 }
 
 class _ListWidgetState extends State<ReceptionListWidget> {
@@ -26,8 +27,9 @@ class _ListWidgetState extends State<ReceptionListWidget> {
   TinyReception _tinyReception;
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
+  final Function _onReceptionTap;
 
-  _ListWidgetState(this._controlState);
+  _ListWidgetState(this._controlState, this._onReceptionTap);
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +91,11 @@ class _ListWidgetState extends State<ReceptionListWidget> {
     );
   }
 
-  Widget _itemBuilder(context, entry, _) {
+  Widget _itemBuilder(context, entry, index) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
-      key: Key(entry.displayName),
+      key: Key('reception_$index'),
       onDismissed: (direction) {
         _tinyRepo.delete(entry);
 
@@ -110,6 +112,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
               color: Colors.brown[200],
             ),
             title: Text(entry.displayName),
+            onTap: () => _onReceptionTap(context, entry),
           ),
           Divider()
         ],
