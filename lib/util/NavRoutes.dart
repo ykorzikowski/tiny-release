@@ -5,6 +5,7 @@ class NavRoutes {
   static const CONTRACT_EDIT = "contract/edit";
   static const CONTRACT_PREVIEW = "contract/preview";
   static const CONTRACT_GENERATED = "contract/generated";
+  static const CONTRACT_PRESET_SELECTION = "contract/select/preset";
 
   static const CONTROL_LIST = "control/list";
 

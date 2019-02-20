@@ -37,6 +37,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
             _tinyContractRepo.getAll(pageIndex, ContractListWidget.PAGE_SIZE)
     );
 
+    _controlState.inControlWidget = true;
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(

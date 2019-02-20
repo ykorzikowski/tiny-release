@@ -79,4 +79,6 @@
   "select_birthday": "Geburtstag wählen",
   "select_date_ok": "Wählen",
   "shooting_date": "Aufnahmedatum",
+  "selected_preset": "Ausgewählte Vorlage",
+  "select_preset": "Vorlage wählen"
 }

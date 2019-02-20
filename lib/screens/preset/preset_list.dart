@@ -17,20 +17,22 @@ typedef Null ItemSelectedCallback(int value);
 class PresetListWidget extends StatefulWidget {
 
   final TinyState _controlState;
+  final Function _onPresetTap;
 
-  PresetListWidget(this._controlState);
+  PresetListWidget(this._controlState, this._onPresetTap);
 
   @override
-  _PresetListWidgetState createState() => _PresetListWidgetState(_controlState);
+  _PresetListWidgetState createState() => _PresetListWidgetState(_controlState, _onPresetTap);
 }
 
 class _PresetListWidgetState extends State<PresetListWidget> {
   static const int PAGE_SIZE = 10;
   final TinyPresetRepo tinyPresetRepo = new TinyPresetRepo();
   final TinyState _controlState;
+  final Function _onPresetTap;
   PagewiseLoadController pageLoadController;
 
-  _PresetListWidgetState(this._controlState);
+  _PresetListWidgetState(this._controlState, this._onPresetTap);
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +57,28 @@ class _PresetListWidgetState extends State<PresetListWidget> {
             Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
           },
         ),),
-      child: SafeArea(  child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: PagewiseListView(
-          showRetry: false,
-          padding: EdgeInsets.only(top: 10.0),
-          itemBuilder: this._itemBuilder,
-          pageLoadController: this.pageLoadController,
-          noItemsFoundBuilder: (context) {
-            return Text(S.of(context).no_items_presets, style: TextStyle(color: CupertinoColors.inactiveGray));
-          },
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: PagewiseListView(
+            showRetry: false,
+            padding: EdgeInsets.only(top: 10.0),
+            itemBuilder: this._itemBuilder,
+            pageLoadController: this.pageLoadController,
+            noItemsFoundBuilder: (context) {
+              return Text(S.of(context).no_items_presets, style: TextStyle(color: CupertinoColors.inactiveGray));
+            },
         ),
       ),),
     );
   }
 
-  Widget _itemBuilder(context, entry, _) {
+  Widget _itemBuilder(context, entry, index) {
     return
       Dismissible(
         direction: DismissDirection.endToStart,
         background: BaseUtil.getDismissibleBackground(),
-        key: Key(entry.title),
+        key: Key('preset_$index'),
         onDismissed: (direction) {
           tinyPresetRepo.delete(entry);
 
@@ -90,21 +93,12 @@ class _PresetListWidgetState extends State<PresetListWidget> {
             ListTile(
               leading: Icon(
                 CupertinoIcons.collections,
-                color: Colors.brown[200],
               ),
               title: Text(entry.title),
-              onTap: () {
-                openDetailView(entry, context);
-              },
+              onTap:() => _onPresetTap(entry, context),
             ),
             Divider()
           ],
         ),);
-  }
-
-  void openDetailView(item, context) {
-    _controlState.curDBO = item;
-
-    Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
   }
 }

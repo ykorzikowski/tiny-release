@@ -29,6 +29,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   Widget build(BuildContext context) {
     var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).item_wording, S.of(context).item_settings];
 
+    widget.controlState.inControlWidget = true;
     return
       CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(

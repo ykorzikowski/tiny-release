@@ -85,6 +85,8 @@ class S implements WidgetsLocalizations {
   String get scaff_deleted => "dismissed";
   String get select_birthday => "Select Birthday";
   String get select_date_ok => "OK";
+  String get select_preset => "Select Preset";
+  String get selected_preset => "Selectd Preset";
   String get shooting_date => "Shooting Date";
   String get shooting_subject => "Subject of Shooting";
   String get tile_contact_preview => "Contact Preview";
@@ -162,6 +164,8 @@ class $de extends S {
   @override
   String get choose_photographer => "Fotograf wählen";
   @override
+  String get selected_preset => "Ausgewählte Vorlage";
+  @override
   String get btn_edit => "Bearbeiten";
   @override
   String get select_birthday => "Geburtstag wählen";
@@ -225,6 +229,8 @@ class $de extends S {
   String get hint_subtitle => "Untertitel";
   @override
   String get item_layout => "Layouts";
+  @override
+  String get select_preset => "Vorlage wählen";
   @override
   String get control => "Verwaltung";
   @override

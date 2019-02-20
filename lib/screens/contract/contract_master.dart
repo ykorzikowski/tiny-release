@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/screens/contract/contract_edit.dart';
 import 'package:tiny_release/screens/contract/contract_preview.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/NavRoutes.dart';

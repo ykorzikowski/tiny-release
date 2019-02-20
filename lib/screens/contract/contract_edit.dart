@@ -6,9 +6,11 @@ import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
+import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_page_wrapper.dart';
@@ -32,6 +34,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   TinyContract _tinyContract;
   TinyPeople _tinyModel;
   TinyPeople _tinyPhotographer;
+  TinyPreset _tinyPreset;
 
   bool _enabledWitness = false;
   TinyPeople _tinyWitness;
@@ -88,6 +91,35 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         },
       );
 
+  _getPresetSelection() =>
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CupertinoButton(
+            child:
+            _tinyPreset == null ? Text(S.of(context).select_preset) : Text(_tinyPreset.title),
+            onPressed: () =>
+                Navigator.of(context).push(TinyPageWrapper(
+                    transitionDuration: ControlHelper
+                        .getScreenSizeBasedDuration(
+                        context),
+                    builder: (context) =>
+                        PresetListWidget(_controlState, (item, context) {
+                          _tinyPreset = item;
+                          Navigator.of(context).pop();
+                        },)
+                ),
+                ),),
+          _tinyPreset != null ? CupertinoButton(
+            child: Icon(CupertinoIcons.delete_solid),
+            onPressed: () {
+              setState(() {
+                _tinyPreset = null;
+              });
+            },
+          ) : Container()
+        ],);
+  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -113,12 +145,15 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               SafeArea(
               child:
               Column(children: <Widget>[
+
+                /// text
                 Text(S.of(context).contract_will_made_between, style: TextStyle(
                   fontSize: 24.0,
                 ), textAlign: TextAlign.center),
 
                 Divider(),
 
+                /// Photographer section
                 _getPeopleView(
                     _tinyPhotographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
                   setState(() {
@@ -137,6 +172,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// Model section
                 _getPeopleView(
                     _tinyModel, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
                   setState(() {
@@ -149,6 +185,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// Represented by section
                 MergeSemantics(
                   child: ListTile(
                     title: Text(S.of(context).represented_by),
@@ -180,6 +217,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// Witnessed by section
                 MergeSemantics(
                   child: ListTile(
                     title: Text(S.of(context).witnessed_by),
@@ -210,12 +248,28 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// preset selection
+                ListTile(
+                  title: Text(S.of(context).selected_preset),
+                  trailing: _getPresetSelection(),
+                ),
+
+                Divider(),
+
+                /// preset selection
+                ListTile(
+                  title: Text(S.of(context).in_reception_areas),
+                  trailing: _getPresetSelection(),
+                ),
+
+                /// Reception areas
                 Text(S.of(context).in_reception_areas, style: TextStyle(
                   fontSize: 24.0,
                 ), textAlign: TextAlign.center,),
 
                 Divider(),
 
+                /// Location
                 Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child:
@@ -228,6 +282,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     ),),
                 ),
 
+                /// subject
                 Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child:
@@ -240,7 +295,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     ),),
                 ),
 
-
+                /// shooting date
                 CupertinoButton(
                   child: TextField(
                     key: Key('tf_shooting_date'),
@@ -278,6 +333,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                           ],)),
                 ),
 
+                /// button generate contract
                 CupertinoButton(
                   child: Text(S.of(context).add_contract),
                   onPressed: validContract() ? () {

@@ -24,8 +24,11 @@ import 'package:tiny_release/util/NavRoutes.dart';
 
 class TinyState {
 
+  /// callbacks for people widgets
   PeopleImportCallback peopleImportCallback;
   PeopleListCallback peopleListCallback;
+
+  /// map that stores the routes of the app
   Map<String, WidgetBuilder> routes;
   
   /// the selected control item
@@ -33,6 +36,9 @@ class TinyState {
 
   /// the current selected data item
   TinyDBO curDBO;
+
+  /// returns if user is currently in control widget
+  bool inControlWidget = false;
 
   TinyState() {
     this.peopleImportCallback = PeopleImportCallback(this);
@@ -51,7 +57,13 @@ class TinyState {
       NavRoutes.PEOPLE_EDIT: (context) => PeopleEditWidget(this),
       NavRoutes.PEOPLE_PREVIEW: (context) => PeoplePreviewWidget(this),
 
-      NavRoutes.PRESET_LIST: (context) => PresetListWidget(this),
+      NavRoutes.PRESET_LIST: (context) =>
+          PresetListWidget(this, (item, context) {
+            this.curDBO = item;
+
+            Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
+          }),
+
       NavRoutes.PRESET_PREVIEW: (context) => PresetPreviewWidget(this),
       NavRoutes.PRESET_EDIT: (context) => PresetEditWidget(this),
 
