@@ -81,5 +81,6 @@
   "shooting_date": "Aufnahmedatum",
   "selected_preset": "Ausgewählte Vorlage",
   "select_preset": "Vorlage wählen",
-  "choose": "Wählen"
+  "choose": "Wählen",
+  "contract_images": "Anzahl Bilder"
 }

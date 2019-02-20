@@ -186,6 +186,47 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             },
           )
       ],);
+
+  _getCountTexts() {
+    int i = 0;
+
+    var widgets = <Widget>[];
+    while (i <= 100 ) {
+      widgets.add(Text(i.toString()));
+      i++;
+    }
+
+    return widgets;
+  }
+
+  _getImagesCountSelection() =>
+      CupertinoButton(
+        child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString()) : Text(S.of(context).choose),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context, builder: (context) =>
+              Column(children: <Widget>[
+                CupertinoNavigationBar(
+                  trailing: CupertinoButton(
+                    child: Text(S.of(context).select_date_ok),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  middle: Text(S.of(context).choose),
+                ),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: CupertinoPicker(
+                    itemExtent: 30,
+                    onSelectedItemChanged: (selected) => _tinyContract.imagesCount = selected,
+                    children: _getCountTexts(),
+                  ),
+                )
+
+              ],), );
+        },
+      );
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -228,12 +269,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 }, () {
                   setState(() {_tinyPhotographer = null;});
                 }),
-
-                Divider(),
-
-                Text(S.of(context).and, style: TextStyle(
-                  fontSize: 24.0,
-                ), textAlign: TextAlign.center,),
 
                 Divider(),
 
@@ -329,6 +364,45 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// number of images
+                ListTile(
+                  title: Text(S.of(context).contract_images),
+                  trailing: _getImagesCountSelection(),
+                ),
+
+                Divider(),
+
+
+                /// location
+                ListTile(
+                  title: Text(S.of(context).hint_location),
+                  trailing: Container(
+                    width: 250,
+                    child: CupertinoTextField(
+                        maxLength: 50,
+                        onChanged: (t) => _tinyContract.location = t,
+                        controller: initialValue(_tinyContract.location),
+                        ),
+                  ),
+                ),
+
+                Divider(),
+
+                /// subject
+                ListTile(
+                  title: Text(S.of(context).shooting_subject),
+                  trailing: Container(
+                    width: 250,
+                    child: CupertinoTextField(
+                      maxLength: 50,
+                      onChanged: (t) => _tinyContract.displayName = t,
+                      controller: initialValue(_tinyContract.displayName),
+                    ),
+                  ),
+                ),
+
+                Divider(),
+
                 /// Reception areas
                 ListTile(
                   title: Text(S.of(context).title_reception),
@@ -345,35 +419,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     });
                   },
                 ),
-                Divider(),
-
-                /// Location
-                Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child:
-                  TextField(
-                    onChanged: (t) => _tinyContract.location = t,
-                    controller: initialValue(_tinyContract.location),
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).hint_location,
-                    ),),
-                ),
-
-                /// subject
-                Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child:
-                  TextField(
-                    onChanged: (t) => _tinyContract.displayName = t,
-                    controller: initialValue(_tinyContract.displayName),
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).shooting_subject,
-                    ),),
-                ),
-
-                Divider(),
 
                 /// button generate contract
                 CupertinoButton(

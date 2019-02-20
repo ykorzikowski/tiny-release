@@ -39,6 +39,7 @@ class SQLiteProvider {
           "displayName TEXT,"
           "location TEXT,"
           "date TEXT,"
+          "imagesCount INTEGER,"
           "presetId INTEGER,"
           "photographerId INTEGER,"
           "modelId INTEGER,"

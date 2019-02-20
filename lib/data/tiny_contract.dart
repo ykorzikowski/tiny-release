@@ -3,10 +3,11 @@ import 'package:tiny_release/data/tiny_dbo.dart';
 
 class TinyContract extends TinyDBO {
   int presetId, photographerId, modelId, parentId, witnessId;
+  int imagesCount;
   String location, date;
   List<TinySetting> settings;
 
-  TinyContract( {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId, this.settings, this.location, this.date} ) : super(id: id, displayName: displayName);
+  TinyContract( {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId, this.imagesCount, this.settings, this.location, this.date} ) : super(id: id, displayName: displayName);
 
   TinyContract.fromMap(Map<String, dynamic> m) {
     id = m["id"];
@@ -16,6 +17,7 @@ class TinyContract extends TinyDBO {
     modelId = m["modelId"];
     parentId = m["parentId"];
     witnessId = m["witnessId"];
+    imagesCount = m["imagesCount"];
     location = m["location"];
     date = m["date"];
     settings = (m["settings"] as Iterable)
@@ -36,6 +38,7 @@ class TinyContract extends TinyDBO {
       "modelId": tinyContract.modelId,
       "parentId": tinyContract.parentId,
       "witnessId": tinyContract.witnessId,
+      "imagesCount": tinyContract.imagesCount,
       "location": tinyContract.location,
       "date": tinyContract.date,
       "settings": settings,

@@ -81,5 +81,6 @@
   "shooting_date": "Shooting Date",
   "selected_preset": "Selectd Preset",
   "select_preset": "Select Preset",
-  "choose": "Choose"
+  "choose": "Choose",
+  "contract_images": "Images count"
 }
