@@ -18,9 +18,10 @@ class NavRoutes {
   static const LAYOUT_PREVIEW = "layout/preview";
   static const LAYOUT_EDIT = "layout/edit";
 
-  static const PRESET_LIST = "preview/list";
-  static const PRESET_PREVIEW = "preview/preview";
-  static const PRESET_EDIT = "preview/edit";
+  static const PRESET_LIST = "preset/list";
+  static const PRESET_PREVIEW = "preset/preview";
+  static const PRESET_EDIT = "preset/edit";
+  static const PRESET_PARAGRAPH_EDIT = "preset/paragraph/edit";
 
   static const RECEPTION_LIST = "reception/list";
   static const RECEPTION_PREVIEW = "reception/preview";

@@ -82,5 +82,6 @@
   "selected_preset": "Ausgewählte Vorlage",
   "select_preset": "Vorlage wählen",
   "choose": "Wählen",
-  "contract_images": "Anzahl Bilder"
+  "contract_images": "Anzahl Bilder",
+  "change_order_title": "Reihenfolge anpassen"
 }

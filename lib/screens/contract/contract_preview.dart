@@ -29,15 +29,14 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
     _tinyContract = _controlState.curDBO;
   }
 
-  _getTitle(Paragraph p) {
-    return '§' + p.position.toString() + " " + p.title;
-  }
-
   buildPreview() {
     var widgetList = List<Widget>();
-    _tinyContract.preset.paragraphs.forEach((paragraph) {
-      widgetList.add(Text(_getTitle(paragraph), style: TextStyle( fontSize: 24 ),));
+    for (int i = 0; i < _tinyContract.preset.paragraphs.length; i++) {
+      var paragraph  =_tinyContract.preset.paragraphs[i];
+      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, i), style: TextStyle( fontSize: 24 ),));
       widgetList.add(Text(paragraph.content));
+    }
+    _tinyContract.preset.paragraphs.forEach((paragraph) {
     });
 
     return widgetList;

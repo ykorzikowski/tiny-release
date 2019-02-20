@@ -82,5 +82,6 @@
   "selected_preset": "Selectd Preset",
   "select_preset": "Select Preset",
   "choose": "Choose",
-  "contract_images": "Images count"
+  "contract_images": "Images count",
+  "change_order_title": "Change order"
 }

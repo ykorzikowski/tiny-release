@@ -15,6 +15,7 @@ import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/screens/people/people_list_callback.dart';
 import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/screens/preset/preset_edit.dart';
+import 'package:tiny_release/screens/preset/preset_edit_sort.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/screens/reception_area/reception_list.dart';
@@ -23,6 +24,8 @@ import 'package:tiny_release/screens/wording/wording_settings.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
 class TinyState {
+
+  Function testCallback;
 
   /// callbacks for people widgets
   PeopleImportCallback peopleImportCallback;
@@ -66,6 +69,8 @@ class TinyState {
 
       NavRoutes.PRESET_PREVIEW: (context) => PresetPreviewWidget(this),
       NavRoutes.PRESET_EDIT: (context) => PresetEditWidget(this),
+      NavRoutes.PRESET_PARAGRAPH_EDIT: (context) => PresetParagraphSortWidget(this),
+
 
       NavRoutes.RECEPTION_LIST: (context) => ReceptionListWidget(this, (){}),
 

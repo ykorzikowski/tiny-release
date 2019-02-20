@@ -14,6 +14,10 @@ import 'package:tiny_release/generated/i18n.dart';
 
 class BaseUtil {
 
+  static String getParagraphTitle(BuildContext ctx, Paragraph p, int index) {
+    return '§' + index.toString() + " " + p.title;
+  }
+
   static String getLocalFormattedDate( final BuildContext context, final String dboStr ) {
     DateFormat formatter = DateFormat(S.of(context).dateFormatPattern);
     return formatter.format(DateTime.parse(dboStr));

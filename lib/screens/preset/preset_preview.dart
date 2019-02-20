@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
@@ -26,23 +27,30 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
     _tinyPreset = _controlState.curDBO;
   }
 
-  List< Widget > _getParagraphWidgets() =>
-      _tinyPreset.paragraphs.map((para) =>
-          Container(
-            child:
-              Column(
-                children: <Widget>[
-                  Divider(),
-                  Text(para.title, style: TextStyle(
-                    fontSize: 26.0,
-                  ),),
-                  Container(
-                      child: Text(para.content,softWrap: true,)
-                  ),
-                ],
+  _getParagraphWidgets() {
+    var list = List<Widget>();
+    for (int i = 0; i < _tinyPreset.paragraphs.length; i++) {
+      var para = _tinyPreset.paragraphs[i];
+      list.add(
+        Container(
+          child:
+          Column(
+            children: <Widget>[
+              Divider(),
+              Text(BaseUtil.getParagraphTitle(context, para, i), style: TextStyle(
+                fontSize: 26.0,
+              ),),
+              Container(
+                  child: Text(para.content,softWrap: true,)
               ),
+            ],
           ),
-      ).toList();
+        ),
+      );
+    }
+    return list;
+  }
+
 
 
   @override

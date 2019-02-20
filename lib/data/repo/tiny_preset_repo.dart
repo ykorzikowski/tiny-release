@@ -36,15 +36,18 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     _putParagraphs( item );
   }
 
-  void _putParagraphs( var tinyPreset ) {
-    for ( Paragraph p in tinyPreset.paragraphs ) {
+  void _putParagraphs( TinyPreset tinyPreset ) {
+    for (int i = 0; i < tinyPreset.paragraphs.length; i++) {
+      var p = tinyPreset.paragraphs[i];
       p.presetId = tinyPreset.id;
+      p.position = (i+1);
       paragraphRepo.save(p);
     }
   }
 
   Future _getParagraphs( var tinyPreset ) async {
-    var paragraphs = await paragraphRepo.getAllByPresetId(tinyPreset.id);
+    List<Paragraph> paragraphs = await paragraphRepo.getAllByPresetId(tinyPreset.id);
+    paragraphs.sort((a, b) => a.position.compareTo(b.position));
     tinyPreset.paragraphs = paragraphs;
   }
 
