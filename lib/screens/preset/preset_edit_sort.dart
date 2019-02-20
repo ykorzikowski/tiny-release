@@ -48,7 +48,7 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
-                  child: _getParagraphWidget(para, i)
+                  child: _getParagraphWidget(para, i+1)
                 ),
               ],
             ),

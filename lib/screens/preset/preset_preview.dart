@@ -37,7 +37,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
           Column(
             children: <Widget>[
               Divider(),
-              Text(BaseUtil.getParagraphTitle(context, para, i), style: TextStyle(
+              Text(BaseUtil.getParagraphTitle(context, para, i+1), style: TextStyle(
                 fontSize: 26.0,
               ),),
               Container(
