@@ -102,7 +102,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         children: <Widget>[
           CupertinoButton(
             child:
-            _tinyPreset == null ? Text(S.of(context).select_preset) : Text(_tinyPreset.title),
+            _tinyPreset == null ? Text(S.of(context).choose) : Text(_tinyPreset.title),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
@@ -153,6 +153,39 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           )
         ],);
 
+  _getCaptureDateSelection() =>
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CupertinoButton(
+            child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)) : Text(S.of(context).choose),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context, builder: (context) =>
+                  Column(children: <Widget>[
+                    CupertinoNavigationBar(
+                      trailing: CupertinoButton(
+                        child: Text(S.of(context).select_date_ok),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      middle: Text(S.of(context).choose_date),
+                    ),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.dateAndTime,
+                        minimumYear: 1900,
+                        initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
+                        onDateTimeChanged: (t) => _tinyContract.date = t.toIso8601String(),
+                      ),
+                    )
+
+                  ],), );
+            },
+          )
+      ],);
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -288,6 +321,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 Divider(),
 
+                /// capture date selection
+                ListTile(
+                  title: Text(S.of(context).shooting_date),
+                  trailing: _getCaptureDateSelection(),
+                ),
+
+                Divider(),
+
                 /// Reception areas
                 ListTile(
                   title: Text(S.of(context).title_reception),
@@ -332,43 +373,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     ),),
                 ),
 
-                /// shooting date
-                CupertinoButton(
-                  child: TextField(
-                    key: Key('tf_shooting_date'),
-                    enabled: false,
-                    controller: _tinyContract.date == null ? initialValue("") : initialValue(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)),
-                    keyboardType: TextInputType.datetime,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      hintText: S.of(context).shooting_date,
-                    ),
-                  ),
-                  onPressed: () =>
-                      showModalBottomSheet(
-                          context: context, builder: (context) =>
-                          Column(children: <Widget>[
-                            CupertinoNavigationBar(
-                              trailing: CupertinoButton(
-                                child: Text(S.of(context).select_date_ok),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              middle: Text(S.of(context).choose_date),
-                            ),
-                            Flexible(
-                              fit: FlexFit.loose,
-                              child: CupertinoDatePicker(
-                                mode: CupertinoDatePickerMode.dateAndTime,
-                                minimumYear: 1900,
-                                initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
-                                onDateTimeChanged: (t) => _tinyContract.date = t.toIso8601String(),
-                              ),
-                            )
-
-                          ],)),
-                ),
+                Divider(),
 
                 /// button generate contract
                 CupertinoButton(

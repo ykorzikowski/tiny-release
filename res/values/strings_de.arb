@@ -80,5 +80,6 @@
   "select_date_ok": "Wählen",
   "shooting_date": "Aufnahmedatum",
   "selected_preset": "Ausgewählte Vorlage",
-  "select_preset": "Vorlage wählen"
+  "select_preset": "Vorlage wählen",
+  "choose": "Wählen"
 }

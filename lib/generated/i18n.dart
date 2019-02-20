@@ -35,6 +35,7 @@ class S implements WidgetsLocalizations {
   String get btn_save => "Speichern";
   String get camera => "Camera";
   String get cancel => "Cancel";
+  String get choose => "Choose";
   String get choose_date => "Choose shooting date";
   String get choose_model => "Choose Model";
   String get choose_parent => "Choose Parent";
@@ -195,6 +196,8 @@ class $de extends S {
   String get no_items_reception => "Legen Sie einen neuen Aufnahmebereich an";
   @override
   String get hint_description => "Beschreibung";
+  @override
+  String get choose => "Wählen";
   @override
   String get preset => "Vorschau";
   @override
