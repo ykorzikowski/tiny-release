@@ -1,4 +1,5 @@
 
+import 'package:cool_ui/cool_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
@@ -45,35 +46,57 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         transitionBetweenRoutes: false,
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text(S.of(context).title_reception),
-        trailing:CupertinoButton(
+        trailing: CupertinoPopoverButton(
           child: Text(S.of(context).btn_add),
-          onPressed: () {
+          popoverHeight: 56,
+          popoverWidth: 250,
+          popoverBuild: (context) {
             _tinyReception = TinyReception();
             _controlState.curDBO = _tinyReception;
-            showCupertinoDialog(context: context, builder: (context) => CupertinoAlertDialog(
-              title: Text(S.of(context).title_add_reception),
-              content: CupertinoTextField(
-                onChanged: (t) => _tinyReception.displayName = t,
-                onSubmitted: (t) => _tinyReception.displayName = t,
-              ),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  isDestructiveAction: true,
-                  child: Text(S.of(context).btn_dialog_cancel),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                ),
-                CupertinoDialogAction(
-                  child: Text(S.of(context).btn_save),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    _tinyRepo.save(_tinyReception);
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                ),
+            return Column(
+              children: <Widget>[
+                ListTile(
+                  trailing: CupertinoButton(
+                      child: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                      onPressed: () {
+                        _tinyRepo.save(_tinyReception);
+                        Navigator.of(context, rootNavigator: true).pop();
+                      }),
+                  leading: Container(
+                    width: 170,
+                    child: CupertinoTextField(
+                      onChanged: (t) => _tinyReception.displayName = t,
+                      onSubmitted: (t) => _tinyReception.displayName = t,
+                      placeholder: S.of(context).reception_area,
+                    ),
+                  ),
+                )
               ],
-            ));
+            );
+//            showCupertinoDialog(context: context, builder: (context) => CupertinoAlertDialog(
+//              title: Text(S.of(context).title_add_reception),
+//              content: CupertinoTextField(
+//                onChanged: (t) => _tinyReception.displayName = t,
+//                onSubmitted: (t) => _tinyReception.displayName = t,
+//              ),
+//              actions: <Widget>[
+//                CupertinoDialogAction(
+//                  isDestructiveAction: true,
+//                  child: Text(S.of(context).btn_dialog_cancel),
+//                  onPressed: () {
+//                    Navigator.of(context, rootNavigator: true).pop();
+//                  },
+//                ),
+//                CupertinoDialogAction(
+//                  child: Text(S.of(context).btn_save),
+//                  isDefaultAction: true,
+//                  onPressed: () {
+//                    _tinyRepo.save(_tinyReception);
+//                    Navigator.of(context, rootNavigator: true).pop();
+//                  },
+//                ),
+//              ],
+//            ));
           },
         ),),
       child: SafeArea(  child: Scaffold(

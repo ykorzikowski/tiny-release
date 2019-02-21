@@ -85,6 +85,7 @@ class S implements WidgetsLocalizations {
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
   String get preset => "Preset";
+  String get reception_area => "Reception area";
   String get represented_by => "represented_by";
   String get scaff_deleted => "dismissed";
   String get select_birthday => "Select Birthday";
@@ -183,6 +184,8 @@ class $de extends S {
   String get btn_add_paragrpah => "Paragraf hinzufügen";
   @override
   String get choose_source => "Quelle wählen";
+  @override
+  String get reception_area => "Reception area";
   @override
   String get title_settings => "Einstellungen";
   @override

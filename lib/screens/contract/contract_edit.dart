@@ -1,4 +1,5 @@
 
+import 'package:cool_ui/cool_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
@@ -36,6 +37,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   Map<int, Tag> _receptionAreas = Map();
   List<Tag> _tags = List();
 
+  static const TextStyle btnStyle = TextStyle(color: CupertinoColors.activeBlue, fontSize: 16);
+
   bool _enabledWitness = false;
 
   bool _enabledParent = false;
@@ -61,19 +64,46 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         PeopleListWidget.PAGE_SIZE);
   }
 
-  _getPeopleView(TinyPeople people, TinyRepo repo, String text, Function _onPeopleTap, Function _onPeopleTrash) =>
-      CupertinoButton(
-        child: Row(children: <Widget>[
-          PeopleListWidget.getCircleAvatar( people, people == null ? "?" : PeopleListWidget.getCircleText(people) ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: people == null ? Text( text ) : Row(children: <Widget>[
-                 Text(people.givenName + " " + people.familyName),
-              CupertinoButton(
-                child: Icon(CupertinoIcons.delete_solid),
-                onPressed: _onPeopleTrash,
+  _getPeopleView(TinyPeople people, TinyRepo repo, String text,
+      Function _onPeopleTap, Function _onPeopleTrash) =>
+      BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
+          child: ListTile(
+            title: Row(children: <Widget>[
+              PeopleListWidget.getCircleAvatar(people,
+                  people == null ? "?" : PeopleListWidget.getCircleText(people)),
+              Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: people == null ? Text(text, style: btnStyle,) : Row(children: <Widget>[
+                    Text(people.givenName + " " + people.familyName, style: btnStyle,),
+                    CupertinoButton(
+                      child: Icon(CupertinoIcons.delete_solid),
+                      onPressed: _onPeopleTrash,
+                    )
+                  ],)
               )
-            ],)
+            ],),
+          ),
+          popoverHeight: 500,
+          popoverWidth: 400,
+          popoverBuild: (context) =>
+              PeopleListWidget(
+                  _controlState,
+                      (pageIndex) => _getPeopleFor(repo, pageIndex),
+                      (item, context) => _onPeopleTap(people, item, context)
+              )
+      ) : CupertinoButton(
+        child: Row(children: <Widget>[
+          PeopleListWidget.getCircleAvatar(people,
+              people == null ? "?" : PeopleListWidget.getCircleText(people)),
+          Padding(
+              padding: EdgeInsets.all(8.0),
+              child: people == null ? Text(text) : Row(children: <Widget>[
+                Text(people.givenName + " " + people.familyName),
+                CupertinoButton(
+                  child: Icon(CupertinoIcons.delete_solid),
+                  onPressed: _onPeopleTrash,
+                )
+              ],)
           )
         ],),
         onPressed: () {
@@ -94,9 +124,21 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          CupertinoButton(
+          BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
+              child: _tinyContract.preset == null ? Text(S.of(context).choose, style: btnStyle,) : Text(
+                _tinyContract.preset.title, style: btnStyle,),
+              popoverHeight: 500,
+              popoverWidth: 400,
+              popoverBuild: (context) =>
+                  PresetListWidget(_controlState, (item, context) {
+                    setState(() {
+                      _tinyContract.preset = item;
+                    });
+                    Navigator.of(context).pop();
+                  },)
+          ) : CupertinoButton(
             child:
-            _tinyContract.preset == null ? Text(S.of(context).choose) : Text( _tinyContract.preset.title),
+            _tinyContract.preset == null ? Text(S.of(context).choose) : Text(_tinyContract.preset.title),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
@@ -111,6 +153,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         },)
                 ),
                 ),),
+
           _tinyContract.preset != null ? CupertinoButton(
             child: Icon(CupertinoIcons.delete_solid),
             onPressed: () {
@@ -148,39 +191,37 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           )
         ],);
 
-  _getCaptureDateSelection() =>
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          CupertinoButton(
-            child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)) : Text(S.of(context).choose),
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context, builder: (context) =>
-                  Column(children: <Widget>[
-                    CupertinoNavigationBar(
-                      trailing: CupertinoButton(
-                        child: Text(S.of(context).select_date_ok),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      middle: Text(S.of(context).choose_date),
-                    ),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.dateAndTime,
-                        minimumYear: 1900,
-                        initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
-                        onDateTimeChanged: (t) => setState( () => _tinyContract.date = t.toIso8601String() ),
-                      ),
-                    )
+  _getCaptureDatePicker(context) => Column(children: <Widget>[
+    CupertinoNavigationBar(
+      trailing: CupertinoButton(
+        child: Text(S.of(context).select_date_ok),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      middle: Text(S.of(context).choose_date),
+    ),
+    Flexible(
+      fit: FlexFit.loose,
+      child: CupertinoDatePicker(
+        mode: CupertinoDatePickerMode.dateAndTime,
+        minimumYear: 1900,
+        initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
+        onDateTimeChanged: (t) => setState( () => _tinyContract.date = t.toIso8601String() ),
+      ),
+    )
+  ],);
 
-                  ],), );
-            },
-          )
-      ],);
+  _getCaptureDateSelection() =>
+      BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
+          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date), style: btnStyle,) : Text(S.of(context).choose, style: btnStyle,),
+          popoverHeight: 500,
+          popoverWidth: 400,
+          popoverBuild: (context) => _getCaptureDatePicker(context)
+      ) : CupertinoButton(
+          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)) : Text(S.of(context).choose),
+          onPressed: () => showModalBottomSheet( context: context, builder: (context) => _getCaptureDatePicker(context),)
+      );
 
   _getCountTexts() {
     int i = 0;
@@ -194,34 +235,43 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     return widgets;
   }
 
+  _getImageCounterPicker(context) =>
+      Column(children: <Widget>[
+        CupertinoNavigationBar(
+          trailing: CupertinoButton(
+            child: Text(S.of(context).select_date_ok),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          middle: Text(S.of(context).choose),
+        ),
+        Flexible(
+          fit: FlexFit.loose,
+          child: CupertinoPicker(
+            itemExtent: 30,
+            onSelectedItemChanged: (selected) => setState(() =>_tinyContract.imagesCount = selected ),
+            children: _getCountTexts(),
+          ),
+        )
+
+      ],);
+
   _getImagesCountSelection() =>
-      CupertinoButton(
+      BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
+          child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString(), style: btnStyle,) : Text(S.of(context).choose, style: btnStyle,),
+          popoverHeight: 200,
+          popoverWidth: 300,
+          popoverBuild: (context) => _getImageCounterPicker(context)
+      ) : CupertinoButton(
         child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString()) : Text(S.of(context).choose),
         onPressed: () {
           showModalBottomSheet(
-            context: context, builder: (context) =>
-              Column(children: <Widget>[
-                CupertinoNavigationBar(
-                  trailing: CupertinoButton(
-                    child: Text(S.of(context).select_date_ok),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  middle: Text(S.of(context).choose),
-                ),
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: CupertinoPicker(
-                    itemExtent: 30,
-                    onSelectedItemChanged: (selected) => setState(() =>_tinyContract.imagesCount = selected ),
-                    children: _getCountTexts(),
-                  ),
-                )
-
-              ],), );
+            context: context,
+            builder: (context) => _getImageCounterPicker(context),);
         },
       );
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
