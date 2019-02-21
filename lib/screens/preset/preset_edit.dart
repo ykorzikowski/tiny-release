@@ -53,13 +53,24 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     return TextEditingController(text: val);
   }
 
-  CupertinoButton _getParagraphAddButton() =>
+  _getParagraphAddButton() =>
       CupertinoButton(
         child:
           Text(S.of(context).btn_add_paragrpah),
         onPressed: () =>
             setState(() => _tinyPreset.paragraphs.add(Paragraph(position: (_tinyPreset.paragraphs.length+1)))),
       );
+
+  _getSortParagraphsButton() => CupertinoButton(
+    child: Text(S.of(context).change_order_title),
+    onPressed: validPreset() ? () {
+      _controlState.curDBO = _tinyPreset;
+      _controlState.tinyEditCallback = () {
+        _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+      };
+      Navigator.of(context).pushNamed(NavRoutes.PRESET_PARAGRAPH_EDIT);
+    } : null,
+  );
 
   /// get phone widgets
   List< Widget > _getParagraphWidgets() =>
@@ -148,19 +159,13 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             placeholder: S.of(context).hint_description,
           ),
         ),
-        ListTile(
+        BaseUtil.isLargeScreen(context) ? ListTile(
           leading: _getParagraphAddButton(),
-          trailing: CupertinoButton(
-          child: Text(S.of(context).change_order_title),
-          onPressed: validPreset() ? () {
-            _controlState.curDBO = _tinyPreset;
-            _controlState.presetEditCallback = () {
-              _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
-            };
-            Navigator.of(context).pushNamed(NavRoutes.PRESET_PARAGRAPH_EDIT);
-          } : null,
-        ),
-        ),
+          trailing: _getSortParagraphsButton(),
+        ) : Column(children: <Widget>[
+          _getParagraphAddButton(),
+          _getSortParagraphsButton()
+        ],),
 
         Container(
           child: Column(

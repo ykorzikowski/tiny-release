@@ -104,7 +104,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         context),
                     builder: (context) =>
                         PresetListWidget(_controlState, (item, context) {
-                          _tinyContract.preset = item;
+                          setState(() {
+                            _tinyContract.preset = item;
+                          });
                           Navigator.of(context).pop();
                         },)
                 ),
@@ -133,7 +135,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     builder: (context) =>
                         ReceptionListWidget(_controlState, (context, item) {
                           setState(() {
-                            // todo check if already in list
                             var tag = new Tag(
                                 id: item.id,
                                 title: item.displayName
@@ -172,7 +173,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         mode: CupertinoDatePickerMode.dateAndTime,
                         minimumYear: 1900,
                         initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
-                        onDateTimeChanged: (t) => _tinyContract.date = t.toIso8601String(),
+                        onDateTimeChanged: (t) => setState( () => _tinyContract.date = t.toIso8601String() ),
                       ),
                     )
 
@@ -213,7 +214,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   fit: FlexFit.loose,
                   child: CupertinoPicker(
                     itemExtent: 30,
-                    onSelectedItemChanged: (selected) => _tinyContract.imagesCount = selected,
+                    onSelectedItemChanged: (selected) => setState(() =>_tinyContract.imagesCount = selected ),
                     children: _getCountTexts(),
                   ),
                 )
@@ -403,7 +404,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   trailing: _getReceptionSelection(),
                 ),
                 SelectableTags(
-                  // todo check on removal possible
                   tags: _tags,
                   backgroundContainer: Colors.transparent,
                   onPressed: (tag) {

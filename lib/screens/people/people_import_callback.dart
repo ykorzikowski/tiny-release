@@ -79,7 +79,8 @@ class PeopleImportCallback {
     TinyPeople beforeImportDBO = _controlState.curDBO;
     item.type = beforeImportDBO.type;
     _controlState.curDBO = item;
+    _controlState.tinyEditCallback();
 
-    Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
+    Navigator.pop(context);
   }
 }

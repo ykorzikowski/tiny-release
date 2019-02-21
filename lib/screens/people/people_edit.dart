@@ -17,20 +17,20 @@ typedef Null ItemSelectedCallback(int value);
 
 class PeopleEditWidget extends StatefulWidget {
 
-  final TinyState _controlState;
+  final TinyState _tinyState;
 
-  PeopleEditWidget(this._controlState);
+  PeopleEditWidget(this._tinyState);
 
   @override
-  _PeopleEditWidgetState createState() => _PeopleEditWidgetState(_controlState);
+  _PeopleEditWidgetState createState() => _PeopleEditWidgetState(_tinyState);
 }
 
 class _PeopleEditWidgetState extends State<PeopleEditWidget> {
-  final TinyState _controlState;
+  final TinyState _tinyState;
   TinyPeople _tinyPeople;
 
-  _PeopleEditWidgetState(this._controlState) {
-    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_controlState.curDBO ) );
+  _PeopleEditWidgetState(this._tinyState) {
+    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
   }
 
   initialValue(val) {
@@ -392,9 +392,10 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               return;
             }
             new TinyPeopleRepo().save(_tinyPeople);
-            _controlState.curDBO = _tinyPeople;
-            Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PEOPLE_LIST);
-            Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
+            _tinyState.curDBO = _tinyPeople;
+              Navigator.of(context).pop();
+//            Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PEOPLE_LIST);
+//            Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -440,6 +441,11 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             CupertinoButton(
               child: Text(S.of(context).btn_import_contacts),
               onPressed: () {
+                _tinyState.tinyEditCallback = () {
+                  setState(() {
+                    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+                  });
+                };
                 Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
               },
             )

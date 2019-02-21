@@ -58,6 +58,13 @@ class _ListWidgetState extends State<ReceptionListWidget> {
               ),
               actions: <Widget>[
                 CupertinoDialogAction(
+                  isDestructiveAction: true,
+                  child: Text(S.of(context).btn_dialog_cancel),
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                ),
+                CupertinoDialogAction(
                   child: Text(S.of(context).btn_save),
                   isDefaultAction: true,
                   onPressed: () {
@@ -65,13 +72,6 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                 ),
-                CupertinoDialogAction(
-                  isDestructiveAction: true,
-                  child: Text(S.of(context).btn_dialog_cancel),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                )
               ],
             ));
           },
