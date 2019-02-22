@@ -58,7 +58,7 @@ class SQLiteProvider {
           "displayName TEXT,"
           "location TEXT,"
           "date TEXT,"
-          "locked INTEGER,"
+          "locked_ INTEGER,"
           "imagesCount INTEGER,"
           "presetId INTEGER,"
           "photographerId INTEGER,"

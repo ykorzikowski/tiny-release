@@ -70,11 +70,11 @@ class _ContractListWidgetState extends State<ContractListWidget> {
       );
   }
 
-  Widget _itemBuilder(context, entry, _) {
+  Widget _itemBuilder(context, entry, index) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
-      key: Key(entry.id.toString()),
+      key: Key('contract_$index'),
       onDismissed: (direction) {
         _tinyContractRepo.delete(entry);
 
@@ -88,7 +88,9 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           ListTile(
             title: Text(entry.displayName),
             onTap: () {
-              // todo if isFinished = directly go to generated widget
+              _controlState.curDBO = entry;
+              entry.locked ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED) :
+              BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
             },
           ),
           Divider()

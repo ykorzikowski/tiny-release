@@ -14,66 +14,67 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
   final TinyPresetRepo _tinyPresetRepo = new TinyPresetRepo();
   final TinySignatureRepo _tinySignatureRepo = new TinySignatureRepo();
 
-  Future< Map<String, dynamic> > _replaceIdWithNested( Map<String, dynamic> map ) async{
-    var modelId = map["modelId"];
-    var photographerId = map["photographerId"];
-    var witnessId = map["witnessId"];
-    var parentId = map["parentId"];
-    var presetId = map["presetId"];
+  Future<TinyContract> _replaceIdWithNested( Map<String, dynamic> dboMap ) async{
+    final TinyContract tinyContract = TinyContract.fromMap(dboMap);
+    final TinyContractDBO dbo = TinyContractDBO.fromMap(dboMap);
 
-    map["model"] = await _tinyPeopleRepo.get(modelId);
-    map["photographer"] = await _tinyPeopleRepo.get(photographerId);
-    map["witness"] = await _tinyPeopleRepo.get(witnessId);
-    map["parent"] = await _tinyPeopleRepo.get(parentId);
-    map["preset"] = await _tinyPeopleRepo.get(presetId);
+    tinyContract.locked = dbo.locked_ == 1;
+    tinyContract.model = await _tinyPeopleRepo.get(dbo.modelId);
+    tinyContract.photographer = await _tinyPeopleRepo.get(dbo.photographerId);
+    tinyContract.witness = await _tinyPeopleRepo.get(dbo.witnessId);
+    tinyContract.parent = await _tinyPeopleRepo.get(dbo.parentId);
+    tinyContract.preset = await _tinyPresetRepo.get(dbo.presetId);
 
-    map["modelSignature"] = await _tinySignatureRepo.getForContractAndType(map["id"], SignatureType.SIG_MODEL);
-    map["photographerSignature"] = await _tinySignatureRepo.getForContractAndType(map["id"], SignatureType.SIG_PHOTOGRAPHER);
-    map["witnessSignature"] = await _tinySignatureRepo.getForContractAndType(map["id"], SignatureType.SIG_WITNESS);
-    map["parentSignature"] = await _tinySignatureRepo.getForContractAndType(map["id"], SignatureType.SIG_PARENT);
+    tinyContract.modelSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_MODEL);
+    tinyContract.photographerSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_PHOTOGRAPHER);
+    tinyContract.witnessSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_WITNESS);
+    tinyContract.parentSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_PARENT);
 
-    return map;
+    return tinyContract;
   }
 
   TinyContract _saveNestedObjects( TinyContract item ) {
     _tinyPresetRepo.save(item.preset);
     _tinyPeopleRepo.save(item.model);
     _tinyPeopleRepo.save(item.photographer);
-    if ( item.witness != null) _tinyPeopleRepo.save(item.witness);
-    if ( item.parent != null) _tinyPeopleRepo.save(item.parent);
+    if ( item.witness != null ) _tinyPeopleRepo.save(item.witness);
+    if ( item.parent != null ) _tinyPeopleRepo.save(item.parent);
 
-    if( item.modelSignature != null ) _tinySignatureRepo.save(item.modelSignature);
-    if( item.photographerSignature != null ) _tinySignatureRepo.save(item.photographerSignature);
-    if( item.parentSignature != null ) _tinySignatureRepo.save(item.parentSignature);
-    if( item.witnessSignature != null ) _tinySignatureRepo.save(item.witnessSignature);
+    if( item.modelSignature != null ) {
+      _tinySignatureRepo.save(item.modelSignature);
+      item.modelSignature.contractId = item.id;
+    }
+
+    if( item.photographerSignature != null ) {
+      _tinySignatureRepo.save(item.photographerSignature);
+      item.photographerSignature.contractId = item.id;
+    }
+
+    if( item.parentSignature != null ) {
+      _tinySignatureRepo.save(item.parentSignature);
+      item.parentSignature.contractId = item.id;
+    }
+
+    if( item.witnessSignature != null ) {
+      _tinySignatureRepo.save(item.witnessSignature);
+      item.witnessSignature.contractId = item.id;
+    }
 
     return item;
   }
 
-  Map<String, dynamic> _replaceNestedWithIds( Map<String, dynamic> map) {
-    map["modelId"] = map["model"]["id"];
-    map["photographerId"] = map["photographer"]["id"];
-    if (map["witness"] != null ) map["witnessId"] = map["witness"]["id"];
-    if (map["parent"] != null ) map["parentId"] = map["parent"]["id"];
-    map["presetId"] = map["preset"]["id"];
+  Map<String, dynamic> _replaceNestedWithIds( TinyContract tinyContract) {
+    final TinyContractDBO dbo = TinyContractDBO.fromMap(TinyContract.toMap(tinyContract));
 
-    map.remove("model");
-    map.remove("photographer");
-    map.remove("witness");
-    map.remove("parent");
-    map.remove("preset");
+    dbo.locked_ = tinyContract.locked ? 1 : 0;
+    dbo.modelId = tinyContract.model.id;
+    dbo.photographerId = tinyContract.photographer.id;
+    dbo.witnessId = tinyContract?.witness?.id;
+    dbo.parentId = tinyContract?.parent?.id;
+    dbo.presetId = tinyContract.preset.id;
 
-    map.remove("modelSignature");
-    map.remove("photographerSignature");
-    map.remove("witnessSignature");
-    map.remove("parentSignature");
-
-    // todo fix
-    map.remove("settings");
-
-    return map;
+    return TinyContractDBO.toMap(dbo);
   }
-
 
   @override
   Future delete(TinyContract item) async {
@@ -89,7 +90,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinyContract.fromMap(await _replaceIdWithNested(res.first)) : Null ;
+    return res.isNotEmpty ? (await _replaceIdWithNested(res.first)) : Null ;
   }
 
   @override
@@ -97,9 +98,17 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, limit: limit, offset: offset);
-    var list = res.isNotEmpty ? res.map((c) async => TinyContract.fromMap(await _replaceIdWithNested(c))) : List<TinyContract>();
 
-    return List.of(list);
+    List<TinyContractDBO> list = res.isNotEmpty ? res.map((li) => TinyContractDBO.fromMap(li)).toList() : List();
+
+    var resultList = List<TinyContract>();
+
+    for (var dbo in list) {
+      var tinyContract = await _replaceIdWithNested(TinyContractDBO.toMap(dbo));
+      resultList.add(tinyContract);
+    };
+
+    return resultList;
   }
 
   @override
@@ -110,13 +119,18 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
       return _update( item );
     }
 
-    return db.insert(TYPE, _replaceNestedWithIds( TinyContract.toMap( _saveNestedObjects( item ) ) ) );
+    var contractId = await db.insert(TYPE, _replaceNestedWithIds( item ) );
+    item.id = contractId;
+
+    _saveNestedObjects( item );
+
+    return contractId;
   }
 
   void _update( TinyContract item ) async {
     final db = await SQLiteProvider.db.database;
 
-    db.update(TYPE, _replaceNestedWithIds( _replaceNestedWithIds( TinyContract.toMap( _saveNestedObjects( item ) ) ) ) , where: "id = ?", whereArgs: [item.id] );
+    db.update(TYPE, _replaceNestedWithIds( _saveNestedObjects( item ) ) , where: "id = ?", whereArgs: [item.id] );
   }
 
 }

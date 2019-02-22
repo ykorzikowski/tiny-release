@@ -74,7 +74,7 @@ class TinyPresetRepo extends TinyRepo< TinyPreset >{
     var tp = TinyPreset.fromMap(res.first);
     await _getParagraphs(tp);
 
-    return res.isNotEmpty ? TinyPreset.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? tp : null ;
   }
 
   @override

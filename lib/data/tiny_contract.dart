@@ -30,7 +30,7 @@ class TinyContract extends TinyDBO {
     photographerSignature = m["photographerSignature"];
     witnessSignature = m["witnessSignature"];
     parentSignature = m["parentSignature"];
-    locked = m["locked"] ?? false;
+    locked = m["locked"];
     settings = (m["settings"] as Iterable)
         ?.map((m) => TinySetting.fromMap(m))?.toList();
   }
@@ -56,7 +56,7 @@ class TinyContract extends TinyDBO {
       "parentSignature": tinyContract.parentSignature,
       "location": tinyContract.location,
       "date": tinyContract.date,
-      "locked": tinyContract.locked ?? false,
+      "locked": tinyContract.locked,
       "settings": settings,
     };
   }
@@ -94,4 +94,46 @@ class TinySetting extends TinyDBO {
     };
   }
 
+}
+
+class TinyContractDBO extends TinyDBO {
+  int presetId;
+  int modelId, photographerId, parentId, witnessId;
+  int imagesCount;
+  int locked_;
+  String location, date;
+
+  TinyContractDBO(
+      {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId, this.imagesCount, this.location, this.date, this.locked_})
+      : super(id: id, displayName: displayName);
+
+  TinyContractDBO.fromMap(Map<String, dynamic> m) {
+    id = m["id"];
+    displayName = m["displayName"];
+    presetId = m["presetId"];
+    modelId = m["modelId"];
+    photographerId = m["photographerId"];
+    parentId = m["parentId"];
+    witnessId = m["witnessId"];
+    imagesCount = m["imagesCount"];
+    location = m["location"];
+    date = m["date"];
+    locked_ = m["locked_"] ?? 0 ;
+  }
+
+  static Map<String, dynamic> toMap(TinyContractDBO tinyContract) {
+    return {
+      "id": tinyContract.id,
+      "displayName": tinyContract.displayName,
+      "presetId": tinyContract.presetId,
+      "modelId": tinyContract.modelId,
+      "photographerId": tinyContract.photographerId,
+      "parentId": tinyContract.parentId,
+      "witnessId": tinyContract.witnessId,
+      "imagesCount": tinyContract.imagesCount,
+      "location": tinyContract.location,
+      "date": tinyContract.date,
+      "locked_": tinyContract.locked_,
+    };
+  }
 }
