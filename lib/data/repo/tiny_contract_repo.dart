@@ -13,11 +13,11 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
 
 
   Future< Map<String, dynamic> > _replaceIdWithNested( Map<String, dynamic> map ) async{
-    var modelId = map["model"];
-    var photographerId = map["photographer"];
-    var witnessId = map["witness"];
-    var parentId = map["parent"];
-    var presetId = map["preset"];
+    var modelId = map["modelId"];
+    var photographerId = map["photographerId"];
+    var witnessId = map["witnessId"];
+    var parentId = map["parentId"];
+    var presetId = map["presetId"];
 
     map["model"] = await _tinyPeopleRepo.get(modelId);
     map["photographer"] = await _tinyPeopleRepo.get(photographerId);
@@ -32,18 +32,27 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     _tinyPresetRepo.save(item.preset);
     _tinyPeopleRepo.save(item.model);
     _tinyPeopleRepo.save(item.photographer);
-    _tinyPeopleRepo.save(item.witness);
-    _tinyPeopleRepo.save(item.parent);
+    if ( item.witness != null) _tinyPeopleRepo.save(item.witness);
+    if ( item.parent != null) _tinyPeopleRepo.save(item.parent);
 
     return item;
   }
 
   Map<String, dynamic> _replaceNestedWithIds( Map<String, dynamic> map) {
-    map["model"] = map["model"]["id"];
-    map["photographer"] = map["photographer"]["id"];
-    map["witness"] = map["witness"]["id"];
-    map["parent"] = map["parent"]["id"];
-    map["preset"] = map["preset"]["id"];
+    map["modelId"] = map["model"]["id"];
+    map["photographerId"] = map["photographer"]["id"];
+    if (map["witness"] != null ) map["witnessId"] = map["witness"]["id"];
+    if (map["parent"] != null ) map["parentId"] = map["parent"]["id"];
+    map["presetId"] = map["preset"]["id"];
+
+    map.remove("model");
+    map.remove("photographer");
+    map.remove("witness");
+    map.remove("parent");
+    map.remove("preset");
+
+    // todo fix
+    map.remove("settings");
 
     return map;
   }

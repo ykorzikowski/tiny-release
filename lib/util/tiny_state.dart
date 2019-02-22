@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/screens/contract/contract_edit.dart';
+import 'package:tiny_release/screens/contract/contract_generated.dart';
 import 'package:tiny_release/screens/contract/contract_list.dart';
 import 'package:tiny_release/screens/contract/contract_master.dart';
 import 'package:tiny_release/screens/contract/contract_preview.dart';
@@ -51,7 +52,7 @@ class TinyState {
       NavRoutes.CONTRACT_LIST: (context) => ContractListWidget(this),
       NavRoutes.CONTRACT_EDIT: (context) => ContractEditWidget(this),
       NavRoutes.CONTRACT_PREVIEW: (context) => ContractPreviewWidget(this),
-      NavRoutes.CONTRACT_GENERATED: (context) => MasterControlWidget(this),
+      NavRoutes.CONTRACT_GENERATED: (context) => ContractGeneratedWidget(this),
 
       NavRoutes.CONTROL_LIST: (context) => MasterControlWidget(this),
       /// PEOPLE ROUTE

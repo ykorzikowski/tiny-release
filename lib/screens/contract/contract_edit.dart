@@ -31,8 +31,9 @@ class ContractEditWidget extends StatefulWidget {
 }
 
 class _ContractEditWidgetState extends State<ContractEditWidget> {
-  final TinyState _controlState;
+  final TinyState _tinyState;
   final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
+  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
   TinyContract _tinyContract;
   Map<int, Tag> _receptionAreas = Map();
   List<Tag> _tags = List();
@@ -43,15 +44,17 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   bool _enabledParent = false;
 
-  _ContractEditWidgetState(this._controlState) {
+  _ContractEditWidgetState(this._tinyState) {
 //    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
-  _tinyContract = _controlState.curDBO;
+  _tinyContract = _tinyState.curDBO;
   }
 
   bool validContract() {
     return _tinyContract.displayName != null && _tinyContract.displayName.isNotEmpty &&
+        _tinyContract.preset != null &&
         _tinyContract.photographer != null &&
-        _tinyContract.model != null;
+        _tinyContract.model != null &&
+        _tinyContract.location != null;
   }
 
   initialValue(val) {
@@ -87,7 +90,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           popoverWidth: 400,
           popoverBuild: (context) =>
               PeopleListWidget(
-                  _controlState,
+                  _tinyState,
                       (pageIndex) => _getPeopleFor(repo, pageIndex),
                       (item, context) => _onPeopleTap(people, item, context)
               )
@@ -111,7 +114,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               transitionDuration: ControlHelper.getScreenSizeBasedDuration(context),
               builder: (context) {
               return PeopleListWidget(
-                  _controlState,
+                  _tinyState,
                       (pageIndex) => _getPeopleFor(repo, pageIndex),
                       (item, context) => _onPeopleTap( people, item, context )
               );
@@ -130,7 +133,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               popoverHeight: 500,
               popoverWidth: 400,
               popoverBuild: (context) =>
-                  PresetListWidget(_controlState, (item, context) {
+                  PresetListWidget(_tinyState, (item, context) {
                     setState(() {
                       _tinyContract.preset = item;
                     });
@@ -145,7 +148,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         .getScreenSizeBasedDuration(
                         context),
                     builder: (context) =>
-                        PresetListWidget(_controlState, (item, context) {
+                        PresetListWidget(_tinyState, (item, context) {
                           setState(() {
                             _tinyContract.preset = item;
                           });
@@ -176,7 +179,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     transitionDuration: ControlHelper
                         .getScreenSizeBasedDuration(context),
                     builder: (context) =>
-                        ReceptionListWidget(_controlState, (context, item) {
+                        ReceptionListWidget(_tinyState, (context, item) {
                           setState(() {
                             var tag = new Tag(
                                 id: item.id,
@@ -286,9 +289,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               return;
             }
             new TinyContractRepo().save(_tinyContract);
-            _controlState.curDBO = _tinyContract;
+            _tinyState.curDBO = _tinyContract;
             Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
-            Navigator.of(context).pushNamed(NavRoutes.CONTRACT_PREVIEW);
+            Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_PREVIEW);
           } : null,),),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
@@ -468,7 +471,10 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 CupertinoButton(
                   child: Text(S.of(context).add_contract),
                   onPressed: validContract() ? () {
-                    // todo generate contract
+                    _tinyContractRepo.save(_tinyContract);
+                    _tinyState.curDBO = _tinyContract;
+                    //Navigator.of(context).pop();
+                    Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
                   } : null,
                 ),
               ],),

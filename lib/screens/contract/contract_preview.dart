@@ -17,6 +17,19 @@ class ContractPreviewWidget extends StatefulWidget {
 
   ContractPreviewWidget(this._controlState);
 
+  static buildPreview(context, tinyContract) {
+    var widgetList = List<Widget>();
+    for (int i = 0; i < tinyContract.preset.paragraphs.length; i++) {
+      var paragraph  =tinyContract.preset.paragraphs[i];
+      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, i), style: TextStyle( fontSize: 24 ),));
+      widgetList.add(Text(paragraph.content));
+    }
+    tinyContract.preset.paragraphs.forEach((paragraph) {
+    });
+
+    return widgetList;
+  }
+
   @override
   _ContractPreviewWidgetState createState() => _ContractPreviewWidgetState(_controlState);
 }
@@ -29,18 +42,6 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
     _tinyContract = _controlState.curDBO;
   }
 
-  buildPreview() {
-    var widgetList = List<Widget>();
-    for (int i = 0; i < _tinyContract.preset.paragraphs.length; i++) {
-      var paragraph  =_tinyContract.preset.paragraphs[i];
-      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, i), style: TextStyle( fontSize: 24 ),));
-      widgetList.add(Text(paragraph.content));
-    }
-    _tinyContract.preset.paragraphs.forEach((paragraph) {
-    });
-
-    return widgetList;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( children: buildPreview(), ),
+            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( shrinkWrap: true, children: ContractPreviewWidget.buildPreview(context, _tinyContract), ),
         ),
       ),
     );

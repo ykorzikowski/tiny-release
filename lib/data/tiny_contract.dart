@@ -48,7 +48,7 @@ class TinyContract extends TinyDBO {
     };
   }
 
-  Map<String, String> settingsToMap( List<TinySetting> settings ) {
+  static Map<String, String> settingsToMap( List<TinySetting> settings ) {
     var map = Map();
 
     for (var value in settings) {

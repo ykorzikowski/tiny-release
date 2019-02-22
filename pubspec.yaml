@@ -25,6 +25,7 @@ dependencies:
   flutter_pagewise: ^1.2.0
   flutter_tags: ^0.1.8
   cool_ui: ^0.1.12
+  flutter_signature_pad: ^0.2.3
   http:
 
   # The following adds the Cupertino Icons font to your application.
