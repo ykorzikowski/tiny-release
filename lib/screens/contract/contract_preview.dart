@@ -21,7 +21,7 @@ class ContractPreviewWidget extends StatefulWidget {
     var widgetList = List<Widget>();
     for (int i = 0; i < tinyContract.preset.paragraphs.length; i++) {
       var paragraph  =tinyContract.preset.paragraphs[i];
-      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, i), style: TextStyle( fontSize: 24 ),));
+      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, (i+1)), style: TextStyle( fontSize: 24 ),));
       widgetList.add(Text(paragraph.content));
     }
     tinyContract.preset.paragraphs.forEach((paragraph) {

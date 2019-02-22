@@ -18,7 +18,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     final TinyContract tinyContract = TinyContract.fromMap(dboMap);
     final TinyContractDBO dbo = TinyContractDBO.fromMap(dboMap);
 
-    tinyContract.locked = dbo.locked_ == 1;
+    tinyContract.isLocked = dbo.locked_ == 1;
     tinyContract.model = await _tinyPeopleRepo.get(dbo.modelId);
     tinyContract.photographer = await _tinyPeopleRepo.get(dbo.photographerId);
     tinyContract.witness = await _tinyPeopleRepo.get(dbo.witnessId);
@@ -66,7 +66,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
   Map<String, dynamic> _replaceNestedWithIds( TinyContract tinyContract) {
     final TinyContractDBO dbo = TinyContractDBO.fromMap(TinyContract.toMap(tinyContract));
 
-    dbo.locked_ = tinyContract.locked ? 1 : 0;
+    dbo.locked_ = tinyContract.isLocked ? 1 : 0;
     dbo.modelId = tinyContract.model.id;
     dbo.photographerId = tinyContract.photographer.id;
     dbo.witnessId = tinyContract?.witness?.id;

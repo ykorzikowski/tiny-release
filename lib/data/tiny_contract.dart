@@ -8,12 +8,12 @@ class TinyContract extends TinyDBO {
   TinyPreset preset;
   TinyPeople model, photographer, parent, witness;
   int imagesCount;
-  bool locked = false;
+  bool isLocked = false;
   String location, date;
   List<TinySetting> settings;
   TinySignature modelSignature, photographerSignature, witnessSignature, parentSignature;
 
-  TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date, this.locked} ) : super(id: id, displayName: displayName);
+  TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date, this.isLocked} ) : super(id: id, displayName: displayName);
 
   TinyContract.fromMap(Map<String, dynamic> m) {
     id = m["id"];
@@ -30,7 +30,7 @@ class TinyContract extends TinyDBO {
     photographerSignature = m["photographerSignature"];
     witnessSignature = m["witnessSignature"];
     parentSignature = m["parentSignature"];
-    locked = m["locked"];
+    isLocked = m["isLocked"];
     settings = (m["settings"] as Iterable)
         ?.map((m) => TinySetting.fromMap(m))?.toList();
   }
@@ -56,7 +56,7 @@ class TinyContract extends TinyDBO {
       "parentSignature": tinyContract.parentSignature,
       "location": tinyContract.location,
       "date": tinyContract.date,
-      "locked": tinyContract.locked,
+      "isLocked": tinyContract.isLocked,
       "settings": settings,
     };
   }

@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
-import 'package:tiny_release/data/repo/tiny_signature_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -33,10 +32,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   final TinyState _tinyState;
   TinyContract _tinyContract;
   Signature _modelSignature, _photographerSignature, _parentSignature, _witnessSignature;
-  ScrollPhysics _scrollPhysics = BouncingScrollPhysics();
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
-  final TinySignatureRepo _tinySignatureRepo = TinySignatureRepo();
 
   /// keys for signature pads
   final _modelKey = GlobalKey<SignatureState>();
@@ -65,8 +62,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       backgroundPainter: _WatermarkPaint("32.0", "32.0"),
       onSign: () {
         setState(() {
-          print("end");
-          _scrollPhysics = BouncingScrollPhysics();
+
         });
       }
   );
@@ -82,7 +78,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                   BaseUtil.getLocalFormattedDate(
                       context, DateTime.now().toIso8601String())),
               leading: Row(children: <Widget>[
-                !_tinyContract.locked ? CupertinoButton(
+                !_tinyContract.isLocked ? CupertinoButton(
                   child: Icon(CupertinoIcons.delete_solid),
                   onPressed: () => setState(() => sig.clear()),
                   borderRadius: BorderRadius.all(Radius.circular(0)),
@@ -124,7 +120,6 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   }
 
   _getImg(TinySignature sig) {
-    print(sig.path);
     return Container(height: 150, child: Image.file(Io.File(sig.path)));
   }
 
@@ -149,30 +144,43 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         TinySignature(
           type: SignatureType.SIG_MODEL,
           contractId: _tinyContract.id,
-          path: (await BaseUtil.storeBlob(await _getBytesFromImg(_modelSignature.getData()))).path
+          path: (await BaseUtil.storeBlob('signature', await _getBytesFromImg(_modelSignature.getData()))).path
         );
     if (_signatureValid(_photographerSignature))
       _tinyContract.photographerSignature =
         TinySignature(
             type: SignatureType.SIG_PHOTOGRAPHER,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlob(await _getBytesFromImg(_photographerSignature.getData()))).path
+            path: (await BaseUtil.storeBlob('signature', await _getBytesFromImg(_photographerSignature.getData()))).path
         );
     if (_signatureValid(_parentSignature))
       _tinyContract.parentSignature =
         TinySignature(
             type: SignatureType.SIG_PARENT,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlob(await _getBytesFromImg( _parentSignature.getData()))).path
+            path: (await BaseUtil.storeBlob('signature', await _getBytesFromImg( _parentSignature.getData()))).path
         );
     if (_signatureValid(_witnessSignature))
       _tinyContract.witnessSignature =
         TinySignature(
             type: SignatureType.SIG_WITNESS,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlob(await _getBytesFromImg(_witnessSignature.getData()))).path
+            path: (await BaseUtil.storeBlob('signature', await _getBytesFromImg(_witnessSignature.getData()))).path
         );
   }
+
+  List<BottomNavigationBarItem> _getButtonsForFinishedContract() =>
+      <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.create),
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.share),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.delete_solid),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -180,52 +188,85 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         navigationBar: CupertinoNavigationBar(
           heroTag: 'contract',
           transitionBetweenRoutes: false,
-          middle: Text(S.of(context).add_contract),
-          trailing: CupertinoButton(
+          middle: _tinyContract.isLocked ? Text(S.of(context).finished_contract) : Text(S.of(context).finish_contract) ,
+          trailing: !_tinyContract.isLocked ? CupertinoButton(
             child: Text(S.of(context).btn_edit),
             onPressed: () {
               //todo: edit contract
               _tinyState.curDBO = _tinyContract;
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER);
-            }),),
+            }) : Text(""),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
           child:
-          ListView(
-            physics: _scrollPhysics,
-            shrinkWrap: true,
-            children: <Widget>[
-              /// contract preview
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: ContractPreviewWidget.buildPreview(
-                    context, _tinyContract),
-              ),
+          Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+          Expanded(child: ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: <Widget>[
 
+                /// contract preview
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: ContractPreviewWidget.buildPreview(
+                      context, _tinyContract),
+                ),
 
-              /// signatures
-              !_tinyContract.locked ? Column(children: <Widget>[
-                /// signatures model and photographer
-                Column( mainAxisSize: MainAxisSize.min, children: _buildPrimarySignatureSection(),),
+                Divider(),
 
-                /// signatures witness and parent
-                _tinyContract.witness != null || _tinyContract.parent != null ? Column( mainAxisSize: MainAxisSize.min, children: _buildSecondarySignatureSection(),) : Container(),
-              ],) :
-              Column( mainAxisSize: MainAxisSize.min, children: _buildSignatureImageSection()),
+                /// signatures
+                !_tinyContract.isLocked ? Column(children: <Widget>[
 
-              CupertinoButton(
-                child: Text("Complete Contract"),
-                onPressed: _signaturesValid() ?  () async {
-                  await _saveSignatures();
-                  _tinyContract.locked = true;
-                  int contractId = await _tinyContractRepo.save(_tinyContract);
-                  _tinyContract.id = contractId;
-                } : null,
-              )
-            ],
-          ),),
+                  /// signatures model and photographer
+                  Column(mainAxisSize: MainAxisSize.min,
+                    children: _buildPrimarySignatureSection(),),
+
+                  /// signatures witness and parent
+                  _tinyContract.witness != null || _tinyContract.parent != null
+                      ? Column(mainAxisSize: MainAxisSize.min,
+                    children: _buildSecondarySignatureSection(),)
+                      : Container(),
+                ],) :
+                Column(mainAxisSize: MainAxisSize.min,
+                    children: _buildSignatureImageSection()),
+
+                !_tinyContract.isLocked ? CupertinoButton(
+                  child: Text(S.of(context).btn_complete_contract),
+                  onPressed: _signaturesValid() ? () async {
+                    print("save signatures");
+                    await _saveSignatures();
+                    print("saved signatures");
+
+                    _tinyContract.isLocked = true;
+                    print("sqlite start");
+                    await _tinyContractRepo.save(_tinyContract);
+                    _tinyState.curDBO = _tinyContract;
+
+                    Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
+                    Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);
+                  } : null,
+                ) : Container()
+              ],
+            ), ),
+
+            CupertinoTabBar(
+              onTap: (sel) {
+                switch(sel) {
+                  case 0:
+                  //todo: new based on this
+                  case 1:
+                    //todo: share
+                  case 2:
+                    // todo: delete
+                }
+              },
+                inactiveColor: CupertinoColors.activeBlue,
+                items: _getButtonsForFinishedContract())
+          ]),),
       ),);
   }
 

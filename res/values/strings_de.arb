@@ -85,5 +85,8 @@
   "contract_images": "Anzahl Bilder",
   "change_order_title": "Reihenfolge anpassen",
   "chose_brithday": "Geburtstag auswählen",
-  "reception_area": "Reception area"
+  "reception_area": "Aufnahmebereiche",
+  "finish_contract": "Vertrag abschließen",
+  "finished_contract": "Abgeschlossener Vertrag",
+  "btn_complete_contract": "Vertrag abschließen"
 }

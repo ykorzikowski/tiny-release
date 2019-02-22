@@ -28,6 +28,7 @@ class S implements WidgetsLocalizations {
   String get btn_add_mail => "Add Mail";
   String get btn_add_paragrpah => "Add Paragrpah";
   String get btn_add_phone => "Add Phone";
+  String get btn_complete_contract => "Complete Contract";
   String get btn_delete_all => "Delete all data";
   String get btn_dialog_cancel => "Abort";
   String get btn_edit => "Edit";
@@ -50,6 +51,8 @@ class S implements WidgetsLocalizations {
   String get create_new_contract => "Create a new contract";
   String get dateFormatPattern => "yyyy-MM-dd";
   String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
+  String get finish_contract => "Finish Contract";
+  String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
   String get hint_adresslabel => "adress_label";
   String get hint_birthday => "birthday";
@@ -127,9 +130,13 @@ class $de extends S {
   @override
   String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
   @override
+  String get finish_contract => "Vertrag abschließen";
+  @override
   String get hint_company => "Firma";
   @override
   String get hint_street => "Straße";
+  @override
+  String get btn_complete_contract => "Vertrag abschließen";
   @override
   String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
   @override
@@ -185,7 +192,7 @@ class $de extends S {
   @override
   String get choose_source => "Quelle wählen";
   @override
-  String get reception_area => "Reception area";
+  String get reception_area => "Aufnahmebereiche";
   @override
   String get title_settings => "Einstellungen";
   @override
@@ -270,6 +277,8 @@ class $de extends S {
   String get btn_add => "Hinzufügen";
   @override
   String get item_preset => "Vorlagen";
+  @override
+  String get finished_contract => "Abgeschlossener Vertrag";
   @override
   String get hint_birthday => "Geburtstag";
   @override

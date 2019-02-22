@@ -85,5 +85,8 @@
   "contract_images": "Images count",
   "change_order_title": "Change order",
   "chose_brithday": "Chose brithday",
-  "reception_area": "Reception area"
+  "reception_area": "Reception area",
+  "finish_contract": "Finish Contract",
+  "finished_contract": "Finished Contract",
+  "btn_complete_contract": "Complete Contract"
 }
