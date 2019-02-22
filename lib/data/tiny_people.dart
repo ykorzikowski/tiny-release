@@ -18,7 +18,7 @@ class TinyPeople extends TinyDBO {
   List<TinyPeopleItem> emails = List();
   List<TinyPeopleItem> phones = List();
   List<TinyAddress> postalAddresses = List();
-  Uint8List avatar;
+  String avatar;
 
   TinyPeople({id, displayName, this.identifier, this.givenName, this.middleName, this.prefix,
     this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
@@ -86,6 +86,59 @@ class TinyPeople extends TinyDBO {
       "emails": emails,
       "phones": phones,
       "postalAddresses": postalAddresses,
+      "avatar": contact.avatar
+    };
+  }
+}
+
+class TinyPeopleDBO extends TinyDBO {
+  String identifier,
+      givenName = "",
+      middleName,
+      prefix,
+      suffix,
+      familyName = "",
+      birthday,
+      company,
+      jobTitle,
+      idType,
+      idNumber;
+  int type;
+  String avatar;
+
+  TinyPeopleDBO({id, displayName, this.identifier, this.givenName, this.middleName, this.prefix,
+    this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.avatar} );
+
+  TinyPeopleDBO.fromMap(Map<String, dynamic> m) {
+    id = m["id"];
+    identifier = m["identifier"];
+    givenName = m["givenName"];
+    middleName = m["middleName"];
+    familyName = m["familyName"];
+    prefix = m["prefix"];
+    suffix = m["suffix"];
+    company = m["company"];
+    birthday = m["birthday"];
+    jobTitle = m["jobTitle"];
+    idType = m["idType"];
+    idNumber = m["idNumber"];
+    avatar = m["avatar"];
+  }
+
+  static Map<String, dynamic> toMap(TinyPeopleDBO contact) {
+    return {
+      "id": contact.id,
+      "identifier": contact.identifier,
+      "givenName": contact.givenName,
+      "middleName": contact.middleName,
+      "familyName": contact.familyName,
+      "birthday": contact.birthday,
+      "prefix": contact.prefix,
+      "suffix": contact.suffix,
+      "company": contact.company,
+      "jobTitle": contact.jobTitle,
+      "idNumber": contact.idNumber,
+      "idType": contact.idType,
       "avatar": contact.avatar
     };
   }

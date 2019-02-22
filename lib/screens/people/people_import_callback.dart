@@ -1,7 +1,10 @@
+import 'dart:io' as Io;
+
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
+import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 
@@ -11,7 +14,7 @@ class PeopleImportCallback {
 
   PeopleImportCallback( this._controlState );
 
-  static TinyPeople mapContactToPeople( Contact contact ) {
+  static Future<TinyPeople> mapContactToPeople( Contact contact ) async {
     var tinyPeople = new TinyPeople();
 
     tinyPeople.identifier = contact.identifier;
@@ -23,7 +26,7 @@ class PeopleImportCallback {
     tinyPeople.company = contact.company;
     tinyPeople.jobTitle = contact.jobTitle;
     tinyPeople.displayName = contact.displayName;
-    tinyPeople.avatar = contact.avatar;
+    tinyPeople.avatar = contact.avatar != null ? (await BaseUtil.storeTempBlobUint8('people', contact.avatar)).path : null;
 
     tinyPeople.emails = contact.emails.map((i) {
       TinyPeopleItem tinyItem = new TinyPeopleItem();
@@ -69,15 +72,18 @@ class PeopleImportCallback {
     data.sort((a, b) =>
         a.familyName.toLowerCase().compareTo(b.familyName.toLowerCase()));
 
-    return data.sublist(start, end)
-        .map((value) => mapContactToPeople(value))
-        .toList();
+    Future<List<TinyPeople>> wait = Future.wait(data.sublist(start, end)
+        .map((value) async => mapContactToPeople(value))
+        .toList());
+
+    return wait;
   }
 
   void onPeopleTap(item, context) {
     // keep type id of dbo created before import
     TinyPeople beforeImportDBO = _controlState.curDBO;
     item.type = beforeImportDBO.type;
+    if( item.avatar != null ) BaseUtil.storeFile('people', Io.File(item.avatar)).then((file) => item.avatar = file.path);
     _controlState.curDBO = item;
     _controlState.tinyEditCallback();
 

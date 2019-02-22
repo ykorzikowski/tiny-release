@@ -1,4 +1,6 @@
 
+import 'dart:io' as Io;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/tiny_people.dart';
@@ -41,7 +43,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                       color: Colors.white,
                     ),
                   ) : null,
-                  backgroundImage: tinyPeople.avatar != null ? new MemoryImage(tinyPeople.avatar) : null,
+                  backgroundImage: tinyPeople.avatar != null ? new FileImage(Io.File(tinyPeople.avatar)) : null,
                   radius: 32.0,
                 ),
               ),

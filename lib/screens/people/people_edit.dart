@@ -47,11 +47,10 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       maxHeight: 512,
     );
     if ( croppedFile != null ) {
-      setState(() {
-          _tinyPeople.avatar = croppedFile.readAsBytesSync();
-      });
+      BaseUtil.storeFile("people_", croppedFile).then((file) => setState((){
+        _tinyPeople.avatar = file.path;
+      }));
     }
-
   }
 
   Widget imageAndNameSection() =>
@@ -95,7 +94,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 child: _tinyPeople.avatar == null ? Icon(CupertinoIcons.add, color: CupertinoColors.white,) : Container(),
                 backgroundImage: _tinyPeople.avatar == null
                     ? null
-                    : new MemoryImage(_tinyPeople.avatar),
+                    : new FileImage(File(_tinyPeople.avatar)),
                 backgroundColor: CupertinoColors.activeBlue,
                 radius: 32.0,
               ),

@@ -1,3 +1,4 @@
+import 'dart:io' as Io;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class PeopleListWidget extends StatefulWidget {
           ),
         ) : null,
         backgroundImage: entry?.avatar != null
-            ? new MemoryImage(entry.avatar)
+            ? new FileImage(Io.File(entry.avatar))
             : null,
         radius: 32.0,
       );

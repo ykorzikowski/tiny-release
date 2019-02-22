@@ -105,7 +105,7 @@ class SQLiteProvider {
       await db.execute("CREATE TABLE People ("
           "id INTEGER PRIMARY KEY,"
           "displayName TEXT,"
-          "avatar BLOB,"
+          "avatar TEXT,"
           "identifier TEXT,"
           "givenName TEXT,"
           "middleName TEXT,"
