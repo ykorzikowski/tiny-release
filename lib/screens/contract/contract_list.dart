@@ -49,6 +49,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
             child: Text(S.of(context).title_add),
             onPressed: () {
               var _tinyContract = TinyContract();
+              _tinyContract.locked = false;
               _controlState.curDBO = _tinyContract;
               BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
             },

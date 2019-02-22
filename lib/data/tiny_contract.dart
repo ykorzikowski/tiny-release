@@ -2,15 +2,18 @@
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/data/tiny_signature.dart';
 
 class TinyContract extends TinyDBO {
   TinyPreset preset;
   TinyPeople model, photographer, parent, witness;
   int imagesCount;
+  bool locked = false;
   String location, date;
   List<TinySetting> settings;
+  TinySignature modelSignature, photographerSignature, witnessSignature, parentSignature;
 
-  TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date} ) : super(id: id, displayName: displayName);
+  TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date, this.locked} ) : super(id: id, displayName: displayName);
 
   TinyContract.fromMap(Map<String, dynamic> m) {
     id = m["id"];
@@ -23,6 +26,11 @@ class TinyContract extends TinyDBO {
     imagesCount = m["imagesCount"];
     location = m["location"];
     date = m["date"];
+    modelSignature = m["modelSignature"];
+    photographerSignature = m["photographerSignature"];
+    witnessSignature = m["witnessSignature"];
+    parentSignature = m["parentSignature"];
+    locked = m["locked"] ?? false;
     settings = (m["settings"] as Iterable)
         ?.map((m) => TinySetting.fromMap(m))?.toList();
   }
@@ -42,8 +50,13 @@ class TinyContract extends TinyDBO {
       "parent": tinyContract.parent != null ? TinyPeople.toMap(tinyContract.parent) : null,
       "witness": tinyContract.witness != null ? TinyPeople.toMap(tinyContract.witness) : null,
       "imagesCount": tinyContract.imagesCount,
+      "modelSignature": tinyContract.modelSignature,
+      "photographerSignature": tinyContract.photographerSignature,
+      "witnessSignature": tinyContract.witnessSignature,
+      "parentSignature": tinyContract.parentSignature,
       "location": tinyContract.location,
       "date": tinyContract.date,
+      "locked": tinyContract.locked ?? false,
       "settings": settings,
     };
   }

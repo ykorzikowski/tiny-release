@@ -1,8 +1,15 @@
 
+import 'dart:io' as Io;
+import 'dart:typed_data';
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
+import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
+import 'package:tiny_release/data/repo/tiny_signature_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
@@ -27,6 +34,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   TinyContract _tinyContract;
   Signature _modelSignature, _photographerSignature, _parentSignature, _witnessSignature;
   ScrollPhysics _scrollPhysics = BouncingScrollPhysics();
+
+  final TinyContractRepo _tinyContractRepo = TinyContractRepo();
+  final TinySignatureRepo _tinySignatureRepo = TinySignatureRepo();
 
   /// keys for signature pads
   final _modelKey = GlobalKey<SignatureState>();
@@ -61,7 +71,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       }
   );
 
-  _wrapSignature(Signature sig, name) =>
+  Widget _wrapSignature(sig, name) =>
       Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -72,16 +82,15 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                   BaseUtil.getLocalFormattedDate(
                       context, DateTime.now().toIso8601String())),
               leading: Row(children: <Widget>[
-                CupertinoButton(
+                !_tinyContract.locked ? CupertinoButton(
                   child: Icon(CupertinoIcons.delete_solid),
                   onPressed: () => setState(() => sig.clear()),
                   borderRadius: BorderRadius.all(Radius.circular(0)),
                   padding: EdgeInsets.all(0),
-                ),
+                ) : Container(),
                 Text(name),
               ],)
           ),
-
         ],
       );
 
@@ -114,6 +123,57 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
     ];
   }
 
+  _getImg(TinySignature sig) {
+    print(sig.path);
+    return Container(height: 150, child: Image.file(Io.File(sig.path)));
+  }
+
+  List<Widget> _buildSignatureImageSection() {
+  return <Widget> [
+    Flexible( fit: FlexFit.loose,
+    child: _tinyContract.photographer != null ? _wrapSignature(_getImg(_tinyContract.photographerSignature), _tinyContract.photographer.displayName) : Container()),
+    Flexible( fit: FlexFit.loose,
+    child: _tinyContract.model != null ? _wrapSignature(_getImg(_tinyContract.modelSignature), _tinyContract.model.displayName) : Container()),
+    Flexible( fit: FlexFit.loose,
+    child: _tinyContract.parent != null ? _wrapSignature(_getImg(_tinyContract.parentSignature), _tinyContract.parent.displayName) : Container()),
+    Flexible( fit: FlexFit.loose,
+    child: _tinyContract.witness != null ? _wrapSignature(_getImg(_tinyContract.witnessSignature), _tinyContract.witness.displayName) : Container()),
+    ];
+  }
+
+  Future<ByteData> _getBytesFromImg(ui.Image img) async => img.toByteData(format: ui.ImageByteFormat.png);
+
+  _saveSignatures() async {
+    if (_signatureValid(_modelSignature))
+      _tinyContract.modelSignature =
+        TinySignature(
+          type: SignatureType.SIG_MODEL,
+          contractId: _tinyContract.id,
+          path: (await BaseUtil.storeBlob(await _getBytesFromImg(_modelSignature.getData()))).path
+        );
+    if (_signatureValid(_photographerSignature))
+      _tinyContract.photographerSignature =
+        TinySignature(
+            type: SignatureType.SIG_PHOTOGRAPHER,
+            contractId: _tinyContract.id,
+            path: (await BaseUtil.storeBlob(await _getBytesFromImg(_photographerSignature.getData()))).path
+        );
+    if (_signatureValid(_parentSignature))
+      _tinyContract.parentSignature =
+        TinySignature(
+            type: SignatureType.SIG_PARENT,
+            contractId: _tinyContract.id,
+            path: (await BaseUtil.storeBlob(await _getBytesFromImg( _parentSignature.getData()))).path
+        );
+    if (_signatureValid(_witnessSignature))
+      _tinyContract.witnessSignature =
+        TinySignature(
+            type: SignatureType.SIG_WITNESS,
+            contractId: _tinyContract.id,
+            path: (await BaseUtil.storeBlob(await _getBytesFromImg(_witnessSignature.getData()))).path
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -137,18 +197,31 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             physics: _scrollPhysics,
             shrinkWrap: true,
             children: <Widget>[
+              /// contract preview
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: ContractPreviewWidget.buildPreview(
                     context, _tinyContract),
               ),
-              Column( mainAxisSize: MainAxisSize.min, children: _buildPrimarySignatureSection(),),
-              _tinyContract.witness != null || _tinyContract.parent != null ? Column( mainAxisSize: MainAxisSize.min, children: _buildSecondarySignatureSection(),) : Container(),
+
+
+              /// signatures
+              !_tinyContract.locked ? Column(children: <Widget>[
+                /// signatures model and photographer
+                Column( mainAxisSize: MainAxisSize.min, children: _buildPrimarySignatureSection(),),
+
+                /// signatures witness and parent
+                _tinyContract.witness != null || _tinyContract.parent != null ? Column( mainAxisSize: MainAxisSize.min, children: _buildSecondarySignatureSection(),) : Container(),
+              ],) :
+              Column( mainAxisSize: MainAxisSize.min, children: _buildSignatureImageSection()),
+
               CupertinoButton(
                 child: Text("Complete Contract"),
-                onPressed: _signaturesValid() ?  () {
-                  print(_signaturesValid());
-                  // todo: Save signatures and lock contract
+                onPressed: _signaturesValid() ?  () async {
+                  await _saveSignatures();
+                  _tinyContract.locked = true;
+                  int contractId = await _tinyContractRepo.save(_tinyContract);
+                  _tinyContract.id = contractId;
                 } : null,
               )
             ],

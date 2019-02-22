@@ -44,12 +44,21 @@ class SQLiteProvider {
           "ON DELETE CASCADE ON UPDATE NO ACTION"
           ")");
 
+      /// Signature
+      await db.execute("CREATE TABLE Signature ("
+          "id INTEGER PRIMARY KEY,"
+          "path TEXT,"
+          "type INTEGER,"
+          "contractId INTEGER"
+          ")");
+
       /// Contracts
       await db.execute("CREATE TABLE Contract ("
           "id INTEGER PRIMARY KEY,"
           "displayName TEXT,"
           "location TEXT,"
           "date TEXT,"
+          "locked INTEGER,"
           "imagesCount INTEGER,"
           "presetId INTEGER,"
           "photographerId INTEGER,"

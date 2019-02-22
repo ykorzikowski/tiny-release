@@ -1,4 +1,4 @@
-/// Used to map list index to specific entry.
+/// has to match table name
 class DataType {
   static const String PEOPLE_ITEM = "PeopleItem";
   static const String PEOPLE_ADDRESS = "PeopleAddress";
@@ -10,5 +10,5 @@ class DataType {
   static const String WORDING = "Wording";
   static const String CONTRACT = "Contract";
   static const String SETTINGS = "Settings";
-
+  static const String SIGNATURE = "Signature";
 }

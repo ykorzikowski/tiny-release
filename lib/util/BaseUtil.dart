@@ -1,5 +1,10 @@
+import 'dart:io' as Io;
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as Img;
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_layout_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
@@ -13,6 +18,16 @@ import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/generated/i18n.dart';
 
 class BaseUtil {
+
+  static Future<Io.File> storeBlob(ByteData byteData) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+
+    final Img.Image img = Img.decodeImage(Uint8List.view(byteData.buffer));
+
+    return new Io.File('$path/${DateTime.now().toUtc().toIso8601String()}.png')
+        ..writeAsBytes(Img.encodePng(img));
+  }
 
   static String getParagraphTitle(BuildContext ctx, Paragraph p, int index) {
     return '§' + index.toString() + " " + p.title;
