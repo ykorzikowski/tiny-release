@@ -34,6 +34,7 @@ class S implements WidgetsLocalizations {
   String get btn_edit => "Edit";
   String get btn_import_contacts => "Import from contracts";
   String get btn_save => "Speichern";
+  String get btn_sign_contract => "Sign contract";
   String get camera => "Camera";
   String get cancel => "Cancel";
   String get change_order_title => "Change order";
@@ -58,6 +59,7 @@ class S implements WidgetsLocalizations {
   String get hint_birthday => "birthday";
   String get hint_city => "city";
   String get hint_company => "company";
+  String get hint_completed_contracts => "Contracts that has been completed can not be edited again";
   String get hint_content => "content";
   String get hint_country => "country";
   String get hint_description => "description";
@@ -188,6 +190,8 @@ class $de extends S {
   @override
   String get btn_save => "Speichern";
   @override
+  String get btn_sign_contract => "Vertrag unterzeichnen";
+  @override
   String get btn_add_paragrpah => "Paragraf hinzufügen";
   @override
   String get choose_source => "Quelle wählen";
@@ -227,6 +231,8 @@ class $de extends S {
   String get title_people => "Menschen";
   @override
   String get hint_city => "Stad";
+  @override
+  String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override

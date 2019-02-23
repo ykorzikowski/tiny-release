@@ -88,5 +88,7 @@
   "reception_area": "Aufnahmebereiche",
   "finish_contract": "Vertrag abschließen",
   "finished_contract": "Abgeschlossener Vertrag",
-  "btn_complete_contract": "Vertrag abschließen"
+  "btn_complete_contract": "Vertrag abschließen",
+  "btn_sign_contract": "Vertrag unterzeichnen",
+  "hint_completed_contracts": "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden"
 }

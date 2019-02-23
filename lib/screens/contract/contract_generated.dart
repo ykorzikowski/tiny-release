@@ -263,6 +263,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                 Column(mainAxisSize: MainAxisSize.min,
                     children: _buildSignatureImageSection()),
 
+                /// button to complete contract
                 !_tinyContract.isLocked ? CupertinoButton(
                   child: Text(S.of(context).btn_complete_contract),
                   onPressed: _signaturesValid() ? () async {
@@ -275,7 +276,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                     Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
                     Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);
                   } : null,
-                ) : Container()
+                ) : Container(),
+
+                _tinyContract.isLocked ? Text(S.of(context).hint_completed_contracts, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.inactiveGray, fontSize: 10),) : Container(),
               ],
             ), ),
 

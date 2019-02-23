@@ -88,5 +88,7 @@
   "reception_area": "Reception area",
   "finish_contract": "Finish Contract",
   "finished_contract": "Finished Contract",
-  "btn_complete_contract": "Complete Contract"
+  "btn_complete_contract": "Complete Contract",
+  "btn_sign_contract": "Sign contract",
+  "hint_completed_contracts": "Contracts that has been completed can not be edited again"
 }

@@ -469,12 +469,21 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 /// button generate contract
                 CupertinoButton(
-                  child: Text(S.of(context).add_contract),
+                  child: Text(S.of(context).btn_sign_contract),
                   onPressed: validContract() ? () {
                     _tinyContractRepo.save(_tinyContract);
                     _tinyState.curDBO = _tinyContract;
                     //Navigator.of(context).pop();
                     Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
+                  } : null,
+                ),
+
+                /// button save contract
+                CupertinoButton(
+                  child: Text(S.of(context).btn_save),
+                  onPressed: validContract() ? () {
+                    _tinyContractRepo.save(_tinyContract);
+                    Navigator.of(context, rootNavigator: true).pop();
                   } : null,
                 ),
               ],),
