@@ -34,6 +34,14 @@ class BaseUtil {
         byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
   }
 
+  static Future<Io.File> storeBlobUint8( String prefix, Uint8List byteData) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+
+    return new Io.File('$path/$prefix${DateTime.now().toUtc().toIso8601String()}.png').writeAsBytes(
+        byteData);
+  }
+
   static Future<Io.File> storeTempBlobUint8( String prefix, Uint8List byteData) async {
     final directory = await getTemporaryDirectory();
     final path = directory.path;
