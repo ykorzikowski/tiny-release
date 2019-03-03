@@ -2,11 +2,13 @@
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/data/tiny_setting.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 
 class TinyContract extends TinyDBO {
   TinyPreset preset;
   TinyPeople model, photographer, parent, witness;
+  TinyAddress selectedModelAddress, selectedPhotographerAddress, selectedParentAddress, selectedWitnessAddress;
   int imagesCount;
   bool isLocked = false;
   String location, date;
@@ -23,6 +25,12 @@ class TinyContract extends TinyDBO {
     model = m["model"] != null ? TinyPeople.fromMap(m["model"]) : null;
     parent = m["parent"] != null ? TinyPeople.fromMap(m["parent"]) : null;
     witness = m["witness"] != null ? TinyPeople.fromMap(m["witness"]) : null;
+
+    selectedModelAddress = m["selectedModelAddress"] ? TinyAddress.fromMap(m["selectedModelAddress"]) : null;
+    selectedPhotographerAddress = m["selectedPhotographerAddress"] ? TinyAddress.fromMap(m["selectedPhotographerAddress"]) : null;
+    selectedParentAddress = m["selectedParentAddress"] ? TinyAddress.fromMap(m["selectedParentAddress"]) : null;
+    selectedWitnessAddress = m["selectedWitnessAddress"] ? TinyAddress.fromMap(m["selectedWitnessAddress"]) : null;
+
     imagesCount = m["imagesCount"];
     location = m["location"];
     date = m["date"];
@@ -49,6 +57,12 @@ class TinyContract extends TinyDBO {
       "model": tinyContract.model != null ? TinyPeople.toMap(tinyContract.model) : null,
       "parent": tinyContract.parent != null ? TinyPeople.toMap(tinyContract.parent) : null,
       "witness": tinyContract.witness != null ? TinyPeople.toMap(tinyContract.witness) : null,
+
+      "selectedModelAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
+      "selectedPhotographerAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
+      "selectedParentAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
+      "selectedWitnessAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
+
       "imagesCount": tinyContract.imagesCount,
       "modelSignature": tinyContract.modelSignature,
       "photographerSignature": tinyContract.photographerSignature,
@@ -73,38 +87,18 @@ class TinyContract extends TinyDBO {
 
 }
 
-class TinySetting extends TinyDBO {
-  String key, value;
-
-  TinySetting( {id, displayName, this.key, this.value} ) : super(id: id, displayName: displayName);
-
-  TinySetting.fromMap(Map<String, dynamic> m) {
-    id = m["id"];
-    displayName = m["displayName"];
-    key = m["key"];
-    value = m["value"];
-  }
-
-  static Map<String, dynamic> toMap(TinySetting tinySetting) {
-    return {
-      "id": tinySetting.id,
-      "displayName": tinySetting.displayName,
-      "key": tinySetting.key,
-      "value": tinySetting.value,
-    };
-  }
-
-}
-
 class TinyContractDBO extends TinyDBO {
   int presetId;
   int modelId, photographerId, parentId, witnessId;
+  int selectedModelAddressId, selectedPhotographerAddressId, selectedParentAddressId, selectedWitnessAddressId;
   int imagesCount;
   int locked_;
   String location, date;
 
   TinyContractDBO(
-      {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId, this.imagesCount, this.location, this.date, this.locked_})
+      {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId,
+        this.selectedModelAddressId, this.selectedPhotographerAddressId, this.selectedParentAddressId, this.selectedWitnessAddressId,
+        this.imagesCount, this.location, this.date, this.locked_})
       : super(id: id, displayName: displayName);
 
   TinyContractDBO.fromMap(Map<String, dynamic> m) {
@@ -115,6 +109,12 @@ class TinyContractDBO extends TinyDBO {
     photographerId = m["photographerId"];
     parentId = m["parentId"];
     witnessId = m["witnessId"];
+
+    selectedModelAddressId = m["selectedModelAddressId"];
+    selectedPhotographerAddressId = m["selectedPhotographerAddressId"];
+    selectedParentAddressId = m["selectedParentAddressId"];
+    selectedWitnessAddressId = m["selectedWitnessAddressId"];
+
     imagesCount = m["imagesCount"];
     location = m["location"];
     date = m["date"];
@@ -130,6 +130,12 @@ class TinyContractDBO extends TinyDBO {
       "photographerId": tinyContract.photographerId,
       "parentId": tinyContract.parentId,
       "witnessId": tinyContract.witnessId,
+
+      "selectedModelAddressId": tinyContract.selectedModelAddressId,
+      "selectedPhotographerAddressId": tinyContract.selectedPhotographerAddressId,
+      "selectedParentAddressId": tinyContract.selectedParentAddressId,
+      "selectedWitnessAddressId": tinyContract.selectedWitnessAddressId,
+
       "imagesCount": tinyContract.imagesCount,
       "location": tinyContract.location,
       "date": tinyContract.date,

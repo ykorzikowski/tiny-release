@@ -5,7 +5,7 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class TinyLayoutRepo extends TinyRepo< TinyLayout >{
 
-  static const TYPE = DataType.LAYOUT;
+  static const TYPE = TableName.LAYOUT;
 
   @override
   Future save( TinyLayout item ) async {

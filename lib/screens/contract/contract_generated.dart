@@ -10,6 +10,7 @@ import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
 import 'package:tiny_release/screens/contract/contract_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -34,6 +35,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   Uint8List _modelSignature, _photographerSignature, _parentSignature, _witnessSignature;
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
+  ContractPdfGenerator _contractPdfGenerator;
 
   /// keys for signature pads
   final _modelKey = GlobalKey<SignatureState>();
@@ -45,6 +47,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
   _ContractGeneratedWidgetState(this._tinyState) {
     _tinyContract = _tinyState.curDBO;
+    _contractPdfGenerator = ContractPdfGenerator(_tinyContract);
   }
 
   _signaturesValid() =>
@@ -238,6 +241,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
               //physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
 
+                /// contract head
+                _contractPdfGenerator.buildContractHeader(),
+
                 /// contract preview
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -288,6 +294,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                   case 0:
                   //todo: new based on this
                   case 1:
+
                     //todo: share
                   case 2:
                     // todo: delete

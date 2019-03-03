@@ -7,7 +7,7 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class TinyReceptionRepo extends TinyRepo< TinyReception >{
 
-  static const TYPE = DataType.RECEPTION;
+  static const TYPE = TableName.RECEPTION;
 
   @override
   Future save( TinyReception item ) async {

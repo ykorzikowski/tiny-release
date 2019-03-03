@@ -44,16 +44,16 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               color: CupertinoColors.destructiveRed,
               onPressed: () async {
                   final db = await SQLiteProvider.db.database;
-                  db.delete(DataType.SETTINGS);
-                  db.delete(DataType.CONTRACT);
-                  db.delete(DataType.WORDING);
-                  db.delete(DataType.PEOPLE_ADDRESS);
-                  db.delete(DataType.PEOPLE_ITEM);
-                  db.delete(DataType.PEOPLE);
-                  db.delete(DataType.LAYOUT);
-                  db.delete(DataType.RECEPTION);
-                  db.delete(DataType.PARAGRAPH);
-                  db.delete(DataType.PRESET);
+                  db.delete(TableName.SETTINGS);
+                  db.delete(TableName.CONTRACT);
+                  db.delete(TableName.WORDING);
+                  db.delete(TableName.PEOPLE_ADDRESS);
+                  db.delete(TableName.PEOPLE_ITEM);
+                  db.delete(TableName.PEOPLE);
+                  db.delete(TableName.LAYOUT);
+                  db.delete(TableName.RECEPTION);
+                  db.delete(TableName.PARAGRAPH);
+                  db.delete(TableName.PRESET);
               },
             )
           ],

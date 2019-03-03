@@ -5,7 +5,7 @@ import 'package:tiny_release/data/tiny_signature.dart';
 
 class TinySignatureRepo extends TinyRepo<TinySignature> {
 
-  static const TYPE = DataType.SIGNATURE;
+  static const TYPE = TableName.SIGNATURE;
 
   @override
   Future delete(TinySignature item) async {

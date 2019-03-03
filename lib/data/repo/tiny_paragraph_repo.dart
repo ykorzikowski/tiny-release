@@ -5,7 +5,7 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class ParagraphRepo extends TinyRepo< Paragraph >{
 
-  static const TYPE = DataType.PARAGRAPH;
+  static const TYPE = TableName.PARAGRAPH;
 
   @override
   Future save( Paragraph item ) async {

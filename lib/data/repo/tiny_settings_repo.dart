@@ -2,10 +2,11 @@ import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/repo/sqlite_provider.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/data/tiny_setting.dart';
 
-class TinySettingsRepo  extends TinyRepo< TinySetting >{
+class TinySettingRepo  extends TinyRepo< TinySetting >{
 
-  static const TYPE = DataType.SETTINGS;
+  static const TYPE = TableName.SETTINGS;
 
   @override
   Future delete(TinySetting item) async {
@@ -21,6 +22,13 @@ class TinySettingsRepo  extends TinyRepo< TinySetting >{
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
+    return res.isNotEmpty ? TinySetting.fromMap(res.first) : Null ;
+  }
+
+  Future<TinySetting> getForKey(String key) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await  db.query(TYPE, where: "key = ?", whereArgs: [key]);
     return res.isNotEmpty ? TinySetting.fromMap(res.first) : Null ;
   }
 

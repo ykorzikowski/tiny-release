@@ -67,6 +67,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         PeopleListWidget.PAGE_SIZE);
   }
 
+  /// opens people selection widget
   _getPeopleView(TinyPeople people, TinyRepo repo, String text,
       Function _onPeopleTap, Function _onPeopleTrash) =>
       BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
@@ -312,6 +313,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     _tinyContract.photographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
                   setState(() {
                     _tinyContract.photographer = item;
+                    _tinyContract.selectedPhotographerAddress = item.postalAddresses[0];
                   });
                   Navigator.pop(context);
                 }, () {
@@ -325,6 +327,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     _tinyContract.model, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
                   setState(() {
                     _tinyContract.model = item;
+                    _tinyContract.selectedModelAddress = item.postalAddresses[0];
                   });
                   Navigator.pop(context);
                 }, () {

@@ -64,7 +64,11 @@ class SQLiteProvider {
           "photographerId INTEGER,"
           "modelId INTEGER,"
           "parentId INTEGER,"
-          "witnessId INTEGER"
+          "witnessId INTEGER,"
+          "selectedModelAddressId INTEGER,"
+          "selectedPhotographerAddressId INTEGER,"
+          "selectedParentAddressId INTEGER,"
+          "selectedWitnessAddressId INTEGER"
           ")");
 
       /// Layout

@@ -13,15 +13,15 @@ class ControlHelper {
   static String getListTypeForPosition( final int position ) {
     switch (position) {
       case 0:
-        return DataType.PEOPLE;
+        return TableName.PEOPLE;
       case 1:
-        return DataType.PRESET;
+        return TableName.PRESET;
       case 2:
-        return DataType.RECEPTION;
+        return TableName.RECEPTION;
       case 3:
-        return DataType.LAYOUT;
+        return TableName.LAYOUT;
       case 4:
-        return DataType.WORDING;
+        return TableName.WORDING;
       default:
         return "notImplYet";
     }

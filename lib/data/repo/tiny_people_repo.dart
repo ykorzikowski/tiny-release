@@ -7,7 +7,7 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class TinyPeopleRepo extends TinyRepo< TinyPeople > {
 
-  static const TYPE = DataType.PEOPLE;
+  static const TYPE = TableName.PEOPLE;
   final TinyPeopleItemRepo tinyPeopleItemRepo = new TinyPeopleItemRepo();
   final TinyAddressRepo tinyAddressRepo = new TinyAddressRepo();
 

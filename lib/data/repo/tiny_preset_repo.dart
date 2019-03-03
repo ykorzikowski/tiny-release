@@ -6,7 +6,7 @@ import 'package:tiny_release/data/repo/tiny_repo.dart';
 
 class TinyPresetRepo extends TinyRepo< TinyPreset >{
 
-  static const TYPE = DataType.PRESET;
+  static const TYPE = TableName.PRESET;
   final ParagraphRepo paragraphRepo = ParagraphRepo();
 
   @override

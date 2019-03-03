@@ -5,7 +5,7 @@ import 'package:tiny_release/data/tiny_people.dart';
 
 class TinyAddressRepo extends TinyRepo< TinyAddress > {
 
-  static const TYPE = DataType.PEOPLE_ADDRESS;
+  static const TYPE = TableName.PEOPLE_ADDRESS;
 
   @override
   Future delete(TinyAddress item) async {

@@ -1,5 +1,6 @@
 import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/repo/sqlite_provider.dart';
+import 'package:tiny_release/data/repo/tiny_address_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
@@ -9,10 +10,11 @@ import 'package:tiny_release/data/tiny_signature.dart';
 
 class TinyContractRepo extends TinyRepo< TinyContract > {
 
-  static const TYPE = DataType.CONTRACT;
+  static const TYPE = TableName.CONTRACT;
   final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
   final TinyPresetRepo _tinyPresetRepo = new TinyPresetRepo();
   final TinySignatureRepo _tinySignatureRepo = new TinySignatureRepo();
+  final TinyAddressRepo _tinyAddressRepo = new TinyAddressRepo();
 
   Future<TinyContract> _replaceIdWithNested( Map<String, dynamic> dboMap ) async{
     final TinyContract tinyContract = TinyContract.fromMap(dboMap);
@@ -25,6 +27,13 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     tinyContract.parent = await _tinyPeopleRepo.get(dbo.parentId);
     tinyContract.preset = await _tinyPresetRepo.get(dbo.presetId);
 
+    /// selected addresses
+    tinyContract.selectedPhotographerAddress = await _tinyAddressRepo.get(dbo.selectedPhotographerAddressId);
+    tinyContract.selectedModelAddress = await _tinyAddressRepo.get(dbo.selectedModelAddressId);
+    tinyContract.selectedWitnessAddress = await _tinyAddressRepo.get(dbo.selectedWitnessAddressId);
+    tinyContract.selectedParentAddress = await _tinyAddressRepo.get(dbo.selectedParentAddressId);
+
+    /// signatures
     tinyContract.modelSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_MODEL);
     tinyContract.photographerSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_PHOTOGRAPHER);
     tinyContract.witnessSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_WITNESS);
@@ -40,6 +49,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     if ( item.witness != null ) _tinyPeopleRepo.save(item.witness);
     if ( item.parent != null ) _tinyPeopleRepo.save(item.parent);
 
+    /// signatures
     if( item.modelSignature != null ) {
       _tinySignatureRepo.save(item.modelSignature);
       item.modelSignature.contractId = item.id;
@@ -72,6 +82,12 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     dbo.witnessId = tinyContract?.witness?.id;
     dbo.parentId = tinyContract?.parent?.id;
     dbo.presetId = tinyContract.preset.id;
+
+    /// selected addresses
+    dbo.selectedModelAddressId = tinyContract.selectedModelAddress.id;
+    dbo.selectedPhotographerAddressId = tinyContract.selectedPhotographerAddress.id;
+    dbo.selectedWitnessAddressId = tinyContract?.selectedWitnessAddress?.id;
+    dbo.selectedParentAddressId = tinyContract?.selectedParentAddress?.id;
 
     return TinyContractDBO.toMap(dbo);
   }
