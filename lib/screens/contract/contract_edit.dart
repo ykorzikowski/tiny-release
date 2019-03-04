@@ -198,27 +198,6 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     builder: (context) => _getReceptionWidget(context)
                 ),
                 ),),
-//          CupertinoButton(
-//            child: Icon(CupertinoIcons.add_circled_solid,
-//              color: CupertinoColors.activeGreen,),
-//            onPressed: () =>
-//                Navigator.of(context).push(TinyPageWrapper(
-//                    transitionDuration: ControlHelper
-//                        .getScreenSizeBasedDuration(context),
-//                    builder: (context) =>
-//                        ReceptionListWidget(_tinyState, (context, item) {
-//                          setState(() {
-//                            var tag = new Tag(
-//                                id: item.id,
-//                                title: item.displayName
-//                            );
-//                            _receptionAreas.putIfAbsent(item.id, () => tag);
-//                            _tags.clear();
-//                            _tags.addAll( _receptionAreas.values.toList());
-//                          });
-//                          Navigator.of(context).pop();
-//                        }))),
-//          )
         ],);
 
   _getCaptureDatePicker(context) => Column(children: <Widget>[
