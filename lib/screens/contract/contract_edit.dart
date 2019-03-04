@@ -49,8 +49,10 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   _ContractEditWidgetState(this._tinyState) {
 //    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
     _tinyContract = _tinyState.curDBO;
-    _tinyContract.receptions.forEach((rec) => _tags.add(Tag(id: rec.id, title: rec.displayName)));
-    _tinyContract.receptions.forEach((rec) => _receptionAreas.putIfAbsent(rec.id, () => Tag(id: rec.id, title: rec.displayName)));
+    if (_tinyContract.receptions != null) {
+      _tinyContract.receptions.forEach((rec) => _tags.add(Tag(id: rec.id, title: rec.displayName)));
+      _tinyContract.receptions.forEach((rec) => _receptionAreas.putIfAbsent(rec.id, () => Tag(id: rec.id, title: rec.displayName)));
+    }
   }
 
   bool validContract() {

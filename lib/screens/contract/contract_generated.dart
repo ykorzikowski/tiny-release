@@ -3,6 +3,7 @@ import 'dart:io' as Io;
 import 'dart:typed_data';
 
 import 'package:pdf/widgets.dart' as pdf;
+import 'package:rect_getter/rect_getter.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
   ContractPdfGenerator _contractPdfGenerator;
   ContractGenerator _contractGenerator;
+
+  /// global key for shareDialogPosition
+  var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
 
   /// keys for signature pads
   final _modelKey = GlobalKey<SignatureState>();
@@ -313,26 +317,28 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
               ],
             ), ),
 
-            CupertinoTabBar(
-              onTap: (sel) {
-                switch(sel) {
-                  case 0:
-                  //todo: new based on this
-                  case 1:
-                    pdf.Document pdfDoc = _contractPdfGenerator.generatePdf(context);
-                    // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
-                    BaseUtil.storeBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                      print(saved.path);
-                      saved.exists().then((val) => print(val));
-                      ShareExtend.share(saved.path, 'file');
-                    });
-                    break;
-                  case 2:
-                    // todo: delete
-                }
-              },
-                inactiveColor: CupertinoColors.activeBlue,
-                items: _getButtonsForFinishedContract())
+          RectGetter(
+            key: _shareDialogPosGlobalKey,
+              child: CupertinoTabBar(
+                onTap: (sel) {
+                  switch(sel) {
+                    case 0:
+                    //todo: new based on this
+                    case 1:
+                      pdf.Document pdfDoc = _contractPdfGenerator.generatePdf(context);
+                      // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
+                      BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                        print(saved.path);
+                        ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+                      });
+                      break;
+                    case 2:
+                      // todo: delete
+                  }
+                },
+                  inactiveColor: CupertinoColors.activeBlue,
+                  items: _getButtonsForFinishedContract()),
+            )
           ]),),
       ),);
   }
