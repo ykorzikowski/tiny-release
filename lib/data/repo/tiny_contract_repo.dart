@@ -131,6 +131,22 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     return res.isNotEmpty ? (await _replaceIdWithNested(res.first)) : null ;
   }
 
+  /// returns true if peopleId is linked to any contract
+  Future<bool> personHasNoContracts(int peopleId) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TYPE, columns: ['id'], where: "photographerId = ? OR modelId = ? OR parentId = ? OR witnessId = ?", whereArgs: [peopleId, peopleId, peopleId, peopleId]);
+    return res.isEmpty;
+  }
+
+  /// returns true if presetId is linked to any contract
+  Future<bool> presetHasNoContracts(int presetId) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TYPE, columns: ['id'], where: "presetId = ?", whereArgs: [presetId]);
+    return res.isEmpty;
+  }
+
   @override
   Future<List<TinyContract>> getAll(int offset, int limit) async {
     final db = await SQLiteProvider.db.database;

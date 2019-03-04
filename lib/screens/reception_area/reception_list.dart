@@ -73,30 +73,6 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                 )
               ],
             );
-//            showCupertinoDialog(context: context, builder: (context) => CupertinoAlertDialog(
-//              title: Text(S.of(context).title_add_reception),
-//              content: CupertinoTextField(
-//                onChanged: (t) => _tinyReception.displayName = t,
-//                onSubmitted: (t) => _tinyReception.displayName = t,
-//              ),
-//              actions: <Widget>[
-//                CupertinoDialogAction(
-//                  isDestructiveAction: true,
-//                  child: Text(S.of(context).btn_dialog_cancel),
-//                  onPressed: () {
-//                    Navigator.of(context, rootNavigator: true).pop();
-//                  },
-//                ),
-//                CupertinoDialogAction(
-//                  child: Text(S.of(context).btn_save),
-//                  isDefaultAction: true,
-//                  onPressed: () {
-//                    _tinyRepo.save(_tinyReception);
-//                    Navigator.of(context, rootNavigator: true).pop();
-//                  },
-//                ),
-//              ],
-//            ));
           },
         ),),
       child: SafeArea(  child: Scaffold(
@@ -119,13 +95,17 @@ class _ListWidgetState extends State<ReceptionListWidget> {
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
       key: Key('reception_$index'),
+      confirmDismiss: (direction) {
+        var receptionHasNoContracts = _tinyRepo.receptionInContract(entry.id);
+        receptionHasNoContracts.then((hasNoContracts) {
+          if (!hasNoContracts) {
+            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+          }
+        },);
+        return receptionHasNoContracts;
+      },
       onDismissed: (direction) {
         _tinyRepo.delete(entry);
-
-        Scaffold
-            .of(context)
-            .showSnackBar(
-            SnackBar(content: Text(entry.displayName + S.of(context).scaff_deleted)));
       },
       child: Column(
         children: <Widget>[

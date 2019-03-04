@@ -49,6 +49,14 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
     return list;
   }
 
+  /// returns true if presetId is linked to any contract
+  Future<bool> receptionInContract(int receptionId) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TableName.RECEPTION_TO_CONTRACT, where: "receptionId = ?", whereArgs: [receptionId]);
+    return res.isEmpty;
+  }
+
   @override
   Future< TinyReception > get(int id) async {
     final db = await SQLiteProvider.db.database;

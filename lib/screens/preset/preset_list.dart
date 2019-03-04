@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -28,6 +29,7 @@ class PresetListWidget extends StatefulWidget {
 class _PresetListWidgetState extends State<PresetListWidget> {
   static const int PAGE_SIZE = 10;
   final TinyPresetRepo tinyPresetRepo = new TinyPresetRepo();
+  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
   final TinyState _controlState;
   final Function _onPresetTap;
   PagewiseLoadController pageLoadController;
@@ -79,6 +81,15 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         direction: DismissDirection.endToStart,
         background: BaseUtil.getDismissibleBackground(),
         key: Key('preset_$index'),
+        confirmDismiss: (direction) {
+          var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
+          presetHasNoContracts.then((hasNoContracts) {
+            if (!hasNoContracts) {
+              Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+            }
+          },);
+          return presetHasNoContracts;
+        },
         onDismissed: (direction) {
           tinyPresetRepo.delete(entry);
 

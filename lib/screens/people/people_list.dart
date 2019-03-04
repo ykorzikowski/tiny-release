@@ -2,6 +2,7 @@ import 'dart:io' as Io;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -50,7 +51,8 @@ class PeopleListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<PeopleListWidget> {
-  final TinyPeopleRepo contactRepository = new TinyPeopleRepo();
+  final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
+  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
   final bool isContactImportDialog;
@@ -109,13 +111,17 @@ class _ListWidgetState extends State<PeopleListWidget> {
       key: Key(key),
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
+      confirmDismiss: (direction) {
+        var personHasNoContracts = _tinyContractRepo.personHasNoContracts(entry.id);
+        personHasNoContracts.then((hasNoContracts) {
+          if (!hasNoContracts) {
+            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+          }
+        },);
+        return personHasNoContracts;
+      },
       onDismissed: (direction) {
-        contactRepository.delete(entry);
-
-        Scaffold
-            .of(context)
-            .showSnackBar(
-            SnackBar(content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
+        _tinyPeopleRepo.delete(entry);
       },
       child: child,) : Container(child: child,);
   }
