@@ -96,5 +96,9 @@
   "item_has_relations": "This item has relations to a contract. Delete the contract first.",
   "dialog_back": "Back",
   "dialog_delete": "Delete",
-  "delete_contract": "Delete Contract?"
+  "delete_contract": "Delete Contract?",
+  "cloned_suffix": " - cloned",
+  "share_pdf": "Share PDF",
+  "loading_pdf": "Loading pdf",
+  "use_as_template": "Use as template"
 }

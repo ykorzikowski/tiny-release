@@ -81,10 +81,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
       onDismissed: (direction) {
         _tinyContractRepo.delete(entry);
 
-        Scaffold
-            .of(context)
-            .showSnackBar(
-            SnackBar(content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
+        Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
       },
       child: Column(
         children: <Widget>[

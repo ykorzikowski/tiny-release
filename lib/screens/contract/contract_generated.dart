@@ -3,7 +3,6 @@ import 'dart:io' as Io;
 import 'dart:typed_data';
 
 import 'package:cool_ui/cool_ui.dart';
-import 'package:pdf/widgets.dart' as pdf;
 import 'package:rect_getter/rect_getter.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -320,33 +319,91 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
           RectGetter(
             key: _shareDialogPosGlobalKey,
-              child: CupertinoTabBar(
-                onTap: (sel) {
-                  switch(sel) {
-                    case 0:
-                    //todo: new based on this
-                    case 1:
-                      var hide = showWeuiLoadingToast(context: context, message: Text("Loading pdf..."));
-                      _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
-                        // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
-                        BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                          print(saved.path);
-                          hide();
-                          ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-                      }));
-                      break;
-                    case 2:
-                      showCupertinoModalPopup(context: context, builder: (context) => CupertinoAlertDialog(title: Text(S.of(context).delete_contract), actions: <Widget>[
-                        CupertinoDialogAction(child: Text(S.of(context).dialog_delete), isDestructiveAction: true, onPressed: () {
-                          _tinyContractRepo.delete(_tinyContract);
-                          Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
-                          },),
-                        CupertinoDialogAction(child: Text(S.of(context).dialog_back), onPressed: () => Navigator.of(context).pop(),),
-                      ],),);
-                  }
-                },
-                  inactiveColor: CupertinoColors.activeBlue,
-                  items: _getButtonsForFinishedContract()),
+            child: IntrinsicWidth(
+              stepHeight: 32,
+              child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CupertinoPopoverButton(
+                      child: Icon(CupertinoIcons.create, color: CupertinoColors.activeBlue, size: 32),
+                      popoverBuild: (context) => CupertinoPopoverMenuList(
+                        children: <Widget>[
+                          CupertinoPopoverMenuItem(
+                            child: SizedBox(
+                              child: Center(child: Text(S.of(context).use_as_template, textAlign: TextAlign.center,)),
+                              width: 80,
+                              height: 40,
+                            ),
+                            onTap: () {
+                              var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
+                              clone.id = null;
+                              clone.isLocked = false;
+                              clone.modelSignature = null;
+                              clone.photographerSignature = null;
+                              clone.parentSignature = null;
+                              clone.witnessSignature = null;
+                              clone.displayName = clone.displayName + S.of(context).cloned_suffix;
+
+                              _tinyContractRepo.save(clone);
+                              Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+                            },)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CupertinoPopoverButton(
+                      child: Icon(CupertinoIcons.share, color: CupertinoColors.activeBlue, size: 32),
+                      popoverBuild: (context) => CupertinoPopoverMenuList(
+                        children: <Widget>[
+                          CupertinoPopoverMenuItem(
+                            child: SizedBox(
+                              child: Center(child: Text(S.of(context).share_pdf, textAlign: TextAlign.center,)),
+                              width: 80,
+                              height: 40,
+                            ),
+                            onTap: () {
+                              var hide = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
+                            _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+                              BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                                print(saved.path);
+                                hide();
+                                ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+                            }));
+                            },)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CupertinoPopoverButton(
+                      child: Icon(CupertinoIcons.delete, color: CupertinoColors.activeBlue, size: 32),
+                      popoverBuild: (context) => CupertinoPopoverMenuList(
+                        children: <Widget>[
+                          CupertinoPopoverMenuItem(
+                            child: SizedBox(
+                              child: Center(child: Text(S.of(context).dialog_delete, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.destructiveRed),)),
+                              width: 80,
+                              height: 40,
+                            ),
+                            onTap: () {
+                              _tinyContractRepo.delete(_tinyContract);
+                              Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+                            },)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],),
+            ),
             )
           ]),),
       ),);

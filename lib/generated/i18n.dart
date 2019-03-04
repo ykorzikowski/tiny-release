@@ -46,6 +46,7 @@ class S implements WidgetsLocalizations {
   String get choose_source => "Choose source";
   String get choose_witness => "Choose Witness";
   String get chose_brithday => "Chose brithday";
+  String get cloned_suffix => " - cloned";
   String get contract_images => "Images count";
   String get contract_will_made_between => "There will be a contract between";
   String get control => "Control";
@@ -89,6 +90,7 @@ class S implements WidgetsLocalizations {
   String get item_reception => "Reception Areas";
   String get item_settings => "Settings";
   String get item_wording => "Wording";
+  String get loading_pdf => "Loading pdf";
   String get location_date_seperator => ", on";
   String get model_release => "Model Release";
   String get no_items_people => "Add people from your contacts";
@@ -103,6 +105,7 @@ class S implements WidgetsLocalizations {
   String get select_date_ok => "OK";
   String get select_preset => "Select Preset";
   String get selected_preset => "Selectd Preset";
+  String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting Date";
   String get shooting_subject => "Subject of Shooting";
   String get tile_contact_preview => "Contact Preview";
@@ -116,6 +119,7 @@ class S implements WidgetsLocalizations {
   String get title_reception => "Reception Area";
   String get title_settings => "Settings";
   String get title_wording => "Wording";
+  String get use_as_template => "Use as template";
   String get witnessed_by => "Witnessed by";
 }
 
@@ -174,6 +178,8 @@ class $de extends S {
   @override
   String get btn_sign_contract => "Vertrag unterzeichnen";
   @override
+  String get share_pdf => "PDF teilen";
+  @override
   String get choose_source => "Quelle wählen";
   @override
   String get reception_area => "Aufnahmebereiche";
@@ -204,6 +210,8 @@ class $de extends S {
   @override
   String get camera => "Kamera";
   @override
+  String get loading_pdf => "Generiere PDF";
+  @override
   String get change_order_title => "Reihenfolge anpassen";
   @override
   String get item_wording => "Wording";
@@ -217,6 +225,8 @@ class $de extends S {
   String get choose_model => "Model wählen";
   @override
   String get btn_add => "Hinzufügen";
+  @override
+  String get cloned_suffix => " - Kopie";
   @override
   String get item_preset => "Vorlagen";
   @override
@@ -295,6 +305,8 @@ class $de extends S {
   String get title_add_preset => "Vorlage hinzufügen";
   @override
   String get delete_contract => "Vertrag löschen?";
+  @override
+  String get use_as_template => "Als Vorlage";
   @override
   String get title_contracts => "Vertrtäge";
   @override

@@ -96,5 +96,9 @@
   "item_has_relations": "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ",
   "dialog_back": "Zurück",
   "dialog_delete": "Löschen",
-  "delete_contract": "Vertrag löschen?"
+  "delete_contract": "Vertrag löschen?",
+  "cloned_suffix": " - Kopie",
+  "share_pdf": "PDF teilen",
+  "loading_pdf": "Generiere PDF",
+  "use_as_template": "Als Vorlage"
 }
