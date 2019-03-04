@@ -267,10 +267,13 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                 Divider(),
 
                 /// contract preview
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: ContractGenerator.buildParagraphs(
-                      context, _tinyContract),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: ContractGenerator.buildParagraphs(
+                        context, _tinyContract),
+                  ),
                 ),
 
                 Divider(),
@@ -324,7 +327,6 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                       ShareExtend.share(saved.path, 'file');
                     });
                     break;
-                    //todo: share
                   case 2:
                     // todo: delete
                 }

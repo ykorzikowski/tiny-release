@@ -152,8 +152,8 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
               address.postcode +
                   " " +
                   address.city),
-          Text(address.region),
-          Text(address.country),
+          address.region != null ? Text(address.region) : Container(),
+          address.country != null ? Text(address.country) : Container(),
         ],
       );
 

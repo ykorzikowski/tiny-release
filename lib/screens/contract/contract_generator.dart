@@ -1,6 +1,5 @@
 import 'dart:io' as Io;
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_address_repo.dart';
@@ -19,6 +18,7 @@ class ContractGenerator {
   static const TextStyle _personSmallStyle = TextStyle( fontSize: 16 );
   static const TextStyle _personLargeStyle = TextStyle( fontSize: 18, fontWeight: FontWeight.bold );
 
+  // todo get from database
   String photographerLabel, modelLabel, parentLabel, witnessLabel, shootingSubject;
 
   ContractGenerator(this._tinyContract) {
