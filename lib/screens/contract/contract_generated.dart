@@ -103,9 +103,12 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             onPressed: () =>
                 showCupertinoModalPopup(context: context, builder: (context) =>
                     Dialog(child: _wrapSignature(_photographerSignatureW, _tinyContract.photographer.displayName, () => _photographerSignatureW.clear()),))
-                    .then((r) => _photographerSignatureW.getData().then((image) => _getBytesFromImg(image)
-                    .then((bv) => setState(() => _photographerKey.currentState.hasPoints() ? _photographerSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
-    _tinyContract.photographer.displayName, () => setState(() => _photographerSignature = null )),),
+                    .then((r) => _getImageBytesFromSignature(_photographerSignatureW)
+                    .then((bd) => setState(() {
+                      _photographerKey.currentState.hasPoints() ? _photographerSignature = _byteDataToUint8(bd) : null;
+                      _saveSignature(_photographerSignature, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
+                    }))),),
+            _tinyContract.photographer.displayName, () => setState(() => _photographerSignature = null )),),
 
       Flexible( fit: FlexFit.loose,
         child:
@@ -114,8 +117,11 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_modelSignatureW, _tinyContract.model.displayName, () => _modelSignatureW.clear()),))
-                  .then((r) => _modelSignatureW.getData().then((image) => _getBytesFromImg(image)
-                  .then((bv) => setState(() => _modelKey.currentState.hasPoints() ? _modelSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
+                  .then((r) => _getImageBytesFromSignature(_modelSignatureW)
+                  .then((bd) => setState(() {
+                    _modelKey.currentState.hasPoints() ? _modelSignature = _byteDataToUint8(bd) : null;
+                    _saveSignature(_modelSignature, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
+                  }))),),
             _tinyContract.model.displayName,  () => setState(() => _modelSignature = null )),),
 
     ];
@@ -139,8 +145,11 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_witnessSignatureW, _tinyContract.witness.displayName, () => _witnessSignatureW.clear()),))
-                  .then((r) =>_witnessSignatureW.getData().then((image) => _getBytesFromImg(image)
-                  .then((bv) => setState(() => _witnessKey.currentState.hasPoints() ? _witnessSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
+                  .then((r) => _getImageBytesFromSignature(_witnessSignatureW)
+                  .then((bd) => setState(() {
+                    _witnessKey.currentState.hasPoints() ? _witnessSignature = _byteDataToUint8(bd) : null;
+                    _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
+                  }))),),
             _tinyContract.witness.displayName, () => setState(() => _witnessSignature = null )),) : Container(),
       _tinyContract.parent != null ? Flexible( fit: FlexFit.loose,
         child:
@@ -149,8 +158,11 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_parentSignatureW, _tinyContract.parent.displayName, () => _parentSignatureW.clear()),))
-                  .then((r) => _parentSignatureW.getData().then((image) => _getBytesFromImg(image)
-                  .then((bv) => setState(() => _parentKey.currentState.hasPoints() ? _parentSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
+                  .then((r) => _getImageBytesFromSignature(_parentSignatureW)
+                  .then((bd) => setState(() {
+                    _parentKey.currentState.hasPoints() ? _parentSignature = _byteDataToUint8(bd) : null;
+                    _saveSignature(_parentSignature, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
+                   }), ), ), ),
             _tinyContract.parent.displayName, () => setState(() => _parentSignature = null )),) : Container(),
     ];
   }
@@ -172,37 +184,34 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
     ];
   }
 
+  Uint8List _byteDataToUint8(ByteData bd) => bd.buffer.asUint8List(bd.offsetInBytes, bd.lengthInBytes);
+
+  Future<ByteData> _getImageBytesFromSignature(Signature signature) => signature.getData().then((image) => _getBytesFromImg(image));
+
   Future<ByteData> _getBytesFromImg(ui.Image img) async => img.toByteData(format: ui.ImageByteFormat.png);
 
-  _saveSignatures() async {
-    if (_modelSignature != null)
-      _tinyContract.modelSignature =
-        TinySignature(
+  /// saves signature to file
+  static Future<TinySignature> _saveSignature(Uint8List sig, int contractId) async {
+    if (sig != null) {
+      return TinySignature(
           type: SignatureType.SIG_MODEL,
-          contractId: _tinyContract.id,
-          path: (await BaseUtil.storeBlobUint8('signature', 'png', _modelSignature)).path
-        );
-    if (_photographerSignature != null)
-      _tinyContract.photographerSignature =
-        TinySignature(
-            type: SignatureType.SIG_PHOTOGRAPHER,
-            contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature', 'png', _photographerSignature)).path
-        );
-    if (_parentSignature != null)
-      _tinyContract.parentSignature =
-        TinySignature(
-            type: SignatureType.SIG_PARENT,
-            contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature', 'png', _parentSignature)).path
-        );
-    if (_witnessSignature != null)
-      _tinyContract.witnessSignature =
-        TinySignature(
-            type: SignatureType.SIG_WITNESS,
-            contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature','png', _witnessSignature)).path
-        );
+          contractId: contractId,
+          path: (await BaseUtil.storeBlobUint8('signature', 'png', sig)).path
+      );
+    }
+    return null;
+  }
+
+  /// saves all signatures
+  _saveSignatures() async {
+    if (_modelSignature != null && _tinyContract.modelSignature != null)
+      _saveSignature(_modelSignature, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
+    if (_photographerSignature != null && _tinyContract.photographerSignature != null)
+      _saveSignature(_photographerSignature, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
+    if (_parentSignature != null && _tinyContract.parentSignature != null)
+      _saveSignature(_parentSignature, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
+    if (_witnessSignature != null && _tinyContract.witnessSignature != null)
+      _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
   }
 
   List<BottomNavigationBarItem> _getButtonsForFinishedContract() =>

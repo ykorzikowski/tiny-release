@@ -148,7 +148,7 @@ class ContractPdfGenerator {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(padding: EdgeInsets.all(8.0),
-            child: Container(decoration: BoxDecoration( border: BoxBorder(bottom: true), ), height: sig != null ? 80 : 40, child: sig != null ?
+            child: Container( height: 50, child: sig != null ?
               _getPdfImage(pdfDoc, sig.path, scale: 3) :
               Container())),
           FittedBox(fit: BoxFit.fill, child:
