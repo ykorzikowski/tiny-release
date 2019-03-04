@@ -115,7 +115,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
         var personHasNoContracts = _tinyContractRepo.personHasNoContracts(entry.id);
         personHasNoContracts.then((hasNoContracts) {
           if (!hasNoContracts) {
-            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(S.of(context).item_has_relations)));
           }
         },);
         return personHasNoContracts;

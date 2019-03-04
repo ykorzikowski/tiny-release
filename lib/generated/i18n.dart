@@ -79,6 +79,7 @@ class S implements WidgetsLocalizations {
   String get hint_subtitle => "subtitle";
   String get hint_title => "title";
   String get in_reception_areas => "in reception areas";
+  String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
   String get item_layout => "Layouts";
   String get item_people => "People";
   String get item_preset => "Presets";
@@ -213,6 +214,8 @@ class $de extends S {
   String get select_address => "Addresse wählen";
   @override
   String get birthday => "Geburtstag";
+  @override
+  String get item_has_relations => "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ";
   @override
   String get hint_phone => "Telefon";
   @override

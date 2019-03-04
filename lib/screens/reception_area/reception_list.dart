@@ -99,7 +99,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         var receptionHasNoContracts = _tinyRepo.receptionInContract(entry.id);
         receptionHasNoContracts.then((hasNoContracts) {
           if (!hasNoContracts) {
-            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+            Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(S.of(context).item_has_relations)));
           }
         },);
         return receptionHasNoContracts;

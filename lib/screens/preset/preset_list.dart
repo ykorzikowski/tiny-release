@@ -85,7 +85,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
           var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
           presetHasNoContracts.then((hasNoContracts) {
             if (!hasNoContracts) {
-              Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text("This item has relations to a contract. Delete the contract first. ")));
+              Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(S.of(context).item_has_relations)));
             }
           },);
           return presetHasNoContracts;
