@@ -77,10 +77,17 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
 
     /// receptions
     if ( item.receptions != null) {
+      _removeContract2Reception( item.id );
       item.receptions.forEach((f) => _saveContract2Reception(item.id, f.id));
     }
 
     return item;
+  }
+
+  Future _removeContract2Reception(int contractId) async {
+    final db = await SQLiteProvider.db.database;
+
+    return db.delete(TableName.RECEPTION_TO_CONTRACT, where: "contractId = ?", whereArgs: [contractId]);
   }
 
   Future _saveContract2Reception(int contractId, int receptionId) async {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
+import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
@@ -47,7 +48,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   _ContractEditWidgetState(this._tinyState) {
 //    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
-  _tinyContract = _tinyState.curDBO;
+    _tinyContract = _tinyState.curDBO;
+    _tinyContract.receptions.forEach((rec) => _tags.add(Tag(id: rec.id, title: rec.displayName)));
+    _tinyContract.receptions.forEach((rec) => _receptionAreas.putIfAbsent(rec.id, () => Tag(id: rec.id, title: rec.displayName)));
   }
 
   bool validContract() {
