@@ -21,7 +21,7 @@ class TinyPeopleItemRepo extends TinyRepo< TinyPeopleItem > {
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinyPeopleItem.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinyPeopleItem.fromMap(res.first) : null ;
   }
 
   @override

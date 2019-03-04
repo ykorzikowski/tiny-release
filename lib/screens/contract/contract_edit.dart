@@ -8,6 +8,7 @@ import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
+import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
@@ -360,6 +361,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 {
                   setState(() {
                     _tinyContract.parent = item;
+                    _tinyContract.selectedParentAddress = item.postalAddresses[0];
                   });
                   Navigator.pop(context);
                 }, () {
@@ -391,6 +393,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     _tinyContract.witness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
                   setState(() {
                     _tinyContract.witness = item;
+                    _tinyContract.selectedWitnessAddress = item.postalAddresses[0];
                   });
                   Navigator.pop(context);
                 }, () {
@@ -474,6 +477,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 CupertinoButton(
                   child: Text(S.of(context).btn_sign_contract),
                   onPressed: validContract() ? () {
+                    List<TinyReception> recs = List();
+                    _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
+                    _tinyContract.receptions = recs;
                     _tinyContractRepo.save(_tinyContract);
                     _tinyState.curDBO = _tinyContract;
                     //Navigator.of(context).pop();
@@ -485,6 +491,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 CupertinoButton(
                   child: Text(S.of(context).btn_save),
                   onPressed: validContract() ? () {
+                    List<TinyReception> recs = List();
+                    _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
+                    _tinyContract.receptions = recs;
                     _tinyContractRepo.save(_tinyContract);
                     Navigator.of(context, rootNavigator: true).pop();
                   } : null,

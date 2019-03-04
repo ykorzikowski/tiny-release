@@ -2,6 +2,7 @@
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/data/tiny_setting.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 
@@ -13,6 +14,7 @@ class TinyContract extends TinyDBO {
   bool isLocked = false;
   String location, date;
   List<TinySetting> settings;
+  List<TinyReception> receptions;
   TinySignature modelSignature, photographerSignature, witnessSignature, parentSignature;
 
   TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date, this.isLocked} ) : super(id: id, displayName: displayName);
@@ -26,10 +28,10 @@ class TinyContract extends TinyDBO {
     parent = m["parent"] != null ? TinyPeople.fromMap(m["parent"]) : null;
     witness = m["witness"] != null ? TinyPeople.fromMap(m["witness"]) : null;
 
-    selectedModelAddress = m["selectedModelAddress"] ? TinyAddress.fromMap(m["selectedModelAddress"]) : null;
-    selectedPhotographerAddress = m["selectedPhotographerAddress"] ? TinyAddress.fromMap(m["selectedPhotographerAddress"]) : null;
-    selectedParentAddress = m["selectedParentAddress"] ? TinyAddress.fromMap(m["selectedParentAddress"]) : null;
-    selectedWitnessAddress = m["selectedWitnessAddress"] ? TinyAddress.fromMap(m["selectedWitnessAddress"]) : null;
+    selectedModelAddress = m["selectedModelAddress"] != null ? TinyAddress.fromMap(m["selectedModelAddress"]) : null;
+    selectedPhotographerAddress = m["selectedPhotographerAddress"] != null ? TinyAddress.fromMap(m["selectedPhotographerAddress"]) : null;
+    selectedParentAddress = m["selectedParentAddress"] != null ? TinyAddress.fromMap(m["selectedParentAddress"]) : null;
+    selectedWitnessAddress = m["selectedWitnessAddress"] != null ? TinyAddress.fromMap(m["selectedWitnessAddress"]) : null;
 
     imagesCount = m["imagesCount"];
     location = m["location"];
@@ -38,15 +40,22 @@ class TinyContract extends TinyDBO {
     photographerSignature = m["photographerSignature"];
     witnessSignature = m["witnessSignature"];
     parentSignature = m["parentSignature"];
-    isLocked = m["isLocked"];
+    isLocked = m["isLocked"] ?? false;
     settings = (m["settings"] as Iterable)
         ?.map((m) => TinySetting.fromMap(m))?.toList();
+    receptions = (m["receptions"] as Iterable)
+        ?.map((m) => TinyReception.fromMap(m))?.toList();
   }
 
   static Map<String, dynamic> toMap(TinyContract tinyContract) {
     var settings = List();
     for (TinySetting ts in tinyContract.settings ?? []) {
       settings.add(TinySetting.toMap(ts));
+    }
+
+    var receptions = List();
+    for (TinyReception ts in tinyContract.receptions ?? []) {
+      settings.add(TinyReception.toMap(ts));
     }
 
     return {
@@ -72,6 +81,7 @@ class TinyContract extends TinyDBO {
       "date": tinyContract.date,
       "isLocked": tinyContract.isLocked,
       "settings": settings,
+      "receptions": receptions,
     };
   }
 

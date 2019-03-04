@@ -47,7 +47,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       maxHeight: 512,
     );
     if ( croppedFile != null ) {
-      BaseUtil.storeFile("people_", croppedFile).then((file) => setState((){
+      BaseUtil.storeFile("people_", 'png', croppedFile).then((file) => setState((){
         _tinyPeople.avatar = file.path;
       }));
     }

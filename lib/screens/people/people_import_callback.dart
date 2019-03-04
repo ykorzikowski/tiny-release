@@ -26,7 +26,7 @@ class PeopleImportCallback {
     tinyPeople.company = contact.company;
     tinyPeople.jobTitle = contact.jobTitle;
     tinyPeople.displayName = contact.displayName;
-    tinyPeople.avatar = contact.avatar != null ? (await BaseUtil.storeTempBlobUint8('people', contact.avatar)).path : null;
+    tinyPeople.avatar = contact.avatar != null ? (await BaseUtil.storeTempBlobUint8('people', 'png', contact.avatar)).path : null;
 
     tinyPeople.emails = contact.emails.map((i) {
       TinyPeopleItem tinyItem = new TinyPeopleItem();
@@ -83,7 +83,7 @@ class PeopleImportCallback {
     // keep type id of dbo created before import
     TinyPeople beforeImportDBO = _controlState.curDBO;
     item.type = beforeImportDBO.type;
-    if( item.avatar != null ) BaseUtil.storeFile('people', Io.File(item.avatar)).then((file) => item.avatar = file.path);
+    if( item.avatar != null ) BaseUtil.storeFile('people', 'png', Io.File(item.avatar)).then((file) => item.avatar = file.path);
     _controlState.curDBO = item;
     _controlState.tinyEditCallback();
 

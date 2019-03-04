@@ -11,11 +11,5 @@ class TableName {
   static const String CONTRACT = "Contract";
   static const String SETTINGS = "Settings";
   static const String SIGNATURE = "Signature";
-  static const String CONTRACT_2_PERSON_SELECTED_VALUE = "Contract2PersonSelectedValue";
-}
-
-class Contract2PersonSelectedType {
-  static const int TYPE_ADDRESS = 1;
-  static const int TYPE_PHONE = 2;
-  static const int TYPE_MAIL = 3;
+  static const String RECEPTION_TO_CONTRACT = "Reception_area_to_contract";
 }

@@ -56,7 +56,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
             return Column(
               children: <Widget>[
                 ListTile(
-                  trailing: CupertinoButton(
+                  trailing: CupertinoButton( // todo: bug when nothing is entered
                       child: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                       onPressed: () {
                         _tinyRepo.save(_tinyReception);
@@ -65,8 +65,8 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                   leading: Container(
                     width: 170,
                     child: CupertinoTextField(
-                      onChanged: (t) => _tinyReception.displayName = t,
-                      onSubmitted: (t) => _tinyReception.displayName = t,
+                      onChanged: (t) => setState(() => _tinyReception.displayName = t),
+                      onSubmitted: (t) => setState(() => _tinyReception.displayName = t),
                       placeholder: S.of(context).reception_area,
                     ),
                   ),

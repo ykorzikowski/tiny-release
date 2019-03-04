@@ -2,16 +2,17 @@
 import 'dart:io' as Io;
 import 'dart:typed_data';
 
+import 'package:pdf/widgets.dart' as pdf;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
+import 'package:share_extend/share_extend.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
-import 'package:tiny_release/screens/contract/contract_preview.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -56,7 +57,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           (_tinyContract.witness == null || _witnessSignature != null ) &&
           (_tinyContract.parent == null || _parentSignature != null);
 
-  _getSignaturePad(GlobalKey key) =>
+  Signature _getSignaturePad(GlobalKey key) =>
       Signature(
             key: key,
             color: CupertinoColors.black,
@@ -88,8 +89,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       );
 
   _buildPrimarySignatureSection() {
-    var _modelSignatureW = _getSignaturePad(_modelKey);
-    var _photographerSignatureW = _getSignaturePad(_photographerKey);
+    Signature _modelSignatureW = _getSignaturePad(_modelKey);
+    Signature _photographerSignatureW = _getSignaturePad(_photographerKey);
 
     return <Widget> [
       Flexible( fit: FlexFit.loose,
@@ -99,8 +100,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             onPressed: () =>
                 showCupertinoModalPopup(context: context, builder: (context) =>
                     Dialog(child: _wrapSignature(_photographerSignatureW, _tinyContract.photographer.displayName, () => _photographerSignatureW.clear()),))
-                    .then((r) => _getBytesFromImg(_photographerSignatureW.getData())
-                    .then((bv) => setState(() => _photographerSignatureW.key.currentState.hasPoints() ? _photographerSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null))),),
+                    .then((r) => _photographerSignatureW.getData().then((image) => _getBytesFromImg(image)
+                    .then((bv) => setState(() => _photographerKey.currentState.hasPoints() ? _photographerSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
     _tinyContract.photographer.displayName, () => setState(() => _photographerSignature = null )),),
 
       Flexible( fit: FlexFit.loose,
@@ -110,15 +111,15 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_modelSignatureW, _tinyContract.model.displayName, () => _modelSignatureW.clear()),))
-                  .then((r) => _getBytesFromImg(_modelSignatureW.getData())
-                  .then((bv) => setState(() => _modelSignatureW.key.currentState.hasPoints() ? _modelSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null))),),
+                  .then((r) => _modelSignatureW.getData().then((image) => _getBytesFromImg(image)
+                  .then((bv) => setState(() => _modelKey.currentState.hasPoints() ? _modelSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
             _tinyContract.model.displayName,  () => setState(() => _modelSignature = null )),),
 
     ];
   }
 
   _buildSecondarySignatureSection() {
-    var _witnessSignatureW, _parentSignatureW;
+    Signature _witnessSignatureW, _parentSignatureW;
     if ( _tinyContract.witness != null ) {
       _witnessSignatureW = _getSignaturePad(_witnessKey);
     }
@@ -135,8 +136,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_witnessSignatureW, _tinyContract.witness.displayName, () => _witnessSignatureW.clear()),))
-                  .then((r) => _getBytesFromImg(_witnessSignatureW.getData())
-                  .then((bv) => setState(() => _witnessSignatureW.key.currentState.hasPoints() ? _witnessSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null))),),
+                  .then((r) =>_witnessSignatureW.getData().then((image) => _getBytesFromImg(image)
+                  .then((bv) => setState(() => _witnessKey.currentState.hasPoints() ? _witnessSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
             _tinyContract.witness.displayName, () => setState(() => _witnessSignature = null )),) : Container(),
       _tinyContract.parent != null ? Flexible( fit: FlexFit.loose,
         child:
@@ -145,8 +146,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           onPressed: () =>
               showCupertinoModalPopup(context: context, builder: (context) =>
                   Dialog(child: _wrapSignature(_parentSignatureW, _tinyContract.parent.displayName, () => _parentSignatureW.clear()),))
-                  .then((r) => _getBytesFromImg(_parentSignatureW.getData())
-                  .then((bv) => setState(() => _parentSignatureW.key.currentState.hasPoints() ? _parentSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null))),),
+                  .then((r) => _parentSignatureW.getData().then((image) => _getBytesFromImg(image)
+                  .then((bv) => setState(() => _parentKey.currentState.hasPoints() ? _parentSignature = bv.buffer.asUint8List(bv.offsetInBytes, bv.lengthInBytes) : null)))),),
             _tinyContract.parent.displayName, () => setState(() => _parentSignature = null )),) : Container(),
     ];
   }
@@ -176,28 +177,28 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         TinySignature(
           type: SignatureType.SIG_MODEL,
           contractId: _tinyContract.id,
-          path: (await BaseUtil.storeBlobUint8('signature', _modelSignature)).path
+          path: (await BaseUtil.storeBlobUint8('signature', 'png', _modelSignature)).path
         );
     if (_photographerSignature != null)
       _tinyContract.photographerSignature =
         TinySignature(
             type: SignatureType.SIG_PHOTOGRAPHER,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature', _photographerSignature)).path
+            path: (await BaseUtil.storeBlobUint8('signature', 'png', _photographerSignature)).path
         );
     if (_parentSignature != null)
       _tinyContract.parentSignature =
         TinySignature(
             type: SignatureType.SIG_PARENT,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature', _parentSignature)).path
+            path: (await BaseUtil.storeBlobUint8('signature', 'png', _parentSignature)).path
         );
     if (_witnessSignature != null)
       _tinyContract.witnessSignature =
         TinySignature(
             type: SignatureType.SIG_WITNESS,
             contractId: _tinyContract.id,
-            path: (await BaseUtil.storeBlobUint8('signature', _witnessSignature)).path
+            path: (await BaseUtil.storeBlobUint8('signature','png', _witnessSignature)).path
         );
   }
 
@@ -241,13 +242,22 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
               //physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
 
+                /// header
+                Text(_tinyContract.preset.title, textAlign: TextAlign.center, style: TextStyle(fontSize: 32),),
+
                 /// contract head
-                _contractPdfGenerator.buildContractHeader(),
+                _contractPdfGenerator.buildContractHeader(context),
+
+                Divider(),
+
+                _contractPdfGenerator.buildShootingInformationSection(context),
+
+                Divider(),
 
                 /// contract preview
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: ContractPreviewWidget.buildPreview(
+                  children: ContractPdfGenerator.buildParagraphs(
                       context, _tinyContract),
                 ),
 
@@ -294,7 +304,14 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                   case 0:
                   //todo: new based on this
                   case 1:
-
+                    pdf.Document pdfDoc = _contractPdfGenerator.generatePdf(context);
+                    // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
+                    BaseUtil.storeBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                      print(saved.path);
+                      saved.exists().then((val) => print(val));
+                      ShareExtend.share(saved.path, 'file');
+                    });
+                    break;
                     //todo: share
                   case 2:
                     // todo: delete

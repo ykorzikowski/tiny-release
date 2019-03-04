@@ -5,6 +5,7 @@ import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -16,19 +17,6 @@ class ContractPreviewWidget extends StatefulWidget {
   final TinyState _controlState;
 
   ContractPreviewWidget(this._controlState);
-
-  static buildPreview(context, tinyContract) {
-    var widgetList = List<Widget>();
-    for (int i = 0; i < tinyContract.preset.paragraphs.length; i++) {
-      var paragraph  =tinyContract.preset.paragraphs[i];
-      widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, (i+1)), style: TextStyle( fontSize: 24 ),));
-      widgetList.add(Text(paragraph.content));
-    }
-    tinyContract.preset.paragraphs.forEach((paragraph) {
-    });
-
-    return widgetList;
-  }
 
   @override
   _ContractPreviewWidgetState createState() => _ContractPreviewWidgetState(_controlState);
@@ -60,7 +48,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( shrinkWrap: true, children: ContractPreviewWidget.buildPreview(context, _tinyContract), ),
+            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( shrinkWrap: true, children: ContractPdfGenerator.buildParagraphs(context, _tinyContract), ),
         ),
       ),
     );

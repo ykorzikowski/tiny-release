@@ -18,27 +18,27 @@ import 'package:tiny_release/generated/i18n.dart';
 
 class BaseUtil {
 
-  static Future<Io.File> storeFile(String prefix, Io.File file) async {
+  static Future<Io.File> storeFile(String prefix, String suffix, Io.File file) async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
 
-    return new Io.File('$path/$prefix${DateTime.now().toUtc().toIso8601String()}.png').writeAsBytes(
+    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         file.readAsBytesSync());
   }
 
-  static Future<Io.File> storeBlobUint8( String prefix, Uint8List byteData) async {
+  static Future<Io.File> storeBlobUint8( String prefix, String suffix, Uint8List byteData) async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
 
-    return new Io.File('$path/$prefix${DateTime.now().toUtc().toIso8601String()}.png').writeAsBytes(
+    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         byteData);
   }
 
-  static Future<Io.File> storeTempBlobUint8( String prefix, Uint8List byteData) async {
+  static Future<Io.File> storeTempBlobUint8( String prefix, String suffix, Uint8List byteData) async {
     final directory = await getTemporaryDirectory();
     final path = directory.path;
 
-    return new Io.File('$path/$prefix${DateTime.now().toUtc().toIso8601String()}.png').writeAsBytes(
+    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         byteData);
   }
 

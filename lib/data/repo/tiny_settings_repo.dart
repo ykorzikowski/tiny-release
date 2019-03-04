@@ -22,14 +22,14 @@ class TinySettingRepo  extends TinyRepo< TinySetting >{
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinySetting.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinySetting.fromMap(res.first) : null ;
   }
 
   Future<TinySetting> getForKey(String key) async {
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "key = ?", whereArgs: [key]);
-    return res.isNotEmpty ? TinySetting.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinySetting.fromMap(res.first) : null ;
   }
 
   @override

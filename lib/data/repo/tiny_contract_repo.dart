@@ -3,6 +3,7 @@ import 'package:tiny_release/data/repo/sqlite_provider.dart';
 import 'package:tiny_release/data/repo/tiny_address_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
+import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/repo/tiny_signature_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
@@ -15,6 +16,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
   final TinyPresetRepo _tinyPresetRepo = new TinyPresetRepo();
   final TinySignatureRepo _tinySignatureRepo = new TinySignatureRepo();
   final TinyAddressRepo _tinyAddressRepo = new TinyAddressRepo();
+  final TinyReceptionRepo _tinyReceptionRepo = new TinyReceptionRepo();
 
   Future<TinyContract> _replaceIdWithNested( Map<String, dynamic> dboMap ) async{
     final TinyContract tinyContract = TinyContract.fromMap(dboMap);
@@ -28,16 +30,19 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     tinyContract.preset = await _tinyPresetRepo.get(dbo.presetId);
 
     /// selected addresses
-    tinyContract.selectedPhotographerAddress = await _tinyAddressRepo.get(dbo.selectedPhotographerAddressId);
-    tinyContract.selectedModelAddress = await _tinyAddressRepo.get(dbo.selectedModelAddressId);
-    tinyContract.selectedWitnessAddress = await _tinyAddressRepo.get(dbo.selectedWitnessAddressId);
-    tinyContract.selectedParentAddress = await _tinyAddressRepo.get(dbo.selectedParentAddressId);
+    if (dbo.selectedPhotographerAddressId != null) tinyContract.selectedPhotographerAddress = await _tinyAddressRepo.get(dbo.selectedPhotographerAddressId);
+    if (dbo.selectedModelAddressId != null) tinyContract.selectedModelAddress = await _tinyAddressRepo.get(dbo.selectedModelAddressId);
+    if (dbo.selectedWitnessAddressId != null) tinyContract.selectedWitnessAddress = await _tinyAddressRepo.get(dbo.selectedWitnessAddressId);
+    if (dbo.selectedParentAddressId != null) tinyContract.selectedParentAddress = await _tinyAddressRepo.get(dbo.selectedParentAddressId);
 
     /// signatures
     tinyContract.modelSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_MODEL);
     tinyContract.photographerSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_PHOTOGRAPHER);
     tinyContract.witnessSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_WITNESS);
     tinyContract.parentSignature = await _tinySignatureRepo.getForContractAndType(dbo.id, SignatureType.SIG_PARENT);
+
+    /// receptions
+    tinyContract.receptions = await _tinyReceptionRepo.getReceptionsForContract(dbo.id);
 
     return tinyContract;
   }
@@ -70,7 +75,24 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
       item.witnessSignature.contractId = item.id;
     }
 
+    /// receptions
+    if ( item.receptions != null) {
+      item.receptions.forEach((f) => _saveContract2Reception(item.id, f.id));
+    }
+
     return item;
+  }
+
+  Future _saveContract2Reception(int contractId, int receptionId) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TableName.RECEPTION_TO_CONTRACT, where: "contractId = ? AND receptionId = ?", whereArgs: [contractId, receptionId]);
+
+    if (res.isEmpty) {
+      return await db.insert(TableName.RECEPTION_TO_CONTRACT, {"contractId": contractId, "receptionId": receptionId} );
+    } else {
+      return res.first["id"];
+    }
   }
 
   Map<String, dynamic> _replaceNestedWithIds( TinyContract tinyContract) {
@@ -106,7 +128,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? (await _replaceIdWithNested(res.first)) : Null ;
+    return res.isNotEmpty ? (await _replaceIdWithNested(res.first)) : null ;
   }
 
   @override
@@ -122,7 +144,7 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     for (var dbo in list) {
       var tinyContract = await _replaceIdWithNested(TinyContractDBO.toMap(dbo));
       resultList.add(tinyContract);
-    };
+    }
 
     return resultList;
   }

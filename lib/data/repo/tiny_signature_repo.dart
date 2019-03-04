@@ -21,7 +21,7 @@ class TinySignatureRepo extends TinyRepo<TinySignature> {
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinySignature.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinySignature.fromMap(res.first) : null ;
   }
 
   Future<TinySignature> getForContractAndType(int contractId, int type) async {

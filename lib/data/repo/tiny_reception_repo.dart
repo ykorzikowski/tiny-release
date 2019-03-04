@@ -36,12 +36,25 @@ class TinyReceptionRepo extends TinyRepo< TinyReception >{
     return List.of(list);
   }
 
+  Future<List<TinyReception>> getReceptionsForContract(int id) async {
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TableName.RECEPTION_TO_CONTRACT, where: "contractId = ?", whereArgs: [id]);
+
+    List<TinyReception> list = List();
+    for (var value in res) {
+      list.add(await get(Reception2ContractRel.fromMap(value).receptionId));
+    }
+
+    return list;
+  }
+
   @override
   Future< TinyReception > get(int id) async {
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinyReception.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinyReception.fromMap(res.first) : null ;
   }
 
   @override

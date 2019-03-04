@@ -40,7 +40,7 @@ class TinyLayoutRepo extends TinyRepo< TinyLayout >{
     final db = await SQLiteProvider.db.database;
 
     var res = await  db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinyLayout.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinyLayout.fromMap(res.first) : null ;
   }
 
   @override

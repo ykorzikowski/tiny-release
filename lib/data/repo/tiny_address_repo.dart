@@ -21,7 +21,7 @@ class TinyAddressRepo extends TinyRepo< TinyAddress > {
     final db = await SQLiteProvider.db.database;
 
     var res = await db.query(TYPE, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? TinyAddress.fromMap(res.first) : Null ;
+    return res.isNotEmpty ? TinyAddress.fromMap(res.first) : null ;
   }
 
   @override
