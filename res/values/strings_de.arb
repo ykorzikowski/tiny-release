@@ -90,5 +90,7 @@
   "finished_contract": "Abgeschlossener Vertrag",
   "btn_complete_contract": "Vertrag abschließen",
   "btn_sign_contract": "Vertrag unterzeichnen",
-  "hint_completed_contracts": "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden"
+  "hint_completed_contracts": "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden",
+  "select_address": "Addresse wählen",
+  "location_date_seperator": ", den"
 }

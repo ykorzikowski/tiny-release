@@ -36,7 +36,7 @@
   "hint_city": "city",
   "hint_postcode": "postcode",
   "hint_street": "street",
-  "hint_adresslabel": "adress_label",
+  "hint_adresslabel": "adress label",
   "hint_mail": "mail",
   "hint_mail_label": "mail label",
   "hint_phone": "phone",
@@ -90,5 +90,7 @@
   "finished_contract": "Finished Contract",
   "btn_complete_contract": "Complete Contract",
   "btn_sign_contract": "Sign contract",
-  "hint_completed_contracts": "Contracts that has been completed can not be edited again"
+  "hint_completed_contracts": "Contracts that has been completed can not be edited again",
+  "select_address": "Select address",
+  "location_date_seperator": ", on"
 }

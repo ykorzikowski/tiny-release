@@ -52,7 +52,7 @@ class ContractGenerator {
             child: SizedBox(height: 150, child: sig != null ? sig : Container(decoration: BoxDecoration( border: Border.all(width: 2.0, color: CupertinoColors.black, ), ), ), ), ),
           ListTile(
             leading:  Text(name),
-            trailing: Text(_tinyContract.location + ", den " +
+            trailing: Text(_tinyContract.location + S.of(context).location_date_seperator +
                 BaseUtil.getLocalFormattedDate(
                     context, DateTime.now().toIso8601String())),
           ),

@@ -55,7 +55,7 @@ class S implements WidgetsLocalizations {
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
-  String get hint_adresslabel => "adress_label";
+  String get hint_adresslabel => "adress label";
   String get hint_birthday => "birthday";
   String get hint_city => "city";
   String get hint_company => "company";
@@ -85,6 +85,7 @@ class S implements WidgetsLocalizations {
   String get item_reception => "Reception Areas";
   String get item_settings => "Settings";
   String get item_wording => "Wording";
+  String get location_date_seperator => ", on";
   String get model_release => "Model Release";
   String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
@@ -93,6 +94,7 @@ class S implements WidgetsLocalizations {
   String get reception_area => "Reception area";
   String get represented_by => "represented_by";
   String get scaff_deleted => "dismissed";
+  String get select_address => "Select address";
   String get select_birthday => "Select Birthday";
   String get select_date_ok => "OK";
   String get select_preset => "Select Preset";
@@ -208,6 +210,8 @@ class $de extends S {
   @override
   String get btn_dialog_cancel => "Abbrechen";
   @override
+  String get select_address => "Addresse wählen";
+  @override
   String get birthday => "Geburtstag";
   @override
   String get hint_phone => "Telefon";
@@ -229,6 +233,8 @@ class $de extends S {
   String get hint_adresslabel => "Markierung";
   @override
   String get title_people => "Menschen";
+  @override
+  String get location_date_seperator => ", den";
   @override
   String get hint_city => "Stad";
   @override

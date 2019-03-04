@@ -5,8 +5,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:image/image.dart' as img;
 
-import 'package:tiny_release/data/repo/tiny_address_repo.dart';
-import 'package:tiny_release/data/repo/tiny_settings_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
@@ -158,7 +156,7 @@ class ContractPdfGenerator {
               Padding(padding: EdgeInsets.all(8.0),
                 child: Text(name, style: _textStyle,),),
               Padding(padding: EdgeInsets.all(8.0),
-                child: Text(_tinyContract.location + ", den " +
+                child: Text(_tinyContract.location + S.of(context).location_date_seperator +
                     BaseUtil.getLocalFormattedDate(
                         context, DateTime.now().toIso8601String()),
                     style: _textStyle),),

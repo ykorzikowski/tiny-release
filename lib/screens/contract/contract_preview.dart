@@ -66,7 +66,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
             heroTag: 'control',
             transitionBetweenRoutes: false,
             leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-            middle: Text("Select address"),),
+            middle: Text(S.of(context).select_address),),
         child: SafeArea(
           child: Scaffold(
             resizeToAvoidBottomPadding: false,

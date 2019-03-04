@@ -75,7 +75,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
           Padding(padding: EdgeInsets.all(8.0),
               child: SizedBox(height: 150, child: sig)),
           ListTile(
-              trailing: Text(_tinyContract.location + ", den " +
+              trailing: Text(_tinyContract.location + S.of(context).location_date_seperator +
                   BaseUtil.getLocalFormattedDate(
                       context, DateTime.now().toIso8601String())),
               leading: Row(children: <Widget>[
