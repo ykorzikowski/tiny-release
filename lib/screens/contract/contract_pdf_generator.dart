@@ -31,7 +31,7 @@ class ContractPdfGenerator {
 //    _tinySettingRepo.getForKey(TinySettingKey.MODEL_LABEL).then((ts) => this.modelLabel = ts.value);
   }
 
-  Document generatePdf(buildContext) {
+  Future<Document> generatePdf(buildContext) async {
     var doc = Document(deflate: zlib.encode);
     _personPdfSmallStyle = TextStyle( fontSize: 14, font: Font.times() );
     _textStyle = TextStyle( fontSize: 12, font: Font.times() );

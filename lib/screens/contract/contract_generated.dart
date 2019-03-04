@@ -2,6 +2,7 @@
 import 'dart:io' as Io;
 import 'dart:typed_data';
 
+import 'package:cool_ui/cool_ui.dart';
 import 'package:pdf/widgets.dart' as pdf;
 import 'package:rect_getter/rect_getter.dart';
 
@@ -325,15 +326,23 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                     case 0:
                     //todo: new based on this
                     case 1:
-                      pdf.Document pdfDoc = _contractPdfGenerator.generatePdf(context);
-                      // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
-                      BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                        print(saved.path);
-                        ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-                      });
+                      var hide = showWeuiLoadingToast(context: context, message: Text("Loading pdf..."));
+                      _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+                        // Share.file(path: saved.path, mimeType: ShareType.TYPE_FILE, title: 'pdf', text: 'pdf'))
+                        BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                          print(saved.path);
+                          hide();
+                          ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+                      }));
                       break;
                     case 2:
-                      // todo: delete
+                      showCupertinoModalPopup(context: context, builder: (context) => CupertinoAlertDialog(title: Text(S.of(context).delete_contract), actions: <Widget>[
+                        CupertinoDialogAction(child: Text(S.of(context).dialog_delete), isDestructiveAction: true, onPressed: () {
+                          _tinyContractRepo.delete(_tinyContract);
+                          Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+                          },),
+                        CupertinoDialogAction(child: Text(S.of(context).dialog_back), onPressed: () => Navigator.of(context).pop(),),
+                      ],),);
                   }
                 },
                   inactiveColor: CupertinoColors.activeBlue,

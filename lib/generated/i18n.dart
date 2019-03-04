@@ -52,6 +52,9 @@ class S implements WidgetsLocalizations {
   String get create_new_contract => "Create a new contract";
   String get dateFormatPattern => "yyyy-MM-dd";
   String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
+  String get delete_contract => "Delete Contract?";
+  String get dialog_back => "Back";
+  String get dialog_delete => "Delete";
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
@@ -127,15 +130,7 @@ class $de extends S {
   @override
   String get dateFormatPattern => "dd.MM.yyyy";
   @override
-  String get contract_images => "Anzahl Bilder";
-  @override
-  String get item_reception => "Aufnahmebereiche";
-  @override
   String get btn_add_address => "Adresse hinzufügen";
-  @override
-  String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
-  @override
-  String get finish_contract => "Vertrag abschließen";
   @override
   String get hint_company => "Firma";
   @override
@@ -143,15 +138,9 @@ class $de extends S {
   @override
   String get btn_complete_contract => "Vertrag abschließen";
   @override
-  String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
-  @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
-  String get shooting_date => "Aufnahmedatum";
-  @override
   String get hint_title => "Titel";
-  @override
-  String get title_add => "Hinzufügen";
   @override
   String get witnessed_by => "Bezeugt durch";
   @override
@@ -163,39 +152,27 @@ class $de extends S {
   @override
   String get choose_date => "Wähle Aufnahmedatum";
   @override
-  String get choose_witness => "Zeuge wählen";
-  @override
-  String get hint_mail_label => "Markierung";
-  @override
   String get title_add_reception => "Aufnahmebereich hinzufügen";
   @override
   String get hint_mail => "E-Mail";
-  @override
-  String get title_add_people => "Menschen hinzufügen";
-  @override
-  String get hint_region => "Bundesland";
   @override
   String get gallery => "Gallerie";
   @override
   String get add_contract => "Vertrag hinzufügen";
   @override
+  String get dialog_back => "Zurück";
+  @override
   String get brn_save => "Speichern";
   @override
   String get btn_import_contacts => "Aus Kontakten importieren";
   @override
-  String get choose_photographer => "Fotograf wählen";
-  @override
   String get selected_preset => "Ausgewählte Vorlage";
-  @override
-  String get btn_edit => "Bearbeiten";
   @override
   String get select_birthday => "Geburtstag wählen";
   @override
   String get btn_save => "Speichern";
   @override
   String get btn_sign_contract => "Vertrag unterzeichnen";
-  @override
-  String get btn_add_paragrpah => "Paragraf hinzufügen";
   @override
   String get choose_source => "Quelle wählen";
   @override
@@ -205,37 +182,15 @@ class $de extends S {
   @override
   String get hint_location => "Location";
   @override
-  String get select_date_ok => "Wählen";
-  @override
-  String get hint_id_type => "Ausweisart";
-  @override
   String get btn_dialog_cancel => "Abbrechen";
-  @override
-  String get select_address => "Addresse wählen";
-  @override
-  String get birthday => "Geburtstag";
   @override
   String get item_has_relations => "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ";
   @override
-  String get hint_phone => "Telefon";
-  @override
-  String get create_new_contract => "Erstellen Sie einen neuen Vertrag";
-  @override
-  String get no_items_reception => "Legen Sie einen neuen Aufnahmebereich an";
+  String get dialog_delete => "Löschen";
   @override
   String get hint_description => "Beschreibung";
   @override
-  String get choose => "Wählen";
-  @override
   String get preset => "Vorschau";
-  @override
-  String get hint_familyname => "Nachname";
-  @override
-  String get hint_language => "Sprache";
-  @override
-  String get hint_adresslabel => "Markierung";
-  @override
-  String get title_people => "Menschen";
   @override
   String get location_date_seperator => ", den";
   @override
@@ -245,57 +200,27 @@ class $de extends S {
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
-  String get and => "und";
-  @override
-  String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
-  @override
   String get btn_add_phone => "Telefon hnzufügen";
   @override
-  String get scaff_deleted => "gelöscht";
-  @override
   String get camera => "Kamera";
-  @override
-  String get title_add_preset => "Vorlage hinzufügen";
   @override
   String get change_order_title => "Reihenfolge anpassen";
   @override
   String get item_wording => "Wording";
   @override
-  String get title_contracts => "Vertrtäge";
-  @override
-  String get hint_subtitle => "Untertitel";
-  @override
-  String get item_layout => "Layouts";
-  @override
   String get select_preset => "Vorlage wählen";
-  @override
-  String get control => "Verwaltung";
   @override
   String get item_settings => "Einstellungen";
   @override
   String get hint_postcode => "PLZ";
   @override
-  String get hint_id_number => "Ausweisnummer";
-  @override
-  String get title_preset => "Vorlagen";
-  @override
-  String get title_reception => "Aufnahmebereiche";
-  @override
   String get choose_model => "Model wählen";
-  @override
-  String get hint_country => "Land";
-  @override
-  String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
-  @override
-  String get btn_add_mail => "E-Mail hinzufügen";
   @override
   String get btn_add => "Hinzufügen";
   @override
   String get item_preset => "Vorlagen";
   @override
   String get finished_contract => "Abgeschlossener Vertrag";
-  @override
-  String get hint_birthday => "Geburtstag";
   @override
   String get in_reception_areas => "in den Aufnahmebereichen";
   @override
@@ -307,9 +232,93 @@ class $de extends S {
   @override
   String get hint_givenname => "Vorname";
   @override
-  String get title_wording => "Wording";
-  @override
   String get model_release => "Model Release";
+  @override
+  String get contract_images => "Anzahl Bilder";
+  @override
+  String get item_reception => "Aufnahmebereiche";
+  @override
+  String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
+  @override
+  String get finish_contract => "Vertrag abschließen";
+  @override
+  String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
+  @override
+  String get shooting_date => "Aufnahmedatum";
+  @override
+  String get title_add => "Hinzufügen";
+  @override
+  String get choose_witness => "Zeuge wählen";
+  @override
+  String get hint_mail_label => "Markierung";
+  @override
+  String get title_add_people => "Menschen hinzufügen";
+  @override
+  String get hint_region => "Bundesland";
+  @override
+  String get choose_photographer => "Fotograf wählen";
+  @override
+  String get btn_edit => "Bearbeiten";
+  @override
+  String get btn_add_paragrpah => "Paragraf hinzufügen";
+  @override
+  String get select_date_ok => "Wählen";
+  @override
+  String get hint_id_type => "Ausweisart";
+  @override
+  String get select_address => "Addresse wählen";
+  @override
+  String get birthday => "Geburtstag";
+  @override
+  String get hint_phone => "Telefon";
+  @override
+  String get create_new_contract => "Erstellen Sie einen neuen Vertrag";
+  @override
+  String get no_items_reception => "Legen Sie einen neuen Aufnahmebereich an";
+  @override
+  String get choose => "Wählen";
+  @override
+  String get hint_familyname => "Nachname";
+  @override
+  String get hint_language => "Sprache";
+  @override
+  String get hint_adresslabel => "Markierung";
+  @override
+  String get title_people => "Menschen";
+  @override
+  String get and => "und";
+  @override
+  String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
+  @override
+  String get scaff_deleted => "gelöscht";
+  @override
+  String get title_add_preset => "Vorlage hinzufügen";
+  @override
+  String get delete_contract => "Vertrag löschen?";
+  @override
+  String get title_contracts => "Vertrtäge";
+  @override
+  String get hint_subtitle => "Untertitel";
+  @override
+  String get item_layout => "Layouts";
+  @override
+  String get control => "Verwaltung";
+  @override
+  String get hint_id_number => "Ausweisnummer";
+  @override
+  String get title_preset => "Vorlagen";
+  @override
+  String get title_reception => "Aufnahmebereiche";
+  @override
+  String get hint_country => "Land";
+  @override
+  String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
+  @override
+  String get btn_add_mail => "E-Mail hinzufügen";
+  @override
+  String get hint_birthday => "Geburtstag";
+  @override
+  String get title_wording => "Wording";
   @override
   String get represented_by => "Vertreten durch";
 }
