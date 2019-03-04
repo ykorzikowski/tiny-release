@@ -55,6 +55,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         _tinyContract.preset != null &&
         _tinyContract.photographer != null &&
         _tinyContract.model != null &&
+        _tinyContract.date != null &&
         _tinyContract.location != null;
   }
 
@@ -125,6 +126,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         },
       );
 
+  _getPresetWidget(context) =>
+      PresetListWidget(_tinyState, (item, context) {
+        setState(() {
+          _tinyContract.preset = item;
+        });
+        Navigator.of(context).pop();
+      },);
+
   _getPresetSelection() =>
       Row(
         mainAxisSize: MainAxisSize.min,
@@ -134,14 +143,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 _tinyContract.preset.title, style: btnStyle,),
               popoverHeight: 500,
               popoverWidth: 400,
-              popoverBuild: (context) =>
-                  PresetListWidget(_tinyState, (item, context) {
-                    setState(() {
-                      _tinyContract.preset = item;
-                    });
-                    Navigator.of(context).pop();
-                  },)
-          ) : CupertinoButton(
+              popoverBuild: (context) => _getPresetWidget(context)) : CupertinoButton(
             child:
             _tinyContract.preset == null ? Text(S.of(context).choose) : Text(_tinyContract.preset.title),
             onPressed: () =>
@@ -149,14 +151,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     transitionDuration: ControlHelper
                         .getScreenSizeBasedDuration(
                         context),
-                    builder: (context) =>
-                        PresetListWidget(_tinyState, (item, context) {
-                          setState(() {
-                            _tinyContract.preset = item;
-                          });
-                          Navigator.of(context).pop();
-                        },)
-                ),
+                    builder: (context) => _getPresetWidget(context)),
                 ),),
 
           _tinyContract.preset != null ? CupertinoButton(
@@ -169,31 +164,61 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           ) : Container()
         ],);
 
+  _getReceptionWidget(context) => ReceptionListWidget(_tinyState, (context, item) {
+    setState(() {
+      var tag = new Tag(
+          id: item.id,
+          title: item.displayName
+      );
+      _receptionAreas.putIfAbsent(item.id, () => tag);
+      _tags.clear();
+      _tags.addAll( _receptionAreas.values.toList());
+    });
+    Navigator.of(context).pop();
+  },);
+
   _getReceptionSelection() =>
       Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          CupertinoButton(
-            child: Icon(CupertinoIcons.add_circled_solid,
-              color: CupertinoColors.activeGreen,),
+          BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
+              child:Icon(CupertinoIcons.add_circled_solid,
+                color: CupertinoColors.activeGreen,),
+              popoverHeight: 500,
+              popoverWidth: 400,
+              popoverBuild: (context) => _getReceptionWidget(context)
+          ) : CupertinoButton(
+            child:
+            _tinyContract.preset == null ? Text(S.of(context).choose) : Text(_tinyContract.preset.title),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
-                        .getScreenSizeBasedDuration(context),
-                    builder: (context) =>
-                        ReceptionListWidget(_tinyState, (context, item) {
-                          setState(() {
-                            var tag = new Tag(
-                                id: item.id,
-                                title: item.displayName
-                            );
-                            _receptionAreas.putIfAbsent(item.id, () => tag);
-                            _tags.clear();
-                            _tags.addAll( _receptionAreas.values.toList());
-                          });
-                          Navigator.of(context).pop();
-                        }))),
-          )
+                        .getScreenSizeBasedDuration(
+                        context),
+                    builder: (context) => _getReceptionWidget(context)
+                ),
+                ),),
+//          CupertinoButton(
+//            child: Icon(CupertinoIcons.add_circled_solid,
+//              color: CupertinoColors.activeGreen,),
+//            onPressed: () =>
+//                Navigator.of(context).push(TinyPageWrapper(
+//                    transitionDuration: ControlHelper
+//                        .getScreenSizeBasedDuration(context),
+//                    builder: (context) =>
+//                        ReceptionListWidget(_tinyState, (context, item) {
+//                          setState(() {
+//                            var tag = new Tag(
+//                                id: item.id,
+//                                title: item.displayName
+//                            );
+//                            _receptionAreas.putIfAbsent(item.id, () => tag);
+//                            _tags.clear();
+//                            _tags.addAll( _receptionAreas.values.toList());
+//                          });
+//                          Navigator.of(context).pop();
+//                        }))),
+//          )
         ],);
 
   _getCaptureDatePicker(context) => Column(children: <Widget>[

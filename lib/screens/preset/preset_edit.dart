@@ -30,6 +30,10 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
   }
 
+  ///
+  /// validation
+  ///
+
   bool validParagraphs() {
     for ( var para in _tinyPreset.paragraphs ) {
       if ( !validParagraph(para) ) {
@@ -189,8 +193,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             }
             new TinyPresetRepo().save(_tinyPreset);
             _controlState.curDBO = _tinyPreset;
-            Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PRESET_LIST);
-            Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
+            Navigator.of(context).pop();
           } : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,

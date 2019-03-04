@@ -370,11 +370,28 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         ),
       );
 
+  /// validation
+  ///
+  ///
   bool validContact() {
     return
+      validAddresses() &&
       _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty &&
           _tinyPeople.givenName != null && _tinyPeople.givenName.isNotEmpty &&
             _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty;
+  }
+
+  bool validAddresses() {
+    for ( var adr in _tinyPeople.postalAddresses ) {
+      if ( !validAddress(adr) ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool validAddress(TinyAddress adr) {
+    return adr.street != null && adr.city != null && adr.postcode != null;
   }
 
   @override
@@ -393,8 +410,6 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             new TinyPeopleRepo().save(_tinyPeople);
             _tinyState.curDBO = _tinyPeople;
               Navigator.of(context).pop();
-//            Navigator.of(context).popUntil((route) => route.settings.name == NavRoutes.PEOPLE_LIST);
-//            Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
           } : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
