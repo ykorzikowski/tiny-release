@@ -12,6 +12,7 @@ import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/contract/contract_generator.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -37,6 +38,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
   ContractPdfGenerator _contractPdfGenerator;
+  ContractGenerator _contractGenerator;
 
   /// keys for signature pads
   final _modelKey = GlobalKey<SignatureState>();
@@ -49,6 +51,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   _ContractGeneratedWidgetState(this._tinyState) {
     _tinyContract = _tinyState.curDBO;
     _contractPdfGenerator = ContractPdfGenerator(_tinyContract);
+    _contractGenerator = ContractGenerator(_tinyContract);
   }
 
   _signaturesValid() =>
@@ -246,18 +249,18 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                 Text(_tinyContract.preset.title, textAlign: TextAlign.center, style: TextStyle(fontSize: 32),),
 
                 /// contract head
-                _contractPdfGenerator.buildContractHeader(context),
+                _contractGenerator.buildContractHeader(context),
 
                 Divider(),
 
-                _contractPdfGenerator.buildShootingInformationSection(context),
+                _contractGenerator.buildShootingInformationSection(context),
 
                 Divider(),
 
                 /// contract preview
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: ContractPdfGenerator.buildParagraphs(
+                  children: ContractGenerator.buildParagraphs(
                       context, _tinyContract),
                 ),
 

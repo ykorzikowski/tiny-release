@@ -5,6 +5,7 @@ import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/contract/contract_generator.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
@@ -48,7 +49,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( shrinkWrap: true, children: ContractPdfGenerator.buildParagraphs(context, _tinyContract), ),
+            child: _tinyContract.preset == null ? Text("No preset selected") : ListView( shrinkWrap: true, children: ContractGenerator.buildParagraphs(context, _tinyContract), ),
         ),
       ),
     );
