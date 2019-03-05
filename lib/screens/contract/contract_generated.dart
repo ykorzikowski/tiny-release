@@ -198,7 +198,6 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   static Future<TinySignature> _saveSignature(Uint8List sig, int contractId) async {
     if (sig != null) {
       return TinySignature(
-          type: SignatureType.SIG_MODEL,
           contractId: contractId,
           path: (await BaseUtil.storeBlobUint8('signature', 'png', sig)).path
       );
@@ -208,28 +207,15 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
   /// saves all signatures
   _saveSignatures() async {
-    if (_modelSignature != null && _tinyContract.modelSignature != null)
+    if (_modelSignature != null && _tinyContract.modelSignature == null)
       _saveSignature(_modelSignature, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
-    if (_photographerSignature != null && _tinyContract.photographerSignature != null)
+    if (_photographerSignature != null && _tinyContract.photographerSignature == null)
       _saveSignature(_photographerSignature, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
-    if (_parentSignature != null && _tinyContract.parentSignature != null)
+    if (_parentSignature != null && _tinyContract.parentSignature == null)
       _saveSignature(_parentSignature, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
-    if (_witnessSignature != null && _tinyContract.witnessSignature != null)
+    if (_witnessSignature != null && _tinyContract.witnessSignature == null)
       _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
   }
-
-  List<BottomNavigationBarItem> _getButtonsForFinishedContract() =>
-      <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.create),
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.share),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.delete_solid),
-        ),
-      ];
 
   @override
   Widget build(BuildContext context) {
@@ -322,6 +308,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             child: IntrinsicWidth(
               stepHeight: 32,
               child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                /// clone button
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -331,9 +318,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                         children: <Widget>[
                           CupertinoPopoverMenuItem(
                             child: SizedBox(
-                              child: Center(child: Text(S.of(context).use_as_template, textAlign: TextAlign.center,)),
+                              child: Center(child: Text(S.of(context).use_as_template, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
                               width: 80,
-                              height: 40,
+                              height: 50,
                             ),
                             onTap: () {
                               var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
@@ -353,6 +340,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                     ),
                   ),
                 ),
+
+                /// share button
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -362,11 +351,12 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                         children: <Widget>[
                           CupertinoPopoverMenuItem(
                             child: SizedBox(
-                              child: Center(child: Text(S.of(context).share_pdf, textAlign: TextAlign.center,)),
+                              child: Center(child: Text(S.of(context).share_pdf, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
                               width: 80,
-                              height: 40,
+                              height: 50,
                             ),
                             onTap: () {
+                              Navigator.of(context).pop();
                               var hide = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
                             _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
                               BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
@@ -380,6 +370,8 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                     ),
                   ),
                 ),
+
+                /// delete button
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -389,9 +381,9 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                         children: <Widget>[
                           CupertinoPopoverMenuItem(
                             child: SizedBox(
-                              child: Center(child: Text(S.of(context).dialog_delete, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.destructiveRed),)),
+                              child: Center(child: Text(S.of(context).dialog_delete, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.destructiveRed, fontSize: 21),)),
                               width: 80,
-                              height: 40,
+                              height: 50,
                             ),
                             onTap: () {
                               _tinyContractRepo.delete(_tinyContract);

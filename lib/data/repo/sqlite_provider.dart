@@ -49,7 +49,9 @@ class SQLiteProvider {
           "id INTEGER PRIMARY KEY,"
           "path TEXT,"
           "type INTEGER,"
-          "contractId INTEGER"
+          "contractId INTEGER,"
+          "FOREIGN KEY (contractId) REFERENCES Contract (id)"
+          "ON DELETE CASCADE ON UPDATE NO ACTION"
           ")");
 
       /// Contracts

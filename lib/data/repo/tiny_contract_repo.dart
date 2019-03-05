@@ -56,23 +56,27 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
 
     /// signatures
     if( item.modelSignature != null ) {
-      _tinySignatureRepo.save(item.modelSignature);
       item.modelSignature.contractId = item.id;
+      item.modelSignature.type = SignatureType.SIG_MODEL;
+      _tinySignatureRepo.save(item.modelSignature).then((id) => item.modelSignature.id = id);
     }
 
     if( item.photographerSignature != null ) {
-      _tinySignatureRepo.save(item.photographerSignature);
       item.photographerSignature.contractId = item.id;
+      item.photographerSignature.type = SignatureType.SIG_PHOTOGRAPHER;
+      _tinySignatureRepo.save(item.photographerSignature).then((id) => item.photographerSignature.id = id);
     }
 
     if( item.parentSignature != null ) {
-      _tinySignatureRepo.save(item.parentSignature);
       item.parentSignature.contractId = item.id;
+      item.parentSignature.type = SignatureType.SIG_PARENT;
+      _tinySignatureRepo.save(item.parentSignature).then((id) => item.parentSignature.id = id);
     }
 
     if( item.witnessSignature != null ) {
-      _tinySignatureRepo.save(item.witnessSignature);
       item.witnessSignature.contractId = item.id;
+      item.witnessSignature.type = SignatureType.SIG_WITNESS;
+      _tinySignatureRepo.save(item.witnessSignature).then((id) => item.witnessSignature.id = id);
     }
 
     /// receptions

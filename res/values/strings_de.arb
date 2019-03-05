@@ -92,7 +92,7 @@
   "btn_sign_contract": "Vertrag unterzeichnen",
   "hint_completed_contracts": "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden",
   "select_address": "Addresse wählen",
-  "location_date_seperator": ", den",
+  "location_date_seperator": ", den ",
   "item_has_relations": "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ",
   "dialog_back": "Zurück",
   "dialog_delete": "Löschen",

@@ -92,7 +92,7 @@
   "btn_sign_contract": "Sign contract",
   "hint_completed_contracts": "Contracts that has been completed can not be edited again",
   "select_address": "Select address",
-  "location_date_seperator": ", on",
+  "location_date_seperator": ", on ",
   "item_has_relations": "This item has relations to a contract. Delete the contract first.",
   "dialog_back": "Back",
   "dialog_delete": "Delete",

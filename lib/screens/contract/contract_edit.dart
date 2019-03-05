@@ -442,6 +442,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   trailing: Container(
                     width: 250,
                     child: CupertinoTextField(
+                        keyboardType: TextInputType.text,
                         maxLength: 50,
                         onChanged: (t) => _tinyContract.location = t,
                         controller: initialValue(_tinyContract.location),
