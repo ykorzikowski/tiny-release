@@ -93,21 +93,30 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
 
   Widget _buildContractHeader(context) =>
       Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-        Text(photographerLabel, style: _personLargeStyle),
-        _addressSelectionButton(context, _tinyContract.photographer, (sel) => setState(() => _tinyContract.selectedPhotographerAddress = sel), Column(children: <Widget>[
-          Text(_tinyContract.photographer.displayName, style: _personSmallStyle),
-          Text(_tinyContract.selectedPhotographerAddress.street, style: _personSmallStyle),
-          Text(_tinyContract.selectedPhotographerAddress.postcode + " " +
-              _tinyContract.selectedPhotographerAddress.city, style: _personSmallStyle),
-        ],), ),
+        _tinyContract.photographer != null ? Column(
+          children: <Widget>[
+            Text(photographerLabel, style: _personLargeStyle),
+            _addressSelectionButton(context, _tinyContract.photographer, (sel) => setState(() => _tinyContract.selectedPhotographerAddress = sel), Column(children: <Widget>[
+              Text(_tinyContract.photographer.displayName, style: _personSmallStyle),
+              Text(_tinyContract.selectedPhotographerAddress.street, style: _personSmallStyle),
+              Text(_tinyContract.selectedPhotographerAddress.postcode + " " +
+                  _tinyContract.selectedPhotographerAddress.city, style: _personSmallStyle),
+            ],), ),
+          ],
+        ) : Container(),
 
-        Text(modelLabel, style: _personLargeStyle),
-        _addressSelectionButton(context, _tinyContract.model, (sel) => setState(() => _tinyContract.selectedModelAddress = sel), Column(children: <Widget>[
-          Text(_tinyContract.model.displayName, style: _personSmallStyle),
-          Text(_tinyContract.selectedModelAddress.street, style: _personSmallStyle),
-          Text(_tinyContract.selectedModelAddress.postcode + " " +
-            _tinyContract.selectedModelAddress.city, style: _personSmallStyle),
-        ]), ),
+
+        _tinyContract.model != null ? Column(
+          children: <Widget>[
+            Text(modelLabel, style: _personLargeStyle),
+            _addressSelectionButton(context, _tinyContract.model, (sel) => setState(() => _tinyContract.selectedModelAddress = sel), Column(children: <Widget>[
+              Text(_tinyContract.model.displayName, style: _personSmallStyle),
+              Text(_tinyContract.selectedModelAddress.street, style: _personSmallStyle),
+              Text(_tinyContract.selectedModelAddress.postcode + " " +
+                  _tinyContract.selectedModelAddress.city, style: _personSmallStyle),
+            ]), )
+          ],
+        ) : Container(),
 
 
         _tinyContract.parent != null ? Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
