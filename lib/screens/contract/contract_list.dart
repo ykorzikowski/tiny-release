@@ -88,9 +88,12 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           ListTile(
             title: Row(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[Icon(entry.isLocked == true ? CupertinoIcons
-                  .check_mark_circled_solid : CupertinoIcons.pen),
-              Text(entry.displayName),
+              children: <Widget>[Icon(entry.isLocked == true ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.pen,
+                color: entry.isLocked == true ? CupertinoColors.black : CupertinoColors.activeBlue,),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(entry.displayName),
+              ),
               ],),
             subtitle: entry?.preset?.subtitle != null ? Text(entry.preset.subtitle) : null,
             trailing: Row(
