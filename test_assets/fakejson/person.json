@@ -1,0 +1,18 @@
+[
+  '{{repeat(5, 7)}}',
+  {
+    givenName: '{{firstName()}}',
+    familyName: '{{surname()}}',
+    idType: 'Driver License',
+    idNumber: '{{integer(1000000, 10000000)}}',
+    company: '{{company().toUpperCase()}}',
+    addresses: [
+      '{{repeat(3)}}',
+      {
+        street: '{{street()}} {{integer(10, 100)}}',
+        postcode: '{{integer(100, 10000)}}',
+        city: '{{city()}}'
+      }
+    ]
+  }
+]

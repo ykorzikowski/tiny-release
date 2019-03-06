@@ -51,7 +51,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text(S.of(context).title_preset),
         trailing:CupertinoButton(
-          child: Text(S.of(context).btn_add),
+          child: Text(S.of(context).btn_add, key: Key('navbar_btn_add')),
           onPressed: () {
             var _tinyPreset = TinyPreset();
             _tinyPreset.paragraphs = List();

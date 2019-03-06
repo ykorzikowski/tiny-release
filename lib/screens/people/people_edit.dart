@@ -290,8 +290,12 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       );
 
   /// get address widgets
-  List<Widget> getAddressWidgets() =>
-      _tinyPeople.postalAddresses.map((ta) =>
+  List<Widget> getAddressWidgets() {
+    var list = List<Widget>();
+
+    for ( int i = 0; i <  _tinyPeople.postalAddresses.length; i++ ) {
+      var ta = _tinyPeople.postalAddresses[i];
+      list.add(
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: Dismissible(
@@ -299,19 +303,22 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 background: BaseUtil.getDismissibleBackground(),
                 key: Key(ta.hashCode.toString()),
                 onDismissed: (direction) => setState(() {_tinyPeople.postalAddresses.remove(ta); }),
-                child: getAddressWidget(ta)
+                child: getAddressWidget(ta, i)
             ),
-          ),
-      ).toList();
+      ));
+    }
+    return list;
+  }
 
   /// get single address widget
-  Widget getAddressWidget(address) =>
+  Widget getAddressWidget(address, index) =>
       Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
+              key: Key('tf_label_$index'),
               onChanged: (t) => address.label = t,
               controller: initialValue(address.label),
               placeholder:  S.of(context).hint_adresslabel,
@@ -321,6 +328,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
+              key: Key('tf_street_$index'),
               onChanged: (t) => address.street = t,
               controller: initialValue(address.street),
               placeholder:  S.of(context).hint_street,
@@ -331,12 +339,14 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             Row(
               children: <Widget>[
                 Flexible(child: CupertinoTextField(
+                  key: Key('tf_postcode_$index'),
                   onChanged: (t) => address.postcode = t,
                   controller: initialValue(address.postcode),
                   keyboardType: TextInputType.number,
                   placeholder:  S.of(context).hint_postcode,
                 )),
                 Flexible(child: CupertinoTextField(
+                  key: Key('tf_city_$index'),
                   onChanged: (t) => address.city = t,
                   controller: initialValue(address.city),
                   placeholder:  S.of(context).hint_city,
@@ -347,6 +357,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
+              key: Key('tf_region_$index'),
               onChanged: (t) => address.region = t,
               controller: initialValue(address.region),
               placeholder:  S.of(context).hint_region,
@@ -355,6 +366,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
+              key: Key('tf_country_$index'),
               onChanged: (t) => address.country = t,
               controller: initialValue(address.country),
               placeholder:  S.of(context).hint_country,
@@ -422,6 +434,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             Divider(),
             mailSection(),
             FlatButton.icon(
+                key: Key('btn_add_mail'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_mail),
                 onPressed: () =>
@@ -433,6 +446,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
             phoneSection(),
             FlatButton.icon(
+                key: Key('btn_add_phone'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_phone),
                 onPressed: () =>
@@ -444,6 +458,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
             addressSection(),
             FlatButton.icon(
+              key: Key('btn_add_address'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_address),
                 onPressed: () =>

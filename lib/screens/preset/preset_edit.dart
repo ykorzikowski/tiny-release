@@ -60,7 +60,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   _getParagraphAddButton() =>
       CupertinoButton(
         child:
-          Text(S.of(context).btn_add_paragrpah),
+          Text(S.of(context).btn_add_paragrpah, key: Key('btn_add_paragraph'),),
         onPressed: () =>
             setState(() => _tinyPreset.paragraphs.add(Paragraph(position: (_tinyPreset.paragraphs.length+1)))),
       );
@@ -76,9 +76,13 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     } : null,
   );
 
-  /// get phone widgets
-  List< Widget > _getParagraphWidgets() =>
-      _tinyPreset.paragraphs.map((para) =>
+  /// get paragraphs widgets
+  List< Widget > _getParagraphWidgets() {
+    var list = List<Widget>();
+
+    for ( int i = 0; i <  _tinyPreset.paragraphs.length; i++ ) {
+      var para = _tinyPreset.paragraphs[i];
+      list.add(
           Column(
             children: <Widget>[
               Divider(),
@@ -88,24 +92,27 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
                 Dismissible(
                     direction: DismissDirection.endToStart,
                     background: BaseUtil.getDismissibleBackground(),
-                    key: Key(para.hashCode.toString()),
+                    key: Key('para_dismiss_$i'),
                     onDismissed: (direction) =>
                         setState(() {
                           _tinyPreset.paragraphs.remove(para);
                           _paragraphRepo.delete(para);
                         }),
-                    child: _getParagraphWidget(para)
+                    child: _getParagraphWidget(para, i)
                 ),
               ),
             ],
-          ),
-      ).toList();
+          ));
+    }
+    return list;
+  }
 
-  Widget _getParagraphWidget(Paragraph para) =>
+  Widget _getParagraphWidget(Paragraph para, index) =>
       Column(children: <Widget>[
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_paragraph_title_$index'),
             onChanged: (t) => para.title = t,
             controller: initialValue(para.title),
             keyboardType: TextInputType.text,
@@ -115,6 +122,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_paragraph_content_$index'),
             onChanged: (t) => para.content = t,
             controller: initialValue(para.content),
             keyboardType: TextInputType.multiline,
@@ -130,6 +138,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_preset_title'),
             onChanged: (t) => _tinyPreset.title = t,
             controller: initialValue(_tinyPreset.title),
             keyboardType: TextInputType.text,
@@ -139,6 +148,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_preset_subtitle'),
             onChanged: (t) => _tinyPreset.subtitle = t,
             controller: initialValue(_tinyPreset.subtitle),
             keyboardType: TextInputType.text,
@@ -148,6 +158,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_preset_language'),
             onChanged: (t) => _tinyPreset.language = t,
             controller: initialValue(_tinyPreset.language),
             keyboardType: TextInputType.text,
@@ -157,12 +168,19 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         Padding(
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
+            key: Key('tf_preset_description'),
             onChanged: (t) => _tinyPreset.description = t,
             controller: initialValue(_tinyPreset.description),
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_description,
           ),
         ),
+        Container(
+          child: Column(
+            children: _getParagraphWidgets(),
+          ),
+        ),
+
         BaseUtil.isLargeScreen(context) ? ListTile(
           leading: _getParagraphAddButton(),
           trailing: _getSortParagraphsButton(),
@@ -170,12 +188,6 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           _getParagraphAddButton(),
           _getSortParagraphsButton()
         ],),
-
-        Container(
-          child: Column(
-            children: _getParagraphWidgets(),
-          ),
-        ),
       ];
 
   @override
@@ -186,7 +198,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         transitionBetweenRoutes: false,
         middle: Text(S.of(context).title_add_preset),
         trailing: CupertinoButton(
-          child: Text(S.of(context).btn_save),
+          child: Text(S.of(context).btn_save, key: Key('btn_navbar_save')),
           onPressed: validPreset() ? () {
             if (!validPreset()) {
               return;
@@ -198,6 +210,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: ListView(
+          key: Key('scrlvw_preset_edit'),
           shrinkWrap: true,
           children: _getFields(),
       ),),

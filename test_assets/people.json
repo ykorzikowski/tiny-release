@@ -1,0 +1,106 @@
+[
+  {
+    "givenName": "Mclaughlin",
+    "familyName": "Baldwin",
+    "company": "MIRACULA",
+    "addresses": [
+      {
+        "street": "Stryker Street 54",
+        "postcode": 7694,
+        "city": "Gibbsville"
+      }
+    ]
+  },
+  {
+    "givenName": "Duncan",
+    "familyName": "Warren",
+    "company": "ZILENCIO",
+    "addresses": [
+      {
+        "street": "Rutland Road 73",
+        "postcode": 3734,
+        "city": "Murillo"
+      },
+      {
+        "street": "Degraw Street 29",
+        "postcode": 5815,
+        "city": "Cade"
+      }
+    ]
+  },
+  {
+    "givenName": "Ladonna",
+    "familyName": "Kirk",
+    "company": "YOGASM",
+    "addresses": [
+      {
+        "street": "Union Street 82",
+        "postcode": 345,
+        "city": "Dexter"
+      },
+      {
+        "street": "Chestnut Avenue 11",
+        "postcode": 7440,
+        "city": "Morningside"
+      }
+    ]
+  },
+  {
+    "givenName": "Snider",
+    "familyName": "Roth",
+    "company": "SONGLINES",
+    "addresses": [
+      {
+        "street": "Will Place 93",
+        "postcode": 1405,
+        "city": "Cawood"
+      }
+    ]
+  },
+  {
+    "givenName": "Gaines",
+    "familyName": "Dunlap",
+    "company": "ZENTIME",
+    "addresses": [
+      {
+        "street": "Oak Street 41",
+        "postcode": 6453,
+        "city": "Kerby"
+      },
+      {
+        "street": "Estate Road 34",
+        "postcode": 6927,
+        "city": "Imperial"
+      }
+    ]
+  },
+  {
+    "givenName": "Noble",
+    "familyName": "Ferguson",
+    "company": "HYPLEX",
+    "addresses": [
+      {
+        "street": "Bond Street 35",
+        "postcode": 8066,
+        "city": "Rivera"
+      },
+      {
+        "street": "Church Avenue 81",
+        "postcode": 4806,
+        "city": "Lindisfarne"
+      }
+    ]
+  },
+  {
+    "givenName": "Mcintyre",
+    "familyName": "Russell",
+    "company": "ZILLATIDE",
+    "addresses": [
+      {
+        "street": "Dwight Street 87",
+        "postcode": 7960,
+        "city": "Beechmont"
+      }
+    ]
+  }
+]

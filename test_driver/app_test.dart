@@ -1,24 +1,116 @@
 // Imports the Flutter Driver API
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-
-void _gotoPeopleEdit(var driver) {
+Future _addPreset(FlutterDriver driver) async {
   // go to Settings
   var tapBar = find.byValueKey('tap_bar');
-  driver.tap(tapBar);
+  await driver.tap(tapBar);
+
+  // tap on presets
+  var peopleControlItem = find.byValueKey('control_1');
+  await driver.tap(peopleControlItem);
+
+  // tap on add paragraph
+  var addPeople = find.byValueKey('navbar_btn_add');
+  await driver.tap(addPeople);
+
+  final file = new File('test_assets/test_preset.json');
+  final Map<String, dynamic> presetJson = json.decode(await file.readAsString());
+
+  for (var key in presetJson.keys) {
+    if ( key == 'paragraphs' ) {
+      List<dynamic> paras = presetJson[key];
+      for (int i = 0; i < paras.length; i++) {
+        var map = paras[i];
+        await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('btn_add_paragraph') );
+        await driver.tap( find.byValueKey('btn_add_paragraph') );
+
+        await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_paragraph_title_$i') );
+        await driver.tap( find.byValueKey('tf_paragraph_title_$i') );
+        await driver.enterText(map['title']);
+
+        await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_paragraph_content_$i') );
+        await driver.tap( find.byValueKey('tf_paragraph_content_$i') );
+        await driver.enterText(map['content']);
+
+        // todo bugfix: we currently need an additional tap to enable save button
+        await driver.tap( find.byValueKey('tf_paragraph_title_$i') );
+      }
+
+      continue;
+    }
+    await driver.tap( find.byValueKey('tf_preset_$key') );
+    await driver.enterText(presetJson[key]);
+  }
+
+  // hit save button
+  await driver.tap( find.byValueKey('btn_navbar_save') );
+}
+
+Future _addPerson(FlutterDriver driver) async {
+  // go to Settings
+  var tapBar = find.byValueKey('tap_bar');
+  await driver.tap(tapBar);
+
+  final file = new File('test_assets/people.json');
+  final List<dynamic> peopleJson = json.decode(await file.readAsString());
 
   // tap on people
   var peopleControlItem = find.byValueKey('control_0');
-  driver.tap(peopleControlItem);
+  await driver.tap(peopleControlItem);
 
-  // tap on add people
-  var addPeople = find.byValueKey('navbar_btn_add');
-  driver.tap(addPeople);
+  for (var map in peopleJson) {
+
+    // tap on add people
+    await driver.tap(find.byValueKey('navbar_btn_add'));
+
+    for (var key in map.keys) {
+      if( key == 'addresses' ) {
+        List<dynamic> items = map[key];
+        for (int i = 0; i < items.length; i++) {
+          var map = items[i];
+
+          // tap on add address
+          await driver.tap( find.byValueKey('btn_add_address') );
+
+          // fill out address
+          await driver.tap( find.byValueKey('tf_label_$i') );
+          await driver.enterText("Private");
+
+          await driver.tap( find.byValueKey('tf_street_$i') );
+          await driver.enterText(map['street']);
+
+          await driver.tap( find.byValueKey('tf_postcode_$i') );
+          await driver.enterText(map['postcode'].toString());
+
+          await driver.tap( find.byValueKey('tf_city_$i') );
+          await driver.enterText(map['city']);
+        }
+        continue;
+      }
+      await driver.tap( find.byValueKey('tf_$key') );
+      await driver.enterText(map[key].toString());
+    }
+
+    // todo bugfix: we currently need an additional tap to enable save button
+    await driver.tap( find.byValueKey('tf_label_0') );
+
+    // hit save button
+    await driver.tap( find.byValueKey('btn_navbar_save') );
+  }
+
+}
+
+Future _addReception(FlutterDriver driver) async {
+
 }
 
 void main() {
-  group('People Scroll', () {
+  group('Input Data', () {
     FlutterDriver driver;
 
     // Connect to the Flutter driver before running any tests
@@ -33,40 +125,40 @@ void main() {
       }
     });
 
-    var saveBtn = find.byValueKey('navbar_btn_save');
-    var tfGivenName = find.byValueKey('tf_givenName');
+    test('verifies create people', () async {
+      await _addPerson(driver);
+    }, timeout: Timeout.factor(2));
 
-    test('verifies people load', () async {
+      test('verifies create preset', () async {
       // Create two SerializableFinders. We will use these to locate specific
       // Widgets displayed by the app. The names provided to the byValueKey
       // method correspond to the Keys we provided to our Widgets in step 1.
       final listFinder = find.byValueKey('long_list');
       final itemFinder = find.byValueKey('item_50_text');
 
-      _gotoPeopleEdit(driver);
+      await _addPreset(driver);
 
-
-
-      //TODO: stub code copied from flutter.io.
-      await driver.scrollUntilVisible(
-        // Scroll through this list
-        listFinder,
-        // Until we find this item
-        itemFinder,
-        // In order to scroll down the list, we need to provide a negative
-        // value to dyScroll. Ensure this value is a small enough increment to
-        // scroll the item into view without potentially scrolling past it.
-        //
-        // If you need to scroll through horizontal lists, provide a dxScroll
-        // argument instead
-        dyScroll: -300.0,
-      );
-
-      // Verify the item contains the correct text
-      expect(
-        await driver.getText(itemFinder),
-        'Item 50',
-      );
-    });
+//
+//      //TODO: stub code copied from flutter.io.
+//      await driver.scrollUntilVisible(
+//        // Scroll through this list
+//        listFinder,
+//        // Until we find this item
+//        itemFinder,
+//        // In order to scroll down the list, we need to provide a negative
+//        // value to dyScroll. Ensure this value is a small enough increment to
+//        // scroll the item into view without potentially scrolling past it.
+//        //
+//        // If you need to scroll through horizontal lists, provide a dxScroll
+//        // argument instead
+//        dyScroll: -300.0,
+//      );
+//
+//      // Verify the item contains the correct text
+//      expect(
+//        await driver.getText(itemFinder),
+//        'Item 50',
+//      );
+    }, timeout: Timeout.factor(2));
   });
 }

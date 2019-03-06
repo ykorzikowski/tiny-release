@@ -7,7 +7,7 @@ description: create model releases
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+1
+version: 0.0.1+2
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -33,6 +33,7 @@ dependencies:
   rect_getter: ^0.0.1
   flutter_inapp_purchase: ^0.9.0
   shared_preferences: ^0.5.1+1
+  screenshots: ^0.1.5
   http:
 
   # The following adds the Cupertino Icons font to your application.
