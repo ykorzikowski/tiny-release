@@ -21,6 +21,7 @@ Future _addPreset(FlutterDriver driver) async {
   final file = new File('test_assets/test_preset.json');
   final Map<String, dynamic> presetJson = json.decode(await file.readAsString());
 
+  var lastParagraphTitle;
   for (var key in presetJson.keys) {
     if ( key == 'paragraphs' ) {
       List<dynamic> paras = presetJson[key];
@@ -30,15 +31,14 @@ Future _addPreset(FlutterDriver driver) async {
         await driver.tap( find.byValueKey('btn_add_paragraph') );
 
         await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_paragraph_title_$i') );
-        await driver.tap( find.byValueKey('tf_paragraph_title_$i') );
+
+        lastParagraphTitle = find.byValueKey('tf_paragraph_title_$i');
+        await driver.tap( lastParagraphTitle );
         await driver.enterText(map['title']);
 
         await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_paragraph_content_$i') );
         await driver.tap( find.byValueKey('tf_paragraph_content_$i') );
         await driver.enterText(map['content']);
-
-        // todo bugfix: we currently need an additional tap to enable save button
-        await driver.tap( find.byValueKey('tf_paragraph_title_$i') );
       }
 
       continue;
@@ -46,6 +46,9 @@ Future _addPreset(FlutterDriver driver) async {
     await driver.tap( find.byValueKey('tf_preset_$key') );
     await driver.enterText(presetJson[key]);
   }
+
+  // todo bugfix: we currently need an additional tap to enable save button
+  await driver.tap( lastParagraphTitle );
 
   // hit save button
   await driver.tap( find.byValueKey('btn_navbar_save') );
@@ -106,7 +109,24 @@ Future _addPerson(FlutterDriver driver) async {
 }
 
 Future _addReception(FlutterDriver driver) async {
+  // go to Settings
+  var tapBar = find.byValueKey('tap_bar');
+  await driver.tap(tapBar);
 
+  // tap on presets
+  var peopleControlItem = find.byValueKey('control_2');
+  await driver.tap(peopleControlItem);
+
+  final file = new File('test_assets/receptions.json');
+  final List<dynamic> presetJson = json.decode(await file.readAsString());
+
+  for (var value in presetJson) {
+    await driver.tap( find.byValueKey('btn_add_reception') );
+    await driver.tap( find.byValueKey('tf_reception') );
+    await driver.enterText(value);
+    await driver.tap( find.byValueKey('btn_save_reception') );
+
+  }
 }
 
 void main() {
@@ -130,14 +150,12 @@ void main() {
     }, timeout: Timeout.factor(2));
 
       test('verifies create preset', () async {
-      // Create two SerializableFinders. We will use these to locate specific
-      // Widgets displayed by the app. The names provided to the byValueKey
-      // method correspond to the Keys we provided to our Widgets in step 1.
-      final listFinder = find.byValueKey('long_list');
-      final itemFinder = find.byValueKey('item_50_text');
+        await _addPreset(driver);
+      }, timeout: Timeout.factor(2));
 
-      await _addPreset(driver);
-
+      test('verifies create receptions', () async {
+        await _addReception(driver);
+      }, timeout: Timeout.factor(2));
 //
 //      //TODO: stub code copied from flutter.io.
 //      await driver.scrollUntilVisible(
@@ -159,6 +177,5 @@ void main() {
 //        await driver.getText(itemFinder),
 //        'Item 50',
 //      );
-    }, timeout: Timeout.factor(2));
   });
 }

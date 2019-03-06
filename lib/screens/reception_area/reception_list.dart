@@ -47,7 +47,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text(S.of(context).title_reception),
         trailing: CupertinoPopoverButton(
-          child: Text(S.of(context).btn_add),
+          child: Text(S.of(context).btn_add, key: Key('btn_add_reception')),
           popoverHeight: 56,
           popoverWidth: 250,
           popoverBuild: (context) {
@@ -57,7 +57,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
               children: <Widget>[
                 ListTile(
                   trailing: CupertinoButton( // todo: bug when nothing is entered
-                      child: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                      child: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen, key: Key('btn_save_reception'),),
                       onPressed: () {
                         _tinyRepo.save(_tinyReception);
                         Navigator.of(context, rootNavigator: true).pop();
@@ -65,6 +65,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                   leading: Container(
                     width: 170,
                     child: CupertinoTextField(
+                      key: Key('tf_reception'),
                       onChanged: (t) => setState(() => _tinyReception.displayName = t),
                       onSubmitted: (t) => setState(() => _tinyReception.displayName = t),
                       placeholder: S.of(context).reception_area,
