@@ -47,11 +47,13 @@ Future _addPreset(FlutterDriver driver) async {
     await driver.enterText(presetJson[key]);
   }
 
-  // todo bugfix: we currently need an additional tap to enable save button
-  await driver.tap( lastParagraphTitle );
-
   // hit save button
   await driver.tap( find.byValueKey('btn_navbar_save') );
+
+  var pageBack = find.pageBack();
+  if (await isPresent(pageBack, driver)) {
+    await driver.tap(pageBack);
+  }
 }
 
 Future _addPerson(FlutterDriver driver) async {
@@ -81,15 +83,19 @@ Future _addPerson(FlutterDriver driver) async {
           await driver.tap( find.byValueKey('btn_add_address') );
 
           // fill out address
+          await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_label_$i') );
           await driver.tap( find.byValueKey('tf_label_$i') );
           await driver.enterText("Private");
 
+          await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_street_$i') );
           await driver.tap( find.byValueKey('tf_street_$i') );
           await driver.enterText(map['street']);
 
+          await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_postcode_$i') );
           await driver.tap( find.byValueKey('tf_postcode_$i') );
           await driver.enterText(map['postcode'].toString());
 
+          await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_city_$i') );
           await driver.tap( find.byValueKey('tf_city_$i') );
           await driver.enterText(map['city']);
         }
@@ -99,13 +105,16 @@ Future _addPerson(FlutterDriver driver) async {
       await driver.enterText(map[key].toString());
     }
 
-    // todo bugfix: we currently need an additional tap to enable save button
-    await driver.tap( find.byValueKey('tf_label_0') );
-
     // hit save button
-    await driver.tap( find.byValueKey('btn_navbar_save') );
+    var findSave = find.byValueKey('btn_navbar_save');
+    await driver.waitFor(findSave);
+    await driver.tap(findSave);
   }
 
+  var pageBack = find.pageBack();
+  if (await isPresent(pageBack, driver)) {
+    await driver.tap(pageBack);
+  }
 }
 
 Future _addReception(FlutterDriver driver) async {
@@ -121,11 +130,24 @@ Future _addReception(FlutterDriver driver) async {
   final List<dynamic> presetJson = json.decode(await file.readAsString());
 
   for (var value in presetJson) {
-    await driver.tap( find.byValueKey('btn_add_reception') );
+    var addFinder = find.byValueKey('btn_add_reception');
     await driver.tap( find.byValueKey('tf_reception') );
     await driver.enterText(value);
     await driver.tap( find.byValueKey('btn_save_reception') );
+  }
 
+  var pageBack = find.pageBack();
+  if (await isPresent(pageBack, driver)) {
+    await driver.tap(pageBack);
+  }
+}
+
+Future<bool> isPresent(SerializableFinder finder, FlutterDriver driver, {Duration timeout = const Duration(seconds: 1)}) async {
+  try {
+    await driver.waitFor(finder, timeout: timeout);
+    return true;
+  } catch (e) {
+    return false;
   }
 }
 
@@ -147,7 +169,7 @@ void main() {
 
     test('verifies create people', () async {
       await _addPerson(driver);
-    }, timeout: Timeout.factor(2));
+    }, timeout: Timeout.factor(3));
 
       test('verifies create preset', () async {
         await _addPreset(driver);
