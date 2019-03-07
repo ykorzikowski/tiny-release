@@ -49,7 +49,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
           middle: Text(S.of(context).title_contracts),
           trailing:CupertinoButton(
-            child: Text(S.of(context).title_add),
+            child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
             onPressed: () {
               var _tinyContract = TinyContract();
               _tinyContract.isLocked = false;

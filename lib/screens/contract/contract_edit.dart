@@ -75,10 +75,11 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   /// opens people selection widget
-  _getPeopleView(TinyPeople people, TinyRepo repo, String text,
+  _getPeopleView(String person, TinyPeople people, TinyRepo repo, String text,
       Function _onPeopleTap, Function _onPeopleTrash) =>
       BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
           child: ListTile(
+            key: Key('select_$person'),
             title: Row(children: <Widget>[
               PeopleListWidget.getCircleAvatar(people,
                   people == null ? "?" : PeopleListWidget.getCircleText(people)),
@@ -144,13 +145,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
-              child: _tinyContract.preset == null ? Text(S.of(context).choose, style: btnStyle,) : Text(
-                _tinyContract.preset.title, style: btnStyle,),
+              child: _tinyContract.preset == null ? Text(S.of(context).choose, style: btnStyle, key: Key("btn_add_preset"),) : Text(
+                _tinyContract.preset.title, style: btnStyle, key: Key("btn_add_preset")),
               popoverHeight: 500,
               popoverWidth: 400,
-              popoverBuild: (context) => _getPresetWidget(context)) : CupertinoButton(
-            child:
-            _tinyContract.preset == null ? Text(S.of(context).choose) : Text(_tinyContract.preset.title),
+              popoverBuild: (context) => _getPresetWidget(context)) :
+          CupertinoButton(
+            child: _tinyContract.preset == null ? Text(S.of(context).choose, key: Key("btn_add_preset")) : Text(_tinyContract.preset.title, key: Key("btn_add_preset")),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
@@ -188,13 +189,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         children: <Widget>[
           BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
               child:Icon(CupertinoIcons.add_circled_solid,
-                color: CupertinoColors.activeGreen,),
+                color: CupertinoColors.activeGreen, key: Key('btn_set_reception'),),
               popoverHeight: 500,
               popoverWidth: 400,
               popoverBuild: (context) => _getReceptionWidget(context)
           ) : CupertinoButton(
             child:
-            _tinyContract.preset == null ? Text(S.of(context).choose) : Text(_tinyContract.preset.title),
+            _tinyContract.preset == null ? Text(S.of(context).choose, key: Key('btn_set_reception')) : Text(_tinyContract.preset.title, key: Key('btn_set_reception')),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper
@@ -208,7 +209,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   _getCaptureDatePicker(context) => Column(children: <Widget>[
     CupertinoNavigationBar(
       trailing: CupertinoButton(
-        child: Text(S.of(context).select_date_ok),
+        child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -216,6 +217,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       middle: Text(S.of(context).choose_date),
     ),
     Flexible(
+      key: Key('datepicker'),
       fit: FlexFit.loose,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.dateAndTime,
@@ -228,12 +230,12 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   _getCaptureDateSelection() =>
       BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
-          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date), style: btnStyle,) : Text(S.of(context).choose, style: btnStyle,),
+          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date), style: btnStyle, key: Key('btn_select_date'),) : Text(S.of(context).choose, style: btnStyle, key: Key('btn_select_date')),
           popoverHeight: 500,
           popoverWidth: 400,
           popoverBuild: (context) => _getCaptureDatePicker(context)
       ) : CupertinoButton(
-          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date)) : Text(S.of(context).choose),
+          child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date), key: Key('btn_select_date')) : Text(S.of(context).choose, key: Key('btn_select_date')),
           onPressed: () => showModalBottomSheet( context: context, builder: (context) => _getCaptureDatePicker(context),)
       );
 
@@ -253,7 +255,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       Column(children: <Widget>[
         CupertinoNavigationBar(
           trailing: CupertinoButton(
-            child: Text(S.of(context).select_date_ok),
+            child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -261,6 +263,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           middle: Text(S.of(context).choose),
         ),
         Flexible(
+          key: Key('image_count_picker'),
           fit: FlexFit.loose,
           child: CupertinoPicker(
             itemExtent: 30,
@@ -273,12 +276,12 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   _getImagesCountSelection() =>
       BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
-          child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString(), style: btnStyle,) : Text(S.of(context).choose, style: btnStyle,),
+          child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString(), style: btnStyle, key: Key('btn_set_images_count'),) : Text(S.of(context).choose, style: btnStyle, key: Key('btn_set_images_count')),
           popoverHeight: 200,
           popoverWidth: 300,
           popoverBuild: (context) => _getImageCounterPicker(context)
       ) : CupertinoButton(
-        child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString()) : Text(S.of(context).choose),
+        child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString(), key: Key('btn_set_images_count')) : Text(S.of(context).choose, key: Key('btn_set_images_count')),
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -320,6 +323,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 /// Photographer section
                 _getPeopleView(
+                    'photographer',
                     _tinyContract.photographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
                   setState(() {
                     _tinyContract.photographer = item;
@@ -334,6 +338,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 /// Model section
                 _getPeopleView(
+                    'model',
                     _tinyContract.model, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
                   setState(() {
                     _tinyContract.model = item;
@@ -351,6 +356,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   child: ListTile(
                     title: Text(S.of(context).represented_by),
                     trailing: CupertinoSwitch(
+                      key: Key('switch_parent'),
                       value: _enabledParent,
                       onChanged: (bool value) {
                         setState(() {
@@ -366,6 +372,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledParent ? _getPeopleView(
+                    'parent',
                     _tinyContract.parent, _tinyPeopleRepo, S.of(context).choose_parent, (people, item, context)
                 {
                   setState(() {
@@ -384,6 +391,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   child: ListTile(
                     title: Text(S.of(context).witnessed_by),
                     trailing: CupertinoSwitch(
+                      key: Key('switch_witness'),
                       value: _enabledWitness,
                       onChanged: (bool value) {
                         setState(() {
@@ -399,6 +407,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   ),
                 ),
                 _enabledWitness ? _getPeopleView(
+                    'witness',
                     _tinyContract.witness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
                   setState(() {
                     _tinyContract.witness = item;
@@ -442,9 +451,10 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   trailing: Container(
                     width: 250,
                     child: CupertinoTextField(
+                        key: Key('tf_location'),
                         keyboardType: TextInputType.text,
                         maxLength: 50,
-                        onChanged: (t) => _tinyContract.location = t,
+                        onChanged: (t) => setState(() =>_tinyContract.location = t ),
                         controller: initialValue(_tinyContract.location),
                         ),
                   ),
@@ -458,8 +468,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   trailing: Container(
                     width: 250,
                     child: CupertinoTextField(
+                      key: Key('tf_subject'),
                       maxLength: 50,
-                      onChanged: (t) => _tinyContract.displayName = t,
+                      onChanged: (t) => setState(() => _tinyContract.displayName = t),
                       controller: initialValue(_tinyContract.displayName),
                     ),
                   ),
@@ -485,7 +496,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                 /// button generate contract
                 CupertinoButton(
-                  child: Text(S.of(context).btn_sign_contract),
+                  child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
                   onPressed: validContract() ? () {
                     List<TinyReception> recs = List();
                     _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));

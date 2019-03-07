@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 Future _addPreset(FlutterDriver driver) async {
   // go to Settings
-  var tapBar = find.byValueKey('tap_bar');
+  var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
 
   // tap on presets
@@ -39,6 +39,8 @@ Future _addPreset(FlutterDriver driver) async {
         await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_paragraph_content_$i') );
         await driver.tap( find.byValueKey('tf_paragraph_content_$i') );
         await driver.enterText(map['content']);
+
+        await driver.tap(lastParagraphTitle);
       }
 
       continue;
@@ -58,7 +60,7 @@ Future _addPreset(FlutterDriver driver) async {
 
 Future _addPerson(FlutterDriver driver) async {
   // go to Settings
-  var tapBar = find.byValueKey('tap_bar');
+  var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
 
   final file = new File('test_assets/people.json');
@@ -119,7 +121,7 @@ Future _addPerson(FlutterDriver driver) async {
 
 Future _addReception(FlutterDriver driver) async {
   // go to Settings
-  var tapBar = find.byValueKey('tap_bar');
+  var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
 
   // tap on presets
@@ -130,7 +132,7 @@ Future _addReception(FlutterDriver driver) async {
   final List<dynamic> presetJson = json.decode(await file.readAsString());
 
   for (var value in presetJson) {
-    var addFinder = find.byValueKey('btn_add_reception');
+    await driver.tap( find.byValueKey('btn_add_reception') );
     await driver.tap( find.byValueKey('tf_reception') );
     await driver.enterText(value);
     await driver.tap( find.byValueKey('btn_save_reception') );
@@ -140,6 +142,78 @@ Future _addReception(FlutterDriver driver) async {
   if (await isPresent(pageBack, driver)) {
     await driver.tap(pageBack);
   }
+}
+
+Future _addContract(FlutterDriver driver) async {
+  // go to Settings
+  var tapBar = find.byValueKey('tab_bar_add');
+  await driver.tap(tapBar);
+
+  // tap on navbar add
+  await driver.tap(find.byValueKey('navbar_btn_add'));
+
+  // choose photographer
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('select_photographer') );
+  await driver.tap(find.byValueKey('select_photographer'));
+  await driver.tap(find.byValueKey('people_0'));
+
+  // choose model
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('select_model') );
+  await driver.tap(find.byValueKey('select_model'));
+  await driver.tap(find.byValueKey('people_1'));
+
+  // choose parent
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('switch_parent') );
+  await driver.tap(find.byValueKey('switch_parent'));
+  await driver.tap(find.byValueKey('select_parent'));
+  await driver.tap(find.byValueKey('people_2'));
+
+  // choose witness
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('switch_witness') );
+  await driver.tap(find.byValueKey('switch_witness'));
+  await driver.tap(find.byValueKey('select_witness'));
+  await driver.tap(find.byValueKey('people_3'));
+
+  // choose preset
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('btn_add_preset') );
+  await driver.tap(find.byValueKey('btn_add_preset'));
+  await driver.tap(find.byValueKey('preset_0'));
+
+  // set date
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('btn_select_date') );
+  await driver.tap(find.byValueKey('btn_select_date'));
+  await driver.scroll(find.byValueKey('datepicker'), 0, 400, Duration(seconds: 1));
+  await driver.tap(find.byValueKey('btn_ok'));
+
+  // set images count
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('btn_select_date') );
+  await driver.tap(find.byValueKey('btn_set_images_count'));
+  await driver.scroll(find.byValueKey('image_count_picker'), 0, 400, Duration(seconds: 1));
+  await driver.tap(find.byValueKey('btn_ok'));
+
+  // set location
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_location') );
+  await driver.tap( find.byValueKey('tf_location') );
+  await driver.enterText('Düsseldorf');
+
+  // set subject
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('tf_subject') );
+  await driver.tap( find.byValueKey('tf_subject') );
+  await driver.enterText('Summershooting');
+
+  // add reception areas
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('btn_set_reception') );
+  await driver.tap( find.byValueKey('btn_set_reception') );
+  await driver.tap(find.byValueKey('reception_0'));
+  await driver.tap( find.byValueKey('btn_set_reception') );
+  await driver.tap(find.byValueKey('reception_1'));
+
+  // sign contract
+  await driver.tap( find.byValueKey('btn_sign_contract') );
+
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('modelSignature') );
+  driver.tap(find.byValueKey('modelSignature'));
+
 }
 
 Future<bool> isPresent(SerializableFinder finder, FlutterDriver driver, {Duration timeout = const Duration(seconds: 1)}) async {
@@ -171,13 +245,18 @@ void main() {
       await _addPerson(driver);
     }, timeout: Timeout.factor(3));
 
-      test('verifies create preset', () async {
-        await _addPreset(driver);
-      }, timeout: Timeout.factor(2));
+    test('verifies create preset', () async {
+      await _addPreset(driver);
+    }, timeout: Timeout.factor(2));
 
-      test('verifies create receptions', () async {
-        await _addReception(driver);
-      }, timeout: Timeout.factor(2));
+    test('verifies create receptions', () async {
+      await _addReception(driver);
+    }, timeout: Timeout.factor(2));
+
+
+    test('verifies add contract', () async {
+      await _addContract(driver);
+    }, timeout: Timeout.factor(3));
 //
 //      //TODO: stub code copied from flutter.io.
 //      await driver.scrollUntilVisible(

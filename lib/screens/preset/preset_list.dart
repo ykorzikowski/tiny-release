@@ -80,7 +80,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
       Dismissible(
         direction: DismissDirection.endToStart,
         background: BaseUtil.getDismissibleBackground(),
-        key: Key('preset_$index'),
+        key: Key('dismissible_preset_$index'),
         confirmDismiss: (direction) {
           var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
           presetHasNoContracts.then((hasNoContracts) {
@@ -102,6 +102,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         Column(
           children: <Widget>[
             ListTile(
+              key: Key('preset_$index'),
               leading: Icon(
                 CupertinoIcons.collections,
               ),

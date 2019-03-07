@@ -49,11 +49,11 @@ class MyStatelessWidget extends StatelessWidget {
                 key: Key('tap_bar'),
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.add),
+                    icon: Icon(CupertinoIcons.add, key: Key('tab_bar_add'),),
                     title: Text(S.of(context).model_release),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.settings),
+                    icon: Icon(CupertinoIcons.settings, key: Key('tab_bar_settings'),),
                     title: Text(S.of(context).control),
                   ),
 

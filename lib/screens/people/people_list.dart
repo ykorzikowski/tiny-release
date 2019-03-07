@@ -130,6 +130,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
     return dismissibleDistinctive (Column(
         children: <Widget>[
           ListTile(
+            key: Key('people_$index'),
             leading: PeopleListWidget.getCircleAvatar(
                 entry, PeopleListWidget.getCircleText(entry)),
             title: Text(entry.givenName + " " + entry.familyName),
@@ -140,6 +141,6 @@ class _ListWidgetState extends State<PeopleListWidget> {
           Divider(),
 
         ],
-      ), entry, 'people_$index');
+      ), entry, 'dismissible_people_$index');
   }
 }

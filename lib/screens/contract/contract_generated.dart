@@ -45,7 +45,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
 
   /// keys for signature pads
-  final _modelKey = GlobalKey<SignatureState>();
+  final _modelKey = GlobalKey<SignatureState>(debugLabel: 'modelSignature');
   final _photographerKey = GlobalKey<SignatureState>();
   final _parentKey = GlobalKey<SignatureState>();
   final _witnessKey = GlobalKey<SignatureState>();

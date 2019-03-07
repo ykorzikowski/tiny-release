@@ -95,7 +95,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
-      key: Key('reception_$index'),
+      key: Key('dismissible_reception_$index'),
       confirmDismiss: (direction) {
         var receptionHasNoContracts = _tinyRepo.receptionInContract(entry.id);
         receptionHasNoContracts.then((hasNoContracts) {
@@ -111,6 +111,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
       child: Column(
         children: <Widget>[
           ListTile(
+            key: Key('reception_$index'),
             leading: Icon(
               Icons.camera,
               color: Colors.brown[200],
