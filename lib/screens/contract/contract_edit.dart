@@ -104,7 +104,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                       (item, context) => _onPeopleTap(people, item, context)
               )
       ) : CupertinoButton(
-        child: Row(children: <Widget>[
+        child: Row(
+          key: Key('select_$person'),
+          children: <Widget>[
           PeopleListWidget.getCircleAvatar(people,
               people == null ? "?" : PeopleListWidget.getCircleText(people)),
           Padding(

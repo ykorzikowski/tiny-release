@@ -197,7 +197,7 @@ Future _addContract(FlutterDriver driver) async {
   // sign contract
   await driver.tap( find.byValueKey('btn_sign_contract') );
 
-  // TODO: fix signing test   
+  // TODO: fix signing test
 //  await driver.scroll(find.byValueKey('scrlvw_contract_generated'), 0, 1000, Duration(milliseconds: 400));
 //  await driver.tap(find.byValueKey('signature_photographer_flex'));
 //  await driver.tap(find.byValueKey('signature_photographer_dialog'));
