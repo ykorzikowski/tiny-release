@@ -9,6 +9,7 @@ staging: /tmp/screenshots
 locales:
   - en-GB
   - de-DE
+  - nl-NL
 
 # A list of devices to emulate
 devices:

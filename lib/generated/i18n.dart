@@ -99,15 +99,15 @@ class S implements WidgetsLocalizations {
   String get no_items_reception => "Create new reception areas";
   String get preset => "Preset";
   String get reception_area => "Reception area";
-  String get represented_by => "represented by";
+  String get represented_by => "Represented by";
   String get scaff_deleted => "Dismissed";
   String get select_address => "Select address";
   String get select_birthday => "Select Birthday";
   String get select_date_ok => "OK";
-  String get select_preset => "Select Preset";
-  String get selected_preset => "Selected Preset";
+  String get select_preset => "Select preset";
+  String get selected_preset => "Selected preset";
   String get share_pdf => "Share PDF";
-  String get shooting_date => "Shooting Date";
+  String get shooting_date => "Shooting date";
   String get shooting_subject => "Subject of Shooting";
   String get tile_contact_preview => "Contact Preview";
   String get title_add => "Add";
@@ -342,6 +342,220 @@ class $en extends S {
   const $en();
 }
 
+class $nl extends S {
+  const $nl();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "annuleren";
+  @override
+  String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get btn_add_address => "Voeg adres toe";
+  @override
+  String get hint_company => "Bedrijf";
+  @override
+  String get hint_street => "Straat";
+  @override
+  String get btn_complete_contract => "Contract afronden";
+  @override
+  String get chose_brithday => "Ik koos voor brithday";
+  @override
+  String get hint_title => "Titel";
+  @override
+  String get witnessed_by => "Getuigd door";
+  @override
+  String get hint_phone_label => "Telefoonlabel";
+  @override
+  String get shooting_subject => "Onderwerp van opname";
+  @override
+  String get hint_content => "Inhoud";
+  @override
+  String get choose_date => "Kies opnamedatum";
+  @override
+  String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get hint_mail => "Mail";
+  @override
+  String get gallery => "Galerij";
+  @override
+  String get add_contract => "Voeg contract toe";
+  @override
+  String get dialog_back => "Terug";
+  @override
+  String get brn_save => "Opslaan";
+  @override
+  String get btn_import_contacts => "Importeren van contracten";
+  @override
+  String get selected_preset => "Geselecteerde preset";
+  @override
+  String get select_birthday => "Selecteer verjaardag";
+  @override
+  String get btn_save => "Opslaan";
+  @override
+  String get btn_sign_contract => "Teken contract";
+  @override
+  String get share_pdf => "Deel PDF";
+  @override
+  String get choose_source => "Kies de bron";
+  @override
+  String get reception_area => "Receptieruimte";
+  @override
+  String get title_settings => "instellingen";
+  @override
+  String get hint_location => "Plaats";
+  @override
+  String get btn_dialog_cancel => "Afbreken";
+  @override
+  String get item_has_relations => "Dit item heeft relaties met een contract. Verwijder eerst het contract.";
+  @override
+  String get dialog_delete => "Verwijder";
+  @override
+  String get hint_description => "Omschrijving";
+  @override
+  String get preset => "Vooraf ingesteld";
+  @override
+  String get location_date_seperator => ", op ";
+  @override
+  String get hint_city => "stad";
+  @override
+  String get hint_completed_contracts => "Contracten die zijn voltooid, kunnen niet opnieuw worden bewerkt";
+  @override
+  String get choose_parent => "Kies ouder";
+  @override
+  String get btn_add_phone => "Voeg telefoon toe";
+  @override
+  String get camera => "Camera";
+  @override
+  String get loading_pdf => "PDF laden";
+  @override
+  String get navbar_btn_preview => "Voorbeeld";
+  @override
+  String get change_order_title => "Verander bestelling";
+  @override
+  String get item_wording => "bewoordingen";
+  @override
+  String get select_preset => "Selecteer Voorinstelling";
+  @override
+  String get item_settings => "instellingen";
+  @override
+  String get hint_postcode => "Postcode";
+  @override
+  String get choose_model => "Kies Model";
+  @override
+  String get btn_add => "Toevoegen";
+  @override
+  String get cloned_suffix => " - gekloond";
+  @override
+  String get item_preset => "presets";
+  @override
+  String get finished_contract => "Voltooide overeenkomst";
+  @override
+  String get in_reception_areas => "In de ontvangstruimtes";
+  @override
+  String get tile_contact_preview => "Neem contact op met Preview";
+  @override
+  String get btn_delete_all => "Verwijder alle gegevens";
+  @override
+  String get item_people => "Mensen";
+  @override
+  String get hint_givenname => "Gegeven naam";
+  @override
+  String get model_release => "Model release";
+  @override
+  String get contract_images => "Afbeeldingen tellen";
+  @override
+  String get item_reception => "Ontvangstgebieden";
+  @override
+  String get contract_will_made_between => "Er komt een contract tussen";
+  @override
+  String get finish_contract => "Contract afronden";
+  @override
+  String get no_items_people => "Voeg mensen toe aan je contacten";
+  @override
+  String get shooting_date => "Opnamedatum";
+  @override
+  String get title_add => "Toevoegen";
+  @override
+  String get choose_witness => "Kies Getuige";
+  @override
+  String get hint_mail_label => "Maillabel";
+  @override
+  String get title_add_people => "Mensen toevoegen";
+  @override
+  String get hint_region => "Regio";
+  @override
+  String get choose_photographer => "Kies Fotograaf";
+  @override
+  String get btn_edit => "Bewerk";
+  @override
+  String get btn_add_paragrpah => "Voeg Paragrpah toe";
+  @override
+  String get select_date_ok => "OK";
+  @override
+  String get hint_id_type => "ID Type";
+  @override
+  String get select_address => "Selecteer adres";
+  @override
+  String get birthday => "Verjaardag";
+  @override
+  String get hint_phone => "Telefoon";
+  @override
+  String get create_new_contract => "Maak een nieuw contract";
+  @override
+  String get no_items_reception => "Maak nieuwe ontvangstgebieden";
+  @override
+  String get choose => "Kiezen";
+  @override
+  String get hint_familyname => "Achternaam";
+  @override
+  String get hint_language => "Taal";
+  @override
+  String get hint_adresslabel => "Adreslabel";
+  @override
+  String get title_people => "Mensen";
+  @override
+  String get and => "en";
+  @override
+  String get no_items_presets => "Voorinstellingen maken of importeren";
+  @override
+  String get scaff_deleted => "ontslagen";
+  @override
+  String get title_add_preset => "Preset toevoegen";
+  @override
+  String get delete_contract => "Contract verwijderen?";
+  @override
+  String get use_as_template => "Gebruik als sjabloon";
+  @override
+  String get title_contracts => "contracten";
+  @override
+  String get hint_subtitle => "subtitel";
+  @override
+  String get item_layout => "lay-outs";
+  @override
+  String get control => "Controle";
+  @override
+  String get hint_id_number => "ID nummer";
+  @override
+  String get title_preset => "presets";
+  @override
+  String get title_reception => "Receptieruimte";
+  @override
+  String get hint_country => "land";
+  @override
+  String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
+  @override
+  String get btn_add_mail => "Mail toevoegen";
+  @override
+  String get hint_birthday => "Verjaardag";
+  @override
+  String get title_wording => "bewoordingen";
+  @override
+  String get represented_by => "vertegenwoordigd door";
+}
+
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
   const GeneratedLocalizationsDelegate();
 
@@ -349,6 +563,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     return const <Locale>[
       Locale("de", ""),
       Locale("en", ""),
+      Locale("nl", ""),
     ];
   }
 
@@ -377,6 +592,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
           return SynchronousFuture<S>(const $de());
         case "en":
           return SynchronousFuture<S>(const $en());
+        case "nl":
+          return SynchronousFuture<S>(const $nl());
         default:
           // NO-OP.
       }
