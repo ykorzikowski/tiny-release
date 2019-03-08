@@ -18,61 +18,37 @@
     {
       "filter": "contract_edit",
       "keyword": {
-        "color": "#a50301",
-        "text": "Define"
-      },
-      "title": {
-        "text": "contracts_title"
+        "color": "#a50301"
       }
     },
     {
       "filter": "contract_signed",
       "keyword": {
         "color": "#a50301",
-        "text": "Sign"
-      },
-      "title": {
-        "text": "contracts_title"
       }
     },
     {
       "filter": "preset_edit",
       "keyword": {
-        "color": "#a50301",
-        "text": "Customize"
-      },
-      "title": {
-        "text": "presets_title"
+        "color": "#a50301"
       }
     },
     {
-      "filter": "preset_edit",
+      "filter": "preset_overview",
       "keyword": {
-        "color": "#a50301",
-        "text": "Different"
-      },
-      "title": {
-        "text": "presets_title"
+        "color": "#a50301"
       }
     },
     {
       "filter": "contract_overview",
       "keyword": {
-        "color": "#a50301",
-        "text": "Create"
+        "color": "#a50301"
       },
-      "title": {
-        "text": "contracts_title"
-      }
     },
     {
       "filter": "people_overview",
       "keyword": {
-        "text": "Manage",
         "color": "#a50301"
-      },
-      "title": {
-        "text": "people_title"
       }
     }
   ]
