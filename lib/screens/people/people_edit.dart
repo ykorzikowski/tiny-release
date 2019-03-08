@@ -108,7 +108,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_givenName'),
-                    onChanged: (t) => setState(() => _tinyPeople.givenName = t),
+                    onChanged: (t) => _tinyPeople.givenName = t,
                     controller: initialValue(_tinyPeople.givenName),
                     placeholder: S.of(context).hint_givenname,
                   ),),
@@ -117,7 +117,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_familyName'),
-                    onChanged: (t) => setState(() => _tinyPeople.familyName = t),
+                    onChanged: (t) => _tinyPeople.familyName = t,
                     controller: initialValue(_tinyPeople.familyName),
                     placeholder: S.of(context).hint_familyname,
                   ),),
@@ -126,7 +126,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_company'),
-                    onChanged: (t) => setState(() => _tinyPeople.company = t),
+                    onChanged: (t) => _tinyPeople.company = t,
                     controller: initialValue(_tinyPeople.company),
                     placeholder:  S.of(context).hint_company,
                   ),),
@@ -148,7 +148,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_idType'),
-              onChanged: (t) => setState(() => _tinyPeople.idType = t),
+              onChanged: (t) => _tinyPeople.idType = t,
               controller: initialValue(_tinyPeople.idType),
               placeholder:  S.of(context).hint_id_type,
             ),),
@@ -157,7 +157,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_idNumber'),
-              onChanged: (t) => setState(() => _tinyPeople.idNumber = t),
+              onChanged: (t) => _tinyPeople.idNumber = t,
               controller: initialValue(_tinyPeople.idNumber),
               placeholder:  S.of(context).hint_id_number,
             ),),
@@ -219,7 +219,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
-              onChanged: (t) => setState(() => phone.label = t),
+              onChanged: (t) => phone.label = t,
               controller: initialValue(phone.label),
               placeholder:  S.of(context).hint_phone_label,
             ),),
@@ -227,7 +227,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
-              onChanged: (t) => setState(() => phone.value = t),
+              onChanged: (t) => phone.value = t,
               controller: initialValue(phone.value),
               keyboardType: TextInputType.phone,
               placeholder:  S.of(context).hint_phone,
@@ -266,14 +266,14 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             padding: EdgeInsets.only(left: 15.0),
             child:
             CupertinoTextField(
-              onChanged: (t) => setState(() => mail.label = t),
+              onChanged: (t) => mail.label = t,
               controller: initialValue(mail.label),
               placeholder:  S.of(context).hint_mail_label,
             ),),
           Padding(
             padding: EdgeInsets.only(left: 15.0),
             child: CupertinoTextField(
-              onChanged: (t) => setState(() => mail.value = t),
+              onChanged: (t) => mail.value = t,
               controller: initialValue(mail.value),
               keyboardType: TextInputType.emailAddress,
               placeholder:  S.of(context).hint_mail,
@@ -319,7 +319,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_label_$index'),
-              onChanged: (t) => setState(() => address.label = t),
+              onChanged: (t) => address.label = t,
               controller: initialValue(address.label),
               placeholder:  S.of(context).hint_adresslabel,
               ),
@@ -329,7 +329,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_street_$index'),
-              onChanged: (t) => setState(() => address.street = t),
+              onChanged: (t) => address.street = t,
               controller: initialValue(address.street),
               placeholder:  S.of(context).hint_street,
             ),),
@@ -340,14 +340,14 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
               children: <Widget>[
                 Flexible(child: CupertinoTextField(
                   key: Key('tf_postcode_$index'),
-                  onChanged: (t) => setState(() => address.postcode = t),
+                  onChanged: (t) => address.postcode = t,
                   controller: initialValue(address.postcode),
                   keyboardType: TextInputType.number,
                   placeholder:  S.of(context).hint_postcode,
                 )),
                 Flexible(child: CupertinoTextField(
                   key: Key('tf_city_$index'),
-                  onChanged: (t) => setState(() => address.city = t),
+                  onChanged: (t) => address.city = t,
                   controller: initialValue(address.city),
                   placeholder:  S.of(context).hint_city,
                 )),
@@ -358,7 +358,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_region_$index'),
-              onChanged: (t) => setState(() => address.region = t),
+              onChanged: (t) => address.region = t,
               controller: initialValue(address.region),
               placeholder:  S.of(context).hint_region,
             ),),

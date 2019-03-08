@@ -54,7 +54,9 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   }
 
   initialValue(val) {
-    return TextEditingController(text: val);
+    var textEditingController = TextEditingController(text: val);
+    textEditingController.addListener(() => setState(() => validPreset()));
+    return textEditingController;
   }
 
   _getParagraphAddButton() =>
@@ -113,7 +115,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_paragraph_title_$index'),
-            onChanged: (t) => setState(() => para.title = t),
+            onChanged: (t) => para.title = t,
             controller: initialValue(para.title),
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_title,
@@ -123,7 +125,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_paragraph_content_$index'),
-            onChanged: (t) => setState(() => para.content = t),
+            onChanged: (t) => para.content = t,
             controller: initialValue(para.content),
             keyboardType: TextInputType.multiline,
             maxLines: 12,
@@ -139,7 +141,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_title'),
-            onChanged: (t) => setState(() => _tinyPreset.title = t),
+            onChanged: (t) => _tinyPreset.title = t,
             controller: initialValue(_tinyPreset.title),
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_title,
@@ -149,7 +151,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_subtitle'),
-            onChanged: (t) =>  setState(() =>_tinyPreset.subtitle = t),
+            onChanged: (t) => _tinyPreset.subtitle = t,
             controller: initialValue(_tinyPreset.subtitle),
             keyboardType: TextInputType.text,
             placeholder:  S.of(context).hint_subtitle,
@@ -159,7 +161,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_language'),
-            onChanged: (t) => setState(() => _tinyPreset.language = t),
+            onChanged: (t) => _tinyPreset.language = t,
             controller: initialValue(_tinyPreset.language),
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_language,
@@ -169,7 +171,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_description'),
-            onChanged: (t) =>  setState(() => _tinyPreset.description = t),
+            onChanged: (t) => _tinyPreset.description = t,
             controller: initialValue(_tinyPreset.description),
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_description,
