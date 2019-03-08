@@ -4,21 +4,21 @@
     "keyword": {
     },
     "title": {
-      "color": "#545454"
+      "color": "#464646"
     },
     "background": "./background.jpg",
     "padding": 50,
     "show_complete_frame": false,
     "stack_title" : false,
     "title_below_image": true,
-    "frame": "WHITE"
+    "frame": "BLACK"
   },
 
   "data": [
     {
       "filter": "contract_edit",
       "keyword": {
-        "color": "#d21559",
+        "color": "#a50301",
         "text": "Define"
       },
       "title": {
@@ -28,7 +28,7 @@
     {
       "filter": "contract_signed",
       "keyword": {
-        "color": "#feb909",
+        "color": "#a50301",
         "text": "Sign"
       },
       "title": {
@@ -38,7 +38,7 @@
     {
       "filter": "preset_edit",
       "keyword": {
-        "color": "#feb909",
+        "color": "#a50301",
         "text": "Customize"
       },
       "title": {
@@ -48,7 +48,7 @@
     {
       "filter": "preset_edit",
       "keyword": {
-        "color": "#feb909",
+        "color": "#a50301",
         "text": "Different"
       },
       "title": {
@@ -58,7 +58,7 @@
     {
       "filter": "contract_overview",
       "keyword": {
-        "color": "#aa4dbc",
+        "color": "#a50301",
         "text": "Create"
       },
       "title": {
@@ -69,10 +69,10 @@
       "filter": "people_overview",
       "keyword": {
         "text": "Manage",
-        "color": "#31bb48"
+        "color": "#a50301"
       },
       "title": {
-        "text": "manage"
+        "text": "people"
       }
     }
   ]
