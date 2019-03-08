@@ -55,7 +55,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
 
   initialValue(val) {
     var textEditingController = TextEditingController(text: val);
-    textEditingController.addListener(() => setState(() => validPreset()));
+    // textEditingController.addListener(() => setState(() => validPreset()));
     return textEditingController;
   }
 
