@@ -6,6 +6,26 @@ create model releases
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
 
+## releasing
+```
+# generate screenshots
+fastlane screenshots
+
+fastlane android release
+fastlane ios release
+```
+
+## manual
+### deliver ios meta + screenshots
+```
+# ios
+cd ios
+
+# commit screenshots and metadata
+fastlane deliver
+
+```
+
 ## testing
 ### screenshots
 ```
