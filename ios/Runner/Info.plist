@@ -12,8 +12,8 @@
 	<string>6.0</string>
 	<key>CFBundleLocalizations</key>
 	<array>
-		<string>de</string>
 		<string>English</string>
+        <string>de</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>TinyRelease</string>

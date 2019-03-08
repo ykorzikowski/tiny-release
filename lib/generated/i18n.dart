@@ -20,7 +20,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get add_contract => "Add Contract";
-  String get and => "und";
+  String get and => "and";
   String get birthday => "Birthday";
   String get brn_save => "Save";
   String get btn_add => "Add";
@@ -33,7 +33,7 @@ class S implements WidgetsLocalizations {
   String get btn_dialog_cancel => "Abort";
   String get btn_edit => "Edit";
   String get btn_import_contacts => "Import from contracts";
-  String get btn_save => "Speichern";
+  String get btn_save => "Save";
   String get btn_sign_contract => "Sign contract";
   String get camera => "Camera";
   String get cancel => "Cancel";
@@ -59,30 +59,30 @@ class S implements WidgetsLocalizations {
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
-  String get hint_adresslabel => "adress label";
-  String get hint_birthday => "birthday";
-  String get hint_city => "city";
-  String get hint_company => "company";
+  String get hint_adresslabel => "Adress label";
+  String get hint_birthday => "Birthday";
+  String get hint_city => "City";
+  String get hint_company => "Company";
   String get hint_completed_contracts => "Contracts that has been completed can not be edited again";
-  String get hint_content => "content";
-  String get hint_country => "country";
-  String get hint_description => "description";
-  String get hint_familyname => "familyName";
-  String get hint_givenname => "givenname";
-  String get hint_id_number => "id number";
-  String get hint_id_type => "id type";
-  String get hint_language => "language";
-  String get hint_location => "location";
-  String get hint_mail => "mail";
-  String get hint_mail_label => "mail label";
-  String get hint_phone => "phone";
-  String get hint_phone_label => "phone label";
-  String get hint_postcode => "postcode";
-  String get hint_region => "region";
-  String get hint_street => "street";
-  String get hint_subtitle => "subtitle";
-  String get hint_title => "title";
-  String get in_reception_areas => "in reception areas";
+  String get hint_content => "Content";
+  String get hint_country => "Country";
+  String get hint_description => "Description";
+  String get hint_familyname => "FamilyName";
+  String get hint_givenname => "Givenname";
+  String get hint_id_number => "ID number";
+  String get hint_id_type => "ID type";
+  String get hint_language => "Language";
+  String get hint_location => "Location";
+  String get hint_mail => "Mail";
+  String get hint_mail_label => "Mail label";
+  String get hint_phone => "Phone";
+  String get hint_phone_label => "Phone label";
+  String get hint_postcode => "Postcode";
+  String get hint_region => "Region";
+  String get hint_street => "Street";
+  String get hint_subtitle => "Subtitle";
+  String get hint_title => "Title";
+  String get in_reception_areas => "In reception areas";
   String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
   String get item_layout => "Layouts";
   String get item_people => "People";
@@ -93,18 +93,19 @@ class S implements WidgetsLocalizations {
   String get loading_pdf => "Loading pdf";
   String get location_date_seperator => ", on ";
   String get model_release => "Model Release";
+  String get navbar_btn_preview => "Preview";
   String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
   String get preset => "Preset";
   String get reception_area => "Reception area";
-  String get represented_by => "represented_by";
-  String get scaff_deleted => "dismissed";
+  String get represented_by => "represented by";
+  String get scaff_deleted => "Dismissed";
   String get select_address => "Select address";
   String get select_birthday => "Select Birthday";
   String get select_date_ok => "OK";
   String get select_preset => "Select Preset";
-  String get selected_preset => "Selectd Preset";
+  String get selected_preset => "Selected Preset";
   String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting Date";
   String get shooting_subject => "Subject of Shooting";
@@ -212,6 +213,8 @@ class $de extends S {
   @override
   String get loading_pdf => "Generiere PDF";
   @override
+  String get navbar_btn_preview => "Vorschau";
+  @override
   String get change_order_title => "Reihenfolge anpassen";
   @override
   String get item_wording => "Wording";
@@ -238,7 +241,7 @@ class $de extends S {
   @override
   String get btn_delete_all => "Lösche alle Daten";
   @override
-  String get item_people => "Menschen";
+  String get item_people => "Personen";
   @override
   String get hint_givenname => "Vorname";
   @override
@@ -252,7 +255,7 @@ class $de extends S {
   @override
   String get finish_contract => "Vertrag abschließen";
   @override
-  String get no_items_people => "Fügen Sie Menschen aus Ihren Kontakten hinzu";
+  String get no_items_people => "Fügen Sie Personen aus Ihren Kontakten hinzu";
   @override
   String get shooting_date => "Aufnahmedatum";
   @override
@@ -262,7 +265,7 @@ class $de extends S {
   @override
   String get hint_mail_label => "Markierung";
   @override
-  String get title_add_people => "Menschen hinzufügen";
+  String get title_add_people => "Personen hinzufügen";
   @override
   String get hint_region => "Bundesland";
   @override
@@ -294,7 +297,7 @@ class $de extends S {
   @override
   String get hint_adresslabel => "Markierung";
   @override
-  String get title_people => "Menschen";
+  String get title_people => "Personen";
   @override
   String get and => "und";
   @override

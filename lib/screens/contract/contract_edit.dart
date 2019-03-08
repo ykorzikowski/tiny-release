@@ -299,7 +299,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         transitionBetweenRoutes: false,
         middle: Text(S.of(context).add_contract),
         trailing: CupertinoButton(
-          child: Text(S.of(context).preset),
+          child: Text(S.of(context).navbar_btn_preview),
           onPressed: validContract() ? () {
             if (!validContract()) {
               return;
