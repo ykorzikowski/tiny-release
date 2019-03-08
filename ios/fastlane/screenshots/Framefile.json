@@ -24,7 +24,7 @@
     {
       "filter": "contract_signed",
       "keyword": {
-        "color": "#a50301",
+        "color": "#a50301"
       }
     },
     {
@@ -43,7 +43,7 @@
       "filter": "contract_overview",
       "keyword": {
         "color": "#a50301"
-      },
+      }
     },
     {
       "filter": "people_overview",
