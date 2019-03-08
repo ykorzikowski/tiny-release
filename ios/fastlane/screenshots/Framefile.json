@@ -22,7 +22,7 @@
         "text": "Define"
       },
       "title": {
-        "text": "contracts"
+        "text": "contracts_title"
       }
     },
     {
@@ -32,7 +32,7 @@
         "text": "Sign"
       },
       "title": {
-        "text": "contracts"
+        "text": "contracts_title"
       }
     },
     {
@@ -42,7 +42,7 @@
         "text": "Customize"
       },
       "title": {
-        "text": "presets"
+        "text": "presets_title"
       }
     },
     {
@@ -52,7 +52,7 @@
         "text": "Different"
       },
       "title": {
-        "text": "presets"
+        "text": "presets_title"
       }
     },
     {
@@ -62,7 +62,7 @@
         "text": "Create"
       },
       "title": {
-        "text": "contracts"
+        "text": "contracts_title"
       }
     },
     {
@@ -72,7 +72,7 @@
         "color": "#a50301"
       },
       "title": {
-        "text": "people"
+        "text": "people_title"
       }
     }
   ]
