@@ -1,0 +1,79 @@
+{
+  "device_frame_version": "latest",
+  "default": {
+    "keyword": {
+    },
+    "title": {
+      "color": "#545454"
+    },
+    "background": "./background.jpg",
+    "padding": 50,
+    "show_complete_frame": false,
+    "stack_title" : false,
+    "title_below_image": true,
+    "frame": "WHITE"
+  },
+
+  "data": [
+    {
+      "filter": "contract_edit",
+      "keyword": {
+        "color": "#d21559",
+        "text": "Define"
+      },
+      "title": {
+        "text": "contracts"
+      }
+    },
+    {
+      "filter": "contract_signed",
+      "keyword": {
+        "color": "#feb909",
+        "text": "Sign"
+      },
+      "title": {
+        "text": "contracts"
+      }
+    },
+    {
+      "filter": "preset_edit",
+      "keyword": {
+        "color": "#feb909",
+        "text": "Customize"
+      },
+      "title": {
+        "text": "presets"
+      }
+    },
+    {
+      "filter": "preset_edit",
+      "keyword": {
+        "color": "#feb909",
+        "text": "Different"
+      },
+      "title": {
+        "text": "presets"
+      }
+    },
+    {
+      "filter": "contract_overview",
+      "keyword": {
+        "color": "#aa4dbc",
+        "text": "Create"
+      },
+      "title": {
+        "text": "contracts"
+      }
+    },
+    {
+      "filter": "people_overview",
+      "keyword": {
+        "text": "Manage",
+        "color": "#31bb48"
+      },
+      "title": {
+        "text": "manage"
+      }
+    }
+  ]
+}
