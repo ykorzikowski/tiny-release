@@ -67,10 +67,12 @@ platform :ios do
       sh("flutter", "build", "ios", "--build-number=#{build_number}")
     end
     build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
-    upload_to_testflight(
-      skip_waiting_for_build_processing: true,
-      ipa: "Runner.ipa",
-      username: username)
+    Dir.chdir "ios" do
+        upload_to_testflight(
+          skip_waiting_for_build_processing: true,
+          ipa: "../Runner.ipa",
+          username: username)
+    end
   end
 
   desc "Push a new release build to the App Store"
@@ -84,13 +86,22 @@ platform :ios do
       sh("flutter", "build", "ios", "--build-number=#{build_number}")
     end
     build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
-    upload_to_app_store(
-      submit_for_review: true,
-      automatic_release: true,
-      skip_screenshots: true,
-      force: true,
-      skip_waiting_for_build_processing: true,
-      ipa: "Runner.ipa",
-      username: username)
+        Dir.chdir "ios" do
+            upload_to_app_store(
+                  submit_for_review: true,
+                  automatic_release: true,
+                  force: true,
+                  skip_waiting_for_build_processing: true,
+                  ipa: "Runner.ipa",
+                  username: username)
+    end
   end
+end
+
+# generate screenshots on machine
+lane :screenshots do
+  Dir.chdir ".." do
+        sh("screenshots")
+  end
+  frame_screenshots
 end
