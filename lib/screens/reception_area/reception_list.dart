@@ -66,7 +66,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
                     width: 170,
                     child: CupertinoTextField(
                       key: Key('tf_reception'),
-                      onChanged: (t) => _tinyReception.displayName = t,
+                      onChanged: (t) => setState(() => _tinyReception.displayName = t),
                       onSubmitted: (t) => setState(() => _tinyReception.displayName = t),
                       placeholder: S.of(context).reception_area,
                     ),

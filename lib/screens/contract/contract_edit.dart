@@ -456,7 +456,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         key: Key('tf_location'),
                         keyboardType: TextInputType.text,
                         maxLength: 50,
-                        onChanged: (t) => _tinyContract.location = t,
+                        onChanged: (t) => setState(() =>_tinyContract.location = t ),
                         controller: initialValue(_tinyContract.location),
                         ),
                   ),
@@ -472,7 +472,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     child: CupertinoTextField(
                       key: Key('tf_subject'),
                       maxLength: 50,
-                      onChanged: (t) => _tinyContract.displayName = t,
+                      onChanged: (t) => setState(() => _tinyContract.displayName = t),
                       controller: initialValue(_tinyContract.displayName),
                     ),
                   ),
