@@ -66,12 +66,21 @@ platform :ios do
       sh("flutter", "clean")
       sh("flutter", "build", "ios", "--build-number=#{build_number}")
     end
-    build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
-    Dir.chdir "ios" do
-        upload_to_testflight(
-          skip_waiting_for_build_processing: true,
-          ipa: "../Runner.ipa",
-          username: username)
+    build_ios_app(
+        workspace: "ios/Runner.xcworkspace",
+        export_options: {
+            method: "app-store",
+            provisioningProfiles: {
+              "de.korzikowski.tinyrelease" => "e7360cb4-5a7e-436e-be58-6fef1aabc027"
+            }
+          },
+        scheme: "Runner")
+    Dir.chdir ".." do
+        Dir.chdir "ios" do
+            upload_to_testflight(
+              skip_waiting_for_build_processing: true,
+              username: username)
+        end
     end
   end
 
