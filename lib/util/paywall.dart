@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 
@@ -12,7 +11,7 @@ typedef SuccessCallback = void Function();
 
 /// this class contains features to check payment status and do payments
 class PayWall {
-
+  static const PAY_ABO = "tinyr_abo";
   static PayWall _singleton = PayWall();
 
   static PayWall getShared() {
@@ -29,7 +28,7 @@ class PayWall {
     return null;
   }
 
-  static String getText(String pf, ctx) => pf.startsWith(PayFeature.PAY_ABO_MONTH)
+  static String getText(String pf, ctx) => pf.startsWith(PAY_ABO)
       ? S.of(ctx).dialog_pay_for_subscription
       : S.of(ctx).dialog_pay_for_subscription_or_feature;
 
@@ -87,19 +86,19 @@ class PayWall {
   /// pay for feature
   /// cbs - callback success
   /// cbf - callback failure
-  void pay(pf, SuccessCallback cbs, ErrorCallback cbf) async{
+  void pay(String pf, SuccessCallback cbs, ErrorCallback cbf) async{
     await initSubscriptionService();
-    bool hasAlreadyPaid = await checkIfPaid(pf, (){}, (error){});
 
-    if ( hasAlreadyPaid ) {
-      return;
-    }
+    print('Prepare for purchasing $pf');
 
     try {
-      PurchasedItem purchased = await FlutterInappPurchase.buyProduct(pf);
+      PurchasedItem purchased;
+      if ( pf.startsWith(PAY_ABO) ) {
+        purchased = await FlutterInappPurchase.buySubscription(pf);
+      } else {
+        purchased = await FlutterInappPurchase.buyProduct(pf);
+      }
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool(pf, true);
       print(purchased.toString());
     } catch(error) {
       cbf(error.toString());
