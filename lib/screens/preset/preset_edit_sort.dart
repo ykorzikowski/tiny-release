@@ -5,7 +5,7 @@ import 'package:tiny_release/data/repo/tiny_paragraph_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);

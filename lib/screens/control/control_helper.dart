@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/tiny_dbo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/tiny_state.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 
 class ControlHelper {
 

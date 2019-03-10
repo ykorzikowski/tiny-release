@@ -7,8 +7,8 @@ import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/base_util.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 

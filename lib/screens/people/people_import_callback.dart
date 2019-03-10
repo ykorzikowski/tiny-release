@@ -4,9 +4,9 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/tiny_state.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 
 class PeopleImportCallback {
 

@@ -8,7 +8,7 @@ import 'package:image/image.dart' as img;
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 
 class ContractPdfGenerator {
   final TinyContract _tinyContract;

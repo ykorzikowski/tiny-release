@@ -23,7 +23,7 @@ import 'package:tiny_release/screens/preset/preset_preview.dart';
 import 'package:tiny_release/screens/reception_area/reception_list.dart';
 import 'package:tiny_release/screens/settings.dart';
 import 'package:tiny_release/screens/wording/wording_settings.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 
 class TinyState {
 

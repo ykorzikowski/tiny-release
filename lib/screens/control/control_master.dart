@@ -4,7 +4,7 @@ import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/control/control_right.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/screens/control/control_left_list.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 
 class MasterControlWidget extends StatefulWidget {
 

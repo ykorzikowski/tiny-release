@@ -15,8 +15,8 @@ import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/screens/preset/preset_list.dart';
 import 'package:tiny_release/screens/reception_area/reception_list.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/base_util.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/tiny_page_wrapper.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 

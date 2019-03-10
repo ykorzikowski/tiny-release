@@ -7,7 +7,7 @@ import 'package:tiny_release/data/tiny_reception.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

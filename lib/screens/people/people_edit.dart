@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/BaseUtil.dart';
+import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/tiny_state.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

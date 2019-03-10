@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/nav_routes.dart';
 
 typedef ErrorCallback = void Function(String error);
 typedef SuccessCallback = void Function();
