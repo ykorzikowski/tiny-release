@@ -19,7 +19,15 @@ class ControlLeftListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ControlLeftListWidget> {
 
-  var icons = const [CupertinoIcons.person_solid, CupertinoIcons.collections_solid, CupertinoIcons.photo_camera_solid, CupertinoIcons.create_solid, CupertinoIcons.tags_solid, CupertinoIcons.settings_solid];
+  var icons = const [
+    CupertinoIcons.person_solid,
+    CupertinoIcons.collections_solid,
+    CupertinoIcons.photo_camera_solid,
+    CupertinoIcons.create_solid,
+    CupertinoIcons.tags_solid,
+    CupertinoIcons.settings_solid,
+    CupertinoIcons.shopping_cart
+  ];
 
   bool _isSelected(int pos) {
     return BaseUtil.isLargeScreen(context) && pos == widget.controlState.selectedControlItem;
@@ -27,7 +35,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).item_wording, S.of(context).item_settings];
+    var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).item_wording, S.of(context).item_settings, "Subscription"];
 
     widget.controlState.inControlWidget = true;
     return

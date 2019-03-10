@@ -17,6 +17,7 @@ import 'package:tiny_release/screens/contract/contract_generator.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
 import 'package:tiny_release/util/BaseUtil.dart';
 import 'package:tiny_release/util/NavRoutes.dart';
+import 'package:tiny_release/util/paywall.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'dart:ui' as ui;
 
@@ -358,14 +359,19 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                               height: 50,
                             ),
                             onTap: () {
+                              /// close the popover
                               Navigator.of(context).pop();
-                              var hide = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
-                            _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
-                              BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                                print(saved.path);
-                                hide();
-                                ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-                            }));
+
+                              PayWall.getShared().checkIfPaid(PayFeature.PAY_PDF_EXPORT, () {
+                                var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
+
+                                _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+                                    BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                                      hideLoading();
+                                      ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+                                    }));
+                                },
+                                      (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getPaymentDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
                             },)
                         ],
                       ),

@@ -97,6 +97,7 @@ class S implements WidgetsLocalizations {
   String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
   String get preset => "Preset";
   String get reception_area => "Reception area";
   String get represented_by => "Represented by";
@@ -226,6 +227,8 @@ class $de extends S {
   String get hint_postcode => "PLZ";
   @override
   String get choose_model => "Model wählen";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs either power users. It's possbile to use this app for free. If you want to use the extended features, you can buy the modules separately or pay for a subscription monthly.";
   @override
   String get btn_add => "Hinzufügen";
   @override
@@ -444,6 +447,8 @@ class $nl extends S {
   String get hint_postcode => "Postcode";
   @override
   String get choose_model => "Kies Model";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
   @override
   String get btn_add => "Toevoegen";
   @override

@@ -34,6 +34,7 @@ dependencies:
   flutter_inapp_purchase: ^0.9.0
   shared_preferences: ^0.5.1+1
   screenshots: ^0.1.5
+  expandable: 2.0.0
   http:
 
   # The following adds the Cupertino Icons font to your application.

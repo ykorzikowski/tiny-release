@@ -50,6 +50,8 @@ class ControlHelper {
         return NavRoutes.WORDING;
       case 5:
         return NavRoutes.SETTINGS;
+      case 6:
+        return NavRoutes.PAYMENT;
     }
     return null;
   }

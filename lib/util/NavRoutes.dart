@@ -30,4 +30,6 @@ class NavRoutes {
   static const WORDING = "wording";
   static const SETTINGS = "settings";
 
+  static const PAYMENT = "payment";
+
 }
