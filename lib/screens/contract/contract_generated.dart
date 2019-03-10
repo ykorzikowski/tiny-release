@@ -7,19 +7,17 @@ import 'package:rect_getter/rect_getter.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/data/tiny_signature.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_generator.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
+import 'package:tiny_release/screens/contract/signature_widget.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/paywall.dart';
 import 'package:tiny_release/util/tiny_state.dart';
-import 'dart:ui' as ui;
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -36,7 +34,6 @@ class ContractGeneratedWidget extends StatefulWidget {
 class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   final TinyState _tinyState;
   TinyContract _tinyContract;
-  Uint8List _modelSignature, _photographerSignature, _parentSignature, _witnessSignature;
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
   ContractPdfGenerator _contractPdfGenerator;
@@ -44,12 +41,6 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
   /// global key for shareDialogPosition
   var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
-
-  /// keys for signature pads
-  final _modelKey = GlobalKey<SignatureState>();
-  final _photographerKey = GlobalKey<SignatureState>();
-  final _parentKey = GlobalKey<SignatureState>();
-  final _witnessKey = GlobalKey<SignatureState>();
 
   static const TextStyle btnStyle = TextStyle(color: CupertinoColors.activeBlue, fontSize: 16);
 
@@ -66,7 +57,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         heroTag: 'contract',
         transitionBetweenRoutes: false,
         middle: _tinyContract.isLocked ? Text(S.of(context).finished_contract) : Text(S.of(context).finish_contract) ,
-        trailing: !_tinyContract.isLocked ? _buildNavBarButton : Text(""),),
+        trailing: !_tinyContract.isLocked ? _buildNavBarButton() : Text(""),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
@@ -108,7 +99,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             Divider(),
 
             /// signatures
-            _buildSignaturesSection(),
+            SignatureWidget( _tinyState ),
 
             _tinyContract.isLocked ? _buildCompletedHint() : Container(),
           ],
@@ -126,232 +117,6 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER);
       });
 
-  ///         ///
-  /// signatures
-  ///         ///
-       
-  ///     
-  /// helpers
-  ///
-
-  _signaturesValid() =>
-      _modelSignature != null &&
-          _photographerSignature != null &&
-          (_tinyContract.witness == null || _witnessSignature != null ) &&
-          (_tinyContract.parent == null || _parentSignature != null);
-  
-  ///
-  /// widgets
-  /// 
-   Widget _buildSignaturesSection() => Column(
-     mainAxisSize: MainAxisSize.min,
-     children: <Widget>[
-       !_tinyContract.isLocked ? Column(children: <Widget>[
-
-         /// signatures model and photographer
-         Column(mainAxisSize: MainAxisSize.min,
-           children: _buildPrimarySignatureSection(),),
-
-         /// signatures witness and parent
-         _tinyContract.witness != null || _tinyContract.parent != null
-             ? Column(mainAxisSize: MainAxisSize.min,
-           children: _buildSecondarySignatureSection(),)
-             : Container(),
-       ],) :
-       Column(mainAxisSize: MainAxisSize.min,
-           children: _buildSignatureImageSection()),
-
-       /// button to complete contract
-       !_tinyContract.isLocked ? CupertinoButton(
-         child: Text(S.of(context).btn_complete_contract),
-         onPressed: _signaturesValid() ? () async {
-           await _saveSignatures();
-
-           _tinyContract.isLocked = true;
-           await _tinyContractRepo.save(_tinyContract);
-           _tinyState.curDBO = _tinyContract;
-
-           Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
-           Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);
-         } : null,
-       ) : Container(),
-     ],
-   );
-
-  Signature _getSignaturePad(GlobalKey key) =>
-      Signature(
-        key: key,
-        color: CupertinoColors.black,
-        strokeWidth: 5,
-        backgroundPainter: _WatermarkPaint("32.0", "32.0"),
-      );
-
-  Widget _buildSignatureDeleteButton(onDelete) =>
-      CupertinoButton(
-        child: Icon(CupertinoIcons.delete_solid),
-        onPressed: () => setState(() => onDelete()),
-        borderRadius: BorderRadius.all(Radius.circular(0)),
-        padding: EdgeInsets.all(0),
-      );
-
-  Widget _buildSignatureSubtext() =>
-      Text(_tinyContract.location + S.of(context).location_date_seperator +
-          BaseUtil.getLocalFormattedDate(context, DateTime.now().toIso8601String()));
-  
-  /// wrap signature with data and location
-  Widget _wrapSignature(sig, name, onDelete) =>
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(8.0),
-              child: SizedBox(height: 150, child: sig)),
-          ListTile(
-              trailing: _buildSignatureSubtext(),
-              leading: Row(children: <Widget>[
-                !_tinyContract.isLocked ? _buildSignatureDeleteButton(onDelete) : Container(),
-                Text(name),
-              ],)
-          ),
-        ],
-      );
-  
-  _signatureFinishedCallback(sig, saveCallback) async {
-    var imageBytesFromSignature = await _getImageBytesFromSignature(sig);
-    saveCallback(imageBytesFromSignature);
-  }
-
-  _savePhotographerSignature(bytes) => setState(() {
-    _photographerKey.currentState.hasPoints() ? _photographerSignature = _byteDataToUint8(bytes) : null;
-    _saveSignature(_photographerSignature, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
-  });
-
-  _saveModelSignature(bytes) => setState(() {
-    _modelKey.currentState.hasPoints() ? _modelSignature = _byteDataToUint8(bytes) : null;
-    _saveSignature(_modelSignature, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
-  });
-
-  _saveWitnessSignature(bytes) => setState(() {
-    _witnessKey.currentState.hasPoints() ? _witnessSignature = _byteDataToUint8(bytes) : null;
-    _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
-  });
-
-  _saveParentSignature(bytes) => setState(() {
-  _parentKey.currentState.hasPoints() ? _parentSignature = _byteDataToUint8(bytes) : null;
-  _saveSignature(_parentSignature, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
-  });
-
-  _buildPrimarySignatureSection() {
-    Signature _modelSignatureW = _getSignaturePad(_modelKey);
-    Signature _photographerSignatureW = _getSignaturePad(_photographerKey);
-
-    return <Widget> [
-      Flexible( fit: FlexFit.loose,
-        key:  Key('signature_photographer_flex'),
-        child:
-        _wrapSignature(CupertinoButton(
-          child: _photographerSignature != null ?
-          Image(image: MemoryImage(_photographerSignature), key: Key('signature_photographer')) :
-          Container(child: Icon(CupertinoIcons.pen, key: Key('signature_photographer'),),),
-          onPressed: () =>
-              showCupertinoModalPopup(context: context, builder: (context) =>
-                  Dialog(key: Key('signature_photographer_dialog'), child: 
-                  _wrapSignature(_photographerSignatureW, _tinyContract.photographer.displayName, () => _photographerSignatureW.clear()),))
-                  .whenComplete(() => _signatureFinishedCallback(_photographerSignatureW, _savePhotographerSignature)
-              ),),
-            _tinyContract.photographer.displayName, () => setState(() => _photographerSignature = null )),),
-
-      Flexible( fit: FlexFit.loose,
-        child:
-        _wrapSignature(CupertinoButton(
-          child: _modelSignature != null ? Image(image: MemoryImage(_modelSignature), key: Key('signature_model')) : Container(child: Icon(CupertinoIcons.pen, key: Key('signature_model')),),
-          onPressed: () =>
-              showCupertinoModalPopup(context: context, builder: (context) =>
-                  Dialog(key: Key('signature_model_dialog'), child: _wrapSignature(_modelSignatureW, _tinyContract.model.displayName, () => _modelSignatureW.clear()),))
-                  .whenComplete(() => _signatureFinishedCallback(_photographerSignatureW, _saveModelSignature)
-                  ),),
-            _tinyContract.model.displayName,  () => setState(() => _modelSignature = null )),),
-
-    ];
-  }
-
-  _buildSecondarySignatureSection() {
-    Signature _witnessSignatureW, _parentSignatureW;
-    if ( _tinyContract.witness != null ) {
-      _witnessSignatureW = _getSignaturePad(_witnessKey);
-    }
-
-    if ( _tinyContract.parent != null ) {
-      _parentSignatureW = _getSignaturePad(_parentKey);
-    }
-
-    return <Widget> [
-      _tinyContract.witness != null ? Flexible( fit: FlexFit.loose,
-        child:
-        _wrapSignature(CupertinoButton(
-          child: _witnessSignature != null ? Image(image: MemoryImage(_witnessSignature), key: Key('signature_witness')) : Container(child: Icon(CupertinoIcons.pen, key: Key('signature_witness')),),
-          onPressed: () =>
-              showCupertinoModalPopup(context: context, builder: (context) =>
-                  Dialog(key: Key('signature_witness_dialog'), child: _wrapSignature(_witnessSignatureW, _tinyContract.witness.displayName, () => _witnessSignatureW.clear()),))
-                  .whenComplete(() => _signatureFinishedCallback(_witnessSignatureW, _saveWitnessSignature)
-              ),),
-            _tinyContract.witness.displayName, () => setState(() => _witnessSignature = null )),) : Container(),
-      _tinyContract.parent != null ? Flexible( fit: FlexFit.loose,
-        child:
-        _wrapSignature(CupertinoButton(
-          child: _parentSignature != null ? Image(image: MemoryImage(_parentSignature), key: Key('signature_parent')) : Container(child: Icon(CupertinoIcons.pen, key: Key('signature_parent')),),
-          onPressed: () =>
-              showCupertinoModalPopup(context: context, builder: (context) =>
-                  Dialog(key: Key('signature_parent_dialog'), child: _wrapSignature(_parentSignatureW, _tinyContract.parent.displayName, () => _parentSignatureW.clear()),))
-                  .whenComplete(() => _signatureFinishedCallback(_parentSignatureW, _saveParentSignature)), ),
-            _tinyContract.parent.displayName, () => setState(() => _parentSignature = null )),) : Container(),
-    ];
-  }
-
-  _getImg(TinySignature sig) {
-    return Container(height: 150, child: Image.file(Io.File(sig.path)));
-  }
-
-  List<Widget> _buildSignatureImageSection() {
-    return <Widget> [
-      Flexible( fit: FlexFit.loose,
-          child: _tinyContract.photographer != null ? _wrapSignature(_getImg(_tinyContract.photographerSignature), _tinyContract.photographer.displayName, null) : Container()),
-      Flexible( fit: FlexFit.loose,
-          child: _tinyContract.model != null ? _wrapSignature(_getImg(_tinyContract.modelSignature), _tinyContract.model.displayName, null) : Container()),
-      Flexible( fit: FlexFit.loose,
-          child: _tinyContract.parent != null ? _wrapSignature(_getImg(_tinyContract.parentSignature), _tinyContract.parent.displayName, null) : Container()),
-      Flexible( fit: FlexFit.loose,
-          child: _tinyContract.witness != null ? _wrapSignature(_getImg(_tinyContract.witnessSignature), _tinyContract.witness.displayName, null) : Container()),
-    ];
-  }
-
-  Uint8List _byteDataToUint8(ByteData bd) => bd.buffer.asUint8List(bd.offsetInBytes, bd.lengthInBytes);
-
-  Future<ByteData> _getImageBytesFromSignature(Signature signature) => signature.getData().then((image) => _getBytesFromImg(image));
-
-  Future<ByteData> _getBytesFromImg(ui.Image img) async => img.toByteData(format: ui.ImageByteFormat.png);
-
-  /// saves signature to file
-  static Future<TinySignature> _saveSignature(Uint8List sig, int contractId) async {
-    if (sig != null) {
-      return TinySignature(
-          contractId: contractId,
-          path: (await BaseUtil.storeBlobUint8('signature', 'png', sig)).path
-      );
-    }
-    return null;
-  }
-
-  /// saves all signatures
-  _saveSignatures() async {
-    if (_modelSignature != null && _tinyContract.modelSignature == null)
-      _saveSignature(_modelSignature, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
-    if (_photographerSignature != null && _tinyContract.photographerSignature == null)
-      _saveSignature(_photographerSignature, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
-    if (_parentSignature != null && _tinyContract.parentSignature == null)
-      _saveSignature(_parentSignature, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
-    if (_witnessSignature != null && _tinyContract.witnessSignature == null)
-      _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
-  }
 
   ///         ///
   /// footer  ///
@@ -465,29 +230,4 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   Widget _buildCompletedHint() =>
       Text(S.of(context).hint_completed_contracts, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.inactiveGray, fontSize: 10),);
 
-}
-
-// todo: ad own watermark impl
-class _WatermarkPaint extends CustomPainter {
-  final String price;
-  final String watermark;
-
-  _WatermarkPaint(this.price, this.watermark);
-
-  @override
-  void paint(ui.Canvas canvas, ui.Size size) {
-    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 10.8, Paint()..color = Colors.blue);
-  }
-
-  @override
-  bool shouldRepaint(_WatermarkPaint oldDelegate) {
-    return oldDelegate != this;
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is _WatermarkPaint && runtimeType == other.runtimeType && price == other.price && watermark == other.watermark;
-
-  @override
-  int get hashCode => price.hashCode ^ watermark.hashCode;
 }
