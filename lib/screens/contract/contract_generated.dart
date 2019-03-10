@@ -59,6 +59,64 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
     _contractGenerator = ContractGenerator(_tinyContract);
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'contract',
+        transitionBetweenRoutes: false,
+        middle: _tinyContract.isLocked ? Text(S.of(context).finished_contract) : Text(S.of(context).finish_contract) ,
+        trailing: !_tinyContract.isLocked ? _buildNavBarButton : Text(""),),
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: SafeArea(
+          child: _buildPageContent(),
+        ),),);
+  }
+
+  Widget _buildPageContent() => Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(child: ListView(
+          key: Key('scrlvw_contract_generated'),
+          shrinkWrap: true,
+          //physics: NeverScrollableScrollPhysics(),
+          children: <Widget>[
+
+            /// header
+            Text(_tinyContract.preset.title, textAlign: TextAlign.center, style: TextStyle(fontSize: 32),),
+
+            /// contract head
+            _contractGenerator.buildContractHeader(context),
+
+            Divider(),
+
+            _contractGenerator.buildShootingInformationSection(context),
+
+            Divider(),
+
+            /// contract preview
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: ContractGenerator.buildParagraphs(
+                    context, _tinyContract),
+              ),
+            ),
+
+            Divider(),
+
+            /// signatures
+            _buildSignaturesSection(),
+
+            _tinyContract.isLocked ? _buildCompletedHint() : Container(),
+          ],
+        ), ),
+        _buildContentFooterAction(),
+
+      ]);
+
   _signaturesValid() =>
       _modelSignature != null &&
           _photographerSignature != null &&
@@ -219,195 +277,164 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       _saveSignature(_witnessSignature, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          heroTag: 'contract',
-          transitionBetweenRoutes: false,
-          middle: _tinyContract.isLocked ? Text(S.of(context).finished_contract) : Text(S.of(context).finish_contract) ,
-          trailing: !_tinyContract.isLocked ? CupertinoButton(
-            child: Text(S.of(context).btn_edit),
-            onPressed: () {
-              //todo: edit contract
-              _tinyState.curDBO = _tinyContract;
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER);
-            }) : Text(""),),
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: SafeArea(
-          child:
-          Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-          Expanded(child: ListView(
-            key: Key('scrlvw_contract_generated'),
-              shrinkWrap: true,
-              //physics: NeverScrollableScrollPhysics(),
-              children: <Widget>[
+  Widget _buildNavBarButton() => CupertinoButton(
+      child: Text(S.of(context).btn_edit),
+      onPressed: () {
+        //todo: edit contract
+        _tinyState.curDBO = _tinyContract;
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER);
+      });
 
-                /// header
-                Text(_tinyContract.preset.title, textAlign: TextAlign.center, style: TextStyle(fontSize: 32),),
+  ///         ///
+  /// signatures
+  ///         ///
+   Widget _buildSignaturesSection() => Column(
+     mainAxisSize: MainAxisSize.min,
+     children: <Widget>[
+       !_tinyContract.isLocked ? Column(children: <Widget>[
 
-                /// contract head
-                _contractGenerator.buildContractHeader(context),
+         /// signatures model and photographer
+         Column(mainAxisSize: MainAxisSize.min,
+           children: _buildPrimarySignatureSection(),),
 
-                Divider(),
+         /// signatures witness and parent
+         _tinyContract.witness != null || _tinyContract.parent != null
+             ? Column(mainAxisSize: MainAxisSize.min,
+           children: _buildSecondarySignatureSection(),)
+             : Container(),
+       ],) :
+       Column(mainAxisSize: MainAxisSize.min,
+           children: _buildSignatureImageSection()),
 
-                _contractGenerator.buildShootingInformationSection(context),
+       /// button to complete contract
+       !_tinyContract.isLocked ? CupertinoButton(
+         child: Text(S.of(context).btn_complete_contract),
+         onPressed: _signaturesValid() ? () async {
+           await _saveSignatures();
 
-                Divider(),
+           _tinyContract.isLocked = true;
+           await _tinyContractRepo.save(_tinyContract);
+           _tinyState.curDBO = _tinyContract;
 
-                /// contract preview
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: ContractGenerator.buildParagraphs(
-                        context, _tinyContract),
-                  ),
-                ),
+           Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
+           Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);
+         } : null,
+       ) : Container(),
+     ],
+   );
 
-                Divider(),
+  ///         ///
+  /// footer  ///
+  ///         ///
+  Widget _buildFooterCloneButton() => CupertinoPopoverButton(
+    child: Icon(CupertinoIcons.create, color: CupertinoColors.activeBlue, size: 32),
+    popoverBuild: (context) => CupertinoPopoverMenuList(
+      children: <Widget>[
+        CupertinoPopoverMenuItem(
+          child: SizedBox(
+            child: Center(child: Text(S.of(context).use_as_template, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
+            width: 80,
+            height: 50,
+          ),
+          onTap: () {
+            var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
+            clone.id = null;
+            clone.isLocked = false;
+            clone.modelSignature = null;
+            clone.photographerSignature = null;
+            clone.parentSignature = null;
+            clone.witnessSignature = null;
+            clone.displayName = clone.displayName + S.of(context).cloned_suffix;
 
-                /// signatures
-                !_tinyContract.isLocked ? Column(children: <Widget>[
+            _tinyContractRepo.save(clone);
+            Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+          },)
+      ],
+    ),
+  );
 
-                  /// signatures model and photographer
-                  Column(mainAxisSize: MainAxisSize.min,
-                    children: _buildPrimarySignatureSection(),),
+  Widget _buildFooterShareButton() => CupertinoPopoverButton(
+    child: Icon(CupertinoIcons.share, color: CupertinoColors.activeBlue, size: 32),
+    popoverBuild: (context) => CupertinoPopoverMenuList(
+      children: <Widget>[
+        CupertinoPopoverMenuItem(
+          child: SizedBox(
+            child: Center(child: Text(S.of(context).share_pdf, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
+            width: 80,
+            height: 50,
+          ),
+          onTap: () {
+            /// close the popover
+            Navigator.of(context).pop();
 
-                  /// signatures witness and parent
-                  _tinyContract.witness != null || _tinyContract.parent != null
-                      ? Column(mainAxisSize: MainAxisSize.min,
-                    children: _buildSecondarySignatureSection(),)
-                      : Container(),
-                ],) :
-                Column(mainAxisSize: MainAxisSize.min,
-                    children: _buildSignatureImageSection()),
+            PayWall.getShared().checkIfPaid(PayFeature.PAY_PDF_EXPORT, () {
+              var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
 
-                /// button to complete contract
-                !_tinyContract.isLocked ? CupertinoButton(
-                  child: Text(S.of(context).btn_complete_contract),
-                  onPressed: _signaturesValid() ? () async {
-                    await _saveSignatures();
+              _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+                  BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+                    hideLoading();
+                    ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+                  }));
+            },
+                    (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
+          },)
+      ],
+    ),
+  );
 
-                    _tinyContract.isLocked = true;
-                    await _tinyContractRepo.save(_tinyContract);
-                    _tinyState.curDBO = _tinyContract;
+  Widget _buildFooterDeleteButton() => CupertinoPopoverButton(
+    child: Icon(CupertinoIcons.delete, color: CupertinoColors.activeBlue, size: 32),
+    popoverBuild: (context) => CupertinoPopoverMenuList(
+      children: <Widget>[
+        CupertinoPopoverMenuItem(
+          child: SizedBox(
+            child: Center(child: Text(S.of(context).dialog_delete, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.destructiveRed, fontSize: 21),)),
+            width: 80,
+            height: 50,
+          ),
+          onTap: () {
+            _tinyContractRepo.delete(_tinyContract);
+            Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+          },)
+      ],
+    ),
+  );
 
-                    Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
-                    Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);
-                  } : null,
-                ) : Container(),
+  Widget _buildContentFooterAction() => RectGetter(
+    key: _shareDialogPosGlobalKey,
+    child: IntrinsicWidth(
+      stepHeight: 32,
+      child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        /// clone button
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildFooterCloneButton(),
+          ),
+        ),
 
-                _tinyContract.isLocked ? Text(S.of(context).hint_completed_contracts, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.inactiveGray, fontSize: 10),) : Container(),
-              ],
-            ), ),
+        /// share button
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildFooterShareButton(),
+          ),
+        ),
 
-          RectGetter(
-            key: _shareDialogPosGlobalKey,
-            child: IntrinsicWidth(
-              stepHeight: 32,
-              child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                /// clone button
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CupertinoPopoverButton(
-                      child: Icon(CupertinoIcons.create, color: CupertinoColors.activeBlue, size: 32),
-                      popoverBuild: (context) => CupertinoPopoverMenuList(
-                        children: <Widget>[
-                          CupertinoPopoverMenuItem(
-                            child: SizedBox(
-                              child: Center(child: Text(S.of(context).use_as_template, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
-                              width: 80,
-                              height: 50,
-                            ),
-                            onTap: () {
-                              var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
-                              clone.id = null;
-                              clone.isLocked = false;
-                              clone.modelSignature = null;
-                              clone.photographerSignature = null;
-                              clone.parentSignature = null;
-                              clone.witnessSignature = null;
-                              clone.displayName = clone.displayName + S.of(context).cloned_suffix;
+        /// delete button
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildFooterDeleteButton(),
+          ),
+        ),
+      ],),
+    ),
+  );
 
-                              _tinyContractRepo.save(clone);
-                              Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
-                            },)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// share button
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CupertinoPopoverButton(
-                      child: Icon(CupertinoIcons.share, color: CupertinoColors.activeBlue, size: 32),
-                      popoverBuild: (context) => CupertinoPopoverMenuList(
-                        children: <Widget>[
-                          CupertinoPopoverMenuItem(
-                            child: SizedBox(
-                              child: Center(child: Text(S.of(context).share_pdf, textAlign: TextAlign.center, style: TextStyle(fontSize: 21),)),
-                              width: 80,
-                              height: 50,
-                            ),
-                            onTap: () {
-                              /// close the popover
-                              Navigator.of(context).pop();
-
-                              PayWall.getShared().checkIfPaid(PayFeature.PAY_PDF_EXPORT, () {
-                                var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
-
-                                _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
-                                    BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                                      hideLoading();
-                                      ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-                                    }));
-                                },
-                                      (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
-                            },)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// delete button
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CupertinoPopoverButton(
-                      child: Icon(CupertinoIcons.delete, color: CupertinoColors.activeBlue, size: 32),
-                      popoverBuild: (context) => CupertinoPopoverMenuList(
-                        children: <Widget>[
-                          CupertinoPopoverMenuItem(
-                            child: SizedBox(
-                              child: Center(child: Text(S.of(context).dialog_delete, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.destructiveRed, fontSize: 21),)),
-                              width: 80,
-                              height: 50,
-                            ),
-                            onTap: () {
-                              _tinyContractRepo.delete(_tinyContract);
-                              Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
-                            },)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],),
-            ),
-            )
-          ]),),
-      ),);
-  }
+  Widget _buildCompletedHint() =>
+      Text(S.of(context).hint_completed_contracts, textAlign: TextAlign.center, style: TextStyle(color: CupertinoColors.inactiveGray, fontSize: 10),);
 
 }
 
