@@ -37,6 +37,35 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
     super.dispose();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    moduleController = PagewiseLoadController(
+        pageSize: 10,
+        pageFuture: (pageIndex) =>
+            _payWall.getItems()
+    );
+
+    subscriptionController = PagewiseLoadController(
+        pageSize: 10,
+        pageFuture: (pageIndex) =>
+            _payWall.getSubscriptions()
+    );
+
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
+        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
+        middle: Text(S.of(context).payment_title),
+      ),
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: _getSubscriptionContent()
+      ),),
+    );
+  }
+
   /// used on android, android differs on subs and normal ip purchases
   Widget _buildSubscriptionList() =>
       PagewiseListView(
@@ -47,7 +76,7 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
         itemBuilder: this._itemBuilder,
         pageLoadController: this.subscriptionController,
         noItemsFoundBuilder: (context) {
-          return Text('Error while fetching subscriptions',
+          return Text(S.of(context).error_subscriptions,
               style: TextStyle(color: CupertinoColors.inactiveGray));
         },
       );
@@ -100,34 +129,6 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
 
           Platform.isAndroid ? _getAndroidSubscriptionContent() : _getIosSubscriptionContent(),
         ],);
-
-  @override
-  Widget build(BuildContext context) {
-    moduleController = PagewiseLoadController(
-        pageSize: 10,
-        pageFuture: (pageIndex) =>
-            _payWall.getItems()
-    );
-
-    subscriptionController = PagewiseLoadController(
-        pageSize: 10,
-        pageFuture: (pageIndex) =>
-            _payWall.getSubscriptions()
-    );
-
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        heroTag: 'control',
-        transitionBetweenRoutes: false,
-        leading: BaseUtil.isLargeScreen(context) ? Container() : null,
-        middle: Text("Payment"),
-      ),
-      child: SafeArea(  child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: _getSubscriptionContent()
-      ),),
-    );
-  }
 
   Widget _buildPrice(IAPItem iap) {
     TextStyle normalPriceStyle = TextStyle();
