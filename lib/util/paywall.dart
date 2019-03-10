@@ -32,7 +32,7 @@ class PayWall {
       ? "To use this feature, you have to pay for a monthly subscription"
       : "To use this feature, you can buy the feature $pf or pay for a monthly subscription";
 
-  static Widget getPaymentDialog(pf, ctx) => CupertinoAlertDialog(
+  static Widget getSubscriptionDialog(pf, ctx) => CupertinoAlertDialog(
     title: Text("Pro Feature"),
     content: Text(getText(pf)),
     actions: <Widget>[
@@ -63,11 +63,11 @@ class PayWall {
         PayFeature.PAY_UNLIMITED_CONTRACTS,
   ];
 
-  initPaymentService() async {
+  initSubscriptionService() async {
     await FlutterInappPurchase.initConnection;
   }
 
-  endPaymentService() async {
+  endSubscriptionService() async {
     await FlutterInappPurchase.endConnection;
   }
 
@@ -88,7 +88,7 @@ class PayWall {
   /// cbs - callback success
   /// cbf - callback failure
   void pay(pf, SuccessCallback cbs, ErrorCallback cbf) async{
-    await initPaymentService();
+    await initSubscriptionService();
     bool hasAlreadyPaid = await checkIfPaid(pf, (){}, (error){});
 
     if ( hasAlreadyPaid ) {
@@ -104,7 +104,7 @@ class PayWall {
     } catch(error) {
       cbf(error.toString());
     } finally {
-      await endPaymentService();
+      await endSubscriptionService();
     }
   }
 

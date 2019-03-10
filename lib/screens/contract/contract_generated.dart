@@ -371,7 +371,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                                       ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
                                     }));
                                 },
-                                      (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getPaymentDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
+                                      (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
                             },)
                         ],
                       ),

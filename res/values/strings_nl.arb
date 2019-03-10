@@ -102,5 +102,13 @@
   "loading_pdf": "PDF laden",
   "use_as_template": "Gebruik als sjabloon",
   "navbar_btn_preview": "Voorbeeld",
-  "payment_introduction_text": "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly."
+  "payment_introduction_text": "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.",
+  "payment_title": "Payment",
+  "payment_was_not_successfull": "Payment was not successfull",
+  "payment_was_successfull": "Payment was successfull",
+  "thanks_for_supporting_me": "Thanks for supporting me!",
+  "try_again_or_write_me_an_email": "Try again or write me an email!",
+  "modules": "Modules",
+  "subscriptions": "Subscriptions",
+  "plans": "Plans"
 }

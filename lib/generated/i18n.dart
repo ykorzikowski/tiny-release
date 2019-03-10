@@ -56,6 +56,7 @@ class S implements WidgetsLocalizations {
   String get delete_contract => "Delete Contract?";
   String get dialog_back => "Back";
   String get dialog_delete => "Delete";
+  String get error_subscriptions => "Error while fetching subscriptions";
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
@@ -93,11 +94,16 @@ class S implements WidgetsLocalizations {
   String get loading_pdf => "Loading pdf";
   String get location_date_seperator => ", on ";
   String get model_release => "Model Release";
+  String get modules => "Modules";
   String get navbar_btn_preview => "Preview";
   String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
+  String get payment_title => "Payment";
+  String get payment_was_not_successfull => "Payment was not successfull";
+  String get payment_was_successfull => "Payment was successfull";
+  String get plans => "Plans";
   String get preset => "Preset";
   String get reception_area => "Reception area";
   String get represented_by => "Represented by";
@@ -110,6 +116,8 @@ class S implements WidgetsLocalizations {
   String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting date";
   String get shooting_subject => "Subject of Shooting";
+  String get subscriptions => "Subscriptions";
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
   String get tile_contact_preview => "Contact Preview";
   String get title_add => "Add";
   String get title_add_people => "Add people";
@@ -121,6 +129,7 @@ class S implements WidgetsLocalizations {
   String get title_reception => "Reception Area";
   String get title_settings => "Settings";
   String get title_wording => "Wording";
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
   String get use_as_template => "Use as template";
   String get witnessed_by => "Witnessed by";
 }
@@ -162,6 +171,8 @@ class $de extends S {
   @override
   String get hint_mail => "E-Mail";
   @override
+  String get payment_title => "Payment";
+  @override
   String get gallery => "Gallerie";
   @override
   String get add_contract => "Vertrag hinzufügen";
@@ -182,6 +193,8 @@ class $de extends S {
   @override
   String get share_pdf => "PDF teilen";
   @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
   String get choose_source => "Quelle wählen";
   @override
   String get reception_area => "Aufnahmebereiche";
@@ -189,6 +202,8 @@ class $de extends S {
   String get title_settings => "Einstellungen";
   @override
   String get hint_location => "Location";
+  @override
+  String get plans => "Plans";
   @override
   String get btn_dialog_cancel => "Abbrechen";
   @override
@@ -208,11 +223,15 @@ class $de extends S {
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
   String get btn_add_phone => "Telefon hnzufügen";
   @override
   String get camera => "Kamera";
   @override
   String get loading_pdf => "Generiere PDF";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
   @override
   String get navbar_btn_preview => "Vorschau";
   @override
@@ -254,6 +273,8 @@ class $de extends S {
   @override
   String get item_reception => "Aufnahmebereiche";
   @override
+  String get subscriptions => "Subscriptions";
+  @override
   String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
   @override
   String get finish_contract => "Vertrag abschließen";
@@ -277,6 +298,8 @@ class $de extends S {
   String get btn_edit => "Bearbeiten";
   @override
   String get btn_add_paragrpah => "Paragraf hinzufügen";
+  @override
+  String get modules => "Modules";
   @override
   String get select_date_ok => "Wählen";
   @override
@@ -303,6 +326,8 @@ class $de extends S {
   String get title_people => "Personen";
   @override
   String get and => "und";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override
@@ -382,6 +407,8 @@ class $nl extends S {
   @override
   String get hint_mail => "Mail";
   @override
+  String get payment_title => "Payment";
+  @override
   String get gallery => "Galerij";
   @override
   String get add_contract => "Voeg contract toe";
@@ -402,6 +429,8 @@ class $nl extends S {
   @override
   String get share_pdf => "Deel PDF";
   @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
   String get choose_source => "Kies de bron";
   @override
   String get reception_area => "Receptieruimte";
@@ -409,6 +438,8 @@ class $nl extends S {
   String get title_settings => "instellingen";
   @override
   String get hint_location => "Plaats";
+  @override
+  String get plans => "Plans";
   @override
   String get btn_dialog_cancel => "Afbreken";
   @override
@@ -428,11 +459,15 @@ class $nl extends S {
   @override
   String get choose_parent => "Kies ouder";
   @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
   String get btn_add_phone => "Voeg telefoon toe";
   @override
   String get camera => "Camera";
   @override
   String get loading_pdf => "PDF laden";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
   @override
   String get navbar_btn_preview => "Voorbeeld";
   @override
@@ -474,6 +509,8 @@ class $nl extends S {
   @override
   String get item_reception => "Ontvangstgebieden";
   @override
+  String get subscriptions => "Subscriptions";
+  @override
   String get contract_will_made_between => "Er komt een contract tussen";
   @override
   String get finish_contract => "Contract afronden";
@@ -497,6 +534,8 @@ class $nl extends S {
   String get btn_edit => "Bewerk";
   @override
   String get btn_add_paragrpah => "Voeg Paragrpah toe";
+  @override
+  String get modules => "Modules";
   @override
   String get select_date_ok => "OK";
   @override
@@ -523,6 +562,8 @@ class $nl extends S {
   String get title_people => "Mensen";
   @override
   String get and => "en";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
   @override
   String get no_items_presets => "Voorinstellingen maken of importeren";
   @override

@@ -12,15 +12,15 @@ import 'package:tiny_release/util/BaseUtil.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
-class PaymentListWidget extends StatefulWidget {
+class SubscriptionListWidget extends StatefulWidget {
 
   @override
-  _PaymentListWidgetState createState() => _PaymentListWidgetState();
+  _SubscriptionListWidgetState createState() => _SubscriptionListWidgetState();
 }
 
-class _PaymentListWidgetState extends State<PaymentListWidget> {
+class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
 
-  _PaymentListWidgetState();
+  _SubscriptionListWidgetState();
 
   PagewiseLoadController moduleController, subscriptionController;
   PayWall _payWall = PayWall();
@@ -28,12 +28,12 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
   @override
   void initState() {
     super.initState();
-    _payWall.initPaymentService(); // async is not allowed on initState() directly
+    _payWall.initSubscriptionService(); // async is not allowed on initState() directly
   }
 
   @override
   void dispose() {
-    _payWall.endPaymentService();
+    _payWall.endSubscriptionService();
     super.dispose();
   }
 
@@ -66,6 +66,70 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
     );
   }
 
+  // build subscription items
+  Widget _itemBuilder(ctx, wrapper, _) {
+    VoidCallback onSubscription = () =>
+      _payWall.pay(wrapper.iapItem.productId, () {
+        _showSubscriptionSuccessDialog(ctx);
+      }, (error) {
+        _showSubscriptionFailedDialog(ctx);
+      });
+    Widget priceTag = _buildPrice(wrapper.iapItem);
+
+    if ( wrapper.purchased ) {
+      onSubscription = null;
+      priceTag = Icon(CupertinoIcons.check_mark_circled_solid, color: CupertinoColors.activeBlue);
+    }
+
+    return
+      ExpandablePanel(
+        header: ListTile(
+          key: Key(wrapper.iapItem.productId),
+          leading: _getIcon(wrapper.iapItem.productId),
+          title: Text(wrapper.iapItem.title),
+          trailing: CupertinoButton(child: priceTag, onPressed: onSubscription),
+        ),
+        expanded: _buildDescription(wrapper.iapItem),
+      );
+  }
+
+  /// sections
+
+  Widget _getIosSubscriptionContent() =>
+      Column(
+        children: <Widget>[
+          Divider(),
+          Text(S.of(context).plans, style: _headerStyle(),),
+          _buildSubscriptionList(),
+        ],
+      );
+
+  Widget _getAndroidSubscriptionContent() =>
+      Column(
+        children: <Widget>[
+          Divider(),
+          Text(S.of(context).subscriptions, style: _headerStyle(),),
+          _buildSubscriptionList(),
+
+          Divider(),
+          Text(S.of(context).modules, style: _headerStyle(),),
+          _buildModuleList(),
+        ],
+      );
+
+  Widget _getSubscriptionContent() =>
+      ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(S.of(context).payment_introduction_text, softWrap: true, ),
+          ),
+
+          Platform.isAndroid ? _getAndroidSubscriptionContent() : _getIosSubscriptionContent(),
+        ],);
+
+  /// build lists
+
   /// used on android, android differs on subs and normal ip purchases
   Widget _buildSubscriptionList() =>
       PagewiseListView(
@@ -90,45 +154,14 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
         itemBuilder: this._itemBuilder,
         pageLoadController: this.moduleController,
         noItemsFoundBuilder: (context) {
-          return Text('Error while fetching subscriptions',
+          return Text(S.of(context).error_subscriptions,
               style: TextStyle(color: CupertinoColors.inactiveGray));
         },
       );
 
+  /// single subscription widgets
+
   _headerStyle() => TextStyle( fontSize: 24);
-
-  Widget _getIosSubscriptionContent() =>
-      Column(
-        children: <Widget>[
-          Divider(),
-          Text("Plans", style: _headerStyle(),),
-          _buildSubscriptionList(),
-        ],
-      );
-
-  Widget _getAndroidSubscriptionContent() =>
-      Column(
-        children: <Widget>[
-          Divider(),
-          Text("Subscription", style: _headerStyle(),),
-          _buildSubscriptionList(),
-
-          Divider(),
-          Text("Modules", style: _headerStyle(),),
-          _buildModuleList(),
-        ],
-      );
-
-  Widget _getSubscriptionContent() =>
-      ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(S.of(context).payment_introduction_text, softWrap: true, ),
-          ),
-
-          Platform.isAndroid ? _getAndroidSubscriptionContent() : _getIosSubscriptionContent(),
-        ],);
 
   Widget _buildPrice(IAPItem iap) {
     TextStyle normalPriceStyle = TextStyle();
@@ -157,12 +190,12 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
       ],
     );
   }
-  
+
   Icon _getIcon(String pf) => pf.startsWith(PayFeature.PAY_ABO_MONTH) ? Icon(Icons.stars, color: Colors.amber,) : Icon(Icons.local_offer);
 
   Widget _subDurationWidget(subscriptionLength) =>
       Padding(
-        padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
           child:
           Column(
             children: <Widget>[
@@ -174,19 +207,20 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
       );
 
 
-
   Widget _buildDescription(IAPItem iap) =>
       Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(iap.description, softWrap: true, style: TextStyle(color: CupertinoColors.inactiveGray)),
-  ],);
+        ],);
 
-  _showPaymentFailedDialog(ctx) =>
+  /// dialog confirmations
+
+  _showSubscriptionFailedDialog(ctx) =>
       showDialog(context: ctx, builder: (ctx) =>
           CupertinoAlertDialog(
-            title: Text("Payment was not successfull"),
-            content: Text("Try again or write me an email!"),
+            title: Text(S.of(context).payment_was_not_successfull),
+            content: Text(S.of(context).try_again_or_write_me_an_email),
             actions: <Widget>[
               CupertinoDialogAction(
                 child: Text("OK"),
@@ -195,42 +229,16 @@ class _PaymentListWidgetState extends State<PaymentListWidget> {
             ],
           ));
 
-  _showPaymentSuccessDialog(ctx) =>
+  _showSubscriptionSuccessDialog(ctx) =>
       showDialog(context: ctx, builder: (ctx) =>
           CupertinoAlertDialog(
-            title: Text("Payment was successfull"),
-            content: Text("Thanks for supporting me!"),
+            title: Text(S.of(context).payment_was_successfull),
+            content: Text(S.of(context).thanks_for_supporting_me),
             actions: <Widget>[
               CupertinoDialogAction(
-                child: Text("OK"),
+                child: Text(S.of(context).select_date_ok),
                 onPressed: () => Navigator.of(ctx).pop(),
               )
             ],
           ));
-
-  Widget _itemBuilder(ctx, wrapper, _) {
-    VoidCallback onPayment = () =>
-      _payWall.pay(wrapper.iapItem.productId, () {
-        _showPaymentSuccessDialog(ctx);
-      }, (error) {
-        _showPaymentFailedDialog(ctx);
-      });
-    Widget priceTag = _buildPrice(wrapper.iapItem);
-
-    if ( wrapper.purchased ) {
-      onPayment = null;
-      priceTag = Icon(CupertinoIcons.check_mark_circled_solid, color: CupertinoColors.activeBlue);
-    }
-
-    return
-        ExpandablePanel(
-          header: ListTile(
-            key: Key(wrapper.iapItem.productId),
-            leading: _getIcon(wrapper.iapItem.productId),
-            title: Text(wrapper.iapItem.title),
-            trailing: CupertinoButton(child: priceTag, onPressed: onPayment),
-          ),
-          expanded: _buildDescription(wrapper.iapItem),
-    );
-  }
 }
