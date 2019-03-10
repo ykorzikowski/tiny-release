@@ -55,4 +55,4 @@ avdmanager create avd -n test -k "system-images;android-27;google_apis;x86"
 ```
 
 ### flutter driver
-tests stored in `test_driver`dir. Can be run by command `flutter drive --target=test_driver/app.dart`
+tests stored in `test_driver`dir. Can be run by command `flutter drive --target=test_driver/app_full.dart -dEngi`

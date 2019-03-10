@@ -73,10 +73,8 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
           middle: Text(S.of(context).title_contracts),
-          trailing:CupertinoButton(
-            child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
-            onPressed: _buildContractAddButton,
-          ),),
+          trailing: _buildContractAddButton(),
+        ),
         child: SafeArea(
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
