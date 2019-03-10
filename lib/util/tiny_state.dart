@@ -10,7 +10,7 @@ import 'package:tiny_release/screens/control/control_master.dart';
 import 'package:tiny_release/screens/layout/layout_edit.dart';
 import 'package:tiny_release/screens/layout/layout_list.dart';
 import 'package:tiny_release/screens/layout/layout_preview.dart';
-import 'package:tiny_release/screens/payment/subscription.dart';
+import 'package:tiny_release/screens/subscription/subscription.dart';
 import 'package:tiny_release/screens/people/people_edit.dart';
 import 'package:tiny_release/screens/people/people_import_callback.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
