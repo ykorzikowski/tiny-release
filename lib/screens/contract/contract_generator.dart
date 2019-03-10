@@ -96,6 +96,9 @@ class ContractGenerator {
   ],);
 
   Widget buildContractHeader(context) =>
+  Padding(
+    padding: EdgeInsets.all(8.0),
+    child:
       Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         Expanded(
           flex: 3,
@@ -138,5 +141,5 @@ class ContractGenerator {
             ],) : Container(),
           ],),
         )
-      ],);
+      ],),);
 }

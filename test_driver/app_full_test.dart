@@ -169,13 +169,14 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
   await driver.tap(find.byValueKey('people_1'));
 
   // choose parent
-  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('switch_witness') );
   await driver.tap(find.byValueKey('switch_parent'));
+  //await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('select_parent') );
   await driver.tap(find.byValueKey('select_parent'));
   await driver.tap(find.byValueKey('people_2'));
 
   // choose witness
   await driver.tap(find.byValueKey('switch_witness'));
+  await driver.scrollUntilVisible(find.byType('ListView'), find.byValueKey('select_witness') );
   await driver.tap(find.byValueKey('select_witness'));
   await driver.tap(find.byValueKey('people_3'));
 
@@ -216,8 +217,23 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
 
   await screenshot(driver, screenshotConfig, 'contract_signed');
 
+  await driver.scroll(find.byValueKey('scrlvw_contract_generated'), 0, -2300, Duration(milliseconds: 400));
+
+  await screenshot(driver, screenshotConfig, 'contract_signatures');
+
+  await isPresent(find.byValueKey('signature_photographer'), driver);
+
+  // todo draw signature
+  await screenshot(driver, screenshotConfig, 'contract_signature_popup');
+
+  var pageBack = find.pageBack();
+  if (await isPresent(pageBack, driver)) {
+    await driver.tap(pageBack);
+  }
+
+
   // TODO: fix signing test
-//  await driver.scroll(find.byValueKey('scrlvw_contract_generated'), 0, 1000, Duration(milliseconds: 400));
+//  await driver.scroll(find.byValueKey('ex_scrlvw_contract_generated'), 0, 1000, Duration(milliseconds: 400));
 //  await driver.tap(find.byValueKey('signature_photographer_flex'));
 //  await driver.tap(find.byValueKey('signature_photographer_dialog'));
 

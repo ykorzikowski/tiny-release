@@ -60,18 +60,15 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         trailing: !_tinyContract.isLocked ? _buildNavBarButton() : Text(""),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: SafeArea(
-          child: _buildPageContent(),
-        ),),);
+        body: _buildPageContent()),);
   }
 
   Widget _buildPageContent() => Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        Expanded(child: ListView(
-          key: Key('scrlvw_contract_generated'),
-          shrinkWrap: true,
-          //physics: NeverScrollableScrollPhysics(),
+        Expanded(
+          child:
+  ListView(key: Key('scrlvw_contract_generated'),
           children: <Widget>[
 
             /// header
@@ -103,7 +100,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
             _tinyContract.isLocked ? _buildCompletedHint() : Container(),
           ],
-        ), ),
+        ),),
         _buildContentFooterAction(),
 
       ]);
