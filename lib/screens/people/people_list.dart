@@ -8,6 +8,7 @@ import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
+import 'package:tiny_release/util/paywall.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 
@@ -56,6 +57,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
   final bool isContactImportDialog;
+  final PayWall _payWall = PayWall();
 
   /// called by list to get people
   /// getPeople(pageIndex)
@@ -66,7 +68,28 @@ class _ListWidgetState extends State<PeopleListWidget> {
 
   _ListWidgetState(this._controlState, this._getPeople, this._onPeopleTap, {this.isContactImportDialog: true});
 
-  @override
+  _createNewPerson() {
+    var _tinyPeople = TinyPeople.factory();
+    _controlState.curDBO = _tinyPeople;
+    Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
+  }
+
+  Widget _buildPeopleAddButton() => CupertinoButton(
+      child: Text(S.of(context).btn_add, key: Key('navbar_btn_add'),),
+      onPressed: () {
+        _tinyPeopleRepo.getPeopleCount().then((peopleCount) {
+          if ( peopleCount > 10) {
+            _payWall.checkIfPaid(PayFeature.PAY_UNLIMITED_PEOPLE,
+                    () => _createNewPerson(),
+                    (error) => showDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_UNLIMITED_PEOPLE, ctx)));
+          } else {
+            _createNewPerson();
+          }
+        });
+      },
+  );
+
+      @override
   Widget build(BuildContext context) {
     pageLoadController = PagewiseLoadController(
         pageSize: PeopleListWidget.PAGE_SIZE,
@@ -80,14 +103,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
           transitionBetweenRoutes: false,
           leading: BaseUtil.isLargeScreen(context) ? Container() : null,
           middle: Text(S.of(context).title_people),
-          trailing: isContactImportDialog ? CupertinoButton(
-            child: Text(S.of(context).btn_add, key: Key('navbar_btn_add'),),
-            onPressed: () {
-              var _tinyPeople = TinyPeople.factory();
-              _controlState.curDBO = _tinyPeople;
-              Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
-            },
-          ) : null),
+          trailing: isContactImportDialog ? _buildPeopleAddButton() : null),
         child: SafeArea(
           child: Scaffold(
             resizeToAvoidBottomPadding: false,

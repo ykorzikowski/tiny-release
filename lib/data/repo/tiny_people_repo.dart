@@ -27,6 +27,14 @@ class TinyPeopleRepo extends TinyRepo< TinyPeople > {
     return tc ;
   }
 
+  Future<int> getPeopleCount() async{
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TYPE, columns: ['id']);
+
+    return res.length;
+  }
+
   @override
   Future<List<TinyPeople>> getAll(int offset, int limit) async{
     final db = await SQLiteProvider.db.database;

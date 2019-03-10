@@ -9,6 +9,7 @@ import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
+import 'package:tiny_release/util/paywall.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 
@@ -29,8 +30,32 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
   final TinyState _controlState;
   PagewiseLoadController pageLoadController;
+  final PayWall _payWall = PayWall();
 
   _ContractListWidgetState(this._controlState);
+
+  _createNewContract() {
+    var _tinyContract = TinyContract();
+    _tinyContract.isLocked = false;
+    _controlState.curDBO = _tinyContract;
+    BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
+  }
+
+  Widget _buildContractAddButton() => CupertinoButton(
+    child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
+    onPressed: () {
+      _tinyContractRepo.getContractCount().then((contractCount) {
+        if ( contractCount > 10 ) {
+          _payWall.checkIfPaid(PayFeature.PAY_UNLIMITED_CONTRACTS,
+                  () => _createNewContract(),
+                  (error) => showDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_UNLIMITED_CONTRACTS, ctx)));
+        } else {
+          _createNewContract();
+        }
+      });
+
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +75,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           middle: Text(S.of(context).title_contracts),
           trailing:CupertinoButton(
             child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
-            onPressed: () {
-              var _tinyContract = TinyContract();
-              _tinyContract.isLocked = false;
-              _controlState.curDBO = _tinyContract;
-              BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
-            },
+            onPressed: _buildContractAddButton,
           ),),
         child: SafeArea(
           child: Scaffold(

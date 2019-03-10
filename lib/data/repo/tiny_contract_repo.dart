@@ -176,6 +176,14 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     return resultList;
   }
 
+  Future<int> getContractCount() async{
+    final db = await SQLiteProvider.db.database;
+
+    var res = await db.query(TYPE, columns: ['id']);
+
+    return res.length;
+  }
+
   @override
   Future save(TinyContract item) async {
     final db = await SQLiteProvider.db.database;
