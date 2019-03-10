@@ -34,29 +34,6 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
   _ContractListWidgetState(this._controlState);
 
-  _createNewContract() {
-    var _tinyContract = TinyContract();
-    _tinyContract.isLocked = false;
-    _controlState.curDBO = _tinyContract;
-    BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
-  }
-
-  Widget _buildContractAddButton() => CupertinoButton(
-    child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
-    onPressed: () {
-      _tinyContractRepo.getContractCount().then((contractCount) {
-        if ( contractCount > 10 ) {
-          _payWall.checkIfPaid(PayFeature.PAY_UNLIMITED_CONTRACTS,
-                  () => _createNewContract(),
-                  (error) => showDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_UNLIMITED_CONTRACTS, ctx)));
-        } else {
-          _createNewContract();
-        }
-      });
-
-    },
-  );
-
   @override
   Widget build(BuildContext context) {
     pageLoadController = PagewiseLoadController(
@@ -86,10 +63,33 @@ class _ContractListWidgetState extends State<ContractListWidget> {
               noItemsFoundBuilder: (context) {
                 return Text(S.of(context).create_new_contract, style: TextStyle(color: CupertinoColors.inactiveGray));
               },
-          ),
-        ),),
+            ),
+          ),),
       );
   }
+
+  _createNewContract() {
+    var _tinyContract = TinyContract();
+    _tinyContract.isLocked = false;
+    _controlState.curDBO = _tinyContract;
+    BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
+  }
+
+  Widget _buildContractAddButton() => CupertinoButton(
+    child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
+    onPressed: () {
+      _tinyContractRepo.getContractCount().then((contractCount) {
+        if ( contractCount > 10 ) {
+          _payWall.checkIfPaid(PayFeature.PAY_UNLIMITED_CONTRACTS,
+                  () => _createNewContract(),
+                  (error) => showDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_UNLIMITED_CONTRACTS, ctx)));
+        } else {
+          _createNewContract();
+        }
+      });
+
+    },
+  );
 
   Widget _itemBuilder(context, entry, index) {
     return Dismissible(
