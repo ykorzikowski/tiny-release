@@ -73,3 +73,8 @@ build/
 # fastlane
 **/fastlane/report.xml
 **/fastlane/google_service_apikey.json
+
+# target
+Runner.app.dSYM.zip
+Runner.ipa
+android/app/**
