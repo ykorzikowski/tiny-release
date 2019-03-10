@@ -56,6 +56,9 @@ class S implements WidgetsLocalizations {
   String get delete_contract => "Delete Contract?";
   String get dialog_back => "Back";
   String get dialog_delete => "Delete";
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  String get dialog_title_pro_feature => "Pro Feature";
   String get error_subscriptions => "Error while fetching subscriptions";
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
@@ -99,6 +102,8 @@ class S implements WidgetsLocalizations {
   String get no_items_people => "Add people from your contacts";
   String get no_items_presets => "Create or import presets";
   String get no_items_reception => "Create new reception areas";
+  String get no_thanks => "No thanks";
+  String get ok => "OK";
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
   String get payment_title => "Payment";
   String get payment_was_not_successfull => "Payment was not successfull";
@@ -154,6 +159,8 @@ class $de extends S {
   String get btn_complete_contract => "Vertrag abschließen";
   @override
   String get chose_brithday => "Geburtstag auswählen";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Titel";
   @override
@@ -221,6 +228,8 @@ class $de extends S {
   @override
   String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
+  String get no_thanks => "No thanks";
+  @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
   String get payment_was_successfull => "Payment was successfull";
@@ -238,6 +247,8 @@ class $de extends S {
   String get change_order_title => "Reihenfolge anpassen";
   @override
   String get item_wording => "Wording";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
   @override
   String get select_preset => "Vorlage wählen";
   @override
@@ -333,6 +344,8 @@ class $de extends S {
   @override
   String get scaff_deleted => "gelöscht";
   @override
+  String get ok => "OK";
+  @override
   String get title_add_preset => "Vorlage hinzufügen";
   @override
   String get delete_contract => "Vertrag löschen?";
@@ -390,6 +403,8 @@ class $nl extends S {
   String get btn_complete_contract => "Contract afronden";
   @override
   String get chose_brithday => "Ik koos voor brithday";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Titel";
   @override
@@ -457,6 +472,8 @@ class $nl extends S {
   @override
   String get hint_completed_contracts => "Contracten die zijn voltooid, kunnen niet opnieuw worden bewerkt";
   @override
+  String get no_thanks => "No thanks";
+  @override
   String get choose_parent => "Kies ouder";
   @override
   String get payment_was_successfull => "Payment was successfull";
@@ -474,6 +491,8 @@ class $nl extends S {
   String get change_order_title => "Verander bestelling";
   @override
   String get item_wording => "bewoordingen";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
   @override
   String get select_preset => "Selecteer Voorinstelling";
   @override
@@ -568,6 +587,8 @@ class $nl extends S {
   String get no_items_presets => "Voorinstellingen maken of importeren";
   @override
   String get scaff_deleted => "ontslagen";
+  @override
+  String get ok => "OK";
   @override
   String get title_add_preset => "Preset toevoegen";
   @override

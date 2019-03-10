@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 
 typedef ErrorCallback = void Function(String error);
@@ -28,18 +29,18 @@ class PayWall {
     return null;
   }
 
-  static String getText(String pf) => pf.startsWith(PayFeature.PAY_ABO_MONTH)
-      ? "To use this feature, you have to pay for a monthly subscription"
-      : "To use this feature, you can buy the feature $pf or pay for a monthly subscription";
+  static String getText(String pf, ctx) => pf.startsWith(PayFeature.PAY_ABO_MONTH)
+      ? S.of(ctx).dialog_pay_for_subscription
+      : S.of(ctx).dialog_pay_for_subscription_or_feature;
 
   static Widget getSubscriptionDialog(pf, ctx) => CupertinoAlertDialog(
-    title: Text("Pro Feature"),
-    content: Text(getText(pf)),
+    title: Text(S.of(ctx).dialog_title_pro_feature),
+    content: Text(getText(pf, ctx)),
     actions: <Widget>[
-      CupertinoDialogAction(child: Text("OK"), onPressed: () {
+      CupertinoDialogAction(child: Text(S.of(ctx).ok), onPressed: () {
         Navigator.of(ctx).pushNamed(NavRoutes.PAYMENT);
       },),
-      CupertinoDialogAction(child: Text("No thanks"),
+      CupertinoDialogAction(child: Text(S.of(ctx).no_thanks),
       onPressed: () {
         Navigator.of(ctx).pop();
       },)
@@ -48,7 +49,6 @@ class PayWall {
 
   final List<String>_productLists = Platform.isAndroid
       ? [
-        'android.test.purchased',
         PayFeature.PAY_ABO_MONTH,
         PayFeature.PAY_ABO_YEAR,
         PayFeature.PAY_PDF_EXPORT,

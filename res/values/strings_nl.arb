@@ -110,5 +110,9 @@
   "try_again_or_write_me_an_email": "Try again or write me an email!",
   "modules": "Modules",
   "subscriptions": "Subscriptions",
-  "plans": "Plans"
+  "plans": "Plans",
+  "dialog_pay_for_subscription": "To use this feature, you have to pay monthly/yearly for a subscription",
+  "dialog_pay_for_subscription_or_feature": "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription",
+  "ok": "OK",
+  "no_thanks": "No thanks"
 }
