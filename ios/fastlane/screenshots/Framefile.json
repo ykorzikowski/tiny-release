@@ -46,6 +46,24 @@
       }
     },
     {
+      "filter": "contract_list",
+      "keyword": {
+        "color": "#a50301"
+      }
+    },
+    {
+      "filter": "contract_signature",
+      "keyword": {
+        "color": "#a50301"
+      }
+    },
+    {
+      "filter": "contract_signatures",
+      "keyword": {
+        "color": "#a50301"
+      }
+    },
+    {
       "filter": "people_overview",
       "keyword": {
         "color": "#a50301"
