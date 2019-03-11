@@ -113,7 +113,9 @@ lane :screenshots do
     sh("screenshots")
     Dir.chdir "ios/fastlane/screenshots" do
         sh("cp -R locales/* ./")
-        frame_screenshots
+    end
+    Dir.chdir "ios/fastlane" do
+	frame_screenshots
     end
   end
 end

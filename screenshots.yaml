@@ -28,4 +28,4 @@ devices:
 #    - Nexus 5X
 
 # Frame screenshots
-frame: true
+frame: false
