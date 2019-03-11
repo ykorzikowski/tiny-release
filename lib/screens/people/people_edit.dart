@@ -29,14 +29,14 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   final TinyState _tinyState;
   TinyPeople _tinyPeople;
 
-  PeopleTextControllerBundle _peopleTextControllerBundle;
-  final Map addressTextControllers = Map<TinyAddress, AddressTextControllerBundle>();
-  final Map mailTextControllers = Map<TinyPeopleItem, MailTextControllerBundle>();
-  final Map phoneTextControllers = Map<TinyPeopleItem, PhoneTextControllerBundle>();
+  _PeopleTextControllerBundle _peopleTextControllerBundle;
+  final Map _addressTextControllers = Map<TinyAddress, _AddressTextControllerBundle>();
+  final Map _mailTextControllers = Map<TinyPeopleItem, _MailTextControllerBundle>();
+  final Map _phoneTextControllers = Map<TinyPeopleItem, _PhoneTextControllerBundle>();
 
   _PeopleEditWidgetState(this._tinyState) {
     _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
-    _peopleTextControllerBundle = PeopleTextControllerBundle(_tinyPeople);
+    _peopleTextControllerBundle = _PeopleTextControllerBundle(_tinyPeople);
   }
 
   @override
@@ -121,9 +121,9 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   void initState() {
     super.initState();
 
-    _tinyPeople.postalAddresses.forEach((addr) => addressTextControllers.putIfAbsent(addr, () => AddressTextControllerBundle(addr)));
-    _tinyPeople.emails.forEach((mail) => mailTextControllers.putIfAbsent(mail, () => MailTextControllerBundle(mail)));
-    _tinyPeople.phones.forEach((phone) => phoneTextControllers.putIfAbsent(phone, () => PhoneTextControllerBundle(phone)));
+    _tinyPeople.postalAddresses.forEach((addr) => _addressTextControllers.putIfAbsent(addr, () => _AddressTextControllerBundle(addr)));
+    _tinyPeople.emails.forEach((mail) => _mailTextControllers.putIfAbsent(mail, () => _MailTextControllerBundle(mail)));
+    _tinyPeople.phones.forEach((phone) => _phoneTextControllers.putIfAbsent(phone, () => _PhoneTextControllerBundle(phone)));
   }
 
   void _updateTextWidgetState(txt) {
@@ -134,7 +134,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     _tinyPeople.idNumber = _peopleTextControllerBundle.idNumberController.text;
 
     for ( var addr in _tinyPeople.postalAddresses) {
-      AddressTextControllerBundle addressTextController = addressTextControllers[addr];
+      _AddressTextControllerBundle addressTextController = _addressTextControllers[addr];
 
       addr.label = addressTextController.addressLabelController.text;
       addr.street = addressTextController.addressStreetController.text;
@@ -145,13 +145,13 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     }
 
     for ( var phone in _tinyPeople.phones ) {
-      PhoneTextControllerBundle phoneTextController = phoneTextControllers[phone];
+      _PhoneTextControllerBundle phoneTextController = _phoneTextControllers[phone];
       phone.label = phoneTextController.phoneLabelController.text;
       phone.value = phoneTextController.phoneController.text;
     }
 
     for( var mail in _tinyPeople.emails ) {
-      MailTextControllerBundle mailTextControllerBundle = mailTextControllers[mail];
+      _MailTextControllerBundle mailTextControllerBundle = _mailTextControllers[mail];
       mail.label = mailTextControllerBundle.mailLabelController.text;
       mail.value = mailTextControllerBundle.mailController.text;
     }
@@ -337,7 +337,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   /// get single phone widget
   Widget getPhoneWidget(phone) {
-    PhoneTextControllerBundle bundle = phoneTextControllers[phone];
+    _PhoneTextControllerBundle bundle = _phoneTextControllers[phone];
 
     return Column(
       children: <Widget>[
@@ -390,7 +390,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   /// get single mail widget
   Widget getMailWidget(mail) {
-    MailTextControllerBundle bundle = mailTextControllers[mail];
+    _MailTextControllerBundle bundle = _mailTextControllers[mail];
 
     return Column(
       children: <Widget>[
@@ -445,7 +445,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   /// get single address widget
   Widget getAddressWidget(address, index) {
-    AddressTextControllerBundle bundle = addressTextControllers[address];
+    _AddressTextControllerBundle bundle = _addressTextControllers[address];
 
     return Column(
       children: <Widget>[
@@ -555,14 +555,14 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   }
 }
 
-class PeopleTextControllerBundle {
+class _PeopleTextControllerBundle {
   final TextEditingController givenNameController = TextEditingController();
   final TextEditingController familyNameController = TextEditingController();
   final TextEditingController companyController = TextEditingController();
   final TextEditingController idTypeController = TextEditingController();
   final TextEditingController idNumberController = TextEditingController();
 
-  PeopleTextControllerBundle(TinyPeople tinyPeople) {
+  _PeopleTextControllerBundle(TinyPeople tinyPeople) {
     givenNameController.text = tinyPeople.givenName;
     familyNameController.text = tinyPeople.familyName;
     idNumberController.text = tinyPeople.idNumber;
@@ -571,7 +571,7 @@ class PeopleTextControllerBundle {
 
 }
 
-class AddressTextControllerBundle {
+class _AddressTextControllerBundle {
   final TextEditingController addressLabelController = TextEditingController();
   final TextEditingController addressStreetController = TextEditingController();
   final TextEditingController addressPostcodeController = TextEditingController();
@@ -579,7 +579,7 @@ class AddressTextControllerBundle {
   final TextEditingController addressRegionController = TextEditingController();
   final TextEditingController addressCountryController = TextEditingController();
 
-  AddressTextControllerBundle(TinyAddress addr) {
+  _AddressTextControllerBundle(TinyAddress addr) {
     addressLabelController.text = addr.label;
     addressStreetController.text = addr.street;
     addressPostcodeController.text = addr.postcode;
@@ -589,21 +589,21 @@ class AddressTextControllerBundle {
   }
 }
 
-class MailTextControllerBundle {
+class _MailTextControllerBundle {
   final TextEditingController mailLabelController = TextEditingController();
   final TextEditingController mailController = TextEditingController();
 
-  MailTextControllerBundle(TinyPeopleItem mail) {
+  _MailTextControllerBundle(TinyPeopleItem mail) {
     mailLabelController.text = mail.label;
     mailController.text = mail.value;
   }
 }
 
-class PhoneTextControllerBundle {
+class _PhoneTextControllerBundle {
   final TextEditingController phoneLabelController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  PhoneTextControllerBundle(TinyPeopleItem phone) {
+  _PhoneTextControllerBundle(TinyPeopleItem phone) {
     phoneLabelController.text = phone.label;
     phoneController.text = phone.value;
   }
