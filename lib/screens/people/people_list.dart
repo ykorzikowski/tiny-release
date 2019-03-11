@@ -149,7 +149,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
             key: Key('people_$index'),
             leading: PeopleListWidget.getCircleAvatar(
                 entry, PeopleListWidget.getCircleText(entry)),
-            title: Text(entry.givenName + " " + entry.familyName),
+            title: Text(entry.givenName + " " + entry.familyName, overflow: TextOverflow.ellipsis,),
             onTap: () {
               _onPeopleTap(entry, context);
             },

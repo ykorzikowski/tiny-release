@@ -104,22 +104,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
     BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
   }
 
-  Widget _buildContractTileTitle(entry) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(entry.isLocked == true
-            ? CupertinoIcons.check_mark_circled_solid
-            : CupertinoIcons.pen,
-          color: entry.isLocked == true
-              ? CupertinoColors.black
-              : CupertinoColors.activeBlue,),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-          child: Text(entry.displayName),
-        ),
-        ],);
-  
-  Widget _buildContractTileSubtitle(entry) => entry?.preset?.subtitle != null ? Text(entry.preset.subtitle) : null;
+  Widget _buildContractTileSubtitle(entry) => entry?.preset?.subtitle != null ? Text(entry.preset.subtitle, overflow: TextOverflow.ellipsis,) : null;
 
   Widget _buildDateBadge(entry) => entry.date != null ? Column(children: <Widget>[
           Icon(CupertinoIcons.time_solid),
@@ -180,10 +165,10 @@ class _ContractListWidgetState extends State<ContractListWidget> {
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
       Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(4.0),
           child: _buildModelBadge(entry)),
       Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(4.0),
           child: _buildPhotographerBadge(entry) ),
     ],);
 
@@ -196,7 +181,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
       child: Column(
         children: <Widget>[
           ListTile(
-            title: _buildContractTileTitle(entry),
+            title: Text(entry.displayName, overflow: TextOverflow.ellipsis,),//_buildContractTileTitle(entry),
             subtitle: _buildContractTileSubtitle(entry),
             trailing: BaseUtil.isLargeScreen(context) ? _buildContractTileTrailingLarge(entry) : _buildContractTileTrailingSmall(entry),
             onTap: () => _onContractTap(entry),
