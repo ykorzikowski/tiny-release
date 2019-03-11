@@ -70,10 +70,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 key: Key('btn_add_mail'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_mail),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.emails.add(TinyPeopleItem());
-                    })
+                onPressed: _addMail
             ),
             Divider(),
 
@@ -82,10 +79,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 key: Key('btn_add_phone'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_phone),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.phones.add(TinyPeopleItem());
-                    })
+                onPressed: _addPhone
             ),
             Divider(),
 
@@ -94,10 +88,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 key: Key('btn_add_address'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_address),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.postalAddresses.add(TinyAddress());
-                    })
+                onPressed: _addAddress
             ),
             Divider(),
             CupertinoButton(
@@ -124,6 +115,30 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     _tinyPeople.postalAddresses.forEach((addr) => _addressTextControllers.putIfAbsent(addr, () => _AddressTextControllerBundle(addr)));
     _tinyPeople.emails.forEach((mail) => _mailTextControllers.putIfAbsent(mail, () => _MailTextControllerBundle(mail)));
     _tinyPeople.phones.forEach((phone) => _phoneTextControllers.putIfAbsent(phone, () => _PhoneTextControllerBundle(phone)));
+  }
+
+  void _addMail() {
+    setState(() {
+      var mail = TinyPeopleItem();
+      _tinyPeople.emails.add(mail);
+      _mailTextControllers.putIfAbsent(mail, () => _MailTextControllerBundle(mail));
+    });
+  }
+
+  void _addPhone() {
+    setState(() {
+      var phone = TinyPeopleItem();
+      _tinyPeople.phones.add(phone);
+      _phoneTextControllers.putIfAbsent(phone, () => _PhoneTextControllerBundle(phone));
+    });
+  }
+
+  void _addAddress() {
+    setState(() {
+      var address = TinyAddress();
+      _tinyPeople.postalAddresses.add(address);
+      _addressTextControllers.putIfAbsent(address, () => _AddressTextControllerBundle(address));
+    });
   }
 
   void _updateTextWidgetState(txt) {

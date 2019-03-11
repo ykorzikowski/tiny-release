@@ -80,9 +80,11 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   }
 
   _addParagraph(pos) {
-    var paragraph = Paragraph(position: pos);
-    _tinyPreset.paragraphs.add(paragraph);
-    _paragraphTextControllers.putIfAbsent(paragraph, () => _ParagraphControllerBundle(paragraph));
+    setState(() {
+      var paragraph = Paragraph(position: pos);
+      _tinyPreset.paragraphs.add(paragraph);
+      _paragraphTextControllers.putIfAbsent(paragraph, () => _ParagraphControllerBundle(paragraph));
+    });
   }
 
   _getParagraphAddButton() =>
