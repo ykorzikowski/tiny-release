@@ -60,6 +60,7 @@ class S implements WidgetsLocalizations {
   String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
   String get dialog_title_pro_feature => "Pro Feature";
   String get error_subscriptions => "Error while fetching subscriptions";
+  String get error_while_importing => "Error while importing";
   String get finish_contract => "Finish Contract";
   String get finished_contract => "Finished Contract";
   String get gallery => "Gallery";
@@ -86,6 +87,7 @@ class S implements WidgetsLocalizations {
   String get hint_street => "Street";
   String get hint_subtitle => "Subtitle";
   String get hint_title => "Title";
+  String get import_preset_from_file => "Import from file";
   String get in_reception_areas => "In reception areas";
   String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
   String get item_layout => "Layouts";
@@ -123,6 +125,7 @@ class S implements WidgetsLocalizations {
   String get shooting_subject => "Subject of Shooting";
   String get subscriptions => "Subscriptions";
   String get thanks_for_supporting_me => "Thanks for supporting me!";
+  String get the_file_you_specified_is_not_a_valid_tiny_release => "The file you specified is not a valid tiny release preset.";
   String get tile_contact_preview => "Contact Preview";
   String get title_add => "Add";
   String get title_add_people => "Add people";
@@ -160,7 +163,7 @@ class $de extends S {
   @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
-  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
   @override
   String get hint_title => "Titel";
   @override
@@ -178,7 +181,7 @@ class $de extends S {
   @override
   String get hint_mail => "E-Mail";
   @override
-  String get payment_title => "Payment";
+  String get payment_title => "Kauf";
   @override
   String get gallery => "Gallerie";
   @override
@@ -200,7 +203,7 @@ class $de extends S {
   @override
   String get share_pdf => "PDF teilen";
   @override
-  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  String get try_again_or_write_me_an_email => "Versuchs nochmal oder schreibe mir eine E-Mail";
   @override
   String get choose_source => "Quelle wählen";
   @override
@@ -210,7 +213,7 @@ class $de extends S {
   @override
   String get hint_location => "Location";
   @override
-  String get plans => "Plans";
+  String get plans => "Preisplan";
   @override
   String get btn_dialog_cancel => "Abbrechen";
   @override
@@ -228,11 +231,11 @@ class $de extends S {
   @override
   String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
-  String get no_thanks => "No thanks";
+  String get no_thanks => "Nein Danke";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
-  String get payment_was_successfull => "Payment was successfull";
+  String get payment_was_successfull => "Kauf erfolgreich";
   @override
   String get btn_add_phone => "Telefon hnzufügen";
   @override
@@ -240,7 +243,7 @@ class $de extends S {
   @override
   String get loading_pdf => "Generiere PDF";
   @override
-  String get payment_was_not_successfull => "Payment was not successfull";
+  String get payment_was_not_successfull => "Kauf nicht erfolgreich";
   @override
   String get navbar_btn_preview => "Vorschau";
   @override
@@ -248,7 +251,7 @@ class $de extends S {
   @override
   String get item_wording => "Wording";
   @override
-  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  String get dialog_pay_for_subscription_or_feature => "Diese Funktion benötigt eine kostenpflichtige Freischaltung oder ein aktives Abonnement";
   @override
   String get select_preset => "Vorlage wählen";
   @override
@@ -280,11 +283,13 @@ class $de extends S {
   @override
   String get model_release => "Model Release";
   @override
+  String get error_while_importing => "Fehler beim Importieren";
+  @override
   String get contract_images => "Anzahl Bilder";
   @override
   String get item_reception => "Aufnahmebereiche";
   @override
-  String get subscriptions => "Subscriptions";
+  String get subscriptions => "Abonnements";
   @override
   String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
   @override
@@ -310,7 +315,7 @@ class $de extends S {
   @override
   String get btn_add_paragrpah => "Paragraf hinzufügen";
   @override
-  String get modules => "Modules";
+  String get modules => "Module";
   @override
   String get select_date_ok => "Wählen";
   @override
@@ -338,7 +343,7 @@ class $de extends S {
   @override
   String get and => "und";
   @override
-  String get thanks_for_supporting_me => "Thanks for supporting me!";
+  String get thanks_for_supporting_me => "Danke für deine Unterstützung!";
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override
@@ -366,6 +371,8 @@ class $de extends S {
   @override
   String get title_reception => "Aufnahmebereiche";
   @override
+  String get import_preset_from_file => "Aus Datei importieren";
+  @override
   String get hint_country => "Land";
   @override
   String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
@@ -373,6 +380,8 @@ class $de extends S {
   String get btn_add_mail => "E-Mail hinzufügen";
   @override
   String get hint_birthday => "Geburtstag";
+  @override
+  String get the_file_you_specified_is_not_a_valid_tiny_release => "Die ausgewählte Datei is keine gültige TinyRelease Vorlage.";
   @override
   String get title_wording => "Wording";
   @override
@@ -524,6 +533,8 @@ class $nl extends S {
   @override
   String get model_release => "Model release";
   @override
+  String get error_while_importing => "Error while importing";
+  @override
   String get contract_images => "Afbeeldingen tellen";
   @override
   String get item_reception => "Ontvangstgebieden";
@@ -610,6 +621,8 @@ class $nl extends S {
   @override
   String get title_reception => "Receptieruimte";
   @override
+  String get import_preset_from_file => "Import from file";
+  @override
   String get hint_country => "land";
   @override
   String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
@@ -617,6 +630,8 @@ class $nl extends S {
   String get btn_add_mail => "Mail toevoegen";
   @override
   String get hint_birthday => "Verjaardag";
+  @override
+  String get the_file_you_specified_is_not_a_valid_tiny_release => "The file you specified is not a valid tiny release preset.";
   @override
   String get title_wording => "bewoordingen";
   @override

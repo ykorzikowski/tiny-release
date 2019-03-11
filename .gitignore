@@ -77,4 +77,4 @@ build/
 # target
 Runner.app.dSYM.zip
 Runner.ipa
-android/app/**
+android/app/release/**

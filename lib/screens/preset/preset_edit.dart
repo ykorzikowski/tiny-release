@@ -1,10 +1,15 @@
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_paragraph_repo.dart';
 import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
 import 'package:tiny_release/data/tiny_preset.dart';
 import 'package:tiny_release/generated/i18n.dart';
+import 'package:tiny_release/screens/preset/preset_json_parser.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -31,14 +36,18 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
 
   _PresetEditWidgetState(this._controlState) {
     _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
-    _textEditControllerBundle = _TextControllerBundle(_tinyPreset);
   }
 
   @override
   void initState() {
     super.initState();
 
+    _initParagraphControllers();
+  }
+
+  void _initParagraphControllers() {
     _tinyPreset.paragraphs.forEach((para) => _paragraphTextControllers.putIfAbsent(para, () => _ParagraphControllerBundle(para)));
+    _textEditControllerBundle = _TextControllerBundle(_tinyPreset);
   }
 
   void _updateTextWidgetState(txt) {
@@ -104,6 +113,40 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
       };
       Navigator.of(context).pushNamed(NavRoutes.PRESET_PARAGRAPH_EDIT);
     } : null,
+  );
+
+  _onImportError() => showDialog(context: context, builder: (f) =>
+      CupertinoAlertDialog(
+        title: Text(S.of(context).error_while_importing),
+        content: Text(S.of(context).the_file_you_specified_is_not_a_valid_tiny_release),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text(S.of(context).ok),
+            onPressed: () => Navigator.of(context).pop(
+            ),
+          )
+        ],
+      ));
+
+  _importPresetFile() async {
+    String path = await FilePicker.getFilePath(type: FileType.ANY, fileExtension: 'tinyjson');
+    if ( path == '' ) {
+      return;
+    }
+    var parser = PresetJSONParser(path, _onImportError);
+    var tinyPreset = await parser.map();
+    if ( tinyPreset == null ) {
+      return;
+    }
+    setState(() {
+      _tinyPreset = tinyPreset;
+      _initParagraphControllers();
+    });
+  }
+
+  _getImportButton() => CupertinoButton(
+    child: Text(S.of(context).import_preset_from_file),
+    onPressed: _importPresetFile,
   );
 
   /// get paragraphs widgets
@@ -215,10 +258,12 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
 
         BaseUtil.isLargeScreen(context) ? ListTile(
           leading: _getParagraphAddButton(),
+          title:  _getImportButton(),
           trailing: _getSortParagraphsButton(),
         ) : Column(children: <Widget>[
           _getParagraphAddButton(),
-          _getSortParagraphsButton()
+          _getSortParagraphsButton(),
+          _getImportButton(),
         ],),
       ];
 
