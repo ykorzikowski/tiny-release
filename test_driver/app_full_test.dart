@@ -17,41 +17,44 @@ Future _addPreset(FlutterDriver driver, Map screenshotConfig) async {
   var peopleControlItem = find.byValueKey('control_1');
   await driver.tap(peopleControlItem);
 
-  // tap on add paragraph
-  var addPeople = find.byValueKey('navbar_btn_add');
-  await driver.tap(addPeople);
-
   final file = new File('test_assets/test_preset.json');
-  final Map<String, dynamic> presetJson = json.decode(await file.readAsString());
+  final List<dynamic> presetsJson = json.decode(await file.readAsString());
 
-  var lastParagraphTitle;
-  for (var key in presetJson.keys) {
-    if ( key == 'paragraphs' ) {
-      List<dynamic> paras = presetJson[key];
-      for (int i = 0; i < paras.length; i++) {
-        var map = paras[i];
-        await driver.tap( find.byValueKey('btn_add_paragraph') );
+  bool isFirstPresetAdded = true;
+  for (var presetJson in presetsJson) {
+    // tap on add paragraph
+    var addPreset = find.byValueKey('navbar_btn_add');
+    await driver.tap(addPreset);
 
-        lastParagraphTitle = find.byValueKey('tf_paragraph_title_$i');
-        await driver.tap( lastParagraphTitle );
-        await driver.enterText(map['title']);
-        await driver.scrollUntilVisible(find.byValueKey('scrlvw_preset_edit'), find.byValueKey('tf_paragraph_title_$i') );
+    var lastParagraphTitle;
+    for (var key in presetJson.keys) {
+      if ( key == 'paragraphs' ) {
+        List<dynamic> paras = presetJson[key];
+        for (int i = 0; i < paras.length; i++) {
+          var map = paras[i];
+          await driver.tap( find.byValueKey('btn_add_paragraph') );
 
-        await driver.tap( find.byValueKey('tf_paragraph_content_$i') );
-        await driver.enterText(map['content']);
-        await driver.scrollUntilVisible(find.byValueKey('scrlvw_preset_edit'), find.byValueKey('tf_paragraph_content_$i') );
+          lastParagraphTitle = find.byValueKey('tf_paragraph_title_$i');
+          await driver.tap( lastParagraphTitle );
+          await driver.enterText(map['title']);
+          await driver.scrollUntilVisible(find.byValueKey('scrlvw_preset_edit'), find.byValueKey('tf_paragraph_title_$i') );
+
+          await driver.tap( find.byValueKey('tf_paragraph_content_$i') );
+          await driver.enterText(map['content']);
+          await driver.scrollUntilVisible(find.byValueKey('scrlvw_preset_edit'), find.byValueKey('tf_paragraph_content_$i') );
+        }
+
+        continue;
       }
-
-      continue;
+      await driver.tap( find.byValueKey('tf_preset_$key') );
+      await driver.enterText(presetJson[key]);
     }
-    await driver.tap( find.byValueKey('tf_preset_$key') );
-    await driver.enterText(presetJson[key]);
+
+    if (isFirstPresetAdded) await screenshot(driver, screenshotConfig, 'preset_edit');
+
+    // hit save button
+    await driver.tap( find.byValueKey('btn_navbar_save') );
   }
-
-  await screenshot(driver, screenshotConfig, 'preset_edit');
-
-  // hit save button
-  await driver.tap( find.byValueKey('btn_navbar_save') );
 
   await screenshot(driver, screenshotConfig, 'preset_overview');
   var pageBack = find.pageBack();
@@ -229,14 +232,10 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
   var pageBack = find.pageBack();
   if (await isPresent(pageBack, driver)) {
     await driver.tap(pageBack);
+    await driver.tap(pageBack);
   }
 
-
-  // TODO: fix signing test
-//  await driver.scroll(find.byValueKey('ex_scrlvw_contract_generated'), 0, 1000, Duration(milliseconds: 400));
-//  await driver.tap(find.byValueKey('signature_photographer_flex'));
-//  await driver.tap(find.byValueKey('signature_photographer_dialog'));
-
+  await screenshot(driver, screenshotConfig, 'contract_list');
 }
 
 Future<bool> isPresent(SerializableFinder finder, FlutterDriver driver, {Duration timeout = const Duration(seconds: 1)}) async {

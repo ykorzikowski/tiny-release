@@ -142,34 +142,36 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   }
 
   void _updateTextWidgetState(txt) {
-    _tinyPeople.givenName = _peopleTextControllerBundle.givenNameController.text;
-    _tinyPeople.familyName = _peopleTextControllerBundle.familyNameController.text;
-    _tinyPeople.company = _peopleTextControllerBundle.companyController.text;
-    _tinyPeople.idType = _peopleTextControllerBundle.idTypeController.text;
-    _tinyPeople.idNumber = _peopleTextControllerBundle.idNumberController.text;
+    setState(() {
+      _tinyPeople.givenName = _peopleTextControllerBundle.givenNameController.text;
+      _tinyPeople.familyName = _peopleTextControllerBundle.familyNameController.text;
+      _tinyPeople.company = _peopleTextControllerBundle.companyController.text;
+      _tinyPeople.idType = _peopleTextControllerBundle.idTypeController.text;
+      _tinyPeople.idNumber = _peopleTextControllerBundle.idNumberController.text;
 
-    for ( var addr in _tinyPeople.postalAddresses) {
-      _AddressTextControllerBundle addressTextController = _addressTextControllers[addr];
+      for ( var addr in _tinyPeople.postalAddresses) {
+        _AddressTextControllerBundle addressTextController = _addressTextControllers[addr];
 
-      addr.label = addressTextController.addressLabelController.text;
-      addr.street = addressTextController.addressStreetController.text;
-      addr.postcode = addressTextController.addressPostcodeController.text;
-      addr.city = addressTextController.addressCityController.text;
-      addr.region = addressTextController.addressRegionController.text;
-      addr.country = addressTextController.addressCountryController.text;
-    }
+        addr.label = addressTextController.addressLabelController.text;
+        addr.street = addressTextController.addressStreetController.text;
+        addr.postcode = addressTextController.addressPostcodeController.text;
+        addr.city = addressTextController.addressCityController.text;
+        addr.region = addressTextController.addressRegionController.text;
+        addr.country = addressTextController.addressCountryController.text;
+      }
 
-    for ( var phone in _tinyPeople.phones ) {
-      _PhoneTextControllerBundle phoneTextController = _phoneTextControllers[phone];
-      phone.label = phoneTextController.phoneLabelController.text;
-      phone.value = phoneTextController.phoneController.text;
-    }
+      for ( var phone in _tinyPeople.phones ) {
+        _PhoneTextControllerBundle phoneTextController = _phoneTextControllers[phone];
+        phone.label = phoneTextController.phoneLabelController.text;
+        phone.value = phoneTextController.phoneController.text;
+      }
 
-    for( var mail in _tinyPeople.emails ) {
-      _MailTextControllerBundle mailTextControllerBundle = _mailTextControllers[mail];
-      mail.label = mailTextControllerBundle.mailLabelController.text;
-      mail.value = mailTextControllerBundle.mailController.text;
-    }
+      for( var mail in _tinyPeople.emails ) {
+        _MailTextControllerBundle mailTextControllerBundle = _mailTextControllers[mail];
+        mail.label = mailTextControllerBundle.mailLabelController.text;
+        mail.value = mailTextControllerBundle.mailController.text;
+      }
+    });
   }
 
   initialValue(tec, val) {

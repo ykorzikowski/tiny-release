@@ -1,38 +1,84 @@
-{
-  "title": "TFP Model Release",
-  "subtitle": "TFP, nicht kommerziell",
-  "language": "de",
-  "description": "TFP Basis",
-  "paragraphs": [{
-    "title": "Aufnahmen",
-    "paragraph": "Aufnahmen",
-    "content": "Zwischen #model.firstname# #model.lastname#, nachfolgend Model genannt, und #photographer.firstname# #photographer.lastname#, nachfolgend Fotograf genannt, wird folgender Vertrag geschlossen:\n Es wird vereinbart, dass das Model für Aufnahmen dem Fotografen zur Verfügung steht und folgende Aufnahmen hergestellt werden: #contract.shootingareas# am Shootingort #contract.city#. Die Aufnahmen werden am #contract.date# angefertigt. "
-  }, {
-    "title": "Veröffentlichungsrecht",
-    "content": "Die Fotografien dienen der zeitlich und räumlich unbefristeten Vertragsdurchführung (Art. 6, Abs. 1b) DSGVO), im Einzelnen\n- der Eigendarstellung des Models in einer künstlerischen Art und Weise; \n- der Eigendarstellung des Fotografen als Fotograf und Künstler.\n\nDie Auswahl der Motive liegt im Ermessen des Fotografen als Künstler. Die Nutzung des Models darf online auf einer eigenen Internetpräsenz erfolgen oder in sozialen Netzwerken wie beispielsweise Facebook oder Instagram. Eine entgeltliche Lizenzierung durch das Model ist ausgeschlossen. Die Nutzung der Forografien durch eine Modelagentur für eine Sedcard ist unter Namensangabe erlaubt. \n\n Der Fotograf kann eine, mehrere oder alle Fotografien nutzen. Er ist nicht   zur Nutzung verpflichtet. Die Bildbearbeitung ist ihm unter Beachtung der Belange des Models gestattet. Die Nutzung darf online auf einer eigenen Präsenz oder in sozialen Netzwerken erfolgen. Ebenfalls kann er die Fotografien für Fotowettbewerbe und Ausstellungen (§18 UrhG) verwenden. Der Fotograf kann die Fotografien schließlich auch durch Druck (Zeitschriften, Zeitungen, Bücher) verwenden. "
+[
+  {
+    "title": "TFP Model Release",
+    "subtitle": "TFP, nicht kommerziell",
+    "language": "de",
+    "description": "TFP Basis",
+    "paragraphs": [
+      {
+        "title": "Aufnahmen",
+        "paragraph": "Aufnahmen",
+        "content": "Zwischen #model.firstname# #model.lastname#, nachfolgend Model genannt, und #photographer.firstname# #photographer.lastname#, nachfolgend Fotograf genannt, wird folgender Vertrag geschlossen:\n Es wird vereinbart, dass das Model für Aufnahmen dem Fotografen zur Verfügung steht und folgende Aufnahmen hergestellt werden: #contract.shootingareas# am Shootingort #contract.city#. Die Aufnahmen werden am #contract.date# angefertigt. "
+      },
+      {
+        "title": "Veröffentlichungsrecht",
+        "content": "Die Fotografien dienen der zeitlich und räumlich unbefristeten Vertragsdurchführung (Art. 6, Abs. 1b) DSGVO), im Einzelnen\n- der Eigendarstellung des Models in einer künstlerischen Art und Weise; \n- der Eigendarstellung des Fotografen als Fotograf und Künstler.\n\nDie Auswahl der Motive liegt im Ermessen des Fotografen als Künstler. Die Nutzung des Models darf online auf einer eigenen Internetpräsenz erfolgen oder in sozialen Netzwerken wie beispielsweise Facebook oder Instagram. Eine entgeltliche Lizenzierung durch das Model ist ausgeschlossen. Die Nutzung der Forografien durch eine Modelagentur für eine Sedcard ist unter Namensangabe erlaubt. \n\n Der Fotograf kann eine, mehrere oder alle Fotografien nutzen. Er ist nicht   zur Nutzung verpflichtet. Die Bildbearbeitung ist ihm unter Beachtung der Belange des Models gestattet. Die Nutzung darf online auf einer eigenen Präsenz oder in sozialen Netzwerken erfolgen. Ebenfalls kann er die Fotografien für Fotowettbewerbe und Ausstellungen (§18 UrhG) verwenden. Der Fotograf kann die Fotografien schließlich auch durch Druck (Zeitschriften, Zeitungen, Bücher) verwenden. "
+      },
+      {
+        "title": "Honorar",
+        "content": "Das Model erhält als Honorar für die Tätigkeit und Übertragung der Verwertungsrechte keine monetäre Vergütung, sondern eine Auswahl der entstandenen Aufnahmen, die vom Fotograf bearbeitet wurden, und welche der Fotograf zeitnah dem Model nach dem Shooting zur Verfügung stellt. \n\n Darüber hinaus ist ein Verkauf und / oder die Übertragung der Bildrechte an Dritte, insbesondere für kommerzielle Zwecke, jedoch ausgeschlossen. Mit diesem Honorar sind sämtliche Ansprüche des Models vollständig abgegolten."
+      },
+      {
+        "title": "Persönlichkeitsrechte & Namensnennung",
+        "content": "Die Namensnennung des Fotografen liegt im Ermessen des Models. Die Namensnennung des Models liegt im Ermessen des Fotografen. "
+      },
+      {
+        "title": "Bereitstellung",
+        "content": "Das Model bekommt nach dem Shooting #contract.numberOfImages# bearbeitete Bilder zur unter §2 vereinbarten Verwendung zur Verfügung gestellt. Das Model bekommt, nachdem die Bilder ausgewählt und bearbeitet wurden, einen Link per E-Mail zugesandt, über welchen die Bilder angesehen und heruntergeladen werden können. \n\n"
+      },
+      {
+        "title": "Datenschutz",
+        "content": "Die Nutzung der oben genannten Daten erfolgt zur Durchführung des Vertrages. Über die E-Mail können sich Model und Fotograf schnell persönlich erreichen. Die Angabe der Handy-Nummer dient dem gleichen Zweck, ist aber *freiwillig. Etwaige EXIF-Daten dienen der Zuordnung der Fotografen zu diesem Vertrag (Art. 6 Abs. 1 f) DSGVO). Dem Model stehen die sog. Betroffenenrechte auf Auskunft über die Nutzung, Berichtigung falscher Daten, Löschung der Rufnummer und ein Beschwerderecht bei einer Aufsichtsbehörde zu. Die Vorschrift des § 42 Abs. 1 UrhG (Widerrufsrecht aus persönlichen Gründen) bleibt unberührt. \n\n Das Model erklärt sich damit einverstanden, dass die angefertigten Aufnahmen auf Datenträgern gespeichert werden dürfen. Die Einwilligung wird erteilt, ohne jede zeitliche, örtliche und inhaltliche Beschränkung der Verarbeitung und Nutzung der Daten, sowohl durch den Fotografen, als auch durch Dritte, die mit dem Einverständnis des Fotografen handelt, ungeachtet der Übertragungs-, Träger-, und Speichertechnik. "
+      },
+      {
+        "title": "Vertragsänderung & Nebenabreden",
+        "content": "Änderungen, Ergänzungen und Nebenabreden bedürfen der Schriftform; dies gilt auch für die Aufhebung der Schriftform selbst. \n Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird hierdurch die Wirksamkeit des Vertrages im Übrigen nicht berührt."
+      },
+      {
+        "title": "Zusätzliche Vereinbarungen",
+        "content": "Keine, sofern nicht anders vereinbart. "
+      }
+    ]
   },
-    {
-      "title": "Honorar",
-      "content": "Das Model erhält als Honorar für die Tätigkeit und Übertragung der Verwertungsrechte keine monetäre Vergütung, sondern eine Auswahl der entstandenen Aufnahmen, die vom Fotograf bearbeitet wurden, und welche der Fotograf zeitnah dem Model nach dem Shooting zur Verfügung stellt. \n\n Darüber hinaus ist ein Verkauf und / oder die Übertragung der Bildrechte an Dritte, insbesondere für kommerzielle Zwecke, jedoch ausgeschlossen. Mit diesem Honorar sind sämtliche Ansprüche des Models vollständig abgegolten."
-    },
-    {
-      "title": "Persönlichkeitsrechte & Namensnennung",
-      "content": "Die Namensnennung des Fotografen liegt im Ermessen des Models. Die Namensnennung des Models liegt im Ermessen des Fotografen. "
-    },
-    {
-      "title": "Bereitstellung",
-      "content": "Das Model bekommt nach dem Shooting #contract.numberOfImages# bearbeitete Bilder zur unter §2 vereinbarten Verwendung zur Verfügung gestellt. Das Model bekommt, nachdem die Bilder ausgewählt und bearbeitet wurden, einen Link per E-Mail zugesandt, über welchen die Bilder angesehen und heruntergeladen werden können. \n\n"
-    },
-    {
-      "title": "Datenschutz",
-      "content": "Die Nutzung der oben genannten Daten erfolgt zur Durchführung des Vertrages. Über die E-Mail können sich Model und Fotograf schnell persönlich erreichen. Die Angabe der Handy-Nummer dient dem gleichen Zweck, ist aber *freiwillig. Etwaige EXIF-Daten dienen der Zuordnung der Fotografen zu diesem Vertrag (Art. 6 Abs. 1 f) DSGVO). Dem Model stehen die sog. Betroffenenrechte auf Auskunft über die Nutzung, Berichtigung falscher Daten, Löschung der Rufnummer und ein Beschwerderecht bei einer Aufsichtsbehörde zu. Die Vorschrift des § 42 Abs. 1 UrhG (Widerrufsrecht aus persönlichen Gründen) bleibt unberührt. \n\n Das Model erklärt sich damit einverstanden, dass die angefertigten Aufnahmen auf Datenträgern gespeichert werden dürfen. Die Einwilligung wird erteilt, ohne jede zeitliche, örtliche und inhaltliche Beschränkung der Verarbeitung und Nutzung der Daten, sowohl durch den Fotografen, als auch durch Dritte, die mit dem Einverständnis des Fotografen handelt, ungeachtet der Übertragungs-, Träger-, und Speichertechnik. "
-    },
-    {
-      "title": "Vertragsänderung & Nebenabreden",
-      "content": "Änderungen, Ergänzungen und Nebenabreden bedürfen der Schriftform; dies gilt auch für die Aufhebung der Schriftform selbst. \n Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird hierdurch die Wirksamkeit des Vertrages im Übrigen nicht berührt."
-    },
-    {
-      "title": "Zusätzliche Vereinbarungen",
-      "content": "Keine, sofern nicht anders vereinbart. "
-    }]
-}
+  {
+    "title": "Pay Model Release",
+    "subtitle": "kommerzieller Release",
+    "language": "de",
+    "description": "Kommerzieller Vertrag mit Honorar",
+    "paragraphs": [
+      {
+        "title": "Aufnahmen",
+        "paragraph": "Aufnahmen",
+        "content": "Zwischen #model.firstname# #model.lastname#, nachfolgend Model genannt, und #photographer.firstname# #photographer.lastname#, nachfolgend Fotograf genannt, wird folgender Vertrag geschlossen:\n Es wird vereinbart, dass das Model für Aufnahmen dem Fotografen zur Verfügung steht und folgende Aufnahmen hergestellt werden: #contract.shootingareas# am Shootingort #contract.city#. Die Aufnahmen werden am #contract.date# angefertigt. "
+      },
+      {
+        "title": "Veröffentlichungsrecht",
+        "content": "Die Fotografien dienen der zeitlich und räumlich unbefristeten Vertragsdurchführung (Art. 6, Abs. 1b) DSGVO), im Einzelnen\n- der Eigendarstellung des Models in einer künstlerischen Art und Weise; \n- der Eigendarstellung des Fotografen als Fotograf und Künstler.\n\nDie Auswahl der Motive liegt im Ermessen des Fotografen als Künstler. Die Nutzung des Models darf online auf einer eigenen Internetpräsenz erfolgen oder in sozialen Netzwerken wie beispielsweise Facebook oder Instagram. Eine entgeltliche Lizenzierung durch das Model ist ausgeschlossen. Die Nutzung der Forografien durch eine Modelagentur für eine Sedcard ist unter Namensangabe erlaubt. \n\n Der Fotograf kann eine, mehrere oder alle Fotografien nutzen. Er ist nicht   zur Nutzung verpflichtet. Die Bildbearbeitung ist ihm unter Beachtung der Belange des Models gestattet. Die Nutzung darf online auf einer eigenen Präsenz oder in sozialen Netzwerken erfolgen. Ebenfalls kann er die Fotografien für Fotowettbewerbe und Ausstellungen (§18 UrhG) verwenden. Der Fotograf kann die Fotografien schließlich auch durch Druck (Zeitschriften, Zeitungen, Bücher) verwenden. "
+      },
+      {
+        "title": "Honorar",
+        "content": "Das Model erhält als Honorar für die Tätigkeit und Übertragung der Verwertungsrechte keine monetäre Vergütung, sondern eine Auswahl der entstandenen Aufnahmen, die vom Fotograf bearbeitet wurden, und welche der Fotograf zeitnah dem Model nach dem Shooting zur Verfügung stellt. \n\n Darüber hinaus ist ein Verkauf und / oder die Übertragung der Bildrechte an Dritte, insbesondere für kommerzielle Zwecke, jedoch ausgeschlossen. Mit diesem Honorar sind sämtliche Ansprüche des Models vollständig abgegolten."
+      },
+      {
+        "title": "Persönlichkeitsrechte & Namensnennung",
+        "content": "Die Namensnennung des Fotografen liegt im Ermessen des Models. Die Namensnennung des Models liegt im Ermessen des Fotografen. "
+      },
+      {
+        "title": "Bereitstellung",
+        "content": "Das Model bekommt nach dem Shooting #contract.numberOfImages# bearbeitete Bilder zur unter §2 vereinbarten Verwendung zur Verfügung gestellt. Das Model bekommt, nachdem die Bilder ausgewählt und bearbeitet wurden, einen Link per E-Mail zugesandt, über welchen die Bilder angesehen und heruntergeladen werden können. \n\n"
+      },
+      {
+        "title": "Datenschutz",
+        "content": "Die Nutzung der oben genannten Daten erfolgt zur Durchführung des Vertrages. Über die E-Mail können sich Model und Fotograf schnell persönlich erreichen. Die Angabe der Handy-Nummer dient dem gleichen Zweck, ist aber *freiwillig. Etwaige EXIF-Daten dienen der Zuordnung der Fotografen zu diesem Vertrag (Art. 6 Abs. 1 f) DSGVO). Dem Model stehen die sog. Betroffenenrechte auf Auskunft über die Nutzung, Berichtigung falscher Daten, Löschung der Rufnummer und ein Beschwerderecht bei einer Aufsichtsbehörde zu. Die Vorschrift des § 42 Abs. 1 UrhG (Widerrufsrecht aus persönlichen Gründen) bleibt unberührt. \n\n Das Model erklärt sich damit einverstanden, dass die angefertigten Aufnahmen auf Datenträgern gespeichert werden dürfen. Die Einwilligung wird erteilt, ohne jede zeitliche, örtliche und inhaltliche Beschränkung der Verarbeitung und Nutzung der Daten, sowohl durch den Fotografen, als auch durch Dritte, die mit dem Einverständnis des Fotografen handelt, ungeachtet der Übertragungs-, Träger-, und Speichertechnik. "
+      },
+      {
+        "title": "Vertragsänderung & Nebenabreden",
+        "content": "Änderungen, Ergänzungen und Nebenabreden bedürfen der Schriftform; dies gilt auch für die Aufhebung der Schriftform selbst. \n Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird hierdurch die Wirksamkeit des Vertrages im Übrigen nicht berührt."
+      },
+      {
+        "title": "Zusätzliche Vereinbarungen",
+        "content": "Keine, sofern nicht anders vereinbart. "
+      }
+    ]
+  }
+]
