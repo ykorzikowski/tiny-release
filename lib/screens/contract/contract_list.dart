@@ -106,31 +106,29 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
   Widget _buildContractTileTitle(entry) => Row(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[Icon(entry.isLocked == true
+        children: <Widget>[
+          Icon(entry.isLocked == true
             ? CupertinoIcons.check_mark_circled_solid
             : CupertinoIcons.pen,
           color: entry.isLocked == true
               ? CupertinoColors.black
               : CupertinoColors.activeBlue,),
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
           child: Text(entry.displayName),
         ),
         ],);
   
   Widget _buildContractTileSubtitle(entry) => entry?.preset?.subtitle != null ? Text(entry.preset.subtitle) : null;
 
-  Widget _buildDateBadge(entry) => entry.date != null ? Padding(
-        padding: EdgeInsets.all(8.0),
-        child:
-        Column(children: <Widget>[
-          Icon(CupertinoIcons.location_solid),
-          Text(BaseUtil.getLocalFormattedDateTime(context, entry.date)),
-        ],),) : Container();
+  Widget _buildDateBadge(entry) => entry.date != null ? Column(children: <Widget>[
+          Icon(CupertinoIcons.time_solid),
+          Text(BaseUtil.getLocalFormattedDateTime(context, entry.date).replaceFirst(" ", "\n"), textAlign: TextAlign.center,),
+        ],) : Container();
 
   Widget _buildLocationBadge(entry) => Column(children: <Widget>[
         Icon(CupertinoIcons.location_solid),
-        Text(entry.location),
+        Text(entry.location + "\n"),
       ],);
 
   Widget _buildModelBadge(entry) => CircleAvatar(
@@ -164,8 +162,12 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   Widget _buildContractTileTrailingLarge(entry) => Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-      _buildDateBadge(entry),
-      _buildLocationBadge(entry),
+      Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: _buildDateBadge(entry)),
+      Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: _buildLocationBadge(entry)),
       Padding(
         padding: EdgeInsets.all(8.0),
         child: _buildModelBadge(entry)),
