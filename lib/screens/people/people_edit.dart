@@ -29,11 +29,135 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   final TinyState _tinyState;
   TinyPeople _tinyPeople;
 
+  PeopleTextControllerBundle _peopleTextControllerBundle;
+  final Map addressTextControllers = Map<TinyAddress, AddressTextControllerBundle>();
+  final Map mailTextControllers = Map<TinyPeopleItem, MailTextControllerBundle>();
+  final Map phoneTextControllers = Map<TinyPeopleItem, PhoneTextControllerBundle>();
+
   _PeopleEditWidgetState(this._tinyState) {
     _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+    _peopleTextControllerBundle = PeopleTextControllerBundle(_tinyPeople);
   }
 
-  initialValue(val) {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
+        middle: Text(S.of(context).title_add_people),
+        trailing: CupertinoButton(
+          child: Text(S.of(context).brn_save, key: Key('btn_navbar_save')),
+          onPressed: validContact() ? () {
+            if (!validContact()) {
+              return;
+            }
+            new TinyPeopleRepo().save(_tinyPeople);
+            _tinyState.curDBO = _tinyPeople;
+            Navigator.of(context).pop();
+          } : null,),),
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            imageAndNameSection(),
+            Divider(),
+            infoWidget(),
+            Divider(),
+            mailSection(),
+            FlatButton.icon(
+                key: Key('btn_add_mail'),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                label: Text(S.of(context).btn_add_mail),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.emails.add(TinyPeopleItem());
+                    })
+            ),
+            Divider(),
+
+            phoneSection(),
+            FlatButton.icon(
+                key: Key('btn_add_phone'),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                label: Text(S.of(context).btn_add_phone),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.phones.add(TinyPeopleItem());
+                    })
+            ),
+            Divider(),
+
+            addressSection(),
+            FlatButton.icon(
+                key: Key('btn_add_address'),
+                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                label: Text(S.of(context).btn_add_address),
+                onPressed: () =>
+                    setState(() {
+                      _tinyPeople.postalAddresses.add(TinyAddress());
+                    })
+            ),
+            Divider(),
+            CupertinoButton(
+              child: Text(S.of(context).btn_import_contacts),
+              onPressed: () {
+                _tinyState.tinyEditCallback = () {
+                  setState(() {
+                    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+                  });
+                };
+                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tinyPeople.postalAddresses.forEach((addr) => addressTextControllers.putIfAbsent(addr, () => AddressTextControllerBundle(addr)));
+    _tinyPeople.emails.forEach((mail) => mailTextControllers.putIfAbsent(mail, () => MailTextControllerBundle(mail)));
+    _tinyPeople.phones.forEach((phone) => phoneTextControllers.putIfAbsent(phone, () => PhoneTextControllerBundle(phone)));
+  }
+
+  void _updateTextWidgetState(txt) {
+    _tinyPeople.givenName = _peopleTextControllerBundle.givenNameController.text;
+    _tinyPeople.familyName = _peopleTextControllerBundle.familyNameController.text;
+    _tinyPeople.company = _peopleTextControllerBundle.companyController.text;
+    _tinyPeople.idType = _peopleTextControllerBundle.idTypeController.text;
+    _tinyPeople.idNumber = _peopleTextControllerBundle.idNumberController.text;
+
+    for ( var addr in _tinyPeople.postalAddresses) {
+      AddressTextControllerBundle addressTextController = addressTextControllers[addr];
+
+      addr.label = addressTextController.addressLabelController.text;
+      addr.street = addressTextController.addressStreetController.text;
+      addr.postcode = addressTextController.addressPostcodeController.text;
+      addr.city = addressTextController.addressCityController.text;
+      addr.region = addressTextController.addressRegionController.text;
+      addr.country = addressTextController.addressCountryController.text;
+    }
+
+    for ( var phone in _tinyPeople.phones ) {
+      PhoneTextControllerBundle phoneTextController = phoneTextControllers[phone];
+      phone.label = phoneTextController.phoneLabelController.text;
+      phone.value = phoneTextController.phoneController.text;
+    }
+
+    for( var mail in _tinyPeople.emails ) {
+      MailTextControllerBundle mailTextControllerBundle = mailTextControllers[mail];
+      mail.label = mailTextControllerBundle.mailLabelController.text;
+      mail.value = mailTextControllerBundle.mailController.text;
+    }
+  }
+
+  initialValue(tec, val) {
     return TextEditingController(text: val);
   }
 
@@ -108,8 +232,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_givenName'),
-                    onChanged: (t) => setState(() => _tinyPeople.givenName = t),
-                    controller: initialValue(_tinyPeople.givenName),
+                    onChanged: _updateTextWidgetState,
+                    controller: _peopleTextControllerBundle.givenNameController,
                     placeholder: S.of(context).hint_givenname,
                   ),),
                 Padding(
@@ -117,8 +241,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_familyName'),
-                    onChanged: (t) => setState(() => _tinyPeople.familyName = t),
-                    controller: initialValue(_tinyPeople.familyName),
+                    onChanged: (t) => _updateTextWidgetState,
+                    controller: _peopleTextControllerBundle.familyNameController,
                     placeholder: S.of(context).hint_familyname,
                   ),),
                 Padding(
@@ -126,8 +250,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_company'),
-                    onChanged: (t) => setState(() => _tinyPeople.company = t),
-                    controller: initialValue(_tinyPeople.company),
+                    onChanged: _updateTextWidgetState,
+                    controller: _peopleTextControllerBundle.companyController,
                     placeholder:  S.of(context).hint_company,
                   ),),
               ],
@@ -148,8 +272,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_idType'),
-              onChanged: (t) => setState(() => _tinyPeople.idType = t),
-              controller: initialValue(_tinyPeople.idType),
+              onChanged: _updateTextWidgetState,
+              controller: _peopleTextControllerBundle.idTypeController,
               placeholder:  S.of(context).hint_id_type,
             ),),
           Padding(
@@ -157,8 +281,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             child:
             CupertinoTextField(
               key: Key('tf_idNumber'),
-              onChanged: (t) => setState(() => _tinyPeople.idNumber = t),
-              controller: initialValue(_tinyPeople.idNumber),
+              onChanged: _updateTextWidgetState,
+              controller: _peopleTextControllerBundle.idNumberController,
               placeholder:  S.of(context).hint_id_number,
             ),),
               ListTile(
@@ -212,29 +336,35 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       ).toList();
 
   /// get single phone widget
-  Widget getPhoneWidget(phone) =>
-      Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              onChanged: (t) => setState(() => phone.label = t),
-              controller: initialValue(phone.label),
-              placeholder:  S.of(context).hint_phone_label,
-            ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              onChanged: (t) => setState(() => phone.value = t),
-              controller: initialValue(phone.value),
-              keyboardType: TextInputType.phone,
-              placeholder:  S.of(context).hint_phone,
-            ),),
-        ],
-      );
+  Widget getPhoneWidget(phone) {
+    PhoneTextControllerBundle bundle = phoneTextControllers[phone];
 
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            onChanged: _updateTextWidgetState,
+            controller: bundle.phoneLabelController,
+            placeholder: S
+                .of(context)
+                .hint_phone_label,
+          ),),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            onChanged: _updateTextWidgetState,
+            controller: bundle.phoneController,
+            keyboardType: TextInputType.phone,
+            placeholder: S
+                .of(context)
+                .hint_phone,
+          ),),
+      ],
+    );
+  }
   /// phone section
   Widget phoneSection() =>
       Container(
@@ -259,27 +389,30 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       ).toList();
 
   /// get single mail widget
-  Widget getMailWidget(mail) =>
-      Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              onChanged: (t) => setState(() => mail.label = t),
-              controller: initialValue(mail.label),
-              placeholder:  S.of(context).hint_mail_label,
-            ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child: CupertinoTextField(
-              onChanged: (t) => setState(() => mail.value = t),
-              controller: initialValue(mail.value),
-              keyboardType: TextInputType.emailAddress,
-              placeholder:  S.of(context).hint_mail,
-            ),),
-        ],
-      );
+  Widget getMailWidget(mail) {
+    MailTextControllerBundle bundle = mailTextControllers[mail];
+
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            onChanged: _updateTextWidgetState,
+            controller: bundle.mailLabelController,
+            placeholder: S.of(context).hint_mail_label,
+          ),),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child: CupertinoTextField(
+            onChanged: _updateTextWidgetState,
+            controller: bundle.mailController,
+            keyboardType: TextInputType.emailAddress,
+            placeholder: S.of(context).hint_mail,
+          ),),
+      ],
+    );
+  }
 
   /// mail section
   Widget mailSection() =>
@@ -311,68 +444,83 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   }
 
   /// get single address widget
-  Widget getAddressWidget(address, index) =>
-      Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              key: Key('tf_label_$index'),
-              onChanged: (t) => setState(() => address.label = t),
-              controller: initialValue(address.label),
-              placeholder:  S.of(context).hint_adresslabel,
-              ),
-            ),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              key: Key('tf_street_$index'),
-              onChanged: (t) => setState(() => address.street = t),
-              controller: initialValue(address.street),
-              placeholder:  S.of(context).hint_street,
-            ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            Row(
-              children: <Widget>[
-                Flexible(child: CupertinoTextField(
-                  key: Key('tf_postcode_$index'),
-                  onChanged: (t) => setState(() => address.postcode = t),
-                  controller: initialValue(address.postcode),
-                  keyboardType: TextInputType.number,
-                  placeholder:  S.of(context).hint_postcode,
-                )),
-                Flexible(child: CupertinoTextField(
-                  key: Key('tf_city_$index'),
-                  onChanged: (t) => setState(() => address.city = t),
-                  controller: initialValue(address.city),
-                  placeholder:  S.of(context).hint_city,
-                )),
-              ],
-            ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              key: Key('tf_region_$index'),
-              onChanged: (t) => setState(() => address.region = t),
-              controller: initialValue(address.region),
-              placeholder:  S.of(context).hint_region,
-            ),),
-          Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child:
-            CupertinoTextField(
-              key: Key('tf_country_$index'),
-              onChanged: (t) => address.country = t,
-              controller: initialValue(address.country),
-              placeholder:  S.of(context).hint_country,
-            ),),
-        ],
-      );
+  Widget getAddressWidget(address, index) {
+    AddressTextControllerBundle bundle = addressTextControllers[address];
+
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            key: Key('tf_label_$index'),
+            onChanged: _updateTextWidgetState,
+            controller: bundle.addressLabelController,
+            placeholder: S
+                .of(context)
+                .hint_adresslabel,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            key: Key('tf_street_$index'),
+            onChanged: _updateTextWidgetState,
+            controller: bundle.addressStreetController,
+            placeholder: S
+                .of(context)
+                .hint_street,
+          ),),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          Row(
+            children: <Widget>[
+              Flexible(child: CupertinoTextField(
+                key: Key('tf_postcode_$index'),
+                onChanged: _updateTextWidgetState,
+                controller: bundle.addressPostcodeController,
+                keyboardType: TextInputType.number,
+                placeholder: S
+                    .of(context)
+                    .hint_postcode,
+              )),
+              Flexible(child: CupertinoTextField(
+                key: Key('tf_city_$index'),
+                onChanged: _updateTextWidgetState,
+                controller: bundle.addressCityController,
+                placeholder: S
+                    .of(context)
+                    .hint_city,
+              )),
+            ],
+          ),),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            key: Key('tf_region_$index'),
+            onChanged: _updateTextWidgetState,
+            controller: bundle.addressRegionController,
+            placeholder: S
+                .of(context)
+                .hint_region,
+          ),),
+        Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child:
+          CupertinoTextField(
+            key: Key('tf_country_$index'),
+            onChanged: _updateTextWidgetState,
+            controller: bundle.addressCountryController,
+            placeholder: S
+                .of(context)
+                .hint_country,
+          ),),
+      ],
+    );
+  }
 
   /// address section
   Widget addressSection() =>
@@ -405,82 +553,58 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   bool validAddress(TinyAddress adr) {
     return adr.street != null && adr.city != null && adr.postcode != null;
   }
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        heroTag: 'control',
-        transitionBetweenRoutes: false,
-        middle: Text(S.of(context).title_add_people),
-        trailing: CupertinoButton(
-          child: Text(S.of(context).brn_save, key: Key('btn_navbar_save')),
-          onPressed: validContact() ? () {
-            if (!validContact()) {
-              return;
-            }
-            new TinyPeopleRepo().save(_tinyPeople);
-            _tinyState.curDBO = _tinyPeople;
-              Navigator.of(context).pop();
-          } : null,),),
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            imageAndNameSection(),
-            Divider(),
-            infoWidget(),
-            Divider(),
-            mailSection(),
-            FlatButton.icon(
-                key: Key('btn_add_mail'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_mail),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.emails.add(TinyPeopleItem());
-                    })
-            ),
-            Divider(),
+class PeopleTextControllerBundle {
+  final TextEditingController givenNameController = TextEditingController();
+  final TextEditingController familyNameController = TextEditingController();
+  final TextEditingController companyController = TextEditingController();
+  final TextEditingController idTypeController = TextEditingController();
+  final TextEditingController idNumberController = TextEditingController();
 
-            phoneSection(),
-            FlatButton.icon(
-                key: Key('btn_add_phone'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_phone),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.phones.add(TinyPeopleItem());
-                    })
-            ),
-            Divider(),
+  PeopleTextControllerBundle(TinyPeople tinyPeople) {
+    givenNameController.text = tinyPeople.givenName;
+    familyNameController.text = tinyPeople.familyName;
+    idNumberController.text = tinyPeople.idNumber;
+    idTypeController.text = tinyPeople.idType;
+  }
 
-            addressSection(),
-            FlatButton.icon(
-              key: Key('btn_add_address'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_address),
-                onPressed: () =>
-                    setState(() {
-                      _tinyPeople.postalAddresses.add(TinyAddress());
-                    })
-            ),
-            Divider(),
-            CupertinoButton(
-              child: Text(S.of(context).btn_import_contacts),
-              onPressed: () {
-                _tinyState.tinyEditCallback = () {
-                  setState(() {
-                    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
-                  });
-                };
-                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
-              },
-            )
-          ],
-        ),
-      ),
-    );
+}
+
+class AddressTextControllerBundle {
+  final TextEditingController addressLabelController = TextEditingController();
+  final TextEditingController addressStreetController = TextEditingController();
+  final TextEditingController addressPostcodeController = TextEditingController();
+  final TextEditingController addressCityController = TextEditingController();
+  final TextEditingController addressRegionController = TextEditingController();
+  final TextEditingController addressCountryController = TextEditingController();
+
+  AddressTextControllerBundle(TinyAddress addr) {
+    addressLabelController.text = addr.label;
+    addressStreetController.text = addr.street;
+    addressPostcodeController.text = addr.postcode;
+    addressCityController.text = addr.city;
+    addressRegionController.text = addr.region;
+    addressCountryController.text = addr.country;
+  }
+}
+
+class MailTextControllerBundle {
+  final TextEditingController mailLabelController = TextEditingController();
+  final TextEditingController mailController = TextEditingController();
+
+  MailTextControllerBundle(TinyPeopleItem mail) {
+    mailLabelController.text = mail.label;
+    mailController.text = mail.value;
+  }
+}
+
+class PhoneTextControllerBundle {
+  final TextEditingController phoneLabelController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  PhoneTextControllerBundle(TinyPeopleItem phone) {
+    phoneLabelController.text = phone.label;
+    phoneController.text = phone.value;
   }
 }
