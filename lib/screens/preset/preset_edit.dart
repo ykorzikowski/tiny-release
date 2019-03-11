@@ -26,8 +26,32 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   final ParagraphRepo _paragraphRepo = ParagraphRepo();
   TinyPreset _tinyPreset;
 
+  _TextControllerBundle _textEditControllerBundle;
+  final Map<Paragraph, _ParagraphControllerBundle> _paragraphTextControllers = Map();
+
   _PresetEditWidgetState(this._controlState) {
     _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+    _textEditControllerBundle = _TextControllerBundle(_tinyPreset);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tinyPreset.paragraphs.forEach((para) => _paragraphTextControllers.putIfAbsent(para, () => _ParagraphControllerBundle(para)));
+  }
+
+  void _updateTextWidgetState(txt) {
+    _tinyPreset.title = _textEditControllerBundle.titleController.text;
+    _tinyPreset.subtitle = _textEditControllerBundle.subtitleController.text;
+    _tinyPreset.language = _textEditControllerBundle.languageController.text;
+    _tinyPreset.description = _textEditControllerBundle.descriptionController.text;
+
+    for (var para in _tinyPreset.paragraphs) {
+      _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
+      para.title = bundle.paragraphTitleController.text;
+      para.content = bundle.paragraphContentController.text;
+    }
   }
 
   ///
@@ -53,8 +77,10 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         _tinyPreset.paragraphs.length > 0 && validParagraphs() ;
   }
 
-  initialValue(val) {
-    return TextEditingController(text: val);
+  _addParagraph(pos) {
+    var paragraph = Paragraph(position: pos);
+    _tinyPreset.paragraphs.add(paragraph);
+    _paragraphTextControllers.putIfAbsent(paragraph, () => _ParagraphControllerBundle(paragraph));
   }
 
   _getParagraphAddButton() =>
@@ -62,7 +88,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         child:
           Text(S.of(context).btn_add_paragrpah, key: Key('btn_add_paragraph'),),
         onPressed: () =>
-            setState(() => _tinyPreset.paragraphs.add(Paragraph(position: (_tinyPreset.paragraphs.length+1)))),
+            setState(() => _addParagraph(_tinyPreset.paragraphs.length+1)),
       );
 
   _getSortParagraphsButton() => CupertinoButton(
@@ -107,31 +133,33 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     return list;
   }
 
-  Widget _getParagraphWidget(Paragraph para, index) =>
-      Column(children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(12.0),
-          child: CupertinoTextField(
-            key: Key('tf_paragraph_title_$index'),
-            onChanged: (t) => setState(() => para.title = t),
-            controller: initialValue(para.title),
-            keyboardType: TextInputType.text,
-            placeholder: S.of(context).hint_title,
-          ),
+  Widget _getParagraphWidget(Paragraph para, index) {
+    _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
+    return Column(children: <Widget>[
+      Padding(
+        padding: EdgeInsets.all(12.0),
+        child: CupertinoTextField(
+          key: Key('tf_paragraph_title_$index'),
+          onChanged: _updateTextWidgetState,
+          controller: bundle.paragraphTitleController,
+          keyboardType: TextInputType.text,
+          placeholder: S.of(context).hint_title,
         ),
-        Padding(
-          padding: EdgeInsets.all(12.0),
-          child: CupertinoTextField(
-            key: Key('tf_paragraph_content_$index'),
-            onChanged: (t) => setState(() => para.content = t),
-            controller: initialValue(para.content),
-            keyboardType: TextInputType.multiline,
-            maxLines: 12,
-            placeholder: S.of(context).hint_content,
-            ),
+      ),
+      Padding(
+        padding: EdgeInsets.all(12.0),
+        child: CupertinoTextField(
+          key: Key('tf_paragraph_content_$index'),
+          onChanged: _updateTextWidgetState,
+          controller: bundle.paragraphContentController,
+          keyboardType: TextInputType.multiline,
+          maxLines: 12,
+          placeholder: S.of(context).hint_content,
         ),
-        ]
-      );
+      ),
+    ]
+    );
+  }
 
   _getFields() =>
       <Widget>[
@@ -139,8 +167,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_title'),
-            onChanged: (t) => setState(() => _tinyPreset.title = t),
-            controller: initialValue(_tinyPreset.title),
+            onChanged: _updateTextWidgetState,
+            controller: _textEditControllerBundle.titleController,
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_title,
           ),
@@ -149,8 +177,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_subtitle'),
-            onChanged: (t) =>  setState(() =>_tinyPreset.subtitle = t),
-            controller: initialValue(_tinyPreset.subtitle),
+            onChanged: _updateTextWidgetState,
+            controller: _textEditControllerBundle.subtitleController,
             keyboardType: TextInputType.text,
             placeholder:  S.of(context).hint_subtitle,
           ),
@@ -159,8 +187,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_language'),
-            onChanged: (t) => setState(() => _tinyPreset.language = t),
-            controller: initialValue(_tinyPreset.language),
+            onChanged: _updateTextWidgetState,
+            controller: _textEditControllerBundle.languageController,
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_language,
           ),
@@ -169,8 +197,8 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           padding: EdgeInsets.all(12.0),
           child: CupertinoTextField(
             key: Key('tf_preset_description'),
-            onChanged: (t) =>  setState(() => _tinyPreset.description = t),
-            controller: initialValue(_tinyPreset.description),
+            onChanged: _updateTextWidgetState,
+            controller: _textEditControllerBundle.descriptionController,
             keyboardType: TextInputType.text,
             placeholder: S.of(context).hint_description,
           ),
@@ -217,4 +245,29 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     );
   }
 
+}
+
+class _TextControllerBundle {
+  final titleController = TextEditingController();
+  final subtitleController = TextEditingController();
+  final languageController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  _TextControllerBundle(TinyPreset tinyPreset) {
+    titleController.text = tinyPreset.title;
+    subtitleController.text = tinyPreset.subtitle;
+    languageController.text = tinyPreset.language;
+    descriptionController.text = tinyPreset.description;
+  }
+}
+
+class _ParagraphControllerBundle {
+
+  final paragraphTitleController = TextEditingController();
+  final paragraphContentController = TextEditingController();
+
+  _ParagraphControllerBundle(Paragraph para) {
+    paragraphTitleController.text = para.title;
+    paragraphContentController.text = para.content;
+  }
 }
