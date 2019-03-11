@@ -40,6 +40,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   Map<int, Tag> _receptionAreas = Map();
   List<Tag> _tags = List();
 
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+
   static const TextStyle btnStyle = TextStyle(color: CupertinoColors.activeBlue, fontSize: 16);
 
   bool _enabledWitness = false;
@@ -53,6 +56,21 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       _tinyContract.receptions.forEach((rec) => _tags.add(Tag(id: rec.id, title: rec.displayName)));
       _tinyContract.receptions.forEach((rec) => _receptionAreas.putIfAbsent(rec.id, () => Tag(id: rec.id, title: rec.displayName)));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _locationController.text = _tinyContract.location;
+    _subjectController.text = _tinyContract.displayName;
+  }
+
+  void _updateTexTWidgetState(txt) {
+    setState(() {
+      _tinyContract.location = _locationController.text;
+      _tinyContract.displayName = _subjectController.text;
+    });
   }
 
   bool validContract() {
@@ -456,8 +474,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                         key: Key('tf_location'),
                         keyboardType: TextInputType.text,
                         maxLength: 50,
-                        onChanged: (t) => setState(() =>_tinyContract.location = t ),
-                        controller: initialValue(_tinyContract.location),
+                        onChanged: _updateTexTWidgetState,
+                        controller: _locationController,
                         ),
                   ),
                 ),
@@ -472,8 +490,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     child: CupertinoTextField(
                       key: Key('tf_subject'),
                       maxLength: 50,
-                      onChanged: (t) => setState(() => _tinyContract.displayName = t),
-                      controller: initialValue(_tinyContract.displayName),
+                      onChanged: _updateTexTWidgetState,
+                      controller: _subjectController,
                     ),
                   ),
                 ),

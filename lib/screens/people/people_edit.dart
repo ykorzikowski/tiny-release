@@ -565,6 +565,7 @@ class _PeopleTextControllerBundle {
   _PeopleTextControllerBundle(TinyPeople tinyPeople) {
     givenNameController.text = tinyPeople.givenName;
     familyNameController.text = tinyPeople.familyName;
+    companyController.text = tinyPeople.company;
     idNumberController.text = tinyPeople.idNumber;
     idTypeController.text = tinyPeople.idType;
   }

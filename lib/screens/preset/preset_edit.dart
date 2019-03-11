@@ -42,16 +42,18 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   }
 
   void _updateTextWidgetState(txt) {
-    _tinyPreset.title = _textEditControllerBundle.titleController.text;
-    _tinyPreset.subtitle = _textEditControllerBundle.subtitleController.text;
-    _tinyPreset.language = _textEditControllerBundle.languageController.text;
-    _tinyPreset.description = _textEditControllerBundle.descriptionController.text;
+    setState(() {
+      _tinyPreset.title = _textEditControllerBundle.titleController.text;
+      _tinyPreset.subtitle = _textEditControllerBundle.subtitleController.text;
+      _tinyPreset.language = _textEditControllerBundle.languageController.text;
+      _tinyPreset.description = _textEditControllerBundle.descriptionController.text;
 
-    for (var para in _tinyPreset.paragraphs) {
-      _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
-      para.title = bundle.paragraphTitleController.text;
-      para.content = bundle.paragraphContentController.text;
-    }
+      for (var para in _tinyPreset.paragraphs) {
+        _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
+        para.title = bundle.paragraphTitleController.text;
+        para.content = bundle.paragraphContentController.text;
+      }
+    });
   }
 
   ///
