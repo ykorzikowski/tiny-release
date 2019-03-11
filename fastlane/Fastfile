@@ -11,7 +11,7 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-update_fastlane
+# update_fastlane
 
 # default_platform(:android)
 
@@ -32,6 +32,8 @@ platform :android do
     end
     upload_to_play_store(
       track: 'alpha',
+      json_key: "fastlane/google_service_apikey.json",
+      package_name: "de.korzikowski.tinyrelease",
       apk: "build/app/outputs/apk/release/app-release.apk",
       skip_upload_screenshots: true,
       skip_upload_images: true)

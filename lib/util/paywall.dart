@@ -75,6 +75,10 @@ class PayWall {
   /// cbs - callback success
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
+    if ( Platform.isIOS ) {
+      cbs();
+      return true;
+    }
     bool hasAlreadyPaid = await FlutterInappPurchase.checkSubscribed(sku: pf) ?? false;
     bool hasAbo = await FlutterInappPurchase.checkSubscribed(sku: PayFeature.PAY_ABO_MONTH) ?? false || await FlutterInappPurchase.checkSubscribed(sku: PayFeature.PAY_ABO_YEAR) ?? false;
 

@@ -37,17 +37,17 @@ class ContractPdfGenerator {
     _textStyle = TextStyle( fontSize: 12, font: Font.times() );
     _personPdfLargeStyle = TextStyle( fontSize: 16, font: Font.timesBold() );
 
+    var widgetList = List<Widget>();
+    widgetList.add(buildPdfContractHeader(buildContext, doc.document));
+    widgetList.add(buildPdfShootingInformationSection(buildContext));
+    widgetList.addAll(buildPdfParagraphs(buildContext));
+    widgetList.add(buildPdfSignatures(buildContext, doc.document));
+
     doc.addPage(MultiPage(
       pageFormat: PdfPageFormat.a4,
       crossAxisAlignment: CrossAxisAlignment.start,
-      build: (context) => <Widget> [
-        buildPdfContractHeader(buildContext, doc.document),
-        buildPdfShootingInformationSection(buildContext),
-        Column(children: buildPdfParagraphs(buildContext)),
-        buildPdfSignatures(buildContext, doc.document),
-      ],
+      build: (context) => widgetList,
     ));
-
     return doc;
   }
 

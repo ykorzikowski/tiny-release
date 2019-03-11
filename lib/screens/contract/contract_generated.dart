@@ -36,6 +36,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   TinyContract _tinyContract;
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
+  final PayWall _payWall = PayWall();
   ContractPdfGenerator _contractPdfGenerator;
   ContractGenerator _contractGenerator;
 
@@ -145,6 +146,16 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
     ),
   );
 
+  void _exportPdf() {
+    var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
+
+    _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+        BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+          hideLoading();
+          ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+        }));
+  }
+
   Widget _buildFooterShareButton() => CupertinoPopoverButton(
     child: Icon(CupertinoIcons.share, color: CupertinoColors.activeBlue, size: 32),
     popoverBuild: (context) => CupertinoPopoverMenuList(
@@ -159,15 +170,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             /// close the popover
             Navigator.of(context).pop();
 
-            PayWall.getShared().checkIfPaid(PayFeature.PAY_PDF_EXPORT, () {
-              var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
-
-              _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
-                  BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-                    hideLoading();
-                    ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-                  }));
-            },
+            _payWall.checkIfPaid(PayFeature.PAY_PDF_EXPORT, _exportPdf,
                     (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
           },)
       ],
