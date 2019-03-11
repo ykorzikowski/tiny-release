@@ -90,85 +90,114 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
     },
   );
+  
+  /// delete contract and print deleted scaffold
+  _deleteContract(entry) {
+    _tinyContractRepo.delete(entry);
+
+    Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
+  }
+
+  _onContractTap(entry) {
+    _controlState.curDBO = entry;
+    entry.isLocked ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED) :
+    BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
+  }
+
+  Widget _buildContractTileTitle(entry) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[Icon(entry.isLocked == true
+            ? CupertinoIcons.check_mark_circled_solid
+            : CupertinoIcons.pen,
+          color: entry.isLocked == true
+              ? CupertinoColors.black
+              : CupertinoColors.activeBlue,),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(entry.displayName),
+        ),
+        ],);
+  
+  Widget _buildContractTileSubtitle(entry) => entry?.preset?.subtitle != null ? Text(entry.preset.subtitle) : null;
+
+  Widget _buildDateBadge(entry) => entry.date != null ? Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        Column(children: <Widget>[
+          Icon(CupertinoIcons.location_solid),
+          Text(BaseUtil.getLocalFormattedDateTime(context, entry.date)),
+        ],),) : Container();
+
+  Widget _buildLocationBadge(entry) => Column(children: <Widget>[
+        Icon(CupertinoIcons.location_solid),
+        Text(entry.location),
+      ],);
+
+  Widget _buildModelBadge(entry) => CircleAvatar(
+        backgroundColor: Colors.lightBlue,
+        child: entry.model.avatar == null ? Text(
+          PeopleListWidget.getCircleText(entry.model),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ) : null,
+        backgroundImage: entry.model.avatar != null ? new FileImage(
+            Io.File(entry.model.avatar)) : null,
+        radius: 32.0,
+      );
+
+  Widget _buildPhotographerBadge(entry) => CircleAvatar(
+        backgroundColor: Colors.lightBlue,
+        child: entry.photographer.avatar == null ? Text(
+          PeopleListWidget.getCircleText(entry.model),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ) : null,
+        backgroundImage: entry.photographer.avatar != null
+            ? new FileImage(
+            Io.File(entry.photographer.avatar))
+            : null,
+        radius: 32.0,
+      );
+
+  Widget _buildContractTileTrailingLarge(entry) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      _buildDateBadge(entry),
+      _buildLocationBadge(entry),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: _buildModelBadge(entry)),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: _buildPhotographerBadge(entry) ),
+    ],);
+
+  Widget _buildContractTileTrailingSmall(entry) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Padding(
+          padding: EdgeInsets.all(8.0),
+          child: _buildModelBadge(entry)),
+      Padding(
+          padding: EdgeInsets.all(8.0),
+          child: _buildPhotographerBadge(entry) ),
+    ],);
 
   Widget _itemBuilder(context, entry, index) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: BaseUtil.getDismissibleBackground(),
       key: Key('contract_$index'),
-      onDismissed: (direction) {
-        _tinyContractRepo.delete(entry);
-
-        Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(entry.displayName + " " +  S.of(context).scaff_deleted)));
-      },
+      onDismissed: (direction) => _deleteContract(entry),
       child: Column(
         children: <Widget>[
           ListTile(
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[Icon(entry.isLocked == true ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.pen,
-                color: entry.isLocked == true ? CupertinoColors.black : CupertinoColors.activeBlue,),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(entry.displayName),
-              ),
-              ],),
-            subtitle: entry?.preset?.subtitle != null ? Text(entry.preset.subtitle) : null,
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                entry.date != null ? Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child:
-                  Column(children: <Widget>[
-                    Icon(CupertinoIcons.location_solid),
-                    Text(BaseUtil.getLocalFormattedDateTime(context, entry.date)),
-                  ],),) : Container(),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child:
-                  Column(children: <Widget>[
-                    Icon(CupertinoIcons.location_solid),
-                    Text(entry.location),
-                  ],),),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child:
-                  CircleAvatar(
-                    backgroundColor: Colors.lightBlue,
-                    child: entry.model.avatar == null ? Text(
-                      PeopleListWidget.getCircleText(entry.model),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ) : null,
-                    backgroundImage: entry.model.avatar != null ? new FileImage(
-                        Io.File(entry.model.avatar)) : null,
-                    radius: 32.0,
-                  ),),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child:
-                  CircleAvatar(
-                    backgroundColor: Colors.lightBlue,
-                    child: entry.photographer.avatar == null ? Text(
-                      PeopleListWidget.getCircleText(entry.model),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ) : null,
-                    backgroundImage: entry.photographer.avatar != null
-                        ? new FileImage(
-                        Io.File(entry.photographer.avatar))
-                        : null,
-                    radius: 32.0,
-                  ),),
-              ],),
-            onTap: () {
-              _controlState.curDBO = entry;
-              entry.isLocked ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED) :
-              BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
-            },
+            title: _buildContractTileTitle(entry),
+            subtitle: _buildContractTileSubtitle(entry),
+            trailing: BaseUtil.isLargeScreen(context) ? _buildContractTileTrailingLarge(entry) : _buildContractTileTrailingSmall(entry),
+            onTap: () => _onContractTap(entry),
           ),
           Divider()
         ],
