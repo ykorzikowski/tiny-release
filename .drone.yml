@@ -2,7 +2,7 @@ pipeline:
   flutter-build:
     image: cirrusci/flutter
     pub_cache:
-      folder: ~/.pub-cache
+      folder: /tmp/.pub-cache
     commands:
       - flutter packages get
       - flutter build apk
