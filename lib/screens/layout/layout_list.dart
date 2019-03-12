@@ -2,11 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_layout_repo.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/screens/people/people_preview.dart';
 import 'package:tiny_release/util/base_util.dart';
 
 typedef Null ItemSelectedCallback(int value);

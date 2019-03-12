@@ -8,7 +8,7 @@ import 'package:tiny_release/util/base_util.dart';
 
 class MasterControlWidget extends StatefulWidget {
 
-  TinyState _controlState;
+  final TinyState _controlState;
 
   MasterControlWidget(this._controlState);
 

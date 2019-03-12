@@ -1,5 +1,4 @@
 
-import 'dart:io' as Io;
 import 'dart:typed_data';
 
 import 'package:cool_ui/cool_ui.dart';

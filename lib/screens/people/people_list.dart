@@ -41,8 +41,8 @@ class PeopleListWidget extends StatefulWidget {
 
   static String getCircleText(TinyPeople entry) {
     var result = "";
-    entry.givenName != null && entry.givenName.isNotEmpty ? result += entry.givenName.substring(0, 1) : "";
-    entry.familyName != null && entry.familyName.isNotEmpty ? result += entry.familyName.substring(0, 1) : "";
+    if(entry.givenName != null && entry.givenName.isNotEmpty) result += entry.givenName.substring(0, 1);
+    if(entry.familyName != null && entry.familyName.isNotEmpty) result += entry.familyName.substring(0, 1);
     return result;
   }
 

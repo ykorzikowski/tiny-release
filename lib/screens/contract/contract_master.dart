@@ -8,7 +8,7 @@ import 'package:tiny_release/util/tiny_state.dart';
 
 class ContractMasterWidget extends StatefulWidget {
 
-  TinyState _controlState;
+  final TinyState _controlState;
 
   ContractMasterWidget(this._controlState);
 

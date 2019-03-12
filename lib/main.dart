@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyStatelessWidget extends StatelessWidget {
-  TinyState tinyState = new TinyState();
+  final TinyState tinyState;
 
   MyStatelessWidget(this.tinyState, {Key key}) : super(key: key);
 

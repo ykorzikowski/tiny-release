@@ -27,6 +27,7 @@ class PresetJSONParser {
       print(error);
       _errorCallback();
     }
+    return null;
   }
 
   Future<Map<String, dynamic>> _decode() async {

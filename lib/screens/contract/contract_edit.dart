@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/repo/tiny_people_repo.dart';
-import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';

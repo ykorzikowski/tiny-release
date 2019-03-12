@@ -1,7 +1,6 @@
 import 'package:tiny_release/data/data_types.dart';
 import 'package:tiny_release/data/repo/sqlite_provider.dart';
 import 'package:tiny_release/data/repo/tiny_repo.dart';
-import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_setting.dart';
 
 class TinySettingRepo  extends TinyRepo< TinySetting >{

@@ -146,22 +146,22 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   /// save methods for signatures
   
   _savePhotographerSignature(bytes) => setState(() {
-    _photographerKey.currentState.hasPoints() ? _photographerSignatureBytes = _byteDataToUint8(bytes) : null;
+    if(_photographerKey.currentState.hasPoints()) _photographerSignatureBytes = _byteDataToUint8(bytes);
     _saveSignature(_photographerSignatureBytes, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
   });
 
   _saveModelSignature(bytes) => setState(() {
-    _modelKey.currentState.hasPoints() ? _modelSignatureBytes = _byteDataToUint8(bytes) : null;
+    if(_modelKey.currentState.hasPoints()) _modelSignatureBytes = _byteDataToUint8(bytes);
     _saveSignature(_modelSignatureBytes, _tinyContract.id).then((ts) => _tinyContract.modelSignature = ts);
   });
 
   _saveWitnessSignature(bytes) => setState(() {
-    _witnessKey.currentState.hasPoints() ? _witnessSignatureBytes = _byteDataToUint8(bytes) : null;
+    if(_witnessKey.currentState.hasPoints()) _witnessSignatureBytes = _byteDataToUint8(bytes);
     _saveSignature(_witnessSignatureBytes, _tinyContract.id).then((ts) => _tinyContract.witnessSignature = ts);
   });
 
   _saveParentSignature(bytes) => setState(() {
-    _parentKey.currentState.hasPoints() ? _parentSignatureBytes = _byteDataToUint8(bytes) : null;
+    if(_parentKey.currentState.hasPoints()) _parentSignatureBytes = _byteDataToUint8(bytes);
     _saveSignature(_parentSignatureBytes, _tinyContract.id).then((ts) => _tinyContract.parentSignature = ts);
   });
 

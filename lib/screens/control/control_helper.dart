@@ -27,8 +27,8 @@ class ControlHelper {
     }
   }
 
-  static void handleSaveButton( final TinyState TinyState, final NavigatorState navigatorState ) {
-    final TinyDBO curDBO = TinyState.curDBO as TinyDBO;
+  static void handleSaveButton( final TinyState tinyState, final NavigatorState navigatorState ) {
+    final TinyDBO curDBO = tinyState.curDBO;
     TinyRepo repoForDataType = BaseUtil.getRepoForDataType(curDBO);
     repoForDataType.save(curDBO);
 

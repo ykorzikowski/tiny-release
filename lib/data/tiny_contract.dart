@@ -102,12 +102,14 @@ class TinyContractDBO extends TinyDBO {
   int modelId, photographerId, parentId, witnessId;
   int selectedModelAddressId, selectedPhotographerAddressId, selectedParentAddressId, selectedWitnessAddressId;
   int imagesCount;
+  // ignore: non_constant_identifier_names
   int locked_;
   String location, date;
 
   TinyContractDBO(
       {id, displayName, this.presetId, this.photographerId, this.modelId, this.parentId, this.witnessId,
         this.selectedModelAddressId, this.selectedPhotographerAddressId, this.selectedParentAddressId, this.selectedWitnessAddressId,
+        // ignore: non_constant_identifier_names
         this.imagesCount, this.location, this.date, this.locked_})
       : super(id: id, displayName: displayName);
 
