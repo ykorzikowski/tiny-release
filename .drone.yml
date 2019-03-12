@@ -4,5 +4,5 @@ pipeline:
     pub_cache:
       folder: ~/.pub-cache
     commands:
-      - flutter pacakges get
+      - flutter packages get
       - flutter build apk
