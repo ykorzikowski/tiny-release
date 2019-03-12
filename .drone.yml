@@ -2,4 +2,4 @@ pipeline:
   flutter-build: 
     image: cirrusci/flutter
     commands: 
-      - flutter build
+      - flutter build apk
