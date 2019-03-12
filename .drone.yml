@@ -4,5 +4,6 @@ pipeline:
     pub_cache:
       folder: /tmp/.pub-cache
     commands:
+      - pwd
       - flutter packages get
       - flutter build apk
