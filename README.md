@@ -2,6 +2,8 @@
 
 create model releases
 
+[![Build Status](https://drone.korzikowski.de/api/badges/ykorzikowski/tiny_release/status.svg)](https://drone.korzikowski.de/ykorzikowski/tiny_release)
+
 ## Generate l10n
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
