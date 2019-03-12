@@ -32,18 +32,18 @@ class ContractGeneratedWidget extends StatefulWidget {
 }
 
 class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
-  final TinyState _tinyState;
-  TinyContract _tinyContract;
+  static const TextStyle btnStyle = TextStyle(color: CupertinoColors.activeBlue, fontSize: 16);
 
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
   final PayWall _payWall = PayWall();
+  final TinyState _tinyState;
+  TinyContract _tinyContract;
+
   ContractPdfGenerator _contractPdfGenerator;
   ContractGenerator _contractGenerator;
 
   /// global key for shareDialogPosition
   var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
-
-  static const TextStyle btnStyle = TextStyle(color: CupertinoColors.activeBlue, fontSize: 16);
 
   _ContractGeneratedWidgetState(this._tinyState) {
     _tinyContract = _tinyState.curDBO;
@@ -69,39 +69,40 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       children: [
         Expanded(
           child:
-  ListView(key: Key('scrlvw_contract_generated'),
-          children: <Widget>[
+          ListView(key: Key('scrlvw_contract_generated'),
+            children: <Widget>[
 
-            /// header
-            Text(_tinyContract.preset.title, textAlign: TextAlign.center, style: TextStyle(fontSize: 32),),
+              /// header
+              Text(_tinyContract.preset.title, textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 32),),
 
-            /// contract head
-            _contractGenerator.buildContractHeader(context),
+              /// contract head
+              _contractGenerator.buildContractHeader(context),
 
-            Divider(),
+              Divider(),
 
-            _contractGenerator.buildShootingInformationSection(context),
+              _contractGenerator.buildShootingInformationSection(context),
 
-            Divider(),
+              Divider(),
 
-            /// contract preview
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: ContractGenerator.buildParagraphs(
-                    context, _tinyContract),
+              /// contract preview
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: ContractGenerator.buildParagraphs(
+                      context, _tinyContract),
+                ),
               ),
-            ),
 
-            Divider(),
+              Divider(),
 
-            /// signatures
-            SignatureWidget( _tinyState ),
+              /// signatures
+              SignatureWidget(_tinyState),
 
-            _tinyContract.isLocked ? _buildCompletedHint() : Container(),
-          ],
-        ),),
+              _tinyContract.isLocked ? _buildCompletedHint() : Container(),
+            ],
+          ),),
         _buildContentFooterAction(),
 
       ]);
@@ -119,6 +120,44 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   ///         ///
   /// footer  ///
   ///         ///
+
+  _onClonePressed() {
+    var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
+    clone.id = null;
+    clone.isLocked = false;
+    clone.modelSignature = null;
+    clone.photographerSignature = null;
+    clone.parentSignature = null;
+    clone.witnessSignature = null;
+    clone.displayName = clone.displayName + S.of(context).cloned_suffix;
+
+    _tinyContractRepo.save(clone);
+    Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+  }
+
+  _onSharePressed() {
+    /// close the popover
+    Navigator.of(context).pop();
+
+    _payWall.checkIfPaid(PayFeature.PAY_PDF_EXPORT, _exportPdf,
+            (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
+  }
+
+  _onDeletePressed() {
+    _tinyContractRepo.delete(_tinyContract);
+    Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
+  }
+
+  _exportPdf() {
+    var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
+
+    _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
+        BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
+          hideLoading();
+          ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
+        }));
+  }
+
   Widget _buildFooterCloneButton() => CupertinoPopoverButton(
     child: Icon(CupertinoIcons.create, color: CupertinoColors.activeBlue, size: 32),
     popoverBuild: (context) => CupertinoPopoverMenuList(
@@ -129,32 +168,10 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: () {
-            var clone = TinyContract.fromMap(TinyContract.toMap(_tinyContract));
-            clone.id = null;
-            clone.isLocked = false;
-            clone.modelSignature = null;
-            clone.photographerSignature = null;
-            clone.parentSignature = null;
-            clone.witnessSignature = null;
-            clone.displayName = clone.displayName + S.of(context).cloned_suffix;
-
-            _tinyContractRepo.save(clone);
-            Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
-          },)
+          onTap: _onClonePressed,)
       ],
     ),
   );
-
-  void _exportPdf() {
-    var hideLoading = showWeuiLoadingToast(context: context, message: Text(S.of(context).loading_pdf, textAlign: TextAlign.center,));
-
-    _contractPdfGenerator.generatePdf(context).then((pdfDoc) =>
-        BaseUtil.storeTempBlobUint8('contract', 'pdf', Uint8List.fromList(pdfDoc.save())).then((saved) {
-          hideLoading();
-          ShareExtend.share(saved.path, 'file', sharePositionOrigin: RectGetter.getRectFromKey(_shareDialogPosGlobalKey));
-        }));
-  }
 
   Widget _buildFooterShareButton() => CupertinoPopoverButton(
     child: Icon(CupertinoIcons.share, color: CupertinoColors.activeBlue, size: 32),
@@ -166,13 +183,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: () {
-            /// close the popover
-            Navigator.of(context).pop();
-
-            _payWall.checkIfPaid(PayFeature.PAY_PDF_EXPORT, _exportPdf,
-                    (error) => showCupertinoDialog(context: context, builder: (ctx) => PayWall.getSubscriptionDialog(PayFeature.PAY_PDF_EXPORT, ctx) ));
-          },)
+          onTap: _onSharePressed,)
       ],
     ),
   );
@@ -187,10 +198,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: () {
-            _tinyContractRepo.delete(_tinyContract);
-            Navigator.of(context).popUntil((r) => !Navigator.of(context).canPop());
-          },)
+          onTap: _onDeletePressed,)
       ],
     ),
   );
