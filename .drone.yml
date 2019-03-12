@@ -4,6 +4,7 @@ pipeline:
     pub_cache:
       folder: /tmp/.pub-cache
     commands:
-      - pwd
-      - flutter packages get
+      - cd /home/cirrus
+      - cp -R /drone/src src
+      - cd src
       - flutter build apk
