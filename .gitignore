@@ -73,6 +73,7 @@ build/
 # fastlane
 **/fastlane/report.xml
 **/fastlane/google_service_apikey.json
+**/ios/fastlane/screenshots/**/*.png
 
 # target
 Runner.app.dSYM.zip
