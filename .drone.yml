@@ -1,4 +1,5 @@
-image: cirrusci/flutter
-env:
-script:
-  - flutter build
+pipeline:
+  flutter-build: 
+    image: cirrusci/flutter
+    commands: 
+      - flutter build
