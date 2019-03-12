@@ -3,5 +3,6 @@ pipeline:
     image: cirrusci/flutter
     pub_cache:
       folder: ~/.pub-cache
-    commands: 
+    commands:
+      - flutter pacakges get
       - flutter build apk
