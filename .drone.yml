@@ -1,18 +1,24 @@
 pipeline:
+  # build when pushed on master or feature branch but not when version tagged
   android-build:
-    branch:
-      - master
-      - feature/*
+    when:
+      ref:
+        exclude:
+          - refs/tags/*
+      branch:
+        - master
+        - feature/*
     image: mingc/android-build-box
     pub_cache:
       folder: /tmp/.pub-cache
     commands:
-      - cd /home/cirrus
-      - cp -R /drone/src src
-      - cd src
       - flutter build apk --debug
+
   ios-build:
     when:
+      ref:
+        exclude:
+          - refs/tags/*
       branch:
         - master
         - feature/*
@@ -38,10 +44,12 @@ pipeline:
       - bash -lc 'flutter packages get'
       - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
       - bash -lc 'flutter build ios'
+
+  # release only when tag starts with 'v*'
   android-release:
-    branch:
-      - master
-      - feature/*
+    when:
+      ref:
+        - refs/tags/v*
     image: mingc/android-build-box
     pub_cache:
       folder: /tmp/.pub-cache
@@ -50,22 +58,11 @@ pipeline:
       - cp -R /drone/src src
       - cd src
       - flutter build apk --debug
-  android-testflight:
-    branch:
-      - testflight
-    image: mingc/android-build-box
-    pub_cache:
-      folder: /tmp/.pub-cache
-    commands:
-      - cd /home/cirrus
-      - cp -R /drone/src src
-      - cd src
-      - flutter build apk --debug
+
   ios-release:
     when:
       ref:
-        include:
-          - refs/tags/v*
+        - refs/tags/v*
     image: appleboy/drone-ssh
     host: git.engineerservices.de
     port: 4222
@@ -88,6 +85,20 @@ pipeline:
       - bash -lc 'flutter packages get'
       - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
       - bash -lc 'fastlane ios release'
+
+  # testflights only when pushed on branch 'testflights'
+  android-testflight:
+    branch:
+      - testflight
+    image: mingc/android-build-box
+    pub_cache:
+      folder: /tmp/.pub-cache
+    commands:
+      - cd /home/cirrus
+      - cp -R /drone/src src
+      - cd src
+      - flutter build apk --debug
+
   ios-testflight:
     when:
       branch:
