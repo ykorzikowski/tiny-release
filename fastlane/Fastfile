@@ -15,15 +15,19 @@
 
 # default_platform(:android)
 
-app_name = "de.korzikowski.tinyrelease" #{app_name}
-username = "business.apple@korzikowski.de" #{username} // Apple ID
+json_key = CredentialsManager::AppfileConfig.try_fetch_value(:json_key)
+app_name = CredentialsManager::AppfileConfig.try_fetch_value(:app_name)
+username = CredentialsManager::AppfileConfig.try_fetch_value(:username)
+
+build_id = CredentialsManager::AppfileConfig.try_fetch_value(:build_id)
 
 platform :android do
   desc "Deploy a new version to the Google Play Alpha"
   lane :alpha do
     # Return the number of commits in current git branch
     #increment_version_code
-    build_number = number_of_commits(all: true)
+    #build_number = number_of_commits(all: true)
+    build_number = build_id
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
@@ -32,8 +36,8 @@ platform :android do
     end
     upload_to_play_store(
       track: 'alpha',
-      json_key: "fastlane/google_service_apikey.json",
-      package_name: "de.korzikowski.tinyrelease",
+      json_key: json_key,
+      package_name: app_name,
       apk: "build/app/outputs/apk/release/app-release.apk",
       skip_upload_screenshots: true,
       skip_upload_images: true)
@@ -42,7 +46,7 @@ platform :android do
   desc "Deploy a new version to the Google Play Production"
   lane :release do
     # Return the number of commits in current git branch
-    build_number = number_of_commits(all: true)
+    build_number = build_id
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
@@ -61,7 +65,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     # Return the number of commits in current git branch
-    build_number = number_of_commits(all: true)
+    build_number = build_id
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
@@ -72,9 +76,6 @@ platform :ios do
         workspace: "ios/Runner.xcworkspace",
         export_options: {
             method: "app-store",
-            provisioningProfiles: {
-              "de.korzikowski.tinyrelease" => "e7360cb4-5a7e-436e-be58-6fef1aabc027"
-            }
           },
         scheme: "Runner")
     Dir.chdir ".." do
@@ -89,7 +90,7 @@ platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
     # Return the number of commits in current git branch
-    build_number = number_of_commits(all: true)
+    build_number = build_id
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")

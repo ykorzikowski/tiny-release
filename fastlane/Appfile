@@ -1,5 +1,4 @@
-json_key("fastlane/google_service_apikey.json")
-package_name("de.korzikowski.tinyrelease")
-username("business.apple@korzikowski.de")
-app_name("de.korzikowski.tinyrelease")
-app_identifier("de.korzikowski.tinyrelease")
+build_id ENV["BUILD_ID"] || ""
+app_name "de.korzikowski.tinyrelease"
+json_key "fastlane/google_service_apikey.json"
+username "business.apple@korzikowski.de"

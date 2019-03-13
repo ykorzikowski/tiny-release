@@ -1,10 +1,24 @@
 pipeline:
-  flutter-build:
-    image: cirrusci/flutter
-    pub_cache:
-      folder: /tmp/.pub-cache
-    commands:
-      - cd /home/cirrus
-      - cp -R /drone/src src
-      - cd src
-      - flutter build apk --debug
+  ios-build:
+    image: appleboy/drone-ssh
+    host: git.engineerservices.de
+    port: 4222
+    command_timeout: 15m
+    username: ci
+    volumes:
+      - /root/drone_rsa:/root/ssh/drone_rsa
+    key_path: /root/ssh/drone_rsa/id_rsa
+    envs: [ DRONE_BUILD_NUMBER, DRONE_COMMIT, DRONE_BRANCH ]
+    script:
+      - export BUILD_ID=$DRONE_BUILD_NUMBER
+      - system_profiler SPSoftwareDataType
+      - mkdir tiny_release_build_$BUILD_ID
+      - cd tiny_release_build_$BUILD_ID
+      - bash -lc 'flutter --version'
+      - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
+      - cd tiny_release
+      - echo $DRONE_BRANCH
+      - git checkout $DRONE_COMMIT
+      - bash -lc 'flutter packages get'
+      - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
+      - bash -lc 'flutter build ios'
