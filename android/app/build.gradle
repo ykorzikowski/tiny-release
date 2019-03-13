@@ -47,7 +47,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("/Users/Yannik/work/app-dev/prod/android_prod.jks.old")
+            storeFile file("$flutterRoot/../android_signing/android_prod.jks")
             storePassword "11Nase!"
             keyAlias "key0"
             keyPassword "11nase"

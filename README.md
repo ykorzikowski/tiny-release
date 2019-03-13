@@ -8,7 +8,24 @@ create model releases
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
 
+## git tagging
+### testflight
+There is a branch called `testflight`. This branch contains an old master which is safe for a testflight release. 
+This branch should not diverge from master. 
+```
+git checkout testflight
+git pull --rebase origin/master
+```
+
+### release
+Release versions will get a tag. 
+```
+git tag -a v1.0
+```
+
 ## releasing
+
+
 ```
 # generate screenshots
 fastlane screenshots

@@ -1,4 +1,4 @@
 build_id ENV["BUILD_ID"] || ""
 app_name "de.korzikowski.tinyrelease"
-json_key "fastlane/google_service_apikey.json"
+json_key "../android_signing/google_service_apikey.json"
 username "business.apple@korzikowski.de"
