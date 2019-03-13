@@ -1,6 +1,9 @@
-pipeline:
+kind: pipeline
+name: default
+
+steps:
   # build when pushed on master or feature branch but not when version tagged
-  android-build:
+  - name: android-build
     when:
       ref:
         exclude:
@@ -9,14 +12,12 @@ pipeline:
         - master
         - feature/*
     image: mingc/android-build-box
-    group: build
-    pub_cache:
-      folder: /tmp/.pub-cache
+    depends_on: [ clone ]
     commands:
       - export BUILD_ID=$DRONE_BUILD_NUMBER
       - flutter build apk --debug
 
-  ios-build:
+  - name: ios-build
     when:
       ref:
         exclude:
@@ -25,9 +26,10 @@ pipeline:
         - master
         - feature/*
     image: appleboy/drone-ssh
-    group: build
+    depends_on: [ clone ]
     volumes:
-      - /root/drone_rsa:/root/ssh/drone_rsa
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
     settings:
       host: git.engineerservices.de
       port: 4222
@@ -53,28 +55,28 @@ pipeline:
         - bash -lc 'flutter build ios'
 
   # release only when tag starts with 'v*'
-  android-release:
+  - name: android-release
     when:
       ref:
         - refs/tags/v*
     image: mingc/android-build-box
-    group: release
+    depends_on: [ clone ]
     volumes:
-      - /srv/drone/android_signing:/opt/android_signing
-    pub_cache:
-      folder: /tmp/.pub-cache
+      - name: android_signing
+        path: /opt/android_signing
     commands:
       - export BUILD_ID=$DRONE_BUILD_NUMBER
       - fastlane android release
 
-  ios-release:
+  - name: ios-release
     when:
       ref:
         - refs/tags/v*
     image: appleboy/drone-ssh
-    group: release
+    depends_on: [ clone ]
     volumes:
-      - /root/drone_rsa:/root/ssh/drone_rsa
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
     settings:
       host: git.engineerservices.de
       port: 4222
@@ -100,28 +102,28 @@ pipeline:
         - bash -lc 'fastlane ios release'
 
   # testflights only when pushed on branch 'testflights'
-  android-testflight:
+  - name: android-testflight
     when:
       branch:
         - testflight
     image: mingc/android-build-box
-    group: testflight
+    depends_on: [ clone ]
     volumes:
-      - /srv/drone/android_signing:/opt/android_signing
-    pub_cache:
-      folder: /tmp/.pub-cache
+      - name: android_signing
+        path: /opt/android_signing
     commands:
       - export BUILD_ID=$DRONE_BUILD_NUMBER
       - fastlane android alpha
 
-  ios-testflight:
+  - name: ios-testflight
     when:
       branch:
         - testflight
     image: appleboy/drone-ssh
-    group: testflight
+    depends_on: [ clone ]
     volumes:
-      - /root/drone_rsa:/root/ssh/drone_rsa
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
     settings:
       host: git.engineerservices.de
       port: 4222
@@ -150,3 +152,6 @@ volumes:
   - name: android_signing
     host:
       path: /srv/drone/android_signing
+  - name: drone_ssh
+    host:
+      path: /root/drone_rsa
