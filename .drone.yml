@@ -1,4 +1,13 @@
 pipeline:
+  flutter-build:
+    image: cirrusci/flutter
+    pub_cache:
+      folder: /tmp/.pub-cache
+    commands:
+      - cd /home/cirrus
+      - cp -R /drone/src src
+      - cd src
+      - flutter build apk --debug
   ios-build:
     image: appleboy/drone-ssh
     host: git.engineerservices.de
