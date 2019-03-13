@@ -1,0 +1,9 @@
+# does not work
+#  - name: android-integrationtest
+#    image: mingc/android-build-box
+#    depends_on: [ clone ]
+#    commands:
+#      - export BUILD_ID=$DRONE_BUILD_NUMBER
+#      - ./scripts/android_avd.sh
+#      - flutter drive --target=test_driver/app_full.dart
+##

@@ -2,6 +2,33 @@ kind: pipeline
 name: default
 
 steps:
+
+  # clone project on mac os buildserver
+  - name: clone-ios
+    image: appleboy/drone-ssh
+    depends_on: [ clone ]
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 15m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - system_profiler SPSoftwareDataType
+        - mkdir tiny_release_build_$BUILD_ID
+        - cd tiny_release_build_$BUILD_ID
+        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
+        - cd tiny_release
+        - git checkout $DRONE_COMMIT
+
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
     when:
@@ -26,7 +53,7 @@ steps:
         - master
         - feature/*
     image: appleboy/drone-ssh
-    depends_on: [ clone ]
+    depends_on: [ clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -42,17 +69,36 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - system_profiler SPSoftwareDataType
-        - mkdir tiny_release_build_$BUILD_ID
-        - cd tiny_release_build_$BUILD_ID
+        - cd tiny_release_build_$BUILD_ID/tiny_release
         - bash -lc 'flutter --version'
-        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
-        - cd tiny_release
-        - echo $DRONE_BRANCH
-        - git checkout $DRONE_COMMIT
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flutter build ios'
+
+  - name: ios-integrationtest
+    image: appleboy/drone-ssh
+    depends_on: [ clone-ios ]
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 15m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - export DEV_ID=`xcrun simctl create iPhonex com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-12-1`
+        - xcrun simctl boot $DEV_ID
+        - bash -lc 'flutter drive --target=test_driver/app_full.dart -diPhonex'
+        - xcrun simctl shutdown $DEV_ID
+        - xcrun simctl erase $DEV_ID
 
   # release only when tag starts with 'v*'
   - name: android-release
@@ -73,7 +119,7 @@ steps:
       ref:
         - refs/tags/v*
     image: appleboy/drone-ssh
-    depends_on: [ clone ]
+    depends_on: [ clone, clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -89,14 +135,9 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - system_profiler SPSoftwareDataType
-        - bash -lc 'flutter --version'
-        - mkdir tiny_release_build_$BUILD_ID
-        - cd tiny_release_build_$BUILD_ID
-        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
-        - cd tiny_release
-        - echo $DRONE_BRANCH
+        - cd tiny_release_build_$BUILD_ID/tiny_release
         - git checkout $DRONE_COMMIT
+        - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'fastlane ios release'
@@ -120,7 +161,7 @@ steps:
       branch:
         - testflight
     image: appleboy/drone-ssh
-    depends_on: [ clone ]
+    depends_on: [ clone-ios, ios-integrationtest ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -136,17 +177,36 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - system_profiler SPSoftwareDataType
+        - cd tiny_release_build_$BUILD_ID/tiny_release
         - bash -lc 'flutter --version'
-        - mkdir tiny_release_build_$BUILD_ID
-        - cd tiny_release_build_$BUILD_ID
-        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
-        - cd tiny_release
-        - echo $DRONE_BRANCH
-        - git checkout $DRONE_COMMIT
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'fastlane ios beta'
+
+  - name: generate-screenshots
+    when:
+      branch:
+        - testflight
+    image: appleboy/drone-ssh
+    depends_on: [ clone-ios ]
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 30m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - git checkout $DRONE_COMMIT
+        - bash -lc 'fastlane screenshots'
 
 volumes:
   - name: android_signing
