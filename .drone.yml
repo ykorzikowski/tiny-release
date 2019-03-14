@@ -39,9 +39,10 @@ steps:
         - master
         - feature/*
     image: mingc/android-build-box
+    environment:
+      BUILD_ID: ${DRONE_BUILD_NUMBER}
     depends_on: [ clone ]
     commands:
-      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - flutter build apk --debug
 
   - name: ios-build
@@ -81,12 +82,13 @@ steps:
       ref:
         - refs/tags/v*
     image: mingc/android-build-box
+    environment:
+      BUILD_ID: ${DRONE_BUILD_NUMBER}
     depends_on: [ clone ]
     volumes:
       - name: android_signing
-        path: /opt/android_signing
+        path: /drone/android_signing
     commands:
-      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - fastlane android release
 
   - name: ios-release
@@ -123,12 +125,13 @@ steps:
       branch:
         - testflight
     image: mingc/android-build-box
+    environment:
+      BUILD_ID: ${DRONE_BUILD_NUMBER}
     depends_on: [ clone ]
     volumes:
       - name: android_signing
-        path: /opt/android_signing
+        path: /drone/android_signing
     commands:
-      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - fastlane android alpha
 
   - name: ios-testflight

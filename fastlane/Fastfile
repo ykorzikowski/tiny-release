@@ -15,10 +15,9 @@
 
 # default_platform(:android)
 
-json_key = CredentialsManager::AppfileConfig.try_fetch_value(:json_key)
-app_name = CredentialsManager::AppfileConfig.try_fetch_value(:app_name)
+json_key = "../android_signing/google_service_apikey.json"
+app_name = "de.korzikowski.tinyrelease"
 username = CredentialsManager::AppfileConfig.try_fetch_value(:username)
-
 build_id = CredentialsManager::AppfileConfig.try_fetch_value(:build_id)
 
 platform :android do
@@ -67,6 +66,9 @@ platform :ios do
     # Return the number of commits in current git branch
     build_number = build_id
     changelog_from_git_commits
+    cocoapods(
+      podfile: "ios/Podfile"
+    )
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
