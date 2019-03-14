@@ -76,15 +76,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           middle: Text(S.of(context).add_contract),
           trailing: CupertinoButton(
             child: Text(S.of(context).navbar_btn_preview),
-            onPressed: validContract() ? () {
-              if (!validContract()) {
-                return;
-              }
-              new TinyContractRepo().save(_tinyContract);
-              _tinyState.curDBO = _tinyContract;
-              Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
-              Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_PREVIEW);
-            } : null,),),
+            onPressed: _validContract() ? _onPreviewPressed : null,),),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
           body: ListView(
@@ -101,31 +93,25 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
                   /// Photographer section
                   _buildPeopleView(
-                      'photographer',
-                      _tinyContract.photographer, _tinyPeopleRepo, S.of(context).choose_photographer, (people, item, context) {
-                    setState(() {
-                      _tinyContract.photographer = item;
-                      _tinyContract.selectedPhotographerAddress = item.postalAddresses[0];
-                    });
-                    Navigator.pop(context);
-                  }, () {
-                    setState(() { _tinyContract.photographer = null;});
-                  }),
+                      person: 'photographer',
+                      people: _tinyContract.photographer,
+                      repo: _tinyPeopleRepo,
+                      text: S.of(context).choose_photographer,
+                      onPeopleTap: _onPhotographerTap,
+                      onPeopleTrash: _onPhotographerTrash,
+                  ),
 
                   Divider(),
 
                   /// Model section
                   _buildPeopleView(
-                      'model',
-                      _tinyContract.model, _tinyPeopleRepo, S.of(context).choose_model, (people, item, context) {
-                    setState(() {
-                      _tinyContract.model = item;
-                      _tinyContract.selectedModelAddress = item.postalAddresses[0];
-                    });
-                    Navigator.pop(context);
-                  }, () {
-                    setState(() { _tinyContract.model = null;});
-                  }),
+                      person: 'model',
+                      people: _tinyContract.model,
+                      repo: _tinyPeopleRepo,
+                      text: S.of(context).choose_model,
+                      onPeopleTap: _onModelTap,
+                      onPeopleTrash: _onModelTrash,
+                  ),
 
                   Divider(),
 
@@ -150,17 +136,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     ),
                   ),
                   _enabledParent ? _buildPeopleView(
-                      'parent',
-                      _tinyContract.parent, _tinyPeopleRepo, S.of(context).choose_parent, (people, item, context)
-                  {
-                    setState(() {
-                      _tinyContract.parent = item;
-                      _tinyContract.selectedParentAddress = item.postalAddresses[0];
-                    });
-                    Navigator.pop(context);
-                  }, () {
-                    setState(() {_tinyContract.parent = null;});
-                  }) : Container(),
+                      person: 'parent',
+                      people: _tinyContract.parent,
+                      repo: _tinyPeopleRepo,
+                      text: S.of(context).choose_parent,
+                      onPeopleTap: _onParentTap,
+                      onPeopleTrash: _onParentTrash,
+                  ) : Container(),
 
                   Divider(),
 
@@ -184,17 +166,16 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                       },
                     ),
                   ),
-                  _enabledWitness ? _buildPeopleView(
-                      'witness',
-                      _tinyContract.witness, _tinyPeopleRepo, S.of(context).choose_witness, (people, item, context) {
-                    setState(() {
-                      _tinyContract.witness = item;
-                      _tinyContract.selectedWitnessAddress = item.postalAddresses[0];
-                    });
-                    Navigator.pop(context);
-                  }, () {
-                    setState(() {_tinyContract.witness = null;});
-                  }) : Container(),
+                  _enabledWitness
+                      ? _buildPeopleView(
+                        person: 'witness',
+                        people: _tinyContract.witness,
+                        repo: _tinyPeopleRepo,
+                        text: S.of(context).choose_witness,
+                        onPeopleTap: _onWitnessTap,
+                        onPeopleTrash: _onWitnessTrash
+                  )
+                      : Container(),
 
                   Divider(),
 
@@ -220,7 +201,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                       key: Key('tf_location'),
                       keyboardType: TextInputType.text,
                       maxLength: 50,
-                      onChanged: _updateTexTWidgetState,
+                      onChanged: _updateTextWidgetState,
                       controller: _locationController,
                     ),
                   ),),
@@ -231,7 +212,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   _tileOrColumn(Text(S.of(context).shooting_subject), CupertinoTextField(
                     key: Key('tf_subject'),
                     maxLength: 50,
-                    onChanged: _updateTexTWidgetState,
+                    onChanged: _updateTextWidgetState,
                     controller: _subjectController,
                   ),),
 
@@ -256,7 +237,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   /// button generate contract
                   CupertinoButton(
                     child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
-                    onPressed: validContract() ? () {
+                    onPressed: _validContract() ? () {
                       List<TinyReception> recs = List();
                       _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
                       _tinyContract.receptions = recs;
@@ -270,7 +251,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   /// button save contract
                   CupertinoButton(
                     child: Text(S.of(context).btn_save),
-                    onPressed: validContract() ? () {
+                    onPressed: _validContract() ? () {
                       List<TinyReception> recs = List();
                       _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
                       _tinyContract.receptions = recs;
@@ -284,15 +265,75 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         )
     );
   }
+  
+  _onPreviewPressed() {
+    _tinyContractRepo.save(_tinyContract);
+    _tinyState.curDBO = _tinyContract;
+    Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
+    Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_PREVIEW);
+  }
 
-  void _updateTexTWidgetState(txt) {
+  _onPhotographerTap(people, item, context) {
+    setState(() {
+      _tinyContract.photographer = item;
+      _tinyContract.selectedPhotographerAddress = item.postalAddresses[0];
+    });
+    Navigator.pop(context);
+  }
+
+  _onPhotographerTrash() {
+    setState(() {
+      _tinyContract.photographer = null;
+    });
+  }
+
+  _onModelTap(people, item, context) {
+    setState(() {
+      _tinyContract.model = item;
+      _tinyContract.selectedModelAddress =
+      item.postalAddresses[0];
+    });
+    Navigator.pop(context);
+  }
+
+  _onModelTrash() {
+    setState(() {
+      _tinyContract.model = null;
+    });
+  }
+
+  _onParentTap(people, item, context) {
+    setState(() {
+      _tinyContract.parent = item;
+      _tinyContract.selectedParentAddress = item.postalAddresses[0];
+    });
+    Navigator.pop(context);
+  }
+
+  _onParentTrash() {
+    setState(() {_tinyContract.parent = null;});
+  }
+
+  _onWitnessTap(people, item, context) {
+    setState(() {
+      _tinyContract.witness = item;
+      _tinyContract.selectedWitnessAddress = item.postalAddresses[0];
+    });
+    Navigator.pop(context);
+  }
+
+  _onWitnessTrash() {
+    setState(() {_tinyContract.witness = null;});
+  }
+
+  _updateTextWidgetState(txt) {
     setState(() {
       _tinyContract.location = _locationController.text;
       _tinyContract.displayName = _subjectController.text;
     });
   }
 
-  bool validContract() {
+  bool _validContract() {
     return _tinyContract.displayName != null && _tinyContract.displayName.isNotEmpty &&
         _tinyContract.preset != null &&
         _tinyContract.photographer != null &&
@@ -308,8 +349,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   /// opens people selection widget
-  _buildPeopleView(String person, TinyPeople people, TinyRepo repo, String text,
-      Function _onPeopleTap, Function _onPeopleTrash) =>
+  _buildPeopleView({String person, TinyPeople people, TinyRepo repo, String text,
+      Function onPeopleTap, Function onPeopleTrash}) =>
       BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
           child: ListTile(
             key: Key('select_$person'),
@@ -322,7 +363,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     Text(people.givenName + " " + people.familyName, style: btnStyle,),
                     CupertinoButton(
                       child: Icon(CupertinoIcons.delete_solid),
-                      onPressed: _onPeopleTrash,
+                      onPressed: onPeopleTrash,
                     )
                   ],)
               )
@@ -334,7 +375,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               PeopleListWidget(
                   _tinyState,
                       (pageIndex) => _getPeopleFor(repo, pageIndex),
-                      (item, context) => _onPeopleTap(people, item, context)
+                      (item, context) => onPeopleTap(people, item, context)
               )
       ) : CupertinoButton(
         child: Row(
@@ -348,7 +389,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 Text(people.givenName + " " + people.familyName),
                 CupertinoButton(
                   child: Icon(CupertinoIcons.delete_solid),
-                  onPressed: _onPeopleTrash,
+                  onPressed: onPeopleTrash,
                 )
               ],)
           )
@@ -360,7 +401,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               return PeopleListWidget(
                   _tinyState,
                       (pageIndex) => _getPeopleFor(repo, pageIndex),
-                      (item, context) => _onPeopleTap( people, item, context )
+                      (item, context) => onPeopleTap( people, item, context )
               );
             }
           ));
