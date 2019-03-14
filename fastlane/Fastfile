@@ -17,7 +17,7 @@
 
 json_key = "../android_signing/google_service_apikey.json"
 app_name = "de.korzikowski.tinyrelease"
-username = CredentialsManager::AppfileConfig.try_fetch_value(:username)
+username = "business.apple@korzikowski.de"
 build_id = CredentialsManager::AppfileConfig.try_fetch_value(:build_id)
 
 platform :android do
@@ -80,7 +80,7 @@ platform :ios do
         Dir.chdir "ios" do
             upload_to_testflight(
               skip_waiting_for_build_processing: true,
-              username: username)
+              username: "business.apple@korzikowski.de")
         end
     end
   end
@@ -103,7 +103,7 @@ platform :ios do
                   force: true,
                   skip_waiting_for_build_processing: true,
                   ipa: "Runner.ipa",
-                  username: username)
+                  username: "business.apple@korzikowski.de")
     end
   end
 end

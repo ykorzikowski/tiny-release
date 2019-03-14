@@ -8,6 +8,9 @@ create model releases
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
 
+## mac buildserver vnc
+`ssh -L 5900:localhost:5900 root@git.engineerservices.de`
+
 ## git tagging
 ### testflight
 There is a branch called `testflight`. This branch contains an old master which is safe for a testflight release. 

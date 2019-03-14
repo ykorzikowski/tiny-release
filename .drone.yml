@@ -5,6 +5,13 @@ steps:
 
   # clone project on mac os buildserver
   - name: clone-ios
+    when:
+      branch:
+        exclude:
+          - testflight
+      ref:
+        exclude:
+          - refs/tags/v*
     image: appleboy/drone-ssh
     depends_on: [ clone ]
     volumes:
@@ -96,7 +103,6 @@ steps:
       ref:
         - refs/tags/v*
     image: appleboy/drone-ssh
-    depends_on: [ clone, clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -112,7 +118,10 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=wwul-ecvv-ewcl-gsit
+        - cd tiny_release_release/tiny_release
+        - git pull
+        - git reset --hard
         - git checkout $DRONE_COMMIT
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
@@ -140,7 +149,6 @@ steps:
       branch:
         - testflight
     image: appleboy/drone-ssh
-    depends_on: [ clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -156,7 +164,8 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - cd tiny_release_testflight/tiny_release
+        - git checkout $DRONE_COMMIT
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
