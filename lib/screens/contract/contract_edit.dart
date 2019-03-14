@@ -31,6 +31,8 @@ class ContractEditWidget extends StatefulWidget {
   _ContractEditWidgetState createState() => _ContractEditWidgetState(_controlState);
 }
 
+const double _kPickerSheetHeight = 350.0;
+
 class _ContractEditWidgetState extends State<ContractEditWidget> {
   final TinyState _tinyState;
   final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
@@ -225,32 +227,40 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 ),),
         ],);
 
-  _getCaptureDatePicker(context) => Column(children: <Widget>[
-    CupertinoNavigationBar(
-      trailing: CupertinoButton(
-        child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+  _getCaptureDatePicker(context) {
+    var selectedDate = _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now();
+
+    return Column(children: <Widget>[
+      CupertinoNavigationBar(
+        trailing: CupertinoButton(
+          child: Text(S
+              .of(context)
+              .select_date_ok, key: Key('btn_ok'),),
+          onPressed: () {
+            setState(() => _tinyContract.date = selectedDate.toIso8601String());
+            Navigator.of(context).pop();
+          },
+        ),
+        middle: Text(S.of(context).choose_date),
       ),
-      middle: Text(S.of(context).choose_date),
-    ),
-    Flexible(
-      key: Key('datepicker'),
-      fit: FlexFit.loose,
-      child: CupertinoDatePicker(
-        mode: CupertinoDatePickerMode.dateAndTime,
-        minimumYear: 1900,
-        initialDateTime: _tinyContract.date != null ? DateTime.parse(_tinyContract.date) : DateTime.now(),
-        onDateTimeChanged: (t) => setState( () => _tinyContract.date = t.toIso8601String() ),
-      ),
-    )
-  ],);
+      Flexible(
+        key: Key('datepicker'),
+        fit: FlexFit.loose,
+        child: _buildBottomPicker(
+          CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.dateAndTime,
+            minimumYear: 1900,
+            initialDateTime: selectedDate,
+            onDateTimeChanged: (t) => selectedDate = t,
+          ),),
+      )
+    ],);
+  }
 
   _getCaptureDateSelection() =>
       BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
           child: _tinyContract.date != null ? Text(BaseUtil.getLocalFormattedDateTime(context, _tinyContract.date), style: btnStyle, key: Key('btn_select_date'),) : Text(S.of(context).choose, style: btnStyle, key: Key('btn_select_date')),
-          popoverHeight: 500,
+          popoverHeight: _kPickerSheetHeight,
           popoverWidth: 400,
           popoverBuild: (context) => _getCaptureDatePicker(context)
       ) : CupertinoButton(
@@ -258,7 +268,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           onPressed: () => showModalBottomSheet( context: context, builder: (context) => _getCaptureDatePicker(context),)
       );
 
-  _getCountTexts() {
+  List<Widget> _getCountTexts() {
     int i = 0;
 
     var widgets = <Widget>[];
@@ -270,33 +280,61 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     return widgets;
   }
 
-  _getImageCounterPicker(context) =>
-      Column(children: <Widget>[
-        CupertinoNavigationBar(
-          trailing: CupertinoButton(
-            child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          middle: Text(S.of(context).choose),
+  Widget _buildBottomPicker(Widget picker) {
+    return Container(
+      height: _kPickerSheetHeight,
+      padding: const EdgeInsets.only(top: 6.0),
+      color: CupertinoColors.white,
+      child: DefaultTextStyle(
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontSize: 22.0,
         ),
-        Flexible(
-          key: Key('image_count_picker'),
-          fit: FlexFit.loose,
-          child: CupertinoPicker(
-            itemExtent: 30,
-            onSelectedItemChanged: (selected) => setState(() =>_tinyContract.imagesCount = selected ),
-            children: _getCountTexts(),
+        child: GestureDetector(
+          // Blocks taps from propagating to the modal sheet and popping.
+          onTap: () { },
+          child: SafeArea(
+            top: false,
+            child: picker,
           ),
-        )
+        ),
+      ),
+    );
+  }
 
-      ],);
+  _getImageCounterPicker(context) {
+    var imagesCountSelected = 0;
+
+    return Column(children: <Widget>[
+      CupertinoNavigationBar(
+        trailing: CupertinoButton(
+          child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
+          onPressed: () {
+            Navigator.of(context).pop();
+            setState(() => _tinyContract.imagesCount = imagesCountSelected);
+          },
+        ),
+        middle: Text(S.of(context).choose),
+      ),
+      Flexible(
+        key: Key('image_count_picker'),
+        fit: FlexFit.loose,
+        child: _buildBottomPicker(
+          CupertinoPicker(
+            backgroundColor: Colors.transparent,
+            itemExtent: 30,
+            onSelectedItemChanged: (selected) => imagesCountSelected = selected,
+            children: _getCountTexts(),
+        ),),
+      )
+
+    ],);
+  }
 
   _getImagesCountSelection() =>
       BaseUtil.isLargeScreen(context) ?  CupertinoPopoverButton(
           child: _tinyContract.imagesCount != null ? Text(_tinyContract.imagesCount.toString(), style: btnStyle, key: Key('btn_set_images_count'),) : Text(S.of(context).choose, style: btnStyle, key: Key('btn_set_images_count')),
-          popoverHeight: 200,
+          popoverHeight: _kPickerSheetHeight,
           popoverWidth: 300,
           popoverBuild: (context) => _getImageCounterPicker(context)
       ) : CupertinoButton(
@@ -307,6 +345,20 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             builder: (context) => _getImageCounterPicker(context),);
         },
       );
+
+  Widget _tileOrColumn(Widget a, Widget b) =>
+      BaseUtil.isLargeScreen(context)
+
+          ? ListTile(
+              title: a,
+              trailing: b,
+            )
+          : Column(
+            children: <Widget>[
+              a,
+              Padding(padding: EdgeInsets.only(top: 8), child: b),
+            ],
+          );
 
   @override
   Widget build(BuildContext context) {
@@ -440,60 +492,41 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                 Divider(),
 
                 /// preset selection
-                ListTile(
-                  title: Text(S.of(context).selected_preset),
-                  trailing: _getPresetSelection(),
-                ),
+                _tileOrColumn(Text(S.of(context).selected_preset), _getPresetSelection()),
 
                 Divider(),
 
                 /// capture date selection
-                ListTile(
-                  title: Text(S.of(context).shooting_date),
-                  trailing: _getCaptureDateSelection(),
-                ),
+                _tileOrColumn(Text(S.of(context).shooting_date), _getCaptureDateSelection()),
 
                 Divider(),
 
                 /// number of images
-                ListTile(
-                  title: Text(S.of(context).contract_images),
-                  trailing: _getImagesCountSelection(),
-                ),
+                _tileOrColumn(Text(S.of(context).contract_images), _getImagesCountSelection()),
 
                 Divider(),
 
-
                 /// location
-                ListTile(
-                  title: Text(S.of(context).hint_location),
-                  trailing: Container(
-                    width: 250,
-                    child: CupertinoTextField(
-                        key: Key('tf_location'),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
-                        onChanged: _updateTexTWidgetState,
-                        controller: _locationController,
-                        ),
+                _tileOrColumn(Text(S.of(context).hint_location), Container(
+                  width: 250,
+                  child: CupertinoTextField(
+                    key: Key('tf_location'),
+                    keyboardType: TextInputType.text,
+                    maxLength: 50,
+                    onChanged: _updateTexTWidgetState,
+                    controller: _locationController,
                   ),
-                ),
+                ),),
 
                 Divider(),
 
                 /// subject
-                ListTile(
-                  title: Text(S.of(context).shooting_subject),
-                  trailing: Container(
-                    width: 250,
-                    child: CupertinoTextField(
-                      key: Key('tf_subject'),
-                      maxLength: 50,
-                      onChanged: _updateTexTWidgetState,
-                      controller: _subjectController,
-                    ),
-                  ),
-                ),
+                _tileOrColumn(Text(S.of(context).shooting_subject), CupertinoTextField(
+                  key: Key('tf_subject'),
+                  maxLength: 50,
+                  onChanged: _updateTexTWidgetState,
+                  controller: _subjectController,
+                ),),
 
                 Divider(),
 
