@@ -7,6 +7,14 @@ class TinyPreset extends TinyDBO {
 
   TinyPreset( {id, displayName, this.title, this.isManualEdited, this.subtitle, this.language, this.description, this.paragraphs} ) : super(id: id, displayName: displayName);
 
+  static TinyPreset factory() {
+    var _tinyPreset = TinyPreset();
+
+    _tinyPreset.paragraphs = List();
+
+    return _tinyPreset;
+  }
+
   TinyPreset.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     isManualEdited = m["isManualEdited"];

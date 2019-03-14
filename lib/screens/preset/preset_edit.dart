@@ -27,28 +27,55 @@ class PresetEditWidget extends StatefulWidget {
 class _PresetEditWidgetState extends State<PresetEditWidget> {
   final TinyState _controlState;
   final ParagraphRepo _paragraphRepo = ParagraphRepo();
+  final TinyPresetRepo _tinyPresetRepo = TinyPresetRepo();
   TinyPreset _tinyPreset;
 
   _TextControllerBundle _textEditControllerBundle;
   final Map<Paragraph, _ParagraphControllerBundle> _paragraphTextControllers = Map();
 
-  _PresetEditWidgetState(this._controlState) {
-    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
-  }
+  _PresetEditWidgetState(this._controlState);
 
   @override
   void initState() {
     super.initState();
 
+    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+
     _initParagraphControllers();
   }
 
-  void _initParagraphControllers() {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'control',
+        transitionBetweenRoutes: false,
+        middle: Text(S.of(context).title_add_preset),
+        trailing: CupertinoButton(
+          child: Text(S.of(context).btn_save, key: Key('btn_navbar_save')),
+          onPressed: validPreset() ? _onPresetSavePressed : null,),),
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: ListView(
+          key: Key('scrlvw_preset_edit'),
+          shrinkWrap: true,
+          children: _buildFields(),
+        ),),
+    );
+  }
+  
+  _onPresetSavePressed() {
+    _tinyPresetRepo.save(_tinyPreset);
+    _controlState.curDBO = _tinyPreset;
+    Navigator.of(context).pop();
+  }
+
+  _initParagraphControllers() {
     _tinyPreset.paragraphs.forEach((para) => _paragraphTextControllers.putIfAbsent(para, () => _ParagraphControllerBundle(para)));
     _textEditControllerBundle = _TextControllerBundle(_tinyPreset);
   }
 
-  void _updateTextWidgetState(txt) {
+  _updateTextWidgetState(txt) {
     setState(() {
       _tinyPreset.title = _textEditControllerBundle.titleController.text;
       _tinyPreset.subtitle = _textEditControllerBundle.subtitleController.text;
@@ -94,7 +121,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     });
   }
 
-  _getParagraphAddButton() =>
+  _buildParagraphAddButton() =>
       CupertinoButton(
         child:
           Text(S.of(context).btn_add_paragrpah, key: Key('btn_add_paragraph'),),
@@ -102,7 +129,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
             setState(() => _addParagraph(_tinyPreset.paragraphs.length+1)),
       );
 
-  _getSortParagraphsButton() => CupertinoButton(
+  _buildSortParagraphsButton() => CupertinoButton(
     child: Text(S.of(context).change_order_title),
     onPressed: validPreset() ? () {
       _controlState.curDBO = _tinyPreset;
@@ -148,7 +175,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   );
 
   /// get paragraphs widgets
-  List< Widget > _getParagraphWidgets() {
+  List< Widget > _buildParagraphWidgets() {
     var list = List<Widget>();
 
     for ( int i = 0; i <  _tinyPreset.paragraphs.length; i++ ) {
@@ -169,7 +196,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
                           _tinyPreset.paragraphs.remove(para);
                           _paragraphRepo.delete(para);
                         }),
-                    child: _getParagraphWidget(para, i)
+                    child: _buildParagraphWidget(para, i)
                 ),
               ),
             ],
@@ -178,7 +205,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     return list;
   }
 
-  Widget _getParagraphWidget(Paragraph para, index) {
+  Widget _buildParagraphWidget(Paragraph para, index) {
     _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
     return Column(children: <Widget>[
       Padding(
@@ -206,7 +233,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     );
   }
 
-  _getFields() =>
+  _buildFields() =>
       <Widget>[
         Padding(
           padding: EdgeInsets.all(12.0),
@@ -250,48 +277,20 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         ),
         Container(
           child: Column(
-            children: _getParagraphWidgets(),
+            children: _buildParagraphWidgets(),
           ),
         ),
 
         BaseUtil.isLargeScreen(context) ? ListTile(
-          leading: _getParagraphAddButton(),
+          leading: _buildParagraphAddButton(),
           title:  _getImportButton(),
-          trailing: _getSortParagraphsButton(),
+          trailing: _buildSortParagraphsButton(),
         ) : Column(children: <Widget>[
-          _getParagraphAddButton(),
-          _getSortParagraphsButton(),
+          _buildParagraphAddButton(),
+          _buildSortParagraphsButton(),
           _getImportButton(),
         ],),
       ];
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        heroTag: 'control',
-        transitionBetweenRoutes: false,
-        middle: Text(S.of(context).title_add_preset),
-        trailing: CupertinoButton(
-          child: Text(S.of(context).btn_save, key: Key('btn_navbar_save')),
-          onPressed: validPreset() ? () {
-            if (!validPreset()) {
-              return;
-            }
-            new TinyPresetRepo().save(_tinyPreset);
-            _controlState.curDBO = _tinyPreset;
-            Navigator.of(context).pop();
-          } : null,),),
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: ListView(
-          key: Key('scrlvw_preset_edit'),
-          shrinkWrap: true,
-          children: _getFields(),
-      ),),
-    );
-  }
-
 }
 
 class _TextControllerBundle {
