@@ -136,7 +136,7 @@ steps:
       branch:
         - testflight
     image: appleboy/drone-ssh
-    depends_on: [ clone-ios, ios-integrationtest ]
+    depends_on: [ clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
