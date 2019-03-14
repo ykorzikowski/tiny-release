@@ -132,6 +132,7 @@ steps:
       - name: android_signing
         path: /drone/android_signing
     commands:
+      - export BUILD_ID=${DRONE_BUILD_NUMBER}
       - fastlane android alpha
 
   - name: ios-testflight
