@@ -35,7 +35,6 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   _PeopleEditWidgetState(this._tinyState) {
     _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
-    _peopleTextControllerBundle = _PeopleTextControllerBundle(_tinyPeople);
   }
 
   @override
@@ -92,14 +91,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
             Divider(),
             CupertinoButton(
               child: Text(S.of(context).btn_import_contacts),
-              onPressed: () {
-                _tinyState.tinyEditCallback = () {
-                  setState(() {
-                    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
-                  });
-                };
-                Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
-              },
+              onPressed: _onPeopleImportPressed,
             )
           ],
         ),
@@ -111,12 +103,27 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   void initState() {
     super.initState();
 
+    _initControllers();
+  }
+
+  _initControllers() {
+    _peopleTextControllerBundle = _PeopleTextControllerBundle(_tinyPeople);
     _tinyPeople.postalAddresses.forEach((addr) => _addressTextControllers.putIfAbsent(addr, () => _AddressTextControllerBundle(addr)));
     _tinyPeople.emails.forEach((mail) => _mailTextControllers.putIfAbsent(mail, () => _MailTextControllerBundle(mail)));
     _tinyPeople.phones.forEach((phone) => _phoneTextControllers.putIfAbsent(phone, () => _PhoneTextControllerBundle(phone)));
   }
 
-  void _addMail() {
+  _onPeopleImportPressed() {
+    _tinyState.tinyEditCallback = () {
+      setState(() {
+        _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+        _initControllers();
+      });
+    };
+    Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
+  }
+
+  _addMail() {
     setState(() {
       var mail = TinyPeopleItem();
       _tinyPeople.emails.add(mail);
@@ -124,7 +131,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     });
   }
 
-  void _addPhone() {
+  _addPhone() {
     setState(() {
       var phone = TinyPeopleItem();
       _tinyPeople.phones.add(phone);
@@ -132,7 +139,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     });
   }
 
-  void _addAddress() {
+  _addAddress() {
     setState(() {
       var address = TinyAddress();
       _tinyPeople.postalAddresses.add(address);
@@ -140,7 +147,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     });
   }
 
-  void _updateTextWidgetState(txt) {
+  _updateTextWidgetState(txt) {
     setState(() {
       _tinyPeople.givenName = _peopleTextControllerBundle.givenNameController.text;
       _tinyPeople.familyName = _peopleTextControllerBundle.familyNameController.text;
@@ -171,10 +178,6 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         mail.value = mailTextControllerBundle.mailController.text;
       }
     });
-  }
-
-  initialValue(tec, val) {
-    return TextEditingController(text: val);
   }
 
   Future getImage(ImageSource source) async {
@@ -257,7 +260,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                   child:
                   CupertinoTextField(
                     key: Key('tf_familyName'),
-                    onChanged: (t) => _updateTextWidgetState,
+                    onChanged: _updateTextWidgetState,
                     controller: _peopleTextControllerBundle.familyNameController,
                     placeholder: S.of(context).hint_familyname,
                   ),),
@@ -553,8 +556,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     return
       validAddresses() &&
       _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty &&
-          _tinyPeople.givenName != null && _tinyPeople.givenName.isNotEmpty &&
-            _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty;
+          _tinyPeople.givenName != null && _tinyPeople.givenName.isNotEmpty;
   }
 
   bool validAddresses() {
