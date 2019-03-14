@@ -33,9 +33,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   final Map _mailTextControllers = Map<TinyPeopleItem, _MailTextControllerBundle>();
   final Map _phoneTextControllers = Map<TinyPeopleItem, _PhoneTextControllerBundle>();
 
-  _PeopleEditWidgetState(this._tinyState) {
-    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
-  }
+  _PeopleEditWidgetState(this._tinyState);
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +44,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         middle: Text(S.of(context).title_add_people),
         trailing: CupertinoButton(
           child: Text(S.of(context).brn_save, key: Key('btn_navbar_save')),
-          onPressed: validContact() ? () {
-            if (!validContact()) {
-              return;
-            }
-            new TinyPeopleRepo().save(_tinyPeople);
-            _tinyState.curDBO = _tinyPeople;
-            Navigator.of(context).pop();
-          } : null,),),
+          onPressed: validContact() ? _onPeopleSave : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: ListView(
@@ -68,16 +59,16 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 key: Key('btn_add_mail'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_mail),
-                onPressed: _addMail
+                onPressed: _onAddMailPressed
             ),
             Divider(),
 
-            phoneSection(),
+            _buildPhoneSection(),
             FlatButton.icon(
                 key: Key('btn_add_phone'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_phone),
-                onPressed: _addPhone
+                onPressed: _onAddPhonePressed
             ),
             Divider(),
 
@@ -86,7 +77,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 key: Key('btn_add_address'),
                 icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
                 label: Text(S.of(context).btn_add_address),
-                onPressed: _addAddress
+                onPressed: _onAddAddressPressed
             ),
             Divider(),
             CupertinoButton(
@@ -103,6 +94,9 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   void initState() {
     super.initState();
 
+    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+    if (_tinyPeople.postalAddresses.length < 1) _tinyPeople.postalAddresses.add(TinyAddress());
+
     _initControllers();
   }
 
@@ -112,6 +106,8 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     _tinyPeople.emails.forEach((mail) => _mailTextControllers.putIfAbsent(mail, () => _MailTextControllerBundle(mail)));
     _tinyPeople.phones.forEach((phone) => _phoneTextControllers.putIfAbsent(phone, () => _PhoneTextControllerBundle(phone)));
   }
+
+  /// button onPressed
 
   _onPeopleImportPressed() {
     _tinyState.tinyEditCallback = () {
@@ -123,7 +119,13 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
   }
 
-  _addMail() {
+  _onPeopleSave() {
+    new TinyPeopleRepo().save(_tinyPeople);
+    _tinyState.curDBO = _tinyPeople;
+    Navigator.of(context).pop();
+  }
+
+  _onAddMailPressed() {
     setState(() {
       var mail = TinyPeopleItem();
       _tinyPeople.emails.add(mail);
@@ -131,7 +133,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     });
   }
 
-  _addPhone() {
+  _onAddPhonePressed() {
     setState(() {
       var phone = TinyPeopleItem();
       _tinyPeople.phones.add(phone);
@@ -139,7 +141,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     });
   }
 
-  _addAddress() {
+  _onAddAddressPressed() {
     setState(() {
       var address = TinyAddress();
       _tinyPeople.postalAddresses.add(address);
@@ -340,22 +342,32 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       );
 
   /// get phone widgets
-  List< Widget > getPhoneWidgets() =>
-      _tinyPeople.phones.map((phone) =>
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: Dismissible(
-                direction: DismissDirection.endToStart,
-                background: BaseUtil.getDismissibleBackground(),
-                key: Key(phone.hashCode.toString()),
-                onDismissed: (direction) => setState(() {_tinyPeople.phones.remove(phone); }),
-                child: getPhoneWidget(phone)
-            ),
-          ),
-      ).toList();
+  List<Widget> _buildPhoneWidgets() {
+    var list = List<Widget>();
+
+    for (var i = 0; i < _tinyPeople.phones.length; i++) {
+      var phone = _tinyPeople.phones[i];
+
+      list.add(Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: Dismissible(
+            key: Key('dismissible_phone_$i'),
+            direction: DismissDirection.endToStart,
+            background: BaseUtil.getDismissibleBackground(),
+            onDismissed: (direction) =>
+                setState(() {
+                  _tinyPeople.phones.remove(phone);
+                }),
+            child: _buildPhoneWidget(phone, i)
+        ),
+      ),);
+    }
+
+    return list;
+  }
 
   /// get single phone widget
-  Widget getPhoneWidget(phone) {
+  Widget _buildPhoneWidget(phone, i) {
     _PhoneTextControllerBundle bundle = _phoneTextControllers[phone];
 
     return Column(
@@ -364,6 +376,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           padding: EdgeInsets.only(left: 15.0),
           child:
           CupertinoTextField(
+            key: Key('tf_phone_label_$i'),
             onChanged: _updateTextWidgetState,
             controller: bundle.phoneLabelController,
             placeholder: S
@@ -374,6 +387,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           padding: EdgeInsets.only(left: 15.0),
           child:
           CupertinoTextField(
+            key: Key('tf_phone_number_$i'),
             onChanged: _updateTextWidgetState,
             controller: bundle.phoneController,
             keyboardType: TextInputType.phone,
@@ -385,30 +399,40 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     );
   }
   /// phone section
-  Widget phoneSection() =>
+  Widget _buildPhoneSection() =>
       Container(
         child: Column(
-          children: getPhoneWidgets(),
+          children: _buildPhoneWidgets(),
         ),
       );
 
   /// get mail widgets
-  List< Widget > getMailWidgets() =>
-      _tinyPeople.emails.map((mail) =>
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: Dismissible(
-                direction: DismissDirection.endToStart,
-                background: BaseUtil.getDismissibleBackground(),
-                key: Key(mail.hashCode.toString()),
-                onDismissed: (direction) => setState(() {_tinyPeople.emails.remove(mail); }),
-                child: getMailWidget(mail)
-            ),
+  List< Widget > _buildMailWidgets() {
+    var list = List<Widget>();
+
+    for( var i = 0; i < _tinyPeople.emails.length; i++ ) {
+      var mail = _tinyPeople.emails[i];
+      list.add(
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.0),
+          child: Dismissible(
+              key: Key('dismissible_mail_$i'),
+              direction: DismissDirection.endToStart,
+              background: BaseUtil.getDismissibleBackground(),
+              onDismissed: (direction) =>
+                  setState(() {
+                    _tinyPeople.emails.remove(mail);
+                  }),
+              child: _buildMailWidget(mail, i)
           ),
-      ).toList();
+        ),);
+    }
+
+    return list;
+  }
 
   /// get single mail widget
-  Widget getMailWidget(mail) {
+  Widget _buildMailWidget(mail, i) {
     _MailTextControllerBundle bundle = _mailTextControllers[mail];
 
     return Column(
@@ -417,6 +441,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           padding: EdgeInsets.only(left: 15.0),
           child:
           CupertinoTextField(
+            key: Key('tf_mail_label_$i'),
             onChanged: _updateTextWidgetState,
             controller: bundle.mailLabelController,
             placeholder: S.of(context).hint_mail_label,
@@ -424,6 +449,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         Padding(
           padding: EdgeInsets.only(left: 15.0),
           child: CupertinoTextField(
+            key: Key('tf_mail_address_$i'),
             onChanged: _updateTextWidgetState,
             controller: bundle.mailController,
             keyboardType: TextInputType.emailAddress,
@@ -437,7 +463,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   Widget mailSection() =>
       Container(
         child: Column(
-          children: getMailWidgets(),
+          children: _buildMailWidgets(),
         ),
       );
 
@@ -450,14 +476,16 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
       list.add(
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: Dismissible(
+            child: i == 0
+                ? getAddressWidget(ta, i)
+                : Dismissible(
+                key: Key('dismissible_address_$i'),
                 direction: DismissDirection.endToStart,
                 background: BaseUtil.getDismissibleBackground(),
-                key: Key(ta.hashCode.toString()),
                 onDismissed: (direction) => setState(() {_tinyPeople.postalAddresses.remove(ta); }),
                 child: getAddressWidget(ta, i)
             ),
-      ));
+          ));
     }
     return list;
   }
@@ -555,7 +583,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   bool validContact() {
     return
       validAddresses() &&
-      _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty &&
+          _tinyPeople.familyName != null && _tinyPeople.familyName.isNotEmpty &&
           _tinyPeople.givenName != null && _tinyPeople.givenName.isNotEmpty;
   }
 
@@ -569,7 +597,9 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   }
 
   bool validAddress(TinyAddress adr) {
-    return adr.street != null && adr.city != null && adr.postcode != null;
+    return adr.street != null && adr.street.isNotEmpty &&
+        adr.city != null && adr.city.isNotEmpty &&
+        adr.postcode != null && adr.postcode.isNotEmpty;
   }
 }
 

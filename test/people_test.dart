@@ -33,7 +33,7 @@ void main() {
       .where((el) => ((el.widget as CupertinoButton).child as Text).key == key).single.widget as CupertinoButton;
 
   group('People', () {
-    testWidgets('PeopleEditWidget blocks no givenName', (WidgetTester tester) async {
+    testWidgets('PeopleEditWidget save button disabled on missing givenName', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
       tinyState.curDBO = tinyPeople;
@@ -47,7 +47,7 @@ void main() {
       expect( getCupertinoButtonByText(Key('btn_navbar_save')).enabled, false );
     });
 
-    testWidgets('PeopleEditWidget blocks no familyName', (WidgetTester tester) async {
+    testWidgets('PeopleEditWidget save button disabled on missing familyName', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
       tinyState.curDBO = tinyPeople;
@@ -61,7 +61,7 @@ void main() {
       expect( getCupertinoButtonByText(Key('btn_navbar_save')).enabled, false );
     });
 
-    testWidgets('PeopleEditWidget test is saved', (WidgetTester tester) async {
+    testWidgets('PeopleEditWidget save button enabled on missing saved', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
       tinyState.curDBO = tinyPeople;
@@ -70,10 +70,53 @@ void main() {
       await tester.pumpWidget(makeTestableWidget( child: PeopleEditWidget(tinyState) ));
       await tester.enterText(find.byKey(Key('tf_familyName')), 'Han');
       await tester.enterText(find.byKey(Key('tf_givenName')), 'Solo');
+      await tester.enterText(find.byKey(Key('tf_street_0')), 'street');
+      await tester.enterText(find.byKey(Key('tf_city_0')), 'city');
+      await tester.enterText(find.byKey(Key('tf_postcode_0')), 'postcode');
       await tester.pump();
 
       // assert
       expect( getCupertinoButtonByText(Key('btn_navbar_save')).enabled, true );
+    });
+
+    testWidgets('PeopleEditWidget two addresses present', (WidgetTester tester) async {
+      // given
+      var tinyPeople = TinyPeople.factory();
+      tinyPeople.postalAddresses.add(TinyAddress());
+      tinyPeople.postalAddresses.add(TinyAddress());
+      tinyState.curDBO = tinyPeople;
+
+      // then
+      await tester.pumpWidget(makeTestableWidget(child: PeopleEditWidget(tinyState)));
+
+      // assert
+      expect( find.byKey(Key('tf_street_1')), findsOneWidget );
+    });
+
+    testWidgets('PeopleEditWidget mail is present', (WidgetTester tester) async {
+      // given
+      var tinyPeople = TinyPeople.factory();
+      tinyPeople.emails.add(TinyPeopleItem());
+      tinyState.curDBO = tinyPeople;
+
+      // then
+      await tester.pumpWidget(makeTestableWidget(child: PeopleEditWidget(tinyState)));
+
+      // assert
+      expect( find.byKey(Key('tf_mail_address_0')), findsOneWidget );
+    });
+
+    testWidgets('PeopleEditWidget phone is present', (WidgetTester tester) async {
+      // given
+      var tinyPeople = TinyPeople.factory();
+      tinyPeople.phones.add(TinyPeopleItem());
+      tinyState.curDBO = tinyPeople;
+
+      // then
+      await tester.pumpWidget(makeTestableWidget(child: PeopleEditWidget(tinyState)));
+
+      // assert
+      expect( find.byKey(Key('tf_phone_number_0')), findsOneWidget );
     });
   });
 }
