@@ -281,11 +281,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           ),
         ),
 
-        BaseUtil.isLargeScreen(context) ? ListTile(
-          leading: _buildParagraphAddButton(),
-          title:  _getImportButton(),
-          trailing: _buildSortParagraphsButton(),
-        ) : Column(children: <Widget>[
+        Column(children: <Widget>[
           _buildParagraphAddButton(),
           _buildSortParagraphsButton(),
           _getImportButton(),

@@ -88,7 +88,7 @@ Future _addPerson(FlutterDriver driver, Map screenshotConfig) async {
           var map = items[i];
 
           // tap on add address
-          await driver.tap( find.byValueKey('btn_add_address') );
+          if ( i > 0 ) await driver.tap( find.byValueKey('btn_add_address') );
 
           // fill out address
           await driver.scrollUntilVisible(find.byValueKey('scrlvw_preset_edit'), find.byValueKey('tf_city_$i') );

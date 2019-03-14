@@ -122,7 +122,7 @@ class S implements WidgetsLocalizations {
   String get selected_preset => "Selected preset";
   String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting date";
-  String get shooting_subject => "Subject of Shooting";
+  String get shooting_subject => "Subject";
   String get subscriptions => "Subscriptions";
   String get thanks_for_supporting_me => "Thanks for supporting me!";
   String get the_file_you_specified_is_not_a_valid_tiny_release => "The file you specified is not a valid tiny release preset.";
@@ -171,7 +171,7 @@ class $de extends S {
   @override
   String get hint_phone_label => "Markierung";
   @override
-  String get shooting_subject => "Betreff des Shootings";
+  String get shooting_subject => "Betreff";
   @override
   String get hint_content => "Inhalt";
   @override
@@ -421,7 +421,7 @@ class $nl extends S {
   @override
   String get hint_phone_label => "Telefoonlabel";
   @override
-  String get shooting_subject => "Onderwerp van opname";
+  String get shooting_subject => "Onderwerp";
   @override
   String get hint_content => "Inhoud";
   @override
