@@ -36,6 +36,14 @@ steps:
         - cd tiny_release
         - git checkout $DRONE_COMMIT
 
+  - name: widget-test
+      image: mingc/android-build-box
+      environment:
+        BUILD_ID: ${DRONE_BUILD_NUMBER}
+      depends_on: [ clone ]
+      commands:
+        - flutter test
+
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
     when:
