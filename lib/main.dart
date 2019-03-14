@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeListResolutionCallback: S.delegate.listResolution(fallback: const Locale('en', '')),
+      localeResolutionCallback: S.delegate.resolution(fallback: const Locale('en', ''), withCountry: false),
       title: 'Flutter Code Sample for material.AppBar.actions',
       routes: tinyState.routes,
       theme: ThemeData(
