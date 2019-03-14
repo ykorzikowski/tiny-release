@@ -41,7 +41,7 @@ steps:
     image: mingc/android-build-box
     depends_on: [ clone ]
     commands:
-      - export BUILD_ID=$DRONE_BUILD_NUMBER
+      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - flutter build apk --debug
 
   - name: ios-build
@@ -86,7 +86,7 @@ steps:
       - name: android_signing
         path: /opt/android_signing
     commands:
-      - export BUILD_ID=$DRONE_BUILD_NUMBER
+      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - fastlane android release
 
   - name: ios-release
@@ -128,7 +128,7 @@ steps:
       - name: android_signing
         path: /opt/android_signing
     commands:
-      - export BUILD_ID=$DRONE_BUILD_NUMBER
+      - export BUILD_ID=$$DRONE_BUILD_NUMBER
       - fastlane android alpha
 
   - name: ios-testflight
