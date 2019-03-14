@@ -209,11 +209,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                   Divider(),
 
                   /// subject
-                  _tileOrColumn(Text(S.of(context).shooting_subject), CupertinoTextField(
-                    key: Key('tf_subject'),
-                    maxLength: 50,
-                    onChanged: _updateTextWidgetState,
-                    controller: _subjectController,
+                  _tileOrColumn(Text(S.of(context).shooting_subject), Container(
+                    width: 250,
+                    child: CupertinoTextField(
+                      key: Key('tf_subject'),
+                      maxLength: 50,
+                      onChanged: _updateTextWidgetState,
+                      controller: _subjectController,
+                    ),
                   ),),
 
                   Divider(),
