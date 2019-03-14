@@ -7,3 +7,52 @@
 #      - ./scripts/android_avd.sh
 #      - flutter drive --target=test_driver/app_full.dart
 ##
+
+- name: ios-integrationtest
+  image: appleboy/drone-ssh
+  depends_on: [ clone-ios ]
+  volumes:
+    - name: drone_ssh
+      path: /root/ssh/drone_rsa
+  settings:
+    host: git.engineerservices.de
+    port: 4222
+    command_timeout: 15m
+    username: ci
+    key_path: /root/ssh/drone_rsa/id_rsa
+    envs:
+      - DRONE_BUILD_NUMBER
+      - DRONE_COMMIT
+      - DRONE_BRANCH
+    script:
+      - export BUILD_ID=$DRONE_BUILD_NUMBER
+      - cd tiny_release_build_$BUILD_ID/tiny_release
+      - export DEV_ID=`xcrun simctl create iPhonex com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-12-1`
+      - xcrun simctl boot $DEV_ID
+      - bash -lc 'flutter drive --target=test_driver/app_full.dart -diPhonex'
+      - xcrun simctl shutdown $DEV_ID
+      - xcrun simctl erase $DEV_ID
+    - name: generate-screenshots
+      when:
+        branch:
+          - testflight
+      image: appleboy/drone-ssh
+      depends_on: [ clone-ios ]
+      volumes:
+        - name: drone_ssh
+          path: /root/ssh/drone_rsa
+      settings:
+        host: git.engineerservices.de
+        port: 4222
+        command_timeout: 30m
+        username: ci
+        key_path: /root/ssh/drone_rsa/id_rsa
+        envs:
+          - DRONE_BUILD_NUMBER
+          - DRONE_COMMIT
+          - DRONE_BRANCH
+        script:
+          - export BUILD_ID=$DRONE_BUILD_NUMBER
+          - cd tiny_release_build_$BUILD_ID/tiny_release
+          - git checkout $DRONE_COMMIT
+          - bash -lc 'fastlane screenshots'
