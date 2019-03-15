@@ -40,11 +40,10 @@ steps:
   - name: android-build
     image: mingc/android-build-box
     depends_on: [ clone, widget-test ]
-    pub_cache:
-      folder: /tmp/.pub-cache
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
     commands:
+      - flutter packages get
       - flutter build apk --debug
 
   - name: ios-build
