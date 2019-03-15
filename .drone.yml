@@ -1,19 +1,13 @@
+---
+# build pipeline
 kind: pipeline
-name: default
+name: build
 
 steps:
 
   # clone project on mac os buildserver
   - name: clone-ios
-    when:
-      branch:
-        exclude:
-          - testflight
-      ref:
-        exclude:
-          - refs/tags/v*
     image: appleboy/drone-ssh
-    depends_on: [ clone ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -38,36 +32,21 @@ steps:
 
   - name: widget-test
     image: mingc/android-build-box
-    depends_on: [ clone ]
     commands:
       - flutter test
 
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
-    when:
-      ref:
-        exclude:
-          - refs/tags/*
-      branch:
-        - master
-        - feature/*
     image: mingc/android-build-box
+    depends_on: [ widget-test ]
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
-    depends_on: [ clone ]
     commands:
       - flutter build apk --debug
 
   - name: ios-build
-    when:
-      ref:
-        exclude:
-          - refs/tags/*
-      branch:
-        - master
-        - feature/*
     image: appleboy/drone-ssh
-    depends_on: [ clone-ios ]
+    depends_on: [ clone-ios, widget-test ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -90,6 +69,28 @@ steps:
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flock /Users/ci/macOS_lock flutter build ios'
 
+trigger:
+  ref:
+    exclude:
+      - refs/tags/*
+  branch:
+    - master
+    - feature/*
+
+volumes:
+  - name: android_signing
+    host:
+      path: /srv/drone/android_signing
+  - name: drone_ssh
+    host:
+      path: /root/drone_rsa
+
+# release pipeline
+---
+kind: pipeline
+name: release
+
+steps:
   # release only when tag starts with 'v*'
   - name: android-release
     when:
@@ -110,7 +111,6 @@ steps:
       ref:
         - refs/tags/v*
     image: appleboy/drone-ssh
-    depends_on: [ clone-ios ]
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
@@ -133,9 +133,6 @@ steps:
 
   - name: ios-release
     depends_on: [ generate-screenshots ]
-    when:
-      ref:
-        - refs/tags/v*
     image: appleboy/drone-ssh
     volumes:
       - name: drone_ssh
@@ -163,11 +160,26 @@ steps:
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flock /Users/ci/macOS_lock fastlane ios release'
 
+trigger:
+  ref:
+    - refs/tags/v*
+
+volumes:
+  - name: android_signing
+    host:
+      path: /srv/drone/android_signing
+  - name: drone_ssh
+    host:
+      path: /root/drone_rsa
+
+# testflight pipeline
+---
+kind: pipeline
+name: testflight
+
+steps:
   # testflights only when pushed on branch 'testflights'
   - name: android-testflight
-    when:
-      branch:
-        - testflight
     image: mingc/android-build-box
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
@@ -180,9 +192,6 @@ steps:
       - fastlane android alpha
 
   - name: ios-testflight
-    when:
-      branch:
-        - testflight
     image: appleboy/drone-ssh
     volumes:
       - name: drone_ssh
@@ -196,7 +205,6 @@ steps:
       envs:
         - DRONE_BUILD_NUMBER
         - DRONE_COMMIT
-        - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - cd tiny_release_testflight/tiny_release
@@ -206,10 +214,72 @@ steps:
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flock /Users/ci/macOS_lock fastlane ios beta'
 
+trigger:
+  branch:
+    - testflight
+
 volumes:
   - name: android_signing
     host:
       path: /srv/drone/android_signing
+  - name: drone_ssh
+    host:
+      path: /root/drone_rsa
+
+# cleanup workspace on mac build selver
+---
+kind: pipeline
+name: cleanup-mac-buildserver
+
+steps:
+  # try to kill hanging dart processes
+  - name: fix-frozen-dart
+    image: appleboy/drone-ssh
+    when:
+      status:
+        - failure
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 15m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      script:
+        - killall dart
+
+  - name: cleanup-build-folder
+    image: appleboy/drone-ssh
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 15m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+      script:
+        - rm -rf tiny_release_build_$BUILD_ID
+
+clone:
+  disable: true
+
+trigger:
+  status:
+    - success
+    - failure
+
+depends_on:
+  - build
+  - testflight
+  - release
+
+volumes:
   - name: drone_ssh
     host:
       path: /root/drone_rsa
