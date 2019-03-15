@@ -39,6 +39,8 @@ steps:
   - name: android-build
     image: mingc/android-build-box
     depends_on: [ widget-test ]
+    pub_cache:
+      folder: /tmp/.pub-cache
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
     commands:
@@ -53,7 +55,7 @@ steps:
     settings:
       host: git.engineerservices.de
       port: 4222
-      command_timeout: 5m
+      command_timeout: 10m
       username: ci
       key_path: /root/ssh/drone_rsa/id_rsa
       envs:
@@ -246,6 +248,7 @@ steps:
       key_path: /root/ssh/drone_rsa/id_rsa
       script:
         - killall dart
+        - killall flutter
 
   - name: cleanup-build-folder
     image: appleboy/drone-ssh
