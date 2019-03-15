@@ -11,6 +11,7 @@ import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/tiny_state.dart';
 import 'package:tiny_release/util/nav_routes.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -116,7 +117,34 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         _initControllers();
       });
     };
-    Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT);
+
+    _requestContactPermission(
+        authorized: () => Navigator.of(context).pushNamed(NavRoutes.PEOPLE_IMPORT),
+        denied: () => showDialog(context: context, builder: (ctx) => _buildPermissionDeniedDialog()),
+    );
+  }
+
+  Widget _buildPermissionDeniedDialog() => CupertinoAlertDialog(
+    title: Text("Permission Denied"),
+    content: Text("If you want to use this feature, you have to give TinyRelease access to your contacts. "),
+    actions: <Widget>[
+      CupertinoDialogAction(
+        child: Text(S.of(context).ok),
+        onPressed: () => Navigator.of(context).pop(),
+      )
+    ],
+  );
+
+  _requestContactPermission( {authorized, denied} ) async {
+    PermissionStatus canReadContacts = await PermissionHandler().checkPermissionStatus(PermissionGroup.contacts);
+
+    if( canReadContacts != PermissionStatus.granted ) {
+      Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.contacts]);
+      if ( permissions[PermissionGroup.contacts] != PermissionStatus.granted ) {
+        return denied();
+      }
+    }
+    return authorized();
   }
 
   _onPeopleSave() {
