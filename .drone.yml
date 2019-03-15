@@ -235,9 +235,6 @@ steps:
   # try to kill hanging dart processes
   - name: fix-frozen-dart
     image: appleboy/drone-ssh
-    when:
-      status:
-        - failure
     volumes:
       - name: drone_ssh
         path: /root/ssh/drone_rsa
