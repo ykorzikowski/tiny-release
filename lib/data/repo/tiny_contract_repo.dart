@@ -25,8 +25,8 @@ class TinyContractRepo extends TinyRepo< TinyContract > {
     tinyContract.isLocked = dbo.locked_ == 1;
     tinyContract.model = await _tinyPeopleRepo.get(dbo.modelId);
     tinyContract.photographer = await _tinyPeopleRepo.get(dbo.photographerId);
-    tinyContract.witness = await _tinyPeopleRepo.get(dbo.witnessId);
-    tinyContract.parent = await _tinyPeopleRepo.get(dbo.parentId);
+    if(dbo.witnessId != null) tinyContract.witness = await _tinyPeopleRepo.get(dbo.witnessId);
+    if(dbo.parentId != null) tinyContract.parent = await _tinyPeopleRepo.get(dbo.parentId);
     tinyContract.preset = await _tinyPresetRepo.get(dbo.presetId);
 
     /// selected addresses

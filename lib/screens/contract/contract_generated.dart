@@ -167,7 +167,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: _onClonePressed,)
+          onTap: () => _onClonePressed(),)
       ],
     ),
   );
@@ -182,7 +182,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: _onSharePressed,)
+          onTap: () => _onSharePressed(),)
       ],
     ),
   );
@@ -197,7 +197,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
             width: 80,
             height: 50,
           ),
-          onTap: _onDeletePressed,)
+          onTap: () => _onDeletePressed(),)
       ],
     ),
   );

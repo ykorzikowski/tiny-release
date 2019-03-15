@@ -467,14 +467,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
-              child:Icon(CupertinoIcons.add_circled_solid,
+              child: Icon(CupertinoIcons.add_circled_solid,
                 color: CupertinoColors.activeGreen, key: Key('btn_set_reception'),),
               popoverHeight: 500,
               popoverWidth: 400,
               popoverBuild: (context) => _buildReceptionWidget(context)
           ) : CupertinoButton(
-            child:
-            _tinyContract.preset == null ? Text(S.of(context).choose, key: Key('btn_set_reception')) : Text(_tinyContract.preset.title, key: Key('btn_set_reception')),
+            child: Icon(CupertinoIcons.add_circled_solid,
+              color: CupertinoColors.activeGreen, key: Key('btn_set_reception'),),
             onPressed: () =>
                 Navigator.of(context).push(TinyPageWrapper(
                     transitionDuration: ControlHelper

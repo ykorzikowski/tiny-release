@@ -60,6 +60,10 @@ class PeopleImportCallback {
   Future<List<TinyPeople>> getPeople(pageIndex) async {
     Iterable<Contact> contacts = await ContactsService.getContacts();
 
+    if( contacts == null ) {
+      return List();
+    }
+
     var start = pageIndex * PeopleListWidget.PAGE_SIZE;
     var end = (pageIndex + 1) * PeopleListWidget.PAGE_SIZE;
 
