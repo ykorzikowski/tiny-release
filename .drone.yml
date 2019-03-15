@@ -69,7 +69,7 @@ steps:
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'flock /Users/ci/macOS_lock flutter build ios'
+        - bash -lc 'flutter build ios --debug --no-codesign'
 
 trigger:
   ref:
@@ -131,7 +131,7 @@ steps:
         - cd tiny_release_testflight/tiny_release
         - bash -lc 'git checkout $DRONE_COMMIT'
         - touch /Users/ci/macOS_lock
-        - bash -lc 'flock /Users/ci/macOS_lock  fastlane screenshots'
+        - bash -lc ' fastlane screenshots'
 
   - name: ios-release
     depends_on: [ generate-screenshots ]
@@ -160,7 +160,7 @@ steps:
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'flock /Users/ci/macOS_lock fastlane ios release'
+        - bash -lc 'fastlane ios release'
 
 trigger:
   ref:
@@ -214,7 +214,7 @@ steps:
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'flock /Users/ci/macOS_lock fastlane ios beta'
+        - bash -lc 'fastlane ios beta'
 
 trigger:
   branch:
