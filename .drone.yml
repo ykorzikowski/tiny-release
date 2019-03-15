@@ -84,10 +84,13 @@ steps:
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - cd tiny_release_build_$BUILD_ID/tiny_release
+        - bash -lc 'flock -s /Users/ci/macOS_lock flutter --version'
+        - touch /Users/ci/macOS_lock
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flutter build ios'
+        - rm /Users/ci/macOS_lock
 
   # release only when tag starts with 'v*'
   - name: android-release
@@ -126,10 +129,10 @@ steps:
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - cd tiny_release_testflight/tiny_release
-        - bash -lc 'flock -s /Users/ci/screenshots_lock git checkout $DRONE_COMMIT'
-        - touch /Users/ci/screenshots_lock
+        - bash -lc 'flock -s /Users/ci/macOS_lock git checkout $DRONE_COMMIT'
+        - touch /Users/ci/macOS_lock
         - bash -lc 'fastlane screenshots'
-        - rm /Users/ci/screenshots_lock
+        - rm /Users/ci/macOS_lock
 
   - name: ios-release
     when:
@@ -155,11 +158,13 @@ steps:
         - cd tiny_release_release/tiny_release
         - git pull
         - git reset --hard
-        - git checkout $DRONE_COMMIT
+        - bash -lc 'flock -s /Users/ci/macOS_lock git checkout $DRONE_COMMIT'
+        - touch /Users/ci/macOS_lock
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'fastlane ios release'
+        - rm /Users/ci/macOS_lock
 
   # testflights only when pushed on branch 'testflights'
   - name: android-testflight
