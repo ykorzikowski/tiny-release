@@ -126,8 +126,10 @@ steps:
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - cd tiny_release_testflight/tiny_release
-        - git checkout $DRONE_COMMIT
-        - bash -lc 'flock -s /Users/ci/screenshots_lock fastlane screenshots'
+        - bash -lc 'flock -s /Users/ci/screenshots_lock git checkout $DRONE_COMMIT'
+        - touch /Users/ci/screenshots_lock
+        - bash -lc 'fastlane screenshots'
+        - rm /Users/ci/screenshots_lock
 
   - name: ios-release
     when:
