@@ -74,7 +74,7 @@ steps:
     settings:
       host: git.engineerservices.de
       port: 4222
-      command_timeout: 15m
+      command_timeout: 5m
       username: ci
       key_path: /root/ssh/drone_rsa/id_rsa
       envs:
