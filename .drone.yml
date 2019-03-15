@@ -104,6 +104,31 @@ steps:
     commands:
       - fastlane android release
 
+  - name: generate-screenshots
+    when:
+      branch:
+        - testflight
+    image: appleboy/drone-ssh
+    depends_on: [ clone-ios ]
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 60m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - cd tiny_release_testflight/tiny_release
+        - git checkout $DRONE_COMMIT
+        - bash -lc 'flock -s /Users/ci/screenshots_lock fastlane screenshots'
+
   - name: ios-release
     when:
       ref:
@@ -151,6 +176,7 @@ steps:
       - fastlane android alpha
 
   - name: ios-testflight
+    depends_on: [ generate-screenshots ]
     when:
       branch:
         - testflight

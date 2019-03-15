@@ -8,8 +8,8 @@ staging: /tmp/screenshots
 # A list of locales supported by the app
 locales:
   - en-GB
-  - de-DE
-  - nl-NL
+#  - de-DE disabled due flutter driver bug - remember to add copy directive to fastfile when adding more
+#  - nl-NL
 
 # A list of devices to emulate
 devices:

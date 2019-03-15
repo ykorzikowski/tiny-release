@@ -114,6 +114,8 @@ lane :screenshots do
     sh("screenshots")
     Dir.chdir "ios/fastlane/screenshots" do
         sh("cp -R locales/* ./")
+        sh("cp -R en-GB/*.png de-DE/")
+        sh("cp -R en-GB/*.png nl-NL/")
     end
     Dir.chdir "ios/fastlane" do
 	frame_screenshots
