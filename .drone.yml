@@ -107,8 +107,8 @@ steps:
 
   - name: generate-screenshots
     when:
-      branch:
-        - testflight
+      ref:
+        - refs/tags/v*
     image: appleboy/drone-ssh
     depends_on: [ clone-ios ]
     volumes:
@@ -132,6 +132,7 @@ steps:
         - bash -lc 'flock /Users/ci/macOS_lock  fastlane screenshots'
 
   - name: ios-release
+    depends_on: [ generate-screenshots ]
     when:
       ref:
         - refs/tags/v*
@@ -179,7 +180,6 @@ steps:
       - fastlane android alpha
 
   - name: ios-testflight
-    depends_on: [ generate-screenshots ]
     when:
       branch:
         - testflight
