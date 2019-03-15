@@ -32,13 +32,14 @@ steps:
 
   - name: widget-test
     image: mingc/android-build-box
+    depends_on: [ clone ]
     commands:
       - flutter test
 
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
     image: mingc/android-build-box
-    depends_on: [ widget-test ]
+    depends_on: [ clone, widget-test ]
     pub_cache:
       folder: /tmp/.pub-cache
     environment:
@@ -247,8 +248,8 @@ steps:
       username: ci
       key_path: /root/ssh/drone_rsa/id_rsa
       script:
-        - killall dart
-        - killall flutter
+        - killall dart ||true
+        - killall flutter ||true
 
   - name: cleanup-build-folder
     image: appleboy/drone-ssh
