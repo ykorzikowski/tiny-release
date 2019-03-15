@@ -69,7 +69,7 @@ class PeopleImportCallback {
 
     var data = contacts.toList();
     data.sort((a, b) =>
-        a.familyName.toLowerCase().compareTo(b.familyName.toLowerCase()));
+        a.familyName?.toLowerCase()?.compareTo(b.familyName?.toLowerCase()) ?? 0);
 
     Future<List<TinyPeople>> wait = Future.wait(data.sublist(start, end)
         .map((value) async => mapContactToPeople(value))

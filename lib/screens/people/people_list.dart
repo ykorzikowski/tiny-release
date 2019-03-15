@@ -142,6 +142,14 @@ class _ListWidgetState extends State<PeopleListWidget> {
       child: child,) : Container(child: child,);
   }
 
+  String _getPersonName(TinyPeople tinyPeople) {
+    String name = "";
+    if (tinyPeople.givenName != null) name += tinyPeople.givenName + " ";
+    if (tinyPeople.familyName != null) name += tinyPeople.familyName;
+
+    return name;
+  }
+
   Widget _itemBuilder(context, entry, index) {
     return dismissibleDistinctive (Column(
         children: <Widget>[
@@ -149,7 +157,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
             key: Key('people_$index'),
             leading: PeopleListWidget.getCircleAvatar(
                 entry, PeopleListWidget.getCircleText(entry)),
-            title: Text(entry.givenName + " " + entry.familyName, overflow: TextOverflow.ellipsis,),
+            title: Text(_getPersonName(entry), overflow: TextOverflow.ellipsis,),
             onTap: () {
               _onPeopleTap(entry, context);
             },
