@@ -264,7 +264,7 @@ steps:
       envs:
         - DRONE_BUILD_NUMBER
       script:
-        - rm -rf tiny_release_build_$BUILD_ID
+        - rm -rf tiny_release_build_$DRONE_BUILD_NUMBER
 
 clone:
   disable: true
