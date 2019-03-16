@@ -354,26 +354,36 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
         PeopleListWidget.PAGE_SIZE);
   }
 
+  _buildPeopleBadge({String person, TinyPeople people, String text, Function onPeopleTrash}) =>
+      ListTile(
+        key: Key('select_$person'),
+        title: Row(children: <Widget>[
+          PeopleListWidget.getCircleAvatar(people,
+              people == null ? "?" : PeopleListWidget.getCircleText(people)),
+          Padding(
+              padding: EdgeInsets.all(8.0),
+              child: people == null ? Text(text, style: btnStyle,) : Row(
+                children: <Widget>[
+                  Text(people.givenName + " " + people.familyName,
+                    style: btnStyle,),
+                  CupertinoButton(
+                    child: Icon(CupertinoIcons.delete_solid),
+                    onPressed: onPeopleTrash,
+                  )
+                ],)
+          )
+        ],),
+      );
+
   /// opens people selection widget
   _buildPeopleView({String person, TinyPeople people, TinyRepo repo, String text,
       Function onPeopleTap, Function onPeopleTrash}) =>
       BaseUtil.isLargeScreen(context) ? CupertinoPopoverButton(
-          child: ListTile(
-            key: Key('select_$person'),
-            title: Row(children: <Widget>[
-              PeopleListWidget.getCircleAvatar(people,
-                  people == null ? "?" : PeopleListWidget.getCircleText(people)),
-              Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: people == null ? Text(text, style: btnStyle,) : Row(children: <Widget>[
-                    Text(people.givenName + " " + people.familyName, style: btnStyle,),
-                    CupertinoButton(
-                      child: Icon(CupertinoIcons.delete_solid),
-                      onPressed: onPeopleTrash,
-                    )
-                  ],)
-              )
-            ],),
+          child: _buildPeopleBadge(
+            people: people,
+            person: person,
+            text: text,
+            onPeopleTrash: onPeopleTrash
           ),
           popoverHeight: 500,
           popoverWidth: 400,
@@ -384,22 +394,12 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                       (item, context) => onPeopleTap(people, item, context)
               )
       ) : CupertinoButton(
-        child: Row(
-          key: Key('select_$person'),
-          children: <Widget>[
-          PeopleListWidget.getCircleAvatar(people,
-              people == null ? "?" : PeopleListWidget.getCircleText(people)),
-          Padding(
-              padding: EdgeInsets.all(8.0),
-              child: people == null ? Text(text) : Row(children: <Widget>[
-                Text(people.givenName + " " + people.familyName),
-                CupertinoButton(
-                  child: Icon(CupertinoIcons.delete_solid),
-                  onPressed: onPeopleTrash,
-                )
-              ],)
-          )
-        ],),
+        child: _buildPeopleBadge(
+            people: people,
+            person: person,
+            text: text,
+            onPeopleTrash: onPeopleTrash
+        ),
         onPressed: () {
           Navigator.of(context).push(TinyPageWrapper(
               transitionDuration: ControlHelper.getScreenSizeBasedDuration(context),

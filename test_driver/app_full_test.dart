@@ -167,10 +167,13 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
   await screenshot(driver, screenshotConfig, 'contract_edit_start');
 
   // choose photographer
+  print('choosing photographer');
   await driver.tap(find.byValueKey('select_photographer'));
   await driver.tap(find.byValueKey('people_0'));
 
   // choose model
+  print('choosing model');
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('select_model') );
   await driver.tap(find.byValueKey('select_model'));
   await driver.tap(find.byValueKey('people_1'));
 
@@ -189,30 +192,33 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
   await driver.tap(find.byValueKey('people_3'));
 
   // choose preset
-  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('btn_select_date') );
   await driver.tap(find.byValueKey('btn_add_preset'));
   await driver.tap(find.byValueKey('preset_0'));
 
   // set date
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('btn_select_date') );
   await driver.tap(find.byValueKey('btn_select_date'));
   await driver.scroll(find.byValueKey('datepicker'), 0, 400, Duration(milliseconds: 300));
   await driver.tap(find.byValueKey('btn_ok'));
 
   // set images count
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('btn_set_images_count') );
   await driver.tap(find.byValueKey('btn_set_images_count'));
   await driver.scroll(find.byValueKey('image_count_picker'), 0, -200, Duration(milliseconds: 300));
   await driver.tap(find.byValueKey('btn_ok'));
 
   // set location
-  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('btn_set_reception') );
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('tf_location') );
   await driver.tap( find.byValueKey('tf_location') );
   await driver.enterText('Düsseldorf');
 
   // set subject
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('tf_subject') );
   await driver.tap( find.byValueKey('tf_subject') );
   await driver.enterText('Summershooting');
 
   // add reception areas
+  await driver.scrollUntilVisible(find.byType('SingleChildScrollView'), find.byValueKey('btn_set_reception') );
   await driver.tap( find.byValueKey('btn_set_reception') );
   await driver.tap(find.byValueKey('reception_0'));
   await driver.tap( find.byValueKey('btn_set_reception') );

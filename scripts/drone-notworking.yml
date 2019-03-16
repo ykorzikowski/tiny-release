@@ -1,37 +1,50 @@
-# does not work
-#  - name: android-integrationtest
-#    image: mingc/android-build-box
-#    depends_on: [ clone ]
-#    commands:
-#      - export BUILD_ID=$DRONE_BUILD_NUMBER
-#      - ./scripts/android_avd.sh
-#      - flutter drive --target=test_driver/app_full.dart
-##
 
-- name: ios-integrationtest
-  image: appleboy/drone-ssh
-  depends_on: [ clone-ios ]
+- name: android-integrationtest-28-phone
+  depends_on: [ clone ]
+  image: ykorzikowski/flutter-android-sdk-and-emulator:0.1.3
+  privileged: true
   volumes:
-    - name: drone_ssh
-      path: /root/ssh/drone_rsa
-  settings:
-    host: git.engineerservices.de
-    port: 4222
-    command_timeout: 15m
-    username: ci
-    key_path: /root/ssh/drone_rsa/id_rsa
-    envs:
-      - DRONE_BUILD_NUMBER
-      - DRONE_COMMIT
-      - DRONE_BRANCH
-    script:
-      - export BUILD_ID=$DRONE_BUILD_NUMBER
-      - cd tiny_release_build_$BUILD_ID/tiny_release
-      - export DEV_ID=`xcrun simctl create iPhonex com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-12-1`
-      - xcrun simctl boot $DEV_ID
-      - bash -lc 'flutter drive --target=test_driver/app_full.dart -diPhonex'
-      - xcrun simctl shutdown $DEV_ID
-      - xcrun simctl erase $DEV_ID
+    - name: kvm
+      path: /dev/kvm
+  environment:
+    DEVICE_ID: "11"
+    SYSTEM_IMAGE: "system-images;android-27;google_apis;x86"
+  commands:
+    - start_emulator && wait_emulator && unlock_emulator
+    - flutter drive --target=test_driver/app_full.dart
+
+---
+kind: pipeline
+name: integration-tests-ios
+
+steps:
+  - name: ios-integrationtest
+    depends_on: [ clone ]
+    image: appleboy/drone-ssh
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 10m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - export DEV_ID=`xcrun simctl create iPhonex com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-12-1`
+        - xcrun simctl boot $DEV_ID
+        - bash -lc 'flutter drive --target=test_driver/app_full.dart -diPhonex'
+        - xcrun simctl shutdown $DEV_ID
+        - xcrun simctl erase $DEV_ID
+
+volumes:
+  - name: drone_ssh
+    host:
+      path: /root/drone_rsa
+
     - name: generate-screenshots
       when:
         branch:

@@ -85,7 +85,7 @@ volumes:
       path: /srv/drone/android_signing
   - name: drone_ssh
     host:
-      path: /root/drone_rsa
+      path: /srv/docker/volumes/drone_rsa
 
 # release pipeline
 ---
@@ -108,33 +108,7 @@ steps:
     commands:
       - fastlane android release
 
-  - name: generate-screenshots
-    when:
-      ref:
-        - refs/tags/v*
-    image: appleboy/drone-ssh
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 60m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      envs:
-        - DRONE_BUILD_NUMBER
-        - DRONE_COMMIT
-        - DRONE_BRANCH
-      script:
-        - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_testflight/tiny_release
-        - bash -lc 'git checkout $DRONE_COMMIT'
-        - touch /Users/ci/macOS_lock
-        - bash -lc ' fastlane screenshots'
-
   - name: ios-release
-    depends_on: [ generate-screenshots ]
     image: appleboy/drone-ssh
     volumes:
       - name: drone_ssh
@@ -156,7 +130,6 @@ steps:
         - git pull
         - git reset --hard
         - bash -lc 'git checkout $DRONE_COMMIT'
-        - touch /Users/ci/macOS_lock
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
@@ -172,7 +145,7 @@ volumes:
       path: /srv/drone/android_signing
   - name: drone_ssh
     host:
-      path: /root/drone_rsa
+      path: /srv/docker/volumes/drone_rsa
 
 # testflight pipeline
 ---
@@ -226,9 +199,9 @@ volumes:
       path: /srv/drone/android_signing
   - name: drone_ssh
     host:
-      path: /root/drone_rsa
+      path: /srv/docker/volumes/drone_rsa
 
-# cleanup workspace on mac build selver
+# cleanup workspace on mac build server
 ---
 kind: pipeline
 name: cleanup-mac-buildserver
@@ -276,10 +249,8 @@ trigger:
 
 depends_on:
   - build
-  - testflight
-  - release
 
 volumes:
   - name: drone_ssh
     host:
-      path: /root/drone_rsa
+      path: /srv/docker/volumes/drone_rsa
