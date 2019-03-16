@@ -157,16 +157,18 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: _tinyContract.preset == null ? Text("No preset selected") :
-              ListView( shrinkWrap: true, children: <Widget>[
-                _buildContractHeader(context),
+            child: SingleChildScrollView(
+              child: _tinyContract.preset == null ? Text("No preset selected") :
+                Column( children: <Widget>[
+                  _buildContractHeader(context),
 
-                Divider(),
+                  Divider(),
 
-                /// paragraphs
-                Column(children: ContractGenerator.buildParagraphs(context, _tinyContract),)
+                  /// paragraphs
+                  Column(children: ContractGenerator.buildParagraphs(context, _tinyContract),)
 
-              ] ),
+                ] ),
+            ),
         ),
       ),
     );

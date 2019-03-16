@@ -48,44 +48,47 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
           onPressed: validContact() ? _onPeopleSave : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            imageAndNameSection(),
-            Divider(),
-            infoWidget(),
-            Divider(),
-            mailSection(),
-            FlatButton.icon(
-                key: Key('btn_add_mail'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_mail),
-                onPressed: _onAddMailPressed
-            ),
-            Divider(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                imageAndNameSection(),
+                Divider(),
+                infoWidget(),
+                Divider(),
+                mailSection(),
+                FlatButton.icon(
+                    key: Key('btn_add_mail'),
+                    icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                    label: Text(S.of(context).btn_add_mail),
+                    onPressed: _onAddMailPressed
+                ),
+                Divider(),
 
-            _buildPhoneSection(),
-            FlatButton.icon(
-                key: Key('btn_add_phone'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_phone),
-                onPressed: _onAddPhonePressed
-            ),
-            Divider(),
+                _buildPhoneSection(),
+                FlatButton.icon(
+                    key: Key('btn_add_phone'),
+                    icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                    label: Text(S.of(context).btn_add_phone),
+                    onPressed: _onAddPhonePressed
+                ),
+                Divider(),
 
-            addressSection(),
-            FlatButton.icon(
-                key: Key('btn_add_address'),
-                icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
-                label: Text(S.of(context).btn_add_address),
-                onPressed: _onAddAddressPressed
+                addressSection(),
+                FlatButton.icon(
+                    key: Key('btn_add_address'),
+                    icon: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen,),
+                    label: Text(S.of(context).btn_add_address),
+                    onPressed: _onAddAddressPressed
+                ),
+                Divider(),
+                CupertinoButton(
+                  child: Text(S.of(context).btn_import_contacts),
+                  onPressed: _onPeopleImportPressed,
+                )
+              ],
             ),
-            Divider(),
-            CupertinoButton(
-              child: Text(S.of(context).btn_import_contacts),
-              onPressed: _onPeopleImportPressed,
-            )
-          ],
+          ),
         ),
       ),
     );

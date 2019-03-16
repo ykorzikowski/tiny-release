@@ -70,24 +70,26 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
       Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
-            child: ListView(children: <Widget>[
-              _tinyPreset.subtitle != null ? Text(
-                _tinyPreset.subtitle,
-                style: TextStyle(fontSize: 26.0,),
-                textAlign: TextAlign.center,
-              ) : Container(),
-              _tinyPreset.language != null ? Text(
-                _tinyPreset.language,
-                style: TextStyle(fontSize: 26.0,),
-                textAlign: TextAlign.center,
-              ) : Container(),
-              _tinyPreset.description != null ? Text(
-                _tinyPreset.description,
-                style: TextStyle(fontSize: 26.0,),
-                textAlign: TextAlign.center,
-              ) : Container(),
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                _tinyPreset.subtitle != null ? Text(
+                  _tinyPreset.subtitle,
+                  style: TextStyle(fontSize: 26.0,),
+                  textAlign: TextAlign.center,
+                ) : Container(),
+                _tinyPreset.language != null ? Text(
+                  _tinyPreset.language,
+                  style: TextStyle(fontSize: 26.0,),
+                  textAlign: TextAlign.center,
+                ) : Container(),
+                _tinyPreset.description != null ? Text(
+                  _tinyPreset.description,
+                  style: TextStyle(fontSize: 26.0,),
+                  textAlign: TextAlign.center,
+                ) : Container(),
           Column(children: _getParagraphWidgets(),),
-            ],)
+              ],),
+            )
         ),
 
       ),

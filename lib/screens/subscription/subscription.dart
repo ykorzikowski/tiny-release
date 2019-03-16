@@ -118,15 +118,19 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
       );
 
   Widget _getSubscriptionContent() =>
-      ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(S.of(context).payment_introduction_text, softWrap: true, ),
-          ),
+      SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(S.of(context).payment_introduction_text, softWrap: true,),
+            ),
 
-          Platform.isAndroid ? _getAndroidSubscriptionContent() : _getIosSubscriptionContent(),
-        ],);
+            Platform.isAndroid
+                ? _getAndroidSubscriptionContent()
+                : _getIosSubscriptionContent(),
+          ],),
+      );
 
   /// build lists
 

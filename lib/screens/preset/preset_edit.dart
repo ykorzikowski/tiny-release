@@ -56,10 +56,13 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           onPressed: validPreset() ? _onPresetSavePressed : null,),),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: ListView(
-          key: Key('scrlvw_preset_edit'),
-          shrinkWrap: true,
-          children: _buildFields(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              key: Key('scrlvw_preset_edit'),
+              children: _buildFields(),
+            ),
+          ),
         ),),
     );
   }

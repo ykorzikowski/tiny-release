@@ -67,40 +67,41 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(
-          child:
-          ListView(key: Key('scrlvw_contract_generated'),
-            children: <Widget>[
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
 
-              /// header
-              Text(_tinyContract.preset.title, textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 32),),
+                /// header
+                Text(_tinyContract.preset.title, textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 32),),
 
-              /// contract head
-              _contractGenerator.buildContractHeader(context),
+                /// contract head
+                _contractGenerator.buildContractHeader(context),
 
-              Divider(),
+                Divider(),
 
-              _contractGenerator.buildShootingInformationSection(context),
+                _contractGenerator.buildShootingInformationSection(context),
 
-              Divider(),
+                Divider(),
 
-              /// contract preview
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: ContractGenerator.buildParagraphs(
-                      context, _tinyContract),
+                /// contract preview
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: ContractGenerator.buildParagraphs(
+                        context, _tinyContract),
+                  ),
                 ),
-              ),
 
-              Divider(),
+                Divider(),
 
-              /// signatures
-              SignatureWidget(_tinyState),
+                /// signatures
+                SignatureWidget(_tinyState),
 
-              _tinyContract.isLocked ? _buildCompletedHint() : Container(),
-            ],
+                _tinyContract.isLocked ? _buildCompletedHint() : Container(),
+              ],
+            ),
           ),),
         _buildContentFooterAction(),
 

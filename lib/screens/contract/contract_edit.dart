@@ -1,6 +1,7 @@
 
 import 'package:cool_ui/cool_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
@@ -79,191 +80,193 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             onPressed: _validContract() ? _onPreviewPressed : null,),),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
-          body: ListView(
-            children: <Widget>[
-              SafeArea(
-                child:
-                Column(children: <Widget>[
-                  /// text
-                  Text(S.of(context).contract_will_made_between, style: TextStyle(
-                    fontSize: 24.0,
-                  ), textAlign: TextAlign.center),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Column(children: <Widget>[
+                    /// text
+                    Text(S.of(context).contract_will_made_between, style: TextStyle(
+                      fontSize: 24.0,
+                    ), textAlign: TextAlign.center),
 
-                  Divider(),
+                    Divider(),
 
-                  /// Photographer section
-                  _buildPeopleView(
-                      person: 'photographer',
-                      people: _tinyContract.photographer,
-                      repo: _tinyPeopleRepo,
-                      text: S.of(context).choose_photographer,
-                      onPeopleTap: _onPhotographerTap,
-                      onPeopleTrash: _onPhotographerTrash,
-                  ),
-
-                  Divider(),
-
-                  /// Model section
-                  _buildPeopleView(
-                      person: 'model',
-                      people: _tinyContract.model,
-                      repo: _tinyPeopleRepo,
-                      text: S.of(context).choose_model,
-                      onPeopleTap: _onModelTap,
-                      onPeopleTrash: _onModelTrash,
-                  ),
-
-                  Divider(),
-
-                  /// Represented by section
-                  MergeSemantics(
-                    child: ListTile(
-                      title: Text(S.of(context).represented_by),
-                      trailing: CupertinoSwitch(
-                        key: Key('switch_parent'),
-                        value: _enabledParent,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _enabledParent = value;
-                          });
-                        },
-                      ),
-                      onTap: () {
-                        setState(() {
-                          _enabledParent = !_enabledParent;
-                        });
-                      },
-                    ),
-                  ),
-                  _enabledParent ? _buildPeopleView(
-                      person: 'parent',
-                      people: _tinyContract.parent,
-                      repo: _tinyPeopleRepo,
-                      text: S.of(context).choose_parent,
-                      onPeopleTap: _onParentTap,
-                      onPeopleTrash: _onParentTrash,
-                  ) : Container(),
-
-                  Divider(),
-
-                  /// Witnessed by section
-                  MergeSemantics(
-                    child: ListTile(
-                      title: Text(S.of(context).witnessed_by),
-                      trailing: CupertinoSwitch(
-                        key: Key('switch_witness'),
-                        value: _enabledWitness,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _enabledWitness = value;
-                          });
-                        },
-                      ),
-                      onTap: () {
-                        setState(() {
-                          _enabledWitness = !_enabledWitness;
-                        });
-                      },
-                    ),
-                  ),
-                  _enabledWitness
-                      ? _buildPeopleView(
-                        person: 'witness',
-                        people: _tinyContract.witness,
+                    /// Photographer section
+                    _buildPeopleView(
+                        person: 'photographer',
+                        people: _tinyContract.photographer,
                         repo: _tinyPeopleRepo,
-                        text: S.of(context).choose_witness,
-                        onPeopleTap: _onWitnessTap,
-                        onPeopleTrash: _onWitnessTrash
-                  )
-                      : Container(),
-
-                  Divider(),
-
-                  /// preset selection
-                  _tileOrColumn(Text(S.of(context).selected_preset), _buildPresetSelection()),
-
-                  Divider(),
-
-                  /// capture date selection
-                  _tileOrColumn(Text(S.of(context).shooting_date), _buildCaptureDateSelection()),
-
-                  Divider(),
-
-                  /// number of images
-                  _tileOrColumn(Text(S.of(context).contract_images), _buildImagesCountSelection()),
-
-                  Divider(),
-
-                  /// location
-                  _tileOrColumn(Text(S.of(context).hint_location), Container(
-                    width: 250,
-                    child: CupertinoTextField(
-                      key: Key('tf_location'),
-                      keyboardType: TextInputType.text,
-                      maxLength: 50,
-                      onChanged: _updateTextWidgetState,
-                      controller: _locationController,
+                        text: S.of(context).choose_photographer,
+                        onPeopleTap: _onPhotographerTap,
+                        onPeopleTrash: _onPhotographerTrash,
                     ),
-                  ),),
 
-                  Divider(),
+                    Divider(),
 
-                  /// subject
-                  _tileOrColumn(Text(S.of(context).shooting_subject), Container(
-                    width: 250,
-                    child: CupertinoTextField(
-                      key: Key('tf_subject'),
-                      maxLength: 50,
-                      onChanged: _updateTextWidgetState,
-                      controller: _subjectController,
+                    /// Model section
+                    _buildPeopleView(
+                        person: 'model',
+                        people: _tinyContract.model,
+                        repo: _tinyPeopleRepo,
+                        text: S.of(context).choose_model,
+                        onPeopleTap: _onModelTap,
+                        onPeopleTrash: _onModelTrash,
                     ),
-                  ),),
 
-                  Divider(),
+                    Divider(),
 
-                  /// Reception areas
-                  ListTile(
-                    title: Text(S.of(context).title_reception),
-                    trailing: _buildReceptionSelection(),
-                  ),
-                  SelectableTags(
-                    tags: _tags,
-                    backgroundContainer: Colors.transparent,
-                    onPressed: (tag) {
-                      setState(() {
-                        _receptionAreas.removeWhere((k, v) => v.title == tag.title);
-                        _tags.remove(tag);
-                      });
-                    },
-                  ),
+                    /// Represented by section
+                    MergeSemantics(
+                      child: ListTile(
+                        title: Text(S.of(context).represented_by),
+                        trailing: CupertinoSwitch(
+                          key: Key('switch_parent'),
+                          value: _enabledParent,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _enabledParent = value;
+                            });
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _enabledParent = !_enabledParent;
+                          });
+                        },
+                      ),
+                    ),
+                    _enabledParent ? _buildPeopleView(
+                        person: 'parent',
+                        people: _tinyContract.parent,
+                        repo: _tinyPeopleRepo,
+                        text: S.of(context).choose_parent,
+                        onPeopleTap: _onParentTap,
+                        onPeopleTrash: _onParentTrash,
+                    ) : Container(),
 
-                  /// button generate contract
-                  CupertinoButton(
-                    child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
-                    onPressed: _validContract() ? () {
-                      List<TinyReception> recs = List();
-                      _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
-                      _tinyContract.receptions = recs;
-                      _tinyContractRepo.save(_tinyContract);
-                      _tinyState.curDBO = _tinyContract;
-                      //Navigator.of(context).pop();
-                      Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
-                    } : null,
-                  ),
+                    Divider(),
 
-                  /// button save contract
-                  CupertinoButton(
-                    child: Text(S.of(context).btn_save),
-                    onPressed: _validContract() ? () {
-                      List<TinyReception> recs = List();
-                      _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
-                      _tinyContract.receptions = recs;
-                      _tinyContractRepo.save(_tinyContract);
-                      Navigator.of(context, rootNavigator: true).pop();
-                    } : null,
-                  ),
-                ],),
-              ),],
+                    /// Witnessed by section
+                    MergeSemantics(
+                      child: ListTile(
+                        title: Text(S.of(context).witnessed_by),
+                        trailing: CupertinoSwitch(
+                          key: Key('switch_witness'),
+                          value: _enabledWitness,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _enabledWitness = value;
+                            });
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _enabledWitness = !_enabledWitness;
+                          });
+                        },
+                      ),
+                    ),
+                    _enabledWitness
+                        ? _buildPeopleView(
+                          person: 'witness',
+                          people: _tinyContract.witness,
+                          repo: _tinyPeopleRepo,
+                          text: S.of(context).choose_witness,
+                          onPeopleTap: _onWitnessTap,
+                          onPeopleTrash: _onWitnessTrash
+                    )
+                        : Container(),
+
+                    Divider(),
+
+                    /// preset selection
+                    _tileOrColumn(Text(S.of(context).selected_preset), _buildPresetSelection()),
+
+                    Divider(),
+
+                    /// capture date selection
+                    _tileOrColumn(Text(S.of(context).shooting_date), _buildCaptureDateSelection()),
+
+                    Divider(),
+
+                    /// number of images
+                    _tileOrColumn(Text(S.of(context).contract_images), _buildImagesCountSelection()),
+
+                    Divider(),
+
+                    /// location
+                    _tileOrColumn(Text(S.of(context).hint_location), Container(
+                      width: 250,
+                      child: CupertinoTextField(
+                        key: Key('tf_location'),
+                        keyboardType: TextInputType.text,
+                        maxLength: 50,
+                        onChanged: _updateTextWidgetState,
+                        controller: _locationController,
+                      ),
+                    ),),
+
+                    Divider(),
+
+                    /// subject
+                    _tileOrColumn(Text(S.of(context).shooting_subject), Container(
+                      width: 250,
+                      child: CupertinoTextField(
+                        key: Key('tf_subject'),
+                        maxLength: 50,
+                        onChanged: _updateTextWidgetState,
+                        controller: _subjectController,
+                      ),
+                    ),),
+
+                    Divider(),
+
+                    /// Reception areas
+                    ListTile(
+                      title: Text(S.of(context).title_reception),
+                      trailing: _buildReceptionSelection(),
+                    ),
+                    SelectableTags(
+                      tags: _tags,
+                      backgroundContainer: Colors.transparent,
+                      onPressed: (tag) {
+                        setState(() {
+                          _receptionAreas.removeWhere((k, v) => v.title == tag.title);
+                          _tags.remove(tag);
+                        });
+                      },
+                    ),
+
+                    /// button generate contract
+                    CupertinoButton(
+                      child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
+                      onPressed: _validContract() ? () {
+                        List<TinyReception> recs = List();
+                        _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
+                        _tinyContract.receptions = recs;
+                        _tinyContractRepo.save(_tinyContract);
+                        _tinyState.curDBO = _tinyContract;
+                        //Navigator.of(context).pop();
+                        Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
+                      } : null,
+                    ),
+
+                    /// button save contract
+                    CupertinoButton(
+                      child: Text(S.of(context).btn_save),
+                      onPressed: _validContract() ? () {
+                        List<TinyReception> recs = List();
+                        _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
+                        _tinyContract.receptions = recs;
+                        _tinyContractRepo.save(_tinyContract);
+                        Navigator.of(context, rootNavigator: true).pop();
+                      } : null,
+                    ),
+                  ],),
+                  ],
+              ),
+            ),
           ),
         )
     );
