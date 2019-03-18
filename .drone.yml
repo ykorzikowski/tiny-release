@@ -46,31 +46,6 @@ steps:
       - flutter packages get
       - flutter build apk --debug
 
-  - name: ios-build
-    image: appleboy/drone-ssh
-    depends_on: [ clone-ios, widget-test ]
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 10m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      envs:
-        - DRONE_BUILD_NUMBER
-        - DRONE_COMMIT
-        - DRONE_BRANCH
-      script:
-        - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_build_$BUILD_ID/tiny_release
-        - bash -lc 'flock -s /Users/ci/macOS_lock flutter --version'
-        - bash -lc 'flutter --version'
-        - bash -lc 'flutter packages get'
-        - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'flutter build ios --debug --no-codesign'
-
 trigger:
   ref:
     exclude:
@@ -108,33 +83,6 @@ steps:
     commands:
       - fastlane android release
 
-  - name: ios-release
-    image: appleboy/drone-ssh
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 15m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      envs:
-        - DRONE_BUILD_NUMBER
-        - DRONE_COMMIT
-        - DRONE_BRANCH
-      script:
-        - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=wwul-ecvv-ewcl-gsit
-        - cd tiny_release_release/tiny_release
-        - git pull
-        - git reset --hard
-        - bash -lc 'git checkout $DRONE_COMMIT'
-        - bash -lc 'flutter --version'
-        - bash -lc 'flutter packages get'
-        - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'fastlane ios release'
-
 trigger:
   ref:
     - refs/tags/v*
@@ -166,29 +114,6 @@ steps:
       - export BUILD_ID=${DRONE_BUILD_NUMBER}
       - fastlane android alpha
 
-  - name: ios-testflight
-    image: appleboy/drone-ssh
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 15m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      envs:
-        - DRONE_BUILD_NUMBER
-        - DRONE_COMMIT
-      script:
-        - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_testflight/tiny_release
-        - git checkout $DRONE_COMMIT
-        - bash -lc 'flutter --version'
-        - bash -lc 'flutter packages get'
-        - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
-        - bash -lc 'fastlane ios beta'
-
 trigger:
   branch:
     - testflight
@@ -197,62 +122,6 @@ volumes:
   - name: android_signing
     host:
       path: /srv/drone/android_signing
-  - name: drone_ssh
-    host:
-      path: /srv/docker/volumes/drone_rsa
-
-# cleanup workspace on mac build server
----
-kind: pipeline
-name: cleanup-mac-buildserver
-
-steps:
-  # try to kill hanging dart processes
-  - name: fix-frozen-dart
-    image: appleboy/drone-ssh
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 15m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      script:
-        - killall dart ||true
-        - killall flutter ||true
-
-  - name: cleanup-build-folder
-    image: appleboy/drone-ssh
-    volumes:
-      - name: drone_ssh
-        path: /root/ssh/drone_rsa
-    settings:
-      host: git.engineerservices.de
-      port: 4222
-      command_timeout: 15m
-      username: ci
-      key_path: /root/ssh/drone_rsa/id_rsa
-      envs:
-        - DRONE_BUILD_NUMBER
-      script:
-        - rm -rf tiny_release_build_$DRONE_BUILD_NUMBER
-
-clone:
-  disable: true
-
-trigger:
-  status:
-    - success
-    - failure
-
-depends_on:
-  - build
-  - release
-  - testflight
-
-volumes:
   - name: drone_ssh
     host:
       path: /srv/docker/volumes/drone_rsa
