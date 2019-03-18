@@ -249,6 +249,8 @@ trigger:
 
 depends_on:
   - build
+  - release
+  - testflight
 
 volumes:
   - name: drone_ssh
