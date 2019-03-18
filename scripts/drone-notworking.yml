@@ -203,3 +203,29 @@ volumes:
         - bash -lc 'flutter packages get'
         - bash -lc 'security unlock-keychain -p 11Nase login.keychain'
         - bash -lc 'flutter build ios --debug --no-codesign'
+
+
+  # clone project on mac os buildserver
+  - name: clone-ios
+    image: appleboy/drone-ssh
+    volumes:
+      - name: drone_ssh
+        path: /root/ssh/drone_rsa
+    settings:
+      host: git.engineerservices.de
+      port: 4222
+      command_timeout: 15m
+      username: ci
+      key_path: /root/ssh/drone_rsa/id_rsa
+      envs:
+        - DRONE_BUILD_NUMBER
+        - DRONE_COMMIT
+        - DRONE_BRANCH
+      script:
+        - export BUILD_ID=$DRONE_BUILD_NUMBER
+        - system_profiler SPSoftwareDataType
+        - mkdir tiny_release_build_$BUILD_ID
+        - cd tiny_release_build_$BUILD_ID
+        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
+        - cd tiny_release
+        - git checkout $DRONE_COMMIT
