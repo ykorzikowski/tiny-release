@@ -14,10 +14,10 @@ typedef Null ItemSelectedCallback(int value);
 
 class PresetListWidget extends StatefulWidget {
 
-  TinyState tinyState;
-  Function onPresetTap;
-  TinyPresetRepo tinyPresetRepo = TinyPresetRepo();
-  TinyContractRepo tinyContractRepo = TinyContractRepo();
+  final TinyState tinyState;
+  final Function onPresetTap;
+  final TinyPresetRepo tinyPresetRepo;
+  final TinyContractRepo tinyContractRepo;
 
   PresetListWidget({ this.tinyPresetRepo, this.tinyContractRepo, this.tinyState, this.onPresetTap});
 
@@ -27,13 +27,16 @@ class PresetListWidget extends StatefulWidget {
 
 class _PresetListWidgetState extends State<PresetListWidget> {
   static const int PAGE_SIZE = 10;
-  final TinyPresetRepo _tinyPresetRepo;
-  final TinyContractRepo _tinyContractRepo;
+  TinyPresetRepo _tinyPresetRepo;
+  TinyContractRepo _tinyContractRepo;
   final TinyState _controlState;
   final Function _onPresetTap;
   PagewiseLoadController pageLoadController;
 
-  _PresetListWidgetState(this._controlState, this._onPresetTap, this._tinyPresetRepo, this._tinyContractRepo);
+  _PresetListWidgetState(this._controlState, this._onPresetTap, this._tinyPresetRepo, this._tinyContractRepo) {
+    _tinyPresetRepo = _tinyPresetRepo ?? TinyPresetRepo();
+    _tinyContractRepo = _tinyContractRepo ?? TinyContractRepo();
+  }
 
   @override
   Widget build(BuildContext context) {
