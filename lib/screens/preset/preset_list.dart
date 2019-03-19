@@ -14,31 +14,33 @@ typedef Null ItemSelectedCallback(int value);
 
 class PresetListWidget extends StatefulWidget {
 
-  final TinyState _controlState;
-  final Function _onPresetTap;
+  TinyState tinyState;
+  Function onPresetTap;
+  TinyPresetRepo tinyPresetRepo = TinyPresetRepo();
+  TinyContractRepo tinyContractRepo = TinyContractRepo();
 
-  PresetListWidget(this._controlState, this._onPresetTap);
+  PresetListWidget({ this.tinyPresetRepo, this.tinyContractRepo, this.tinyState, this.onPresetTap});
 
   @override
-  _PresetListWidgetState createState() => _PresetListWidgetState(_controlState, _onPresetTap);
+  _PresetListWidgetState createState() => _PresetListWidgetState(tinyState, onPresetTap, tinyPresetRepo, tinyContractRepo);
 }
 
 class _PresetListWidgetState extends State<PresetListWidget> {
   static const int PAGE_SIZE = 10;
-  final TinyPresetRepo tinyPresetRepo = new TinyPresetRepo();
-  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
+  final TinyPresetRepo _tinyPresetRepo;
+  final TinyContractRepo _tinyContractRepo;
   final TinyState _controlState;
   final Function _onPresetTap;
   PagewiseLoadController pageLoadController;
 
-  _PresetListWidgetState(this._controlState, this._onPresetTap);
+  _PresetListWidgetState(this._controlState, this._onPresetTap, this._tinyPresetRepo, this._tinyContractRepo);
 
   @override
   Widget build(BuildContext context) {
     pageLoadController = PagewiseLoadController(
         pageSize: PAGE_SIZE,
         pageFuture: (pageIndex) =>
-            tinyPresetRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
+            _tinyPresetRepo.getAll( pageIndex * PAGE_SIZE, PAGE_SIZE )
     );
 
     return CupertinoPageScaffold(
@@ -49,12 +51,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         middle: Text(S.of(context).title_preset),
         trailing:CupertinoButton(
           child: Text(S.of(context).btn_add, key: Key('navbar_btn_add')),
-          onPressed: () {
-            var _tinyPreset = TinyPreset();
-            _tinyPreset.paragraphs = List();
-            _controlState.curDBO = _tinyPreset;
-            Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
-          },
+          onPressed: _onAddPresetPressed,
         ),),
       child: SafeArea(
         child: Scaffold(
@@ -62,14 +59,50 @@ class _PresetListWidgetState extends State<PresetListWidget> {
           body: PagewiseListView(
             showRetry: false,
             padding: EdgeInsets.only(top: 10.0),
-            itemBuilder: this._itemBuilder,
-            pageLoadController: this.pageLoadController,
-            noItemsFoundBuilder: (context) {
-              return Text(S.of(context).no_items_presets, style: TextStyle(color: CupertinoColors.inactiveGray));
-            },
+            itemBuilder: _itemBuilder,
+            pageLoadController: pageLoadController,
+            noItemsFoundBuilder: (context) => Text(S.of(context).no_items_presets, style: TextStyle(color: CupertinoColors.inactiveGray)),
         ),
       ),),
     );
+  }
+
+  _onAddPresetPressed() {
+    var _tinyPreset = TinyPreset();
+    _tinyPreset.paragraphs = List();
+    _controlState.curDBO = _tinyPreset;
+    Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
+  }
+
+  Widget _buildListTile(index, entry) => ListTile(
+    key: Key('preset_$index'),
+    leading: Icon(CupertinoIcons.collections,),
+    title: Text(entry.title, key: Key('preset_title_$index')),
+    onTap:() => _onPresetTap(entry, context),
+  );
+  
+  _onDismissed(direction, entry) {
+    _tinyPresetRepo.delete(entry);
+
+    Scaffold
+        .of(context)
+        .showSnackBar(
+        SnackBar(content: Text(entry.title + S.of(context).scaff_deleted)));
+  }
+  
+  Future<bool> _confirmDismiss(direction, entry) {
+    var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
+    presetHasNoContracts.then((hasNoContracts) {
+      if (!hasNoContracts) {
+        Scaffold.of(context).showSnackBar(
+            SnackBar(
+                key: Key('confirm_dismiss_denied_snackbar'),
+                duration: Duration(milliseconds: 1000),
+                content: Text(S.of(context).item_has_relations))
+        );
+      }
+    },);
+    return presetHasNoContracts;
   }
 
   Widget _itemBuilder(context, entry, index) {
@@ -78,36 +111,9 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         direction: DismissDirection.endToStart,
         background: BaseUtil.getDismissibleBackground(),
         key: Key('dismissible_preset_$index'),
-        confirmDismiss: (direction) {
-          var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
-          presetHasNoContracts.then((hasNoContracts) {
-            if (!hasNoContracts) {
-              Scaffold.of(context).showSnackBar(SnackBar(duration: Duration(milliseconds: 1000), content: Text(S.of(context).item_has_relations)));
-            }
-          },);
-          return presetHasNoContracts;
-        },
-        onDismissed: (direction) {
-          tinyPresetRepo.delete(entry);
-
-          Scaffold
-              .of(context)
-              .showSnackBar(
-              SnackBar(content: Text(entry.title + S.of(context).scaff_deleted)));
-        },
-        child:
-        Column(
-          children: <Widget>[
-            ListTile(
-              key: Key('preset_$index'),
-              leading: Icon(
-                CupertinoIcons.collections,
-              ),
-              title: Text(entry.title),
-              onTap:() => _onPresetTap(entry, context),
-            ),
-            Divider()
-          ],
-        ),);
+        confirmDismiss: (direction) => _confirmDismiss(direction, entry),
+        onDismissed: (direction) => _onDismissed(direction, entry),
+        child: _buildListTile(index, entry)
+      );
   }
 }

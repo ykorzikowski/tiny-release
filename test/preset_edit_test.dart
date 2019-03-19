@@ -10,7 +10,7 @@ import 'test_utils.dart';
 void main() {
   final TinyState tinyState = new TinyState();
 
-  group('Presets', () {
+  group('Validation', () {
     testWidgets('PresetWidget save button disabled on missing title', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
@@ -52,22 +52,36 @@ void main() {
       // assert
       expect( TestUtils.getCupertinoButtonByText(Key('btn_navbar_save'), find).enabled, false );
     });
-  });
 
-  testWidgets('PresetWidget save button enabled on complete paragraph and title set', (WidgetTester tester) async {
-    // given
-    var tinyPreset = TinyPreset.factory();
-    tinyPreset.paragraphs.add(Paragraph());
-    tinyState.curDBO = tinyPreset;
-    await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
+    testWidgets('PresetWidget save button enabled on complete paragraph and title set', (WidgetTester tester) async {
+      // given
+      var tinyPreset = TinyPreset.factory();
+      tinyPreset.paragraphs.add(Paragraph());
+      tinyState.curDBO = tinyPreset;
+      await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
 
-    // then
-    await tester.enterText(find.byKey(Key('tf_preset_title')), 'fm');
-    await tester.enterText(find.byKey(Key('tf_paragraph_title_0')), 'fm');
-    await tester.enterText(find.byKey(Key('tf_paragraph_content_0')), 'fm');
-    await tester.pump();
+      // then
+      await tester.enterText(find.byKey(Key('tf_preset_title')), 'fm');
+      await tester.enterText(find.byKey(Key('tf_paragraph_title_0')), 'fm');
+      await tester.enterText(find.byKey(Key('tf_paragraph_content_0')), 'fm');
+      await tester.pump();
 
-    // assert
-    expect( TestUtils.getCupertinoButtonByText(Key('btn_navbar_save'), find).enabled, true );
+      // assert
+      expect( TestUtils.getCupertinoButtonByText(Key('btn_navbar_save'), find).enabled, true );
+    });
+
+    testWidgets('PresetWidget paragraph added on "btn_add_paragraph"', (WidgetTester tester) async {
+      // given
+      var tinyPreset = TinyPreset.factory();
+      tinyState.curDBO = tinyPreset;
+
+      // then
+      await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
+      await tester.tap(find.byKey(Key('btn_add_paragraph')));
+      await tester.pump();
+
+      // assert
+      expect( find.byKey(Key('tf_paragraph_title_0')), findsOneWidget );
+    });
   });
 }

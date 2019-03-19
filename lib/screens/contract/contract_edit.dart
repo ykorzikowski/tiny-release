@@ -415,12 +415,14 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       );
 
   _buildPresetWidget(context) =>
-      PresetListWidget(_tinyState, (item, context) {
-        setState(() {
-          _tinyContract.preset = item;
-        });
-        Navigator.of(context).pop();
-      },);
+      PresetListWidget(
+        tinyState: _tinyState,
+        onPresetTap: (item, context) {
+          setState(() {
+            _tinyContract.preset = item;
+          });
+          Navigator.of(context).pop();
+        },);
 
   _buildPresetSelection() =>
       Row(

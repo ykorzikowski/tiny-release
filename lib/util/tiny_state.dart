@@ -63,11 +63,13 @@ class TinyState {
       NavRoutes.PEOPLE_PREVIEW: (context) => PeoplePreviewWidget(this),
 
       NavRoutes.PRESET_LIST: (context) =>
-          PresetListWidget(this, (item, context) {
-            this.curDBO = item;
+          PresetListWidget(
+              tinyState: this,
+              onPresetTap: (item, context) {
+                this.curDBO = item;
 
-            Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
-          }),
+                Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
+              }),
 
       NavRoutes.PRESET_PREVIEW: (context) => PresetPreviewWidget(this),
       NavRoutes.PRESET_EDIT: (context) => PresetEditWidget(this),
