@@ -21,7 +21,7 @@ class TinyPeople extends TinyDBO {
 
   TinyPeople({id, displayName, this.identifier, this.givenName, this.middleName, this.prefix,
     this.suffix, this.familyName, this.birthday, this.company, this.jobTitle, this.idNumber, this.idType, this.emails, this.phones,
-  this.postalAddresses, this.avatar} );
+  this.postalAddresses, this.avatar} ) : super(id: id, displayName: displayName);
 
   static TinyPeople factory() {
     var _tinyPeople = TinyPeople();

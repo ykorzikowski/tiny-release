@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiny_release/generated/i18n.dart';
 
 class TestUtils {
-  static Widget makeTestableWidget({ Widget child }) {
+  static Widget makeTestableWidget({ Widget child, Size size }) {
     return MediaQuery(
       data: MediaQueryData(),
       child: MaterialApp(

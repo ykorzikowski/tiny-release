@@ -62,7 +62,7 @@ class MyStatelessWidget extends StatelessWidget {
 
                 switch(index) {
                   case 0:
-                    return new ContractListWidget(tinyState);
+                    return new ContractListWidget(tinyState: tinyState);
                   case 1:
                     return new MasterControlWidget(tinyState);
                 }

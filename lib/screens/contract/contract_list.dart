@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
 import 'package:tiny_release/data/tiny_contract.dart';
+import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/people/people_list.dart';
 import 'package:tiny_release/util/base_util.dart';
@@ -18,21 +19,24 @@ typedef Null ItemSelectedCallback(int value);
 class ContractListWidget extends StatefulWidget {
   static const int PAGE_SIZE = 10;
 
-  final TinyState _controlState;
+  final TinyState tinyState;
+  final TinyContractRepo tinyContractRepo;
 
-  ContractListWidget(this._controlState);
+  ContractListWidget({this.tinyState, this.tinyContractRepo});
 
   @override
-  _ContractListWidgetState createState() => _ContractListWidgetState(_controlState);
+  _ContractListWidgetState createState() => _ContractListWidgetState(tinyState, tinyContractRepo);
 }
 
 class _ContractListWidgetState extends State<ContractListWidget> {
-  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
-  final TinyState _controlState;
-  PagewiseLoadController pageLoadController;
   final PayWall _payWall = PayWall();
+  final TinyState _controlState;
+  TinyContractRepo _tinyContractRepo;
+  PagewiseLoadController pageLoadController;
 
-  _ContractListWidgetState(this._controlState);
+  _ContractListWidgetState(this._controlState, this._tinyContractRepo) {
+    _tinyContractRepo = _tinyContractRepo ?? TinyContractRepo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,71 +110,69 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
   Widget _buildContractTileSubtitle(entry) => entry?.preset?.subtitle != null ? Text(entry.preset.subtitle, overflow: TextOverflow.ellipsis,) : null;
 
-  Widget _buildDateBadge(entry) => entry.date != null ? Column(children: <Widget>[
+  Widget _buildDateBadge(entry, index) => entry.date != null ? Column(key: Key('date_badge_$index'),
+    children: <Widget>[
           Icon(CupertinoIcons.time_solid),
           Text(BaseUtil.getLocalFormattedDateTime(context, entry.date).replaceFirst(" ", "\n"), textAlign: TextAlign.center,),
         ],) : Container();
 
-  Widget _buildLocationBadge(entry) => Column(children: <Widget>[
+  Widget _buildLocationBadge(entry, index) => Column(key: Key('location_badge_$index'), children: <Widget>[
         Icon(CupertinoIcons.location_solid),
         Text(entry.location + "\n"),
       ],);
 
-  Widget _buildModelBadge(entry) => CircleAvatar(
+  Widget _buildPeopleBadge(TinyPeople tinyPeople, index) => CircleAvatar(
+        key: Key('circle_avatar_${tinyPeople.id}_$index'),
         backgroundColor: Colors.lightBlue,
-        child: entry.model.avatar == null ? Text(
-          PeopleListWidget.getCircleText(entry.model),
+        child: tinyPeople.avatar == null ? Text(
+          PeopleListWidget.getCircleText(tinyPeople),
           style: TextStyle(
             color: Colors.white,
           ),
         ) : null,
-        backgroundImage: entry.model.avatar != null ? new FileImage(
-            Io.File(entry.model.avatar)) : null,
+        backgroundImage: tinyPeople.avatar != null ? new FileImage(
+            Io.File(tinyPeople.avatar)) : null,
         radius: 32.0,
       );
 
-  Widget _buildPhotographerBadge(entry) => CircleAvatar(
-        backgroundColor: Colors.lightBlue,
-        child: entry.photographer.avatar == null ? Text(
-          PeopleListWidget.getCircleText(entry.model),
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ) : null,
-        backgroundImage: entry.photographer.avatar != null
-            ? new FileImage(
-            Io.File(entry.photographer.avatar))
-            : null,
-        radius: 32.0,
-      );
-
-  Widget _buildContractTileTrailingLarge(entry) => Row(
+  Widget _buildContractTileTrailingLarge(entry, index) => Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
       Padding(
-          padding: EdgeInsets.only(right: 8.0),
-          child: _buildDateBadge(entry)),
+        padding: EdgeInsets.only(right: 8.0),
+        child: _buildDateBadge(entry, index)),
       Padding(
-          padding: EdgeInsets.only(right: 8.0),
-          child: _buildLocationBadge(entry)),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: _buildModelBadge(entry)),
+        padding: EdgeInsets.only(right: 8.0),
+        child: _buildLocationBadge(entry, index)),
       Padding(
         padding: EdgeInsets.all(8.0),
-        child: _buildPhotographerBadge(entry) ),
+        child: _buildPeopleBadge(entry.model, index)),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: _buildPeopleBadge(entry.photographer, index)),
     ],);
 
-  Widget _buildContractTileTrailingSmall(entry) => Row(
+  Widget _buildContractTileTrailingSmall(entry, index) => Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
       Padding(
           padding: EdgeInsets.all(4.0),
-          child: _buildModelBadge(entry)),
+          child: _buildPeopleBadge(entry.model, index)),
       Padding(
           padding: EdgeInsets.all(4.0),
-          child: _buildPhotographerBadge(entry) ),
+          child: _buildPeopleBadge(entry.photographer, index)),
     ],);
+
+  Widget _buildListTile(entry, index) =>
+      ListTile(
+        title: Text(entry.displayName, overflow: TextOverflow.ellipsis,
+          key: Key('contract_text_$index'),), //_buildContractTileTitle(entry),
+        subtitle: _buildContractTileSubtitle(entry),
+        trailing: BaseUtil.isLargeScreen(context)
+            ? _buildContractTileTrailingLarge(entry, index)
+            : _buildContractTileTrailingSmall(entry, index),
+        onTap: () => _onContractTap(entry),
+      );
 
   Widget _itemBuilder(context, entry, index) {
     return Dismissible(
@@ -178,16 +180,6 @@ class _ContractListWidgetState extends State<ContractListWidget> {
       background: BaseUtil.getDismissibleBackground(),
       key: Key('contract_$index'),
       onDismissed: (direction) => _deleteContract(entry),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text(entry.displayName, overflow: TextOverflow.ellipsis,),//_buildContractTileTitle(entry),
-            subtitle: _buildContractTileSubtitle(entry),
-            trailing: BaseUtil.isLargeScreen(context) ? _buildContractTileTrailingLarge(entry) : _buildContractTileTrailingSmall(entry),
-            onTap: () => _onContractTap(entry),
-          ),
-          Divider()
-        ],
-      ),);
+      child: _buildListTile(entry, index));
   }
 }

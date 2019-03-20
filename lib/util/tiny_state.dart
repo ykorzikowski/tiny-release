@@ -50,7 +50,7 @@ class TinyState {
     this.peopleListCallback = PeopleListCallback(this);
     this.routes = {
       NavRoutes.CONTRACT_MASTER: (context) => ContractMasterWidget(this),
-      NavRoutes.CONTRACT_LIST: (context) => ContractListWidget(this),
+      NavRoutes.CONTRACT_LIST: (context) => ContractListWidget(tinyState: this),
       NavRoutes.CONTRACT_EDIT: (context) => ContractEditWidget(this),
       NavRoutes.CONTRACT_PREVIEW: (context) => ContractPreviewWidget(this),
       NavRoutes.CONTRACT_GENERATED: (context) => ContractGeneratedWidget(this),
