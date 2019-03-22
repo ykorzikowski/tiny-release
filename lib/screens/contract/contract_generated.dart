@@ -12,6 +12,7 @@ import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_generator.dart';
 import 'package:tiny_release/screens/contract/contract_pdf_generator.dart';
+import 'package:tiny_release/screens/contract/parser/parser.dart';
 import 'package:tiny_release/screens/contract/signature_widget.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
@@ -45,9 +46,16 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
 
   _ContractGeneratedWidgetState(this._tinyState) {
-    _tinyContract = _tinyState.curDBO;
     _contractPdfGenerator = ContractPdfGenerator(_tinyContract);
     _contractGenerator = ContractGenerator(_tinyContract);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
+    _tinyContract.preset = Parser(_tinyContract, context).parsePreset();
   }
 
   @override

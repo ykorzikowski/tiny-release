@@ -68,9 +68,9 @@ class TinyContract extends TinyDBO {
       "witness": tinyContract.witness != null ? TinyPeople.toMap(tinyContract.witness) : null,
 
       "selectedModelAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
-      "selectedPhotographerAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
-      "selectedParentAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
-      "selectedWitnessAddress": tinyContract.selectedModelAddress != null ? TinyAddress.toMap(tinyContract.selectedModelAddress) : null,
+      "selectedPhotographerAddress": tinyContract.selectedPhotographerAddress != null ? TinyAddress.toMap(tinyContract.selectedPhotographerAddress) : null,
+      "selectedParentAddress": tinyContract.selectedParentAddress != null ? TinyAddress.toMap(tinyContract.selectedParentAddress) : null,
+      "selectedWitnessAddress": tinyContract.selectedWitnessAddress != null ? TinyAddress.toMap(tinyContract.selectedWitnessAddress) : null,
 
       "imagesCount": tinyContract.imagesCount,
       "modelSignature": tinyContract.modelSignature,

@@ -6,6 +6,7 @@ import 'package:tiny_release/data/tiny_contract.dart';
 import 'package:tiny_release/data/tiny_people.dart';
 import 'package:tiny_release/generated/i18n.dart';
 import 'package:tiny_release/screens/contract/contract_generator.dart';
+import 'package:tiny_release/screens/contract/parser/parser.dart';
 import 'package:tiny_release/util/base_util.dart';
 import 'package:tiny_release/util/nav_routes.dart';
 import 'package:tiny_release/util/tiny_state.dart';
@@ -23,7 +24,7 @@ class ContractPreviewWidget extends StatefulWidget {
 }
 
 class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
-  final TinyState _controlState;
+  final TinyState _tinyState;
   TinyContract _tinyContract;
 
   // todo get from database
@@ -32,15 +33,13 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
   static const TextStyle _personSmallStyle = TextStyle( color: CupertinoColors.activeBlue, fontSize: 16 );
   static const TextStyle _personLargeStyle = TextStyle( fontSize: 18, fontWeight: FontWeight.bold );
 
-  _ContractPreviewWidgetState(this._controlState) {
+  _ContractPreviewWidgetState(this._tinyState) {
     photographerLabel = "Fotograf";
     modelLabel = "Model";
     shootingSubject = "Betreff";
     parentLabel = "Erziehungsberechtigter";
     witnessLabel = "Zeuge";
     shootingSubject = "Betreff";
-
-    _tinyContract = _controlState.curDBO;
   }
 
 
@@ -139,9 +138,11 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
 
       ],);
 
-
   @override
   Widget build(BuildContext context) {
+    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
+    _tinyContract.preset = Parser(_tinyContract, context).parsePreset();
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         heroTag: 'contract',
