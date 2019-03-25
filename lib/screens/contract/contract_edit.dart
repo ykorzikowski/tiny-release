@@ -24,12 +24,13 @@ typedef Null ItemSelectedCallback(int value);
 
 class ContractEditWidget extends StatefulWidget {
 
-  final TinyState _controlState;
+  final TinyState tinyState;
+  final TinyContractRepo tinyContractRepo;
 
-  ContractEditWidget( this._controlState );
+  ContractEditWidget( {this.tinyState, this.tinyContractRepo} );
 
   @override
-  _ContractEditWidgetState createState() => _ContractEditWidgetState(_controlState);
+  _ContractEditWidgetState createState() => _ContractEditWidgetState(tinyState, tinyContractRepo);
 }
 
 const double _kPickerSheetHeight = 350.0;
@@ -37,7 +38,7 @@ const double _kPickerSheetHeight = 350.0;
 class _ContractEditWidgetState extends State<ContractEditWidget> {
   final TinyState _tinyState;
   final TinyPeopleRepo _tinyPeopleRepo = new TinyPeopleRepo();
-  final TinyContractRepo _tinyContractRepo = new TinyContractRepo();
+  TinyContractRepo _tinyContractRepo;
   TinyContract _tinyContract;
   Map<int, Tag> _receptionAreas = Map();
   List<Tag> _tags = List();
@@ -51,9 +52,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   bool _enabledParent = false;
 
-  _ContractEditWidgetState(this._tinyState) {
-//    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_controlState.curDBO ) );
-    _tinyContract = _tinyState.curDBO;
+  _ContractEditWidgetState(this._tinyState, this._tinyContractRepo) {
+    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_tinyState.curDBO ) );
+
+    if( _tinyContractRepo != null ) {
+      _tinyContractRepo = new TinyContractRepo();
+    }
+
     if (_tinyContract.receptions != null) {
       _tinyContract.receptions.forEach((rec) => _tags.add(Tag(id: rec.id, title: rec.displayName)));
       _tinyContract.receptions.forEach((rec) => _receptionAreas.putIfAbsent(rec.id, () => Tag(id: rec.id, title: rec.displayName)));
@@ -241,27 +246,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     /// button generate contract
                     CupertinoButton(
                       child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
-                      onPressed: _validContract() ? () {
-                        List<TinyReception> recs = List();
-                        _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
-                        _tinyContract.receptions = recs;
-                        _tinyContractRepo.save(_tinyContract);
-                        _tinyState.curDBO = _tinyContract;
-                        //Navigator.of(context).pop();
-                        Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
-                      } : null,
+                      onPressed: _validContract() ? _onGenerateContractPressed() : null,
                     ),
 
                     /// button save contract
                     CupertinoButton(
                       child: Text(S.of(context).btn_save),
-                      onPressed: _validContract() ? () {
-                        List<TinyReception> recs = List();
-                        _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
-                        _tinyContract.receptions = recs;
-                        _tinyContractRepo.save(_tinyContract);
-                        Navigator.of(context, rootNavigator: true).pop();
-                      } : null,
+                      onPressed: _validContract() ? _onSaveContractPressed : null,
                     ),
                   ],),
                   ],
@@ -270,6 +261,24 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           ),
         )
     );
+  }
+
+  _saveContract() {
+    List<TinyReception> recs = List();
+    _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
+    _tinyContract.receptions = recs;
+    _tinyContractRepo.save(_tinyContract);
+    _tinyState.curDBO = _tinyContract;
+  }
+
+  _onGenerateContractPressed() {
+    _saveContract();
+    Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_GENERATED);
+  }
+
+  _onSaveContractPressed() {
+    _saveContract();
+    Navigator.of(context, rootNavigator: true).pop();
   }
   
   _onPreviewPressed() {
