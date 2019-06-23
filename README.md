@@ -1,8 +1,8 @@
-# tiny_release
+# paperflavor
 
 create model releases
 
-[![Build Status](https://drone.korzikowski.de/api/badges/ykorzikowski/tiny_release/status.svg)](https://drone.korzikowski.de/ykorzikowski/tiny_release)
+[![Build Status](https://drone.korzikowski.de/api/badges/ykorzikowski/paperflavor/status.svg)](https://drone.korzikowski.de/ykorzikowski/paperflavor)
 
 ## Generate l10n
 Managed by https://github.com/long1eu/flutter_i18n

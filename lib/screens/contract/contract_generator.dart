@@ -2,9 +2,9 @@ import 'dart:io' as Io;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/base_util.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/base_util.dart';
 
 class ContractGenerator {
   final TinyContract _tinyContract;

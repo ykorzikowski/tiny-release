@@ -1,29 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/tiny_dbo.dart';
-import 'package:tiny_release/screens/contract/contract_edit.dart';
-import 'package:tiny_release/screens/contract/contract_generated.dart';
-import 'package:tiny_release/screens/contract/contract_list.dart';
-import 'package:tiny_release/screens/contract/contract_master.dart';
-import 'package:tiny_release/screens/contract/contract_preview.dart';
-import 'package:tiny_release/screens/control/control_master.dart';
-import 'package:tiny_release/screens/layout/layout_edit.dart';
-import 'package:tiny_release/screens/layout/layout_list.dart';
-import 'package:tiny_release/screens/layout/layout_preview.dart';
-import 'package:tiny_release/screens/subscription/subscription.dart';
-import 'package:tiny_release/screens/people/people_edit.dart';
-import 'package:tiny_release/screens/people/people_import_callback.dart';
-import 'package:tiny_release/screens/people/people_list.dart';
-import 'package:tiny_release/screens/people/people_list_callback.dart';
-import 'package:tiny_release/screens/people/people_preview.dart';
-import 'package:tiny_release/screens/preset/preset_edit.dart';
-import 'package:tiny_release/screens/preset/preset_edit_sort.dart';
-import 'package:tiny_release/screens/preset/preset_list.dart';
-import 'package:tiny_release/screens/preset/preset_preview.dart';
-import 'package:tiny_release/screens/reception_area/reception_list.dart';
-import 'package:tiny_release/screens/settings.dart';
-import 'package:tiny_release/screens/wording/wording_settings.dart';
-import 'package:tiny_release/util/nav_routes.dart';
+import 'package:paperflavor/data/tiny_dbo.dart';
+import 'package:paperflavor/screens/contract/contract_edit.dart';
+import 'package:paperflavor/screens/contract/contract_generated.dart';
+import 'package:paperflavor/screens/contract/contract_list.dart';
+import 'package:paperflavor/screens/contract/contract_master.dart';
+import 'package:paperflavor/screens/contract/contract_preview.dart';
+import 'package:paperflavor/screens/control/control_master.dart';
+import 'package:paperflavor/screens/layout/layout_edit.dart';
+import 'package:paperflavor/screens/layout/layout_list.dart';
+import 'package:paperflavor/screens/layout/layout_preview.dart';
+import 'package:paperflavor/screens/subscription/subscription.dart';
+import 'package:paperflavor/screens/people/people_edit.dart';
+import 'package:paperflavor/screens/people/people_import_callback.dart';
+import 'package:paperflavor/screens/people/people_list.dart';
+import 'package:paperflavor/screens/people/people_list_callback.dart';
+import 'package:paperflavor/screens/people/people_preview.dart';
+import 'package:paperflavor/screens/preset/preset_edit.dart';
+import 'package:paperflavor/screens/preset/preset_edit_sort.dart';
+import 'package:paperflavor/screens/preset/preset_list.dart';
+import 'package:paperflavor/screens/preset/preset_preview.dart';
+import 'package:paperflavor/screens/reception_area/reception_list.dart';
+import 'package:paperflavor/screens/settings.dart';
+import 'package:paperflavor/screens/wording/wording_settings.dart';
+import 'package:paperflavor/util/nav_routes.dart';
 
 class TinyState {
 
@@ -35,7 +35,7 @@ class TinyState {
 
   /// map that stores the routes of the app
   Map<String, WidgetBuilder> routes;
-  
+
   /// the selected control item
   int selectedControlItem = 0;
 

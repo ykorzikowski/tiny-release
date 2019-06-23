@@ -4,17 +4,17 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:tiny_release/data/repo/tiny_people_repo.dart';
-import 'package:tiny_release/data/repo/tiny_layout_repo.dart';
-import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
-import 'package:tiny_release/data/repo/tiny_reception_repo.dart';
-import 'package:tiny_release/data/repo/tiny_repo.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/tiny_dbo.dart';
-import 'package:tiny_release/data/tiny_layout.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/data/tiny_reception.dart';
-import 'package:tiny_release/generated/i18n.dart';
+import 'package:paperflavor/data/repo/tiny_people_repo.dart';
+import 'package:paperflavor/data/repo/tiny_layout_repo.dart';
+import 'package:paperflavor/data/repo/tiny_preset_repo.dart';
+import 'package:paperflavor/data/repo/tiny_reception_repo.dart';
+import 'package:paperflavor/data/repo/tiny_repo.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/tiny_dbo.dart';
+import 'package:paperflavor/data/tiny_layout.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/data/tiny_reception.dart';
+import 'package:paperflavor/generated/i18n.dart';
 
 class BaseUtil {
 

@@ -1,14 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
-import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/nav_routes.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/repo/tiny_contract_repo.dart';
+import 'package:paperflavor/data/repo/tiny_preset_repo.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/util/base_util.dart';
+import 'package:paperflavor/util/base_util.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

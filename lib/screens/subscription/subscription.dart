@@ -5,10 +5,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/paywall.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/paywall.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
-import 'package:tiny_release/util/base_util.dart';
+import 'package:paperflavor/util/base_util.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

@@ -1,5 +1,5 @@
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:tiny_release/main.dart' as app;
+import 'package:paperflavor/main.dart' as app;
 
 void main() {
   // This line enables the extension

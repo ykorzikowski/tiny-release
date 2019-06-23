@@ -1,10 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/data_types.dart';
-import 'package:tiny_release/data/repo/sqlite_provider.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/data_types.dart';
+import 'package:paperflavor/data/repo/sqlite_provider.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

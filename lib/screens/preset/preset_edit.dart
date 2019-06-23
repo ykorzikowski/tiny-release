@@ -3,14 +3,14 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/repo/tiny_paragraph_repo.dart';
-import 'package:tiny_release/data/repo/tiny_preset_repo.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/screens/preset/preset_json_parser.dart';
-import 'package:tiny_release/util/base_util.dart';
-import 'package:tiny_release/util/nav_routes.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/repo/tiny_paragraph_repo.dart';
+import 'package:paperflavor/data/repo/tiny_preset_repo.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/screens/preset/preset_json_parser.dart';
+import 'package:paperflavor/util/base_util.dart';
+import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -147,7 +147,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   _onImportError() => showDialog(context: context, builder: (f) =>
       CupertinoAlertDialog(
         title: Text(S.of(context).error_while_importing),
-        content: Text(S.of(context).the_file_you_specified_is_not_a_valid_tiny_release),
+        content: Text(S.of(context).the_file_you_specified_is_not_a_valid_paperflavor),
         actions: <Widget>[
           CupertinoDialogAction(
             child: Text(S.of(context).ok),

@@ -3,11 +3,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:tiny_release/cupertino_localizations.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/screens/contract/contract_list.dart';
-import 'package:tiny_release/screens/control/control_master.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/cupertino_localizations.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/screens/contract/contract_list.dart';
+import 'package:paperflavor/screens/control/control_master.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 
 void main() => runApp(MyApp());
 

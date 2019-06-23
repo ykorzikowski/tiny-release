@@ -33,7 +33,7 @@ steps:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - cd paperflavor_build_$BUILD_ID/paperflavor
         - export DEV_ID=`xcrun simctl create iPhonex com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-12-1`
         - xcrun simctl boot $DEV_ID
         - bash -lc 'flutter drive --target=test_driver/app_full.dart -diPhonex'
@@ -66,7 +66,7 @@ volumes:
           - DRONE_BRANCH
         script:
           - export BUILD_ID=$DRONE_BUILD_NUMBER
-          - cd tiny_release_build_$BUILD_ID/tiny_release
+          - cd paperflavor_build_$BUILD_ID/paperflavor
           - git checkout $DRONE_COMMIT
           - bash -lc 'fastlane screenshots'
 
@@ -106,7 +106,7 @@ steps:
       envs:
         - DRONE_BUILD_NUMBER
       script:
-        - rm -rf tiny_release_build_$DRONE_BUILD_NUMBER
+        - rm -rf paperflavor_build_$DRONE_BUILD_NUMBER
 
 clone:
   disable: true
@@ -143,7 +143,7 @@ volumes:
         - DRONE_COMMIT
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_testflight/tiny_release
+        - cd paperflavor_testflight/paperflavor
         - git checkout $DRONE_COMMIT
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
@@ -169,7 +169,7 @@ volumes:
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=wwul-ecvv-ewcl-gsit
-        - cd tiny_release_release/tiny_release
+        - cd paperflavor_release/paperflavor
         - git pull
         - git reset --hard
         - bash -lc 'git checkout $DRONE_COMMIT'
@@ -197,7 +197,7 @@ volumes:
         - DRONE_BRANCH
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
-        - cd tiny_release_build_$BUILD_ID/tiny_release
+        - cd paperflavor_build_$BUILD_ID/paperflavor
         - bash -lc 'flock -s /Users/ci/macOS_lock flutter --version'
         - bash -lc 'flutter --version'
         - bash -lc 'flutter packages get'
@@ -224,8 +224,8 @@ volumes:
       script:
         - export BUILD_ID=$DRONE_BUILD_NUMBER
         - system_profiler SPSoftwareDataType
-        - mkdir tiny_release_build_$BUILD_ID
-        - cd tiny_release_build_$BUILD_ID
-        - git clone gitea@gitea.korzikowski.de:ykorzikowski/tiny_release.git tiny_release --recursive
-        - cd tiny_release
+        - mkdir paperflavor_build_$BUILD_ID
+        - cd paperflavor_build_$BUILD_ID
+        - git clone gitea@gitea.korzikowski.de:ykorzikowski/paperflavor.git paperflavor --recursive
+        - cd paperflavor
         - git checkout $DRONE_COMMIT

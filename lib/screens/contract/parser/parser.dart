@@ -1,8 +1,8 @@
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/screens/contract/parser/parser_config.dart';
-import 'package:tiny_release/util/base_util.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/screens/contract/parser/parser_config.dart';
+import 'package:paperflavor/util/base_util.dart';
 
 class Parser {
   final TinyContract tinyContract;

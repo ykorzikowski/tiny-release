@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:tiny_release/data/tiny_preset.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
 
 typedef void JSONErrorCallback();
 

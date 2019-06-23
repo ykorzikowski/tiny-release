@@ -1,10 +1,10 @@
 
-import 'package:tiny_release/data/tiny_dbo.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/data/tiny_reception.dart';
-import 'package:tiny_release/data/tiny_setting.dart';
-import 'package:tiny_release/data/tiny_signature.dart';
+import 'package:paperflavor/data/tiny_dbo.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/data/tiny_reception.dart';
+import 'package:paperflavor/data/tiny_setting.dart';
+import 'package:paperflavor/data/tiny_signature.dart';
 
 class TinyContract extends TinyDBO {
   TinyPreset preset;

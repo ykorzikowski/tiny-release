@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tiny_release/data/repo/tiny_people_repo.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/screens/people/people_list.dart';
-import 'package:tiny_release/util/nav_routes.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/repo/tiny_people_repo.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/screens/people/people_list.dart';
+import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 
 class PeopleListCallback {
 

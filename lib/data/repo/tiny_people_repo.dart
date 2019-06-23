@@ -1,9 +1,9 @@
-import 'package:tiny_release/data/data_types.dart';
-import 'package:tiny_release/data/repo/sqlite_provider.dart';
-import 'package:tiny_release/data/repo/tiny_address_repo.dart';
-import 'package:tiny_release/data/repo/tiny_peopleitem_repo.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/repo/tiny_repo.dart';
+import 'package:paperflavor/data/data_types.dart';
+import 'package:paperflavor/data/repo/sqlite_provider.dart';
+import 'package:paperflavor/data/repo/tiny_address_repo.dart';
+import 'package:paperflavor/data/repo/tiny_peopleitem_repo.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/repo/tiny_repo.dart';
 
 class TinyPeopleRepo extends TinyRepo< TinyPeople > {
 

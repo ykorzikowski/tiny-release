@@ -1,9 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/screens/contract/contract_edit.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/screens/contract/contract_edit.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 
 import 'test_utils.dart';
 

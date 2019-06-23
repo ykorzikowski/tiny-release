@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:tiny_release/generated/i18n.dart';
+import 'package:paperflavor/generated/i18n.dart';
 
 class TestUtils {
   static Widget makeTestableWidget({ Widget child, Size size }) {

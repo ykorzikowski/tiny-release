@@ -1,7 +1,7 @@
-import 'package:tiny_release/data/data_types.dart';
-import 'package:tiny_release/data/repo/sqlite_provider.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/data/repo/tiny_repo.dart';
+import 'package:paperflavor/data/data_types.dart';
+import 'package:paperflavor/data/repo/sqlite_provider.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/data/repo/tiny_repo.dart';
 
 class ParagraphRepo extends TinyRepo< Paragraph >{
 

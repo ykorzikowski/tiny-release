@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:tiny_release/util/base_util.dart';
-import 'package:tiny_release/util/tiny_state.dart';
-import 'package:tiny_release/util/nav_routes.dart';
+import 'package:paperflavor/util/base_util.dart';
+import 'package:paperflavor/util/tiny_state.dart';
+import 'package:paperflavor/util/nav_routes.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

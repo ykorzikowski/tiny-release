@@ -5,13 +5,13 @@ import 'dart:typed_data';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/data/tiny_signature.dart';
-import 'package:tiny_release/data/repo/tiny_contract_repo.dart';
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/base_util.dart';
-import 'package:tiny_release/util/nav_routes.dart';
-import 'package:tiny_release/util/tiny_state.dart';
+import 'package:paperflavor/data/tiny_signature.dart';
+import 'package:paperflavor/data/repo/tiny_contract_repo.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/base_util.dart';
+import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/tiny_state.dart';
 import 'dart:ui' as ui;
 
 class SignatureWidget extends StatefulWidget {
@@ -33,7 +33,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   final _photographerKey = GlobalKey<SignatureState>();
   final _parentKey = GlobalKey<SignatureState>();
   final _witnessKey = GlobalKey<SignatureState>();
-  
+
   /// signature widgets
   Signature _modelSignatureWidget, _photographerSignatureWidget, _witnessSignatureWidget, _parentSignatureWidget;
 
@@ -82,7 +82,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
       ],
     );
   }
-  
+
   ///         ///
   /// signatures
   ///         ///
@@ -144,7 +144,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   }
 
   /// save methods for signatures
-  
+
   _savePhotographerSignature(bytes) => setState(() {
     if(_photographerKey.currentState.hasPoints()) _photographerSignatureBytes = _byteDataToUint8(bytes);
     _saveSignature(_photographerSignatureBytes, _tinyContract.id).then((ts) => _tinyContract.photographerSignature = ts);
@@ -169,16 +169,16 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   _onSignatureComplete(dialogKey, signatureWidget, signerName, saveCallback) =>
       showCupertinoModalPopup(context: context, builder: (context) =>
           Dialog(
-            key: Key(dialogKey), 
+            key: Key(dialogKey),
             child:
             _wrapSignature(
                 signatureWidget, signerName, () => signatureWidget.clear()),))
           .then((v) => _signatureFinishedCallback(signatureWidget, saveCallback));
-  
+
   _buildSignButton({signatureBytes, signatureWidget, signerName, buttonKey, dialogKey, saveSignatureCallback}) =>
       CupertinoButton(
-        child: signatureBytes != null 
-            ? Image(image: MemoryImage(signatureBytes), key: Key(buttonKey)) 
+        child: signatureBytes != null
+            ? Image(image: MemoryImage(signatureBytes), key: Key(buttonKey))
             : Container(child: Icon(CupertinoIcons.pen, key: Key(buttonKey),),),
         onPressed: () => _onSignatureComplete(
             dialogKey,
@@ -190,7 +190,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   _buildPrimarySignatureSection() {
     _modelSignatureWidget = _getSignaturePad(_modelKey);
     _photographerSignatureWidget = _getSignaturePad(_photographerKey);
-    
+
     return <Widget> [
       Flexible(fit: FlexFit.loose,
         key: Key('signature_photographer_flex'),
@@ -198,10 +198,10 @@ class _SignatureWidgetState extends State<SignatureWidget> {
         _wrapSignature(
             _buildSignButton(
                 saveSignatureCallback: _savePhotographerSignature,
-                signatureBytes: _photographerSignatureBytes, 
+                signatureBytes: _photographerSignatureBytes,
                 signatureWidget: _photographerSignatureWidget,
                 signerName: _tinyContract.photographer.displayName,
-                buttonKey: 'signature_photographer', 
+                buttonKey: 'signature_photographer',
                 dialogKey: 'signature_photographer_dialog'),
             _tinyContract.photographer.displayName, () =>
             setState(() => _photographerSignatureBytes = null)),),

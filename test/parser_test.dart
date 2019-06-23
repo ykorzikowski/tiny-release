@@ -1,8 +1,8 @@
 import 'package:test_api/test_api.dart';
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/data/tiny_people.dart';
-import 'package:tiny_release/data/tiny_preset.dart';
-import 'package:tiny_release/screens/contract/parser/parser.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/screens/contract/parser/parser.dart';
 
 void main() {
   test('Parser replace model', () {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_release/screens/control/control_helper.dart';
-import 'package:tiny_release/util/nav_routes.dart';
-import 'package:tiny_release/util/tiny_state.dart';
-import 'package:tiny_release/util/tiny_page_wrapper.dart';
+import 'package:paperflavor/screens/control/control_helper.dart';
+import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/tiny_state.dart';
+import 'package:paperflavor/util/tiny_page_wrapper.dart';
 
 typedef Null ItemSelectedCallback(int value);
 

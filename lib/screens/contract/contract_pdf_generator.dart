@@ -5,10 +5,10 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:image/image.dart' as img;
 
-import 'package:tiny_release/data/tiny_contract.dart';
-import 'package:tiny_release/data/tiny_signature.dart';
-import 'package:tiny_release/generated/i18n.dart';
-import 'package:tiny_release/util/base_util.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
+import 'package:paperflavor/data/tiny_signature.dart';
+import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/base_util.dart';
 
 class ContractPdfGenerator {
   final TinyContract _tinyContract;
@@ -16,7 +16,7 @@ class ContractPdfGenerator {
   static const doppelPinkt = ": ";
 
   TextStyle _personPdfSmallStyle, _personPdfLargeStyle, _textStyle;
-  
+
   String photographerLabel, modelLabel, parentLabel, witnessLabel, shootingSubject;
 
   ContractPdfGenerator(this._tinyContract) {
