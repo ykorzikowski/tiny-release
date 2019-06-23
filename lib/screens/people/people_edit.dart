@@ -44,6 +44,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
         transitionBetweenRoutes: false,
         middle: Text(S.of(context).title_add_people),
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).brn_save, key: Key('btn_navbar_save')),
           onPressed: validContact() ? _onPeopleSave : null,),),
       child: Scaffold(
@@ -347,6 +348,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                           Column(children: <Widget>[
                             CupertinoNavigationBar(
                               trailing: CupertinoButton(
+                                padding: EdgeInsets.all(13),
                                 child: Text(S.of(context).select_date_ok),
                                 onPressed: () {
                                   Navigator.of(context).pop();

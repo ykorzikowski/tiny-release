@@ -75,6 +75,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
   }
 
   Widget _buildPeopleAddButton() => CupertinoButton(
+      padding: EdgeInsets.all(10),
       child: Text(S.of(context).btn_add, key: Key('navbar_btn_add'),),
       onPressed: () {
         _tinyPeopleRepo.getPeopleCount().then((peopleCount) {

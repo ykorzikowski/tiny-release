@@ -80,6 +80,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   }
 
   Widget _buildContractAddButton() => CupertinoButton(
+    padding: EdgeInsets.all(10),
     child: Text(S.of(context).title_add, key: Key('navbar_btn_add'),),
     onPressed: () {
       _tinyContractRepo.getContractCount().then((contractCount) {
@@ -94,7 +95,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
     },
   );
-  
+
   /// delete contract and print deleted scaffold
   _deleteContract(entry) {
     _tinyContractRepo.delete(entry);

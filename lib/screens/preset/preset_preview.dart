@@ -62,6 +62,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
         border: null,
         middle: Text(_tinyPreset.title),
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).btn_edit),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT),

@@ -38,7 +38,9 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
       list.add(
           ListTile(
             key: Key(para.hashCode.toString()),
-            trailing: CupertinoButton(child: Icon(CupertinoIcons.delete_simple), onPressed: () {
+            trailing: CupertinoButton(
+                padding: EdgeInsets.all(13),
+                child: Icon(CupertinoIcons.delete_simple), onPressed: () {
               setState(() {
                 _tinyPreset.paragraphs.remove(para);
               });
@@ -74,6 +76,7 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
         transitionBetweenRoutes: false,
         middle: Text(S.of(context).change_order_title),
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).btn_save),
           onPressed:() {
             _tinyPresetRepo.save(_tinyPreset);

@@ -57,6 +57,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
               children: <Widget>[
                 ListTile(
                   trailing: CupertinoButton( // todo: bug when nothing is entered
+                      padding: EdgeInsets.all(13),
                       child: Icon(CupertinoIcons.add_circled_solid, color: CupertinoColors.activeGreen, key: Key('btn_save_reception'),),
                       onPressed: () {
                         _tinyRepo.save(_tinyReception);

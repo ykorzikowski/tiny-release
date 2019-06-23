@@ -87,7 +87,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
           key: Key(wrapper.iapItem.productId),
           leading: _getIcon(wrapper.iapItem.productId),
           title: Text(wrapper.iapItem.title),
-          trailing: CupertinoButton(child: priceTag, onPressed: onSubscription),
+          trailing: CupertinoButton(padding: EdgeInsets.all(13), child: priceTag, onPressed: onSubscription),
         ),
         expanded: _buildDescription(wrapper.iapItem),
       );

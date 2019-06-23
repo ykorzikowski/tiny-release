@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [
         S.delegate,
         FallbackCupertinoLocalisationsDelegate(),
-        DefaultCupertinoLocalizations.delegate,
+        //DefaultCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback: S.delegate.resolution(fallback: const Locale('en', ''), withCountry: false),
+      localeResolutionCallback: S.delegate.resolution(fallback: const Locale('en', '')),
       title: 'Flutter Code Sample for material.AppBar.actions',
       routes: tinyState.routes,
       theme: ThemeData(

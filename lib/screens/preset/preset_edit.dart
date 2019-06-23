@@ -52,6 +52,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         transitionBetweenRoutes: false,
         middle: Text(S.of(context).title_add_preset),
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).btn_save, key: Key('btn_navbar_save')),
           onPressed: validPreset() ? _onPresetSavePressed : null,),),
       child: Scaffold(
@@ -66,7 +67,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         ),),
     );
   }
-  
+
   _onPresetSavePressed() {
     _tinyPresetRepo.save(_tinyPreset);
     _controlState.curDBO = _tinyPreset;

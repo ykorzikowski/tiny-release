@@ -42,6 +42,7 @@ class _LayoutListWidgetState extends State<LayoutListWidget> {
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text("Layout"),
         trailing:CupertinoButton(
+          padding: EdgeInsets.all(10),
           child: Text("Hinzufügen"),
           onPressed: () {
 

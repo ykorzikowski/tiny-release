@@ -173,6 +173,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
         transitionBetweenRoutes: false,
         border: null,
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).btn_edit),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT),

@@ -53,6 +53,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text(S.of(context).title_preset),
         trailing:CupertinoButton(
+          padding: EdgeInsets.all(10),
           child: Text(S.of(context).btn_add, key: Key('navbar_btn_add')),
           onPressed: _onAddPresetPressed,
         ),),
@@ -83,7 +84,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
     title: Text(entry.title, key: Key('preset_title_$index')),
     onTap:() => _onPresetTap(entry, context),
   );
-  
+
   _onDismissed(direction, entry) {
     _tinyPresetRepo.delete(entry);
 
@@ -92,7 +93,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
         .showSnackBar(
         SnackBar(content: Text(entry.title + S.of(context).scaff_deleted)));
   }
-  
+
   Future<bool> _confirmDismiss(direction, entry) {
     var presetHasNoContracts = _tinyContractRepo.presetHasNoContracts(entry.id);
     presetHasNoContracts.then((hasNoContracts) {

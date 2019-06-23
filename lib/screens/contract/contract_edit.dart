@@ -72,7 +72,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     _locationController.text = _tinyContract.location;
     _subjectController.text = _tinyContract.displayName;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -81,6 +81,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
           transitionBetweenRoutes: false,
           middle: Text(S.of(context).add_contract),
           trailing: CupertinoButton(
+            padding: EdgeInsets.all(13),
             child: Text(S.of(context).navbar_btn_preview),
             onPressed: _validContract() ? _onPreviewPressed : null,),),
         child: Scaffold(
@@ -280,7 +281,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     _saveContract();
     Navigator.of(context, rootNavigator: true).pop();
   }
-  
+
   _onPreviewPressed() {
     _tinyContractRepo.save(_tinyContract);
     _tinyState.curDBO = _tinyContract;
@@ -505,6 +506,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     return Column(children: <Widget>[
       CupertinoNavigationBar(
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S
               .of(context)
               .select_date_ok, key: Key('btn_ok'),),
@@ -523,6 +525,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
             mode: CupertinoDatePickerMode.dateAndTime,
             minimumYear: 1900,
             initialDateTime: selectedDate,
+            use24hFormat: true,
             onDateTimeChanged: (t) => selectedDate = t,
           ),),
       )
@@ -580,6 +583,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     return Column(children: <Widget>[
       CupertinoNavigationBar(
         trailing: CupertinoButton(
+          padding: EdgeInsets.all(13),
           child: Text(S.of(context).select_date_ok, key: Key('btn_ok'),),
           onPressed: () {
             Navigator.of(context).pop();
