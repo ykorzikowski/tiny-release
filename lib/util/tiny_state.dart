@@ -22,7 +22,6 @@ import 'package:paperflavor/screens/preset/preset_list.dart';
 import 'package:paperflavor/screens/preset/preset_preview.dart';
 import 'package:paperflavor/screens/reception_area/reception_list.dart';
 import 'package:paperflavor/screens/settings.dart';
-import 'package:paperflavor/screens/wording/wording_settings.dart';
 import 'package:paperflavor/util/nav_routes.dart';
 
 class TinyState {
@@ -82,7 +81,6 @@ class TinyState {
       NavRoutes.LAYOUT_EDIT: (context) => LayoutEditWidget(this),
 
       NavRoutes.SETTINGS: (context) => SettingsWidget(this),
-      NavRoutes.WORDING: (context) => WordingSettingsWidget(this),
 
       NavRoutes.PAYMENT: (context) => SubscriptionListWidget(),
     };

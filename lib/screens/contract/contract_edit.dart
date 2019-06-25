@@ -55,7 +55,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   _ContractEditWidgetState(this._tinyState, this._tinyContractRepo) {
     _tinyContract = TinyContract.fromMap( TinyContract.toMap (_tinyState.curDBO ) );
 
-    if( _tinyContractRepo != null ) {
+    if( _tinyContractRepo == null ) {
       _tinyContractRepo = new TinyContractRepo();
     }
 
@@ -247,7 +247,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
                     /// button generate contract
                     CupertinoButton(
                       child: Text(S.of(context).btn_sign_contract, key: Key('btn_sign_contract'),),
-                      onPressed: _validContract() ? _onGenerateContractPressed() : null,
+                      onPressed: _validContract() ? _onGenerateContractPressed : null,
                     ),
 
                     /// button save contract

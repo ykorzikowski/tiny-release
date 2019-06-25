@@ -45,21 +45,19 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   /// global key for shareDialogPosition
   var _shareDialogPosGlobalKey = RectGetter.createGlobalKey();
 
-  _ContractGeneratedWidgetState(this._tinyState) {
+  _ContractGeneratedWidgetState(this._tinyState);
+
+  void _init() {
+    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
     _contractPdfGenerator = ContractPdfGenerator(_tinyContract);
     _contractGenerator = ContractGenerator(_tinyContract);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
     _tinyContract.preset = Parser(_tinyContract, context).parsePreset();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    _init();
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         heroTag: 'contract',
@@ -107,7 +105,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                 /// signatures
                 SignatureWidget(_tinyState),
 
-                _tinyContract.isLocked ? _buildCompletedHint() : Container(),
+                _tinyContract.isLocked ? _buildCompletedHint : Container(),
               ],
             ),
           ),),
@@ -117,6 +115,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
 
   Widget _buildNavBarButton() => CupertinoButton(
       child: Text(S.of(context).btn_edit),
+      padding: EdgeInsets.all(10),
       onPressed: () {
         //todo: edit contract
         _tinyState.curDBO = _tinyContract;

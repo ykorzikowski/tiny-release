@@ -20,8 +20,6 @@ class ControlHelper {
         return TableName.RECEPTION;
       case 3:
         return TableName.LAYOUT;
-      case 4:
-        return TableName.WORDING;
       default:
         return "notImplYet";
     }
@@ -47,10 +45,8 @@ class ControlHelper {
       case 3:
         return NavRoutes.LAYOUT_LIST;
       case 4:
-        return NavRoutes.WORDING;
-      case 5:
         return NavRoutes.SETTINGS;
-      case 6:
+      case 5:
         return NavRoutes.PAYMENT;
     }
     return null;

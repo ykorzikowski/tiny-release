@@ -118,7 +118,7 @@ class ContractPdfGenerator {
     var widgetList = List<Widget>();
     for (int i = 0; i < _tinyContract.preset.paragraphs.length; i++) {
       var paragraph  = _tinyContract.preset.paragraphs[i];
-      widgetList.add(Header(level: 2, textStyle: _personPdfLargeStyle, text: BaseUtil.getParagraphTitle(context, paragraph, (i+1)),));
+      widgetList.add(Header(level: 1, textStyle: _personPdfLargeStyle, text: BaseUtil.getParagraphTitle(context, paragraph, (i+1)),));
       widgetList.add(Paragraph(style: _textStyle, text: paragraph.content));
     }
     _tinyContract.preset.paragraphs.forEach((paragraph) {
@@ -191,7 +191,7 @@ class ContractPdfGenerator {
 
     PdfImage pdfImg = PdfImage(
         pdfDoc,
-        image: img.copyResize(fileImg, width, height).data.buffer.asUint8List(),
+        image: img.copyResize(fileImg, width: width, height: height).data.buffer.asUint8List(),
         width: width,
         height: height);
 

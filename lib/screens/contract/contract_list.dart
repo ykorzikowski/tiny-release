@@ -113,13 +113,13 @@ class _ContractListWidgetState extends State<ContractListWidget> {
 
   Widget _buildDateBadge(entry, index) => entry.date != null ? Column(key: Key('date_badge_$index'),
     children: <Widget>[
-          Icon(CupertinoIcons.time_solid),
-          Text(BaseUtil.getLocalFormattedDateTime(context, entry.date).replaceFirst(" ", "\n"), textAlign: TextAlign.center,),
+          Icon(Icons.access_time),
+          Text(BaseUtil.getLocalFormattedDate(context, entry.date), textAlign: TextAlign.center,),
         ],) : Container();
 
   Widget _buildLocationBadge(entry, index) => Column(key: Key('location_badge_$index'), children: <Widget>[
-        Icon(CupertinoIcons.location_solid),
-        Text(entry.location + "\n"),
+        Icon(Icons.my_location),
+        Text(entry.location, textAlign: TextAlign.center,),
       ],);
 
   Widget _buildPeopleBadge(TinyPeople tinyPeople, index) => CircleAvatar(
@@ -140,27 +140,27 @@ class _ContractListWidgetState extends State<ContractListWidget> {
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
       Padding(
-        padding: EdgeInsets.only(right: 8.0),
-        child: _buildDateBadge(entry, index)),
+          padding: EdgeInsets.only(left: 4.0, top: 10.0),
+          child: _buildDateBadge(entry, index)),
       Padding(
-        padding: EdgeInsets.only(right: 8.0),
-        child: _buildLocationBadge(entry, index)),
+          padding: EdgeInsets.only(left: 4.0, top: 10.0),
+          child: _buildLocationBadge(entry, index)),
       Padding(
-        padding: EdgeInsets.all(8.0),
-        child: _buildPeopleBadge(entry.model, index)),
+          padding: EdgeInsets.only(left: 4.0),
+          child: _buildPeopleBadge(entry.model, index)),
       Padding(
-        padding: EdgeInsets.all(8.0),
-        child: _buildPeopleBadge(entry.photographer, index)),
+          padding: EdgeInsets.only(left: 4.0),
+          child: _buildPeopleBadge(entry.photographer, index)),
     ],);
 
   Widget _buildContractTileTrailingSmall(entry, index) => Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
       Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.only(left: 4.0),
           child: _buildPeopleBadge(entry.model, index)),
       Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.only(left: 4.0),
           child: _buildPeopleBadge(entry.photographer, index)),
     ],);
 

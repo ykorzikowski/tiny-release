@@ -47,7 +47,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
         leading: BaseUtil.isLargeScreen(context) ? Container() : null,
         middle: Text(S.of(context).title_reception),
         trailing: CupertinoPopoverButton(
-          child: Text(S.of(context).btn_add, key: Key('btn_add_reception')),
+          child: Text(S.of(context).btn_add, key: Key('btn_add_reception'), style: TextStyle(color: CupertinoColors.activeBlue),),
           popoverHeight: 56,
           popoverWidth: 250,
           popoverBuild: (context) {

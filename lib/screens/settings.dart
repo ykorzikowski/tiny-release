@@ -46,7 +46,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     final db = await SQLiteProvider.db.database;
                     db.delete(TableName.SETTINGS);
                     db.delete(TableName.CONTRACT);
-                    db.delete(TableName.WORDING);
                     db.delete(TableName.PEOPLE_ADDRESS);
                     db.delete(TableName.PEOPLE_ITEM);
                     db.delete(TableName.PEOPLE);

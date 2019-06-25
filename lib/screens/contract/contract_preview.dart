@@ -151,6 +151,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
         middle: Text(S.of(context).tile_contact_preview),
         trailing: !BaseUtil.isLargeScreen(context) ? CupertinoButton(
           child: Text(S.of(context).btn_edit),
+          padding: EdgeInsets.all(10),
           onPressed: () =>
               Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT),
         ) : null,),
