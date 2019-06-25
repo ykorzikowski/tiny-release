@@ -144,6 +144,502 @@ class S implements WidgetsLocalizations {
   String get witnessed_by => "Witnessed by";
 }
 
+class de_model extends S {
+  const de_model();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "Abbrechen";
+  @override
+  String get dateFormatPattern => "dd.MM.yyyy";
+  @override
+  String get btn_add_address => "Adresse hinzufügen";
+  @override
+  String get hint_company => "Firma";
+  @override
+  String get hint_street => "Straße";
+  @override
+  String get btn_complete_contract => "Vertrag abschließen";
+  @override
+  String get chose_brithday => "Geburtstag auswählen";
+  @override
+  String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
+  @override
+  String get hint_title => "Titel";
+  @override
+  String get witnessed_by => "Bezeugt durch";
+  @override
+  String get hint_phone_label => "Markierung";
+  @override
+  String get shooting_subject => "Betreff";
+  @override
+  String get hint_content => "Inhalt";
+  @override
+  String get choose_date => "Wähle Aufnahmedatum";
+  @override
+  String get title_add_reception => "Aufnahmebereich hinzufügen";
+  @override
+  String get hint_mail => "E-Mail";
+  @override
+  String get payment_title => "Kauf";
+  @override
+  String get gallery => "Gallerie";
+  @override
+  String get add_contract => "Vertrag hinzufügen";
+  @override
+  String get dialog_back => "Zurück";
+  @override
+  String get brn_save => "Speichern";
+  @override
+  String get btn_import_contacts => "Aus Kontakten importieren";
+  @override
+  String get selected_preset => "Ausgewählte Vorlage";
+  @override
+  String get select_birthday => "Geburtstag wählen";
+  @override
+  String get btn_save => "Speichern";
+  @override
+  String get btn_sign_contract => "Vertrag unterzeichnen";
+  @override
+  String get share_pdf => "PDF teilen";
+  @override
+  String get try_again_or_write_me_an_email => "Versuchs nochmal oder schreibe mir eine E-Mail";
+  @override
+  String get choose_source => "Quelle wählen";
+  @override
+  String get reception_area => "Aufnahmebereiche";
+  @override
+  String get title_settings => "Einstellungen";
+  @override
+  String get hint_location => "Location";
+  @override
+  String get plans => "Preisplan";
+  @override
+  String get btn_dialog_cancel => "Abbrechen";
+  @override
+  String get item_has_relations => "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ";
+  @override
+  String get dialog_delete => "Löschen";
+  @override
+  String get hint_description => "Beschreibung";
+  @override
+  String get preset => "Vorschau";
+  @override
+  String get location_date_seperator => ", den ";
+  @override
+  String get hint_city => "Stad";
+  @override
+  String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
+  @override
+  String get no_thanks => "Nein Danke";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.";
+  @override
+  String get choose_parent => "Gesetzl. Vertretung\n wählen";
+  @override
+  String get payment_was_successfull => "Kauf erfolgreich";
+  @override
+  String get btn_add_phone => "Telefon hnzufügen";
+  @override
+  String get camera => "Kamera";
+  @override
+  String get loading_pdf => "Generiere PDF";
+  @override
+  String get payment_was_not_successfull => "Kauf nicht erfolgreich";
+  @override
+  String get navbar_btn_preview => "Vorschau";
+  @override
+  String get change_order_title => "Reihenfolge anpassen";
+  @override
+  String get item_wording => "Wording";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "Diese Funktion benötigt eine kostenpflichtige Freischaltung oder ein aktives Abonnement";
+  @override
+  String get select_preset => "Vorlage wählen";
+  @override
+  String get item_settings => "Einstellungen";
+  @override
+  String get hint_postcode => "PLZ";
+  @override
+  String get choose_model => "Model wählen";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs either power users. It's possbile to use this app for free. If you want to use the extended features, you can buy the modules separately or pay for a subscription monthly.";
+  @override
+  String get btn_add => "Hinzufügen";
+  @override
+  String get cloned_suffix => " - Kopie";
+  @override
+  String get item_preset => "Vorlagen";
+  @override
+  String get finished_contract => "Abgeschlossener Vertrag";
+  @override
+  String get in_reception_areas => "in den Aufnahmebereichen";
+  @override
+  String get tile_contact_preview => "Vertragsvorschau";
+  @override
+  String get btn_delete_all => "Lösche alle Daten";
+  @override
+  String get item_people => "Personen";
+  @override
+  String get hint_givenname => "Vorname";
+  @override
+  String get model_release => "Model Release";
+  @override
+  String get error_while_importing => "Fehler beim Importieren";
+  @override
+  String get contract_images => "Anzahl Bilder";
+  @override
+  String get item_reception => "Aufnahmebereiche";
+  @override
+  String get subscriptions => "Abonnements";
+  @override
+  String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
+  @override
+  String get finish_contract => "Vertrag abschließen";
+  @override
+  String get no_items_people => "Fügen Sie Personen aus Ihren Kontakten hinzu";
+  @override
+  String get shooting_date => "Aufnahmedatum";
+  @override
+  String get title_add => "Hinzufügen";
+  @override
+  String get choose_witness => "Zeuge wählen";
+  @override
+  String get hint_mail_label => "Markierung";
+  @override
+  String get title_add_people => "Personen hinzufügen";
+  @override
+  String get hint_region => "Bundesland";
+  @override
+  String get choose_photographer => "Fotograf wählen";
+  @override
+  String get btn_edit => "Bearbeiten";
+  @override
+  String get btn_add_paragrpah => "Paragraf hinzufügen";
+  @override
+  String get modules => "Module";
+  @override
+  String get select_date_ok => "Wählen";
+  @override
+  String get hint_id_type => "Ausweisart";
+  @override
+  String get select_address => "Addresse wählen";
+  @override
+  String get birthday => "Geburtstag";
+  @override
+  String get hint_phone => "Telefon";
+  @override
+  String get create_new_contract => "Erstellen Sie einen neuen Vertrag";
+  @override
+  String get no_items_reception => "Legen Sie einen neuen Aufnahmebereich an";
+  @override
+  String get choose => "Wählen";
+  @override
+  String get hint_familyname => "Nachname";
+  @override
+  String get hint_language => "Sprache";
+  @override
+  String get hint_adresslabel => "Markierung";
+  @override
+  String get title_people => "Personen";
+  @override
+  String get and => "und";
+  @override
+  String get thanks_for_supporting_me => "Danke für deine Unterstützung!";
+  @override
+  String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
+  @override
+  String get scaff_deleted => "gelöscht";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Vorlage hinzufügen";
+  @override
+  String get delete_contract => "Vertrag löschen?";
+  @override
+  String get use_as_template => "Als Vorlage";
+  @override
+  String get title_contracts => "Vertrtäge";
+  @override
+  String get hint_subtitle => "Untertitel";
+  @override
+  String get item_layout => "Layouts";
+  @override
+  String get control => "Verwaltung";
+  @override
+  String get hint_id_number => "Ausweisnummer";
+  @override
+  String get title_preset => "Vorlagen";
+  @override
+  String get title_reception => "Aufnahmebereiche";
+  @override
+  String get import_preset_from_file => "Aus Datei importieren";
+  @override
+  String get hint_country => "Land";
+  @override
+  String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
+  @override
+  String get btn_add_mail => "E-Mail hinzufügen";
+  @override
+  String get hint_birthday => "Geburtstag";
+  @override
+  String get title_wording => "Wording";
+  @override
+  String get represented_by => "Vertreten durch";
+}
+
+class en_writer extends S {
+  const en_writer();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "Cancel";
+  @override
+  String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get btn_add_address => "Add Address";
+  @override
+  String get hint_company => "Company";
+  @override
+  String get hint_street => "Street";
+  @override
+  String get btn_complete_contract => "Complete Contract";
+  @override
+  String get chose_brithday => "Chose brithday";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  @override
+  String get hint_title => "Title";
+  @override
+  String get witnessed_by => "Witnessed by";
+  @override
+  String get hint_phone_label => "Phone label";
+  @override
+  String get shooting_subject => "Subject";
+  @override
+  String get hint_content => "Content";
+  @override
+  String get choose_date => "Choose shooting date";
+  @override
+  String get title_add_reception => "Add reception area";
+  @override
+  String get hint_mail => "Mail";
+  @override
+  String get payment_title => "Payment";
+  @override
+  String get gallery => "Gallery";
+  @override
+  String get add_contract => "Add Contract";
+  @override
+  String get dialog_back => "Back";
+  @override
+  String get brn_save => "Save";
+  @override
+  String get btn_import_contacts => "Import from contracts";
+  @override
+  String get selected_preset => "Selected preset";
+  @override
+  String get select_birthday => "Select Birthday";
+  @override
+  String get btn_save => "Save";
+  @override
+  String get btn_sign_contract => "Sign contract";
+  @override
+  String get share_pdf => "Share PDF";
+  @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
+  String get choose_source => "Choose source";
+  @override
+  String get reception_area => "Reception area";
+  @override
+  String get title_settings => "Settings";
+  @override
+  String get hint_location => "Location";
+  @override
+  String get plans => "Plans";
+  @override
+  String get btn_dialog_cancel => "Abort";
+  @override
+  String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
+  @override
+  String get dialog_delete => "Delete";
+  @override
+  String get hint_description => "Description";
+  @override
+  String get preset => "Preset";
+  @override
+  String get location_date_seperator => ", on ";
+  @override
+  String get hint_city => "City";
+  @override
+  String get hint_completed_contracts => "Contracts that has been completed can not be edited again";
+  @override
+  String get no_thanks => "No thanks";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "The file you specified is not a valid tiny release preset.";
+  @override
+  String get choose_parent => "Choose Parent";
+  @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
+  String get btn_add_phone => "Add Phone";
+  @override
+  String get camera => "Camera";
+  @override
+  String get loading_pdf => "Loading pdf";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
+  @override
+  String get navbar_btn_preview => "Preview";
+  @override
+  String get change_order_title => "Change order";
+  @override
+  String get item_wording => "Wording";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  @override
+  String get select_preset => "Select preset";
+  @override
+  String get item_settings => "Settings";
+  @override
+  String get hint_postcode => "Postcode";
+  @override
+  String get choose_model => "Choose Model";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
+  @override
+  String get btn_add => "Add";
+  @override
+  String get cloned_suffix => " - cloned";
+  @override
+  String get item_preset => "Presets";
+  @override
+  String get finished_contract => "Finished Contract";
+  @override
+  String get error_subscriptions => "Error while fetching subscriptions";
+  @override
+  String get in_reception_areas => "In reception areas";
+  @override
+  String get tile_contact_preview => "Contact Preview";
+  @override
+  String get btn_delete_all => "Delete all data";
+  @override
+  String get item_people => "People";
+  @override
+  String get hint_givenname => "Givenname";
+  @override
+  String get model_release => "Model Release";
+  @override
+  String get error_while_importing => "Error while importing";
+  @override
+  String get contract_images => "Images count";
+  @override
+  String get item_reception => "Reception Areas";
+  @override
+  String get subscriptions => "Subscriptions";
+  @override
+  String get contract_will_made_between => "There will be a contract between";
+  @override
+  String get finish_contract => "Finish Contract";
+  @override
+  String get no_items_people => "Add people from your contacts";
+  @override
+  String get shooting_date => "Shooting date";
+  @override
+  String get title_add => "Add";
+  @override
+  String get choose_witness => "Choose Witness";
+  @override
+  String get hint_mail_label => "Mail label";
+  @override
+  String get title_add_people => "Add people";
+  @override
+  String get hint_region => "Region";
+  @override
+  String get choose_photographer => "Choose Photographer";
+  @override
+  String get btn_edit => "Edit";
+  @override
+  String get btn_add_paragrpah => "Add Paragrpah";
+  @override
+  String get modules => "Modules";
+  @override
+  String get select_date_ok => "OK";
+  @override
+  String get hint_id_type => "ID type";
+  @override
+  String get select_address => "Select address";
+  @override
+  String get birthday => "Birthday";
+  @override
+  String get hint_phone => "Phone";
+  @override
+  String get create_new_contract => "Create a new contract";
+  @override
+  String get no_items_reception => "Create new reception areas";
+  @override
+  String get choose => "Choose";
+  @override
+  String get hint_familyname => "FamilyName";
+  @override
+  String get hint_language => "Language";
+  @override
+  String get hint_adresslabel => "Adress label";
+  @override
+  String get title_people => "People";
+  @override
+  String get dialog_title_pro_feature => "Pro Feature";
+  @override
+  String get and => "and";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
+  @override
+  String get no_items_presets => "Create or import presets";
+  @override
+  String get scaff_deleted => "Dismissed";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Add Preset";
+  @override
+  String get delete_contract => "Delete Contract?";
+  @override
+  String get use_as_template => "Use as template";
+  @override
+  String get title_contracts => "Contracts";
+  @override
+  String get hint_subtitle => "Subtitle";
+  @override
+  String get item_layout => "Layouts";
+  @override
+  String get control => "Control";
+  @override
+  String get hint_id_number => "ID number";
+  @override
+  String get title_preset => "Presets";
+  @override
+  String get title_reception => "Reception Area";
+  @override
+  String get import_preset_from_file => "Import from file";
+  @override
+  String get hint_country => "Country";
+  @override
+  String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
+  @override
+  String get btn_add_mail => "Add Mail";
+  @override
+  String get hint_birthday => "Birthday";
+  @override
+  String get title_wording => "Wording";
+  @override
+  String get represented_by => "Represented by";
+}
+
 class de extends S {
   const de();
 
@@ -390,8 +886,996 @@ class de extends S {
   String get represented_by => "Vertreten durch";
 }
 
+class en_model extends S {
+  const en_model();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "Cancel";
+  @override
+  String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get btn_add_address => "Add Address";
+  @override
+  String get hint_company => "Company";
+  @override
+  String get hint_street => "Street";
+  @override
+  String get btn_complete_contract => "Complete Contract";
+  @override
+  String get chose_brithday => "Chose brithday";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  @override
+  String get hint_title => "Title";
+  @override
+  String get witnessed_by => "Witnessed by";
+  @override
+  String get hint_phone_label => "Phone label";
+  @override
+  String get shooting_subject => "Subject";
+  @override
+  String get hint_content => "Content";
+  @override
+  String get choose_date => "Choose shooting date";
+  @override
+  String get title_add_reception => "Add reception area";
+  @override
+  String get hint_mail => "Mail";
+  @override
+  String get payment_title => "Payment";
+  @override
+  String get gallery => "Gallery";
+  @override
+  String get add_contract => "Add Contract";
+  @override
+  String get dialog_back => "Back";
+  @override
+  String get brn_save => "Save";
+  @override
+  String get btn_import_contacts => "Import from contracts";
+  @override
+  String get selected_preset => "Selected preset";
+  @override
+  String get select_birthday => "Select Birthday";
+  @override
+  String get btn_save => "Save";
+  @override
+  String get btn_sign_contract => "Sign contract";
+  @override
+  String get share_pdf => "Share PDF";
+  @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
+  String get choose_source => "Choose source";
+  @override
+  String get reception_area => "Reception area";
+  @override
+  String get title_settings => "Settings";
+  @override
+  String get hint_location => "Location";
+  @override
+  String get plans => "Plans";
+  @override
+  String get btn_dialog_cancel => "Abort";
+  @override
+  String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
+  @override
+  String get dialog_delete => "Delete";
+  @override
+  String get hint_description => "Description";
+  @override
+  String get preset => "Preset";
+  @override
+  String get location_date_seperator => ", on ";
+  @override
+  String get hint_city => "City";
+  @override
+  String get hint_completed_contracts => "Contracts that has been completed can not be edited again";
+  @override
+  String get no_thanks => "No thanks";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "The file you specified is not a valid tiny release preset.";
+  @override
+  String get choose_parent => "Choose Parent";
+  @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
+  String get btn_add_phone => "Add Phone";
+  @override
+  String get camera => "Camera";
+  @override
+  String get loading_pdf => "Loading pdf";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
+  @override
+  String get navbar_btn_preview => "Preview";
+  @override
+  String get change_order_title => "Change order";
+  @override
+  String get item_wording => "Wording";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  @override
+  String get select_preset => "Select preset";
+  @override
+  String get item_settings => "Settings";
+  @override
+  String get hint_postcode => "Postcode";
+  @override
+  String get choose_model => "Choose Model";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
+  @override
+  String get btn_add => "Add";
+  @override
+  String get cloned_suffix => " - cloned";
+  @override
+  String get item_preset => "Presets";
+  @override
+  String get finished_contract => "Finished Contract";
+  @override
+  String get error_subscriptions => "Error while fetching subscriptions";
+  @override
+  String get in_reception_areas => "In reception areas";
+  @override
+  String get tile_contact_preview => "Contact Preview";
+  @override
+  String get btn_delete_all => "Delete all data";
+  @override
+  String get item_people => "People";
+  @override
+  String get hint_givenname => "Givenname";
+  @override
+  String get model_release => "Model Release";
+  @override
+  String get error_while_importing => "Error while importing";
+  @override
+  String get contract_images => "Images count";
+  @override
+  String get item_reception => "Reception Areas";
+  @override
+  String get subscriptions => "Subscriptions";
+  @override
+  String get contract_will_made_between => "There will be a contract between";
+  @override
+  String get finish_contract => "Finish Contract";
+  @override
+  String get no_items_people => "Add people from your contacts";
+  @override
+  String get shooting_date => "Shooting date";
+  @override
+  String get title_add => "Add";
+  @override
+  String get choose_witness => "Choose Witness";
+  @override
+  String get hint_mail_label => "Mail label";
+  @override
+  String get title_add_people => "Add people";
+  @override
+  String get hint_region => "Region";
+  @override
+  String get choose_photographer => "Choose Photographer";
+  @override
+  String get btn_edit => "Edit";
+  @override
+  String get btn_add_paragrpah => "Add Paragrpah";
+  @override
+  String get modules => "Modules";
+  @override
+  String get select_date_ok => "OK";
+  @override
+  String get hint_id_type => "ID type";
+  @override
+  String get select_address => "Select address";
+  @override
+  String get birthday => "Birthday";
+  @override
+  String get hint_phone => "Phone";
+  @override
+  String get create_new_contract => "Create a new contract";
+  @override
+  String get no_items_reception => "Create new reception areas";
+  @override
+  String get choose => "Choose";
+  @override
+  String get hint_familyname => "FamilyName";
+  @override
+  String get hint_language => "Language";
+  @override
+  String get hint_adresslabel => "Adress label";
+  @override
+  String get title_people => "People";
+  @override
+  String get dialog_title_pro_feature => "Pro Feature";
+  @override
+  String get and => "and";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
+  @override
+  String get no_items_presets => "Create or import presets";
+  @override
+  String get scaff_deleted => "Dismissed";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Add Preset";
+  @override
+  String get delete_contract => "Delete Contract?";
+  @override
+  String get use_as_template => "Use as template";
+  @override
+  String get title_contracts => "Contracts";
+  @override
+  String get hint_subtitle => "Subtitle";
+  @override
+  String get item_layout => "Layouts";
+  @override
+  String get control => "Control";
+  @override
+  String get hint_id_number => "ID number";
+  @override
+  String get title_preset => "Presets";
+  @override
+  String get title_reception => "Reception Area";
+  @override
+  String get import_preset_from_file => "Import from file";
+  @override
+  String get hint_country => "Country";
+  @override
+  String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
+  @override
+  String get btn_add_mail => "Add Mail";
+  @override
+  String get hint_birthday => "Birthday";
+  @override
+  String get title_wording => "Wording";
+  @override
+  String get represented_by => "Represented by";
+}
+
 class en extends S {
   const en();
+}
+
+class nl_model extends S {
+  const nl_model();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "annuleren";
+  @override
+  String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get btn_add_address => "Voeg adres toe";
+  @override
+  String get hint_company => "Bedrijf";
+  @override
+  String get hint_street => "Straat";
+  @override
+  String get btn_complete_contract => "Contract afronden";
+  @override
+  String get chose_brithday => "Ik koos voor brithday";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  @override
+  String get hint_title => "Titel";
+  @override
+  String get witnessed_by => "Getuigd door";
+  @override
+  String get hint_phone_label => "Telefoonlabel";
+  @override
+  String get shooting_subject => "Onderwerp";
+  @override
+  String get hint_content => "Inhoud";
+  @override
+  String get choose_date => "Kies opnamedatum";
+  @override
+  String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get hint_mail => "Mail";
+  @override
+  String get payment_title => "Payment";
+  @override
+  String get gallery => "Galerij";
+  @override
+  String get add_contract => "Voeg contract toe";
+  @override
+  String get dialog_back => "Terug";
+  @override
+  String get brn_save => "Opslaan";
+  @override
+  String get btn_import_contacts => "Importeren van contracten";
+  @override
+  String get selected_preset => "Geselecteerde preset";
+  @override
+  String get select_birthday => "Selecteer verjaardag";
+  @override
+  String get btn_save => "Opslaan";
+  @override
+  String get btn_sign_contract => "Teken contract";
+  @override
+  String get share_pdf => "Deel PDF";
+  @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
+  String get choose_source => "Kies de bron";
+  @override
+  String get reception_area => "Receptieruimte";
+  @override
+  String get title_settings => "instellingen";
+  @override
+  String get hint_location => "Plaats";
+  @override
+  String get plans => "Plans";
+  @override
+  String get btn_dialog_cancel => "Afbreken";
+  @override
+  String get item_has_relations => "Dit item heeft relaties met een contract. Verwijder eerst het contract.";
+  @override
+  String get dialog_delete => "Verwijder";
+  @override
+  String get hint_description => "Omschrijving";
+  @override
+  String get preset => "Vooraf ingesteld";
+  @override
+  String get location_date_seperator => ", op ";
+  @override
+  String get hint_city => "stad";
+  @override
+  String get hint_completed_contracts => "Contracten die zijn voltooid, kunnen niet opnieuw worden bewerkt";
+  @override
+  String get no_thanks => "No thanks";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "The file you specified is not a valid tiny release preset.";
+  @override
+  String get choose_parent => "Kies ouder";
+  @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
+  String get btn_add_phone => "Voeg telefoon toe";
+  @override
+  String get camera => "Camera";
+  @override
+  String get loading_pdf => "PDF laden";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
+  @override
+  String get navbar_btn_preview => "Voorbeeld";
+  @override
+  String get change_order_title => "Verander bestelling";
+  @override
+  String get item_wording => "bewoordingen";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  @override
+  String get select_preset => "Selecteer Voorinstelling";
+  @override
+  String get item_settings => "instellingen";
+  @override
+  String get hint_postcode => "Postcode";
+  @override
+  String get choose_model => "Kies Model";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
+  @override
+  String get btn_add => "Toevoegen";
+  @override
+  String get cloned_suffix => " - gekloond";
+  @override
+  String get item_preset => "presets";
+  @override
+  String get finished_contract => "Voltooide overeenkomst";
+  @override
+  String get in_reception_areas => "In de ontvangstruimtes";
+  @override
+  String get tile_contact_preview => "Neem contact op met Preview";
+  @override
+  String get btn_delete_all => "Verwijder alle gegevens";
+  @override
+  String get item_people => "Mensen";
+  @override
+  String get hint_givenname => "Gegeven naam";
+  @override
+  String get model_release => "Model release";
+  @override
+  String get error_while_importing => "Error while importing";
+  @override
+  String get contract_images => "Afbeeldingen tellen";
+  @override
+  String get item_reception => "Ontvangstgebieden";
+  @override
+  String get subscriptions => "Subscriptions";
+  @override
+  String get contract_will_made_between => "Er komt een contract tussen";
+  @override
+  String get finish_contract => "Contract afronden";
+  @override
+  String get no_items_people => "Voeg mensen toe aan je contacten";
+  @override
+  String get shooting_date => "Opnamedatum";
+  @override
+  String get title_add => "Toevoegen";
+  @override
+  String get choose_witness => "Kies Getuige";
+  @override
+  String get hint_mail_label => "Maillabel";
+  @override
+  String get title_add_people => "Mensen toevoegen";
+  @override
+  String get hint_region => "Regio";
+  @override
+  String get choose_photographer => "Kies Fotograaf";
+  @override
+  String get btn_edit => "Bewerk";
+  @override
+  String get btn_add_paragrpah => "Voeg Paragrpah toe";
+  @override
+  String get modules => "Modules";
+  @override
+  String get select_date_ok => "OK";
+  @override
+  String get hint_id_type => "ID Type";
+  @override
+  String get select_address => "Selecteer adres";
+  @override
+  String get birthday => "Verjaardag";
+  @override
+  String get hint_phone => "Telefoon";
+  @override
+  String get create_new_contract => "Maak een nieuw contract";
+  @override
+  String get no_items_reception => "Maak nieuwe ontvangstgebieden";
+  @override
+  String get choose => "Kiezen";
+  @override
+  String get hint_familyname => "Achternaam";
+  @override
+  String get hint_language => "Taal";
+  @override
+  String get hint_adresslabel => "Adreslabel";
+  @override
+  String get title_people => "Mensen";
+  @override
+  String get and => "en";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
+  @override
+  String get no_items_presets => "Voorinstellingen maken of importeren";
+  @override
+  String get scaff_deleted => "ontslagen";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Preset toevoegen";
+  @override
+  String get delete_contract => "Contract verwijderen?";
+  @override
+  String get use_as_template => "Gebruik als sjabloon";
+  @override
+  String get title_contracts => "contracten";
+  @override
+  String get hint_subtitle => "subtitel";
+  @override
+  String get item_layout => "lay-outs";
+  @override
+  String get control => "Controle";
+  @override
+  String get hint_id_number => "ID nummer";
+  @override
+  String get title_preset => "presets";
+  @override
+  String get title_reception => "Receptieruimte";
+  @override
+  String get import_preset_from_file => "Import from file";
+  @override
+  String get hint_country => "land";
+  @override
+  String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
+  @override
+  String get btn_add_mail => "Mail toevoegen";
+  @override
+  String get hint_birthday => "Verjaardag";
+  @override
+  String get title_wording => "bewoordingen";
+  @override
+  String get represented_by => "vertegenwoordigd door";
+}
+
+class de_writer extends S {
+  const de_writer();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "Abbrechen";
+  @override
+  String get dateFormatPattern => "dd.MM.yyyy";
+  @override
+  String get btn_add_address => "Adresse hinzufügen";
+  @override
+  String get hint_company => "Firma";
+  @override
+  String get hint_street => "Straße";
+  @override
+  String get btn_complete_contract => "Vertrag abschließen";
+  @override
+  String get chose_brithday => "Geburtstag auswählen";
+  @override
+  String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
+  @override
+  String get hint_title => "Titel";
+  @override
+  String get witnessed_by => "Bezeugt durch";
+  @override
+  String get hint_phone_label => "Markierung";
+  @override
+  String get shooting_subject => "Betreff";
+  @override
+  String get hint_content => "Inhalt";
+  @override
+  String get choose_date => "Wähle Aufnahmedatum";
+  @override
+  String get title_add_reception => "Aufnahmebereich hinzufügen";
+  @override
+  String get hint_mail => "E-Mail";
+  @override
+  String get payment_title => "Kauf";
+  @override
+  String get gallery => "Gallerie";
+  @override
+  String get add_contract => "Vertrag hinzufügen";
+  @override
+  String get dialog_back => "Zurück";
+  @override
+  String get brn_save => "Speichern";
+  @override
+  String get btn_import_contacts => "Aus Kontakten importieren";
+  @override
+  String get selected_preset => "Ausgewählte Vorlage";
+  @override
+  String get select_birthday => "Geburtstag wählen";
+  @override
+  String get btn_save => "Speichern";
+  @override
+  String get btn_sign_contract => "Vertrag unterzeichnen";
+  @override
+  String get share_pdf => "PDF teilen";
+  @override
+  String get try_again_or_write_me_an_email => "Versuchs nochmal oder schreibe mir eine E-Mail";
+  @override
+  String get choose_source => "Quelle wählen";
+  @override
+  String get reception_area => "Aufnahmebereiche";
+  @override
+  String get title_settings => "Einstellungen";
+  @override
+  String get hint_location => "Location";
+  @override
+  String get plans => "Preisplan";
+  @override
+  String get btn_dialog_cancel => "Abbrechen";
+  @override
+  String get item_has_relations => "Es besteht noch eine Verknüpfung mit einem Vertrag. Bitte erst diesen löschen. ";
+  @override
+  String get dialog_delete => "Löschen";
+  @override
+  String get hint_description => "Beschreibung";
+  @override
+  String get preset => "Vorschau";
+  @override
+  String get location_date_seperator => ", den ";
+  @override
+  String get hint_city => "Stad";
+  @override
+  String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
+  @override
+  String get no_thanks => "Nein Danke";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.";
+  @override
+  String get choose_parent => "Gesetzl. Vertretung\n wählen";
+  @override
+  String get payment_was_successfull => "Kauf erfolgreich";
+  @override
+  String get btn_add_phone => "Telefon hnzufügen";
+  @override
+  String get camera => "Kamera";
+  @override
+  String get loading_pdf => "Generiere PDF";
+  @override
+  String get payment_was_not_successfull => "Kauf nicht erfolgreich";
+  @override
+  String get navbar_btn_preview => "Vorschau";
+  @override
+  String get change_order_title => "Reihenfolge anpassen";
+  @override
+  String get item_wording => "Wording";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "Diese Funktion benötigt eine kostenpflichtige Freischaltung oder ein aktives Abonnement";
+  @override
+  String get select_preset => "Vorlage wählen";
+  @override
+  String get item_settings => "Einstellungen";
+  @override
+  String get hint_postcode => "PLZ";
+  @override
+  String get choose_model => "Model wählen";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs either power users. It's possbile to use this app for free. If you want to use the extended features, you can buy the modules separately or pay for a subscription monthly.";
+  @override
+  String get btn_add => "Hinzufügen";
+  @override
+  String get cloned_suffix => " - Kopie";
+  @override
+  String get item_preset => "Vorlagen";
+  @override
+  String get finished_contract => "Abgeschlossener Vertrag";
+  @override
+  String get in_reception_areas => "in den Aufnahmebereichen";
+  @override
+  String get tile_contact_preview => "Vertragsvorschau";
+  @override
+  String get btn_delete_all => "Lösche alle Daten";
+  @override
+  String get item_people => "Personen";
+  @override
+  String get hint_givenname => "Vorname";
+  @override
+  String get model_release => "Model Release";
+  @override
+  String get error_while_importing => "Fehler beim Importieren";
+  @override
+  String get contract_images => "Anzahl Bilder";
+  @override
+  String get item_reception => "Aufnahmebereiche";
+  @override
+  String get subscriptions => "Abonnements";
+  @override
+  String get contract_will_made_between => "Es wird ein Vertrag geschlossen zwischen";
+  @override
+  String get finish_contract => "Vertrag abschließen";
+  @override
+  String get no_items_people => "Fügen Sie Personen aus Ihren Kontakten hinzu";
+  @override
+  String get shooting_date => "Aufnahmedatum";
+  @override
+  String get title_add => "Hinzufügen";
+  @override
+  String get choose_witness => "Zeuge wählen";
+  @override
+  String get hint_mail_label => "Markierung";
+  @override
+  String get title_add_people => "Personen hinzufügen";
+  @override
+  String get hint_region => "Bundesland";
+  @override
+  String get choose_photographer => "Fotograf wählen";
+  @override
+  String get btn_edit => "Bearbeiten";
+  @override
+  String get btn_add_paragrpah => "Paragraf hinzufügen";
+  @override
+  String get modules => "Module";
+  @override
+  String get select_date_ok => "Wählen";
+  @override
+  String get hint_id_type => "Ausweisart";
+  @override
+  String get select_address => "Addresse wählen";
+  @override
+  String get birthday => "Geburtstag";
+  @override
+  String get hint_phone => "Telefon";
+  @override
+  String get create_new_contract => "Erstellen Sie einen neuen Vertrag";
+  @override
+  String get no_items_reception => "Legen Sie einen neuen Aufnahmebereich an";
+  @override
+  String get choose => "Wählen";
+  @override
+  String get hint_familyname => "Nachname";
+  @override
+  String get hint_language => "Sprache";
+  @override
+  String get hint_adresslabel => "Markierung";
+  @override
+  String get title_people => "Personen";
+  @override
+  String get and => "und";
+  @override
+  String get thanks_for_supporting_me => "Danke für deine Unterstützung!";
+  @override
+  String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
+  @override
+  String get scaff_deleted => "gelöscht";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Vorlage hinzufügen";
+  @override
+  String get delete_contract => "Vertrag löschen?";
+  @override
+  String get use_as_template => "Als Vorlage";
+  @override
+  String get title_contracts => "Vertrtäge";
+  @override
+  String get hint_subtitle => "Untertitel";
+  @override
+  String get item_layout => "Layouts";
+  @override
+  String get control => "Verwaltung";
+  @override
+  String get hint_id_number => "Ausweisnummer";
+  @override
+  String get title_preset => "Vorlagen";
+  @override
+  String get title_reception => "Aufnahmebereiche";
+  @override
+  String get import_preset_from_file => "Aus Datei importieren";
+  @override
+  String get hint_country => "Land";
+  @override
+  String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
+  @override
+  String get btn_add_mail => "E-Mail hinzufügen";
+  @override
+  String get hint_birthday => "Geburtstag";
+  @override
+  String get title_wording => "Wording";
+  @override
+  String get represented_by => "Vertreten durch";
+}
+
+class nl_writer extends S {
+  const nl_writer();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "annuleren";
+  @override
+  String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get btn_add_address => "Voeg adres toe";
+  @override
+  String get hint_company => "Bedrijf";
+  @override
+  String get hint_street => "Straat";
+  @override
+  String get btn_complete_contract => "Contract afronden";
+  @override
+  String get chose_brithday => "Ik koos voor brithday";
+  @override
+  String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
+  @override
+  String get hint_title => "Titel";
+  @override
+  String get witnessed_by => "Getuigd door";
+  @override
+  String get hint_phone_label => "Telefoonlabel";
+  @override
+  String get shooting_subject => "Onderwerp";
+  @override
+  String get hint_content => "Inhoud";
+  @override
+  String get choose_date => "Kies opnamedatum";
+  @override
+  String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get hint_mail => "Mail";
+  @override
+  String get payment_title => "Payment";
+  @override
+  String get gallery => "Galerij";
+  @override
+  String get add_contract => "Voeg contract toe";
+  @override
+  String get dialog_back => "Terug";
+  @override
+  String get brn_save => "Opslaan";
+  @override
+  String get btn_import_contacts => "Importeren van contracten";
+  @override
+  String get selected_preset => "Geselecteerde preset";
+  @override
+  String get select_birthday => "Selecteer verjaardag";
+  @override
+  String get btn_save => "Opslaan";
+  @override
+  String get btn_sign_contract => "Teken contract";
+  @override
+  String get share_pdf => "Deel PDF";
+  @override
+  String get try_again_or_write_me_an_email => "Try again or write me an email!";
+  @override
+  String get choose_source => "Kies de bron";
+  @override
+  String get reception_area => "Receptieruimte";
+  @override
+  String get title_settings => "instellingen";
+  @override
+  String get hint_location => "Plaats";
+  @override
+  String get plans => "Plans";
+  @override
+  String get btn_dialog_cancel => "Afbreken";
+  @override
+  String get item_has_relations => "Dit item heeft relaties met een contract. Verwijder eerst het contract.";
+  @override
+  String get dialog_delete => "Verwijder";
+  @override
+  String get hint_description => "Omschrijving";
+  @override
+  String get preset => "Vooraf ingesteld";
+  @override
+  String get location_date_seperator => ", op ";
+  @override
+  String get hint_city => "stad";
+  @override
+  String get hint_completed_contracts => "Contracten die zijn voltooid, kunnen niet opnieuw worden bewerkt";
+  @override
+  String get no_thanks => "No thanks";
+  @override
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "The file you specified is not a valid tiny release preset.";
+  @override
+  String get choose_parent => "Kies ouder";
+  @override
+  String get payment_was_successfull => "Payment was successfull";
+  @override
+  String get btn_add_phone => "Voeg telefoon toe";
+  @override
+  String get camera => "Camera";
+  @override
+  String get loading_pdf => "PDF laden";
+  @override
+  String get payment_was_not_successfull => "Payment was not successfull";
+  @override
+  String get navbar_btn_preview => "Voorbeeld";
+  @override
+  String get change_order_title => "Verander bestelling";
+  @override
+  String get item_wording => "bewoordingen";
+  @override
+  String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
+  @override
+  String get select_preset => "Selecteer Voorinstelling";
+  @override
+  String get item_settings => "instellingen";
+  @override
+  String get hint_postcode => "Postcode";
+  @override
+  String get choose_model => "Kies Model";
+  @override
+  String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
+  @override
+  String get btn_add => "Toevoegen";
+  @override
+  String get cloned_suffix => " - gekloond";
+  @override
+  String get item_preset => "presets";
+  @override
+  String get finished_contract => "Voltooide overeenkomst";
+  @override
+  String get in_reception_areas => "In de ontvangstruimtes";
+  @override
+  String get tile_contact_preview => "Neem contact op met Preview";
+  @override
+  String get btn_delete_all => "Verwijder alle gegevens";
+  @override
+  String get item_people => "Mensen";
+  @override
+  String get hint_givenname => "Gegeven naam";
+  @override
+  String get model_release => "Model release";
+  @override
+  String get error_while_importing => "Error while importing";
+  @override
+  String get contract_images => "Afbeeldingen tellen";
+  @override
+  String get item_reception => "Ontvangstgebieden";
+  @override
+  String get subscriptions => "Subscriptions";
+  @override
+  String get contract_will_made_between => "Er komt een contract tussen";
+  @override
+  String get finish_contract => "Contract afronden";
+  @override
+  String get no_items_people => "Voeg mensen toe aan je contacten";
+  @override
+  String get shooting_date => "Opnamedatum";
+  @override
+  String get title_add => "Toevoegen";
+  @override
+  String get choose_witness => "Kies Getuige";
+  @override
+  String get hint_mail_label => "Maillabel";
+  @override
+  String get title_add_people => "Mensen toevoegen";
+  @override
+  String get hint_region => "Regio";
+  @override
+  String get choose_photographer => "Kies Fotograaf";
+  @override
+  String get btn_edit => "Bewerk";
+  @override
+  String get btn_add_paragrpah => "Voeg Paragrpah toe";
+  @override
+  String get modules => "Modules";
+  @override
+  String get select_date_ok => "OK";
+  @override
+  String get hint_id_type => "ID Type";
+  @override
+  String get select_address => "Selecteer adres";
+  @override
+  String get birthday => "Verjaardag";
+  @override
+  String get hint_phone => "Telefoon";
+  @override
+  String get create_new_contract => "Maak een nieuw contract";
+  @override
+  String get no_items_reception => "Maak nieuwe ontvangstgebieden";
+  @override
+  String get choose => "Kiezen";
+  @override
+  String get hint_familyname => "Achternaam";
+  @override
+  String get hint_language => "Taal";
+  @override
+  String get hint_adresslabel => "Adreslabel";
+  @override
+  String get title_people => "Mensen";
+  @override
+  String get and => "en";
+  @override
+  String get thanks_for_supporting_me => "Thanks for supporting me!";
+  @override
+  String get no_items_presets => "Voorinstellingen maken of importeren";
+  @override
+  String get scaff_deleted => "ontslagen";
+  @override
+  String get ok => "OK";
+  @override
+  String get title_add_preset => "Preset toevoegen";
+  @override
+  String get delete_contract => "Contract verwijderen?";
+  @override
+  String get use_as_template => "Gebruik als sjabloon";
+  @override
+  String get title_contracts => "contracten";
+  @override
+  String get hint_subtitle => "subtitel";
+  @override
+  String get item_layout => "lay-outs";
+  @override
+  String get control => "Controle";
+  @override
+  String get hint_id_number => "ID nummer";
+  @override
+  String get title_preset => "presets";
+  @override
+  String get title_reception => "Receptieruimte";
+  @override
+  String get import_preset_from_file => "Import from file";
+  @override
+  String get hint_country => "land";
+  @override
+  String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
+  @override
+  String get btn_add_mail => "Mail toevoegen";
+  @override
+  String get hint_birthday => "Verjaardag";
+  @override
+  String get title_wording => "bewoordingen";
+  @override
+  String get represented_by => "vertegenwoordigd door";
 }
 
 class nl extends S {
@@ -647,8 +2131,14 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
   List<Locale> get supportedLocales {
     return const <Locale>[
 
+      const Locale("de", "model"),
+      const Locale("en", "writer"),
       const Locale("de", ""),
+      const Locale("en", "model"),
       const Locale("en", ""),
+      const Locale("nl", "model"),
+      const Locale("de", "writer"),
+      const Locale("nl", "writer"),
       const Locale("nl", ""),
 
     ];
@@ -673,10 +2163,22 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
     final String lang = getLang(locale);
     switch (lang) {
 
+      case "de_model":
+        return new SynchronousFuture<WidgetsLocalizations>(const de_model());
+      case "en_writer":
+        return new SynchronousFuture<WidgetsLocalizations>(const en_writer());
       case "de":
         return new SynchronousFuture<WidgetsLocalizations>(const de());
+      case "en_model":
+        return new SynchronousFuture<WidgetsLocalizations>(const en_model());
       case "en":
         return new SynchronousFuture<WidgetsLocalizations>(const en());
+      case "nl_model":
+        return new SynchronousFuture<WidgetsLocalizations>(const nl_model());
+      case "de_writer":
+        return new SynchronousFuture<WidgetsLocalizations>(const de_writer());
+      case "nl_writer":
+        return new SynchronousFuture<WidgetsLocalizations>(const nl_writer());
       case "nl":
         return new SynchronousFuture<WidgetsLocalizations>(const nl());
 

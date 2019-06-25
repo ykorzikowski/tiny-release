@@ -1,5 +1,5 @@
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:paperflavor/main.dart' as app;
+import 'package:paperflavor/main_delegate.dart' as app;
 
 void main() {
   // This line enables the extension
