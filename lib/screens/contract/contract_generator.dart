@@ -17,17 +17,7 @@ class ContractGenerator {
   // todo get from database
   String photographerLabel, modelLabel, parentLabel, witnessLabel, shootingSubject;
 
-  ContractGenerator(this._tinyContract) {
-    photographerLabel = "Fotograf";
-    modelLabel = "Model";
-    shootingSubject = "Betreff";
-    parentLabel = "Erziehungsberechtigter";
-    witnessLabel = "Zeuge";
-    shootingSubject = "Betreff";
-
-//    _tinySettingRepo.getForKey(TinySettingKey.PHOTOGRAPHER_LABEL).then((ts) => this.photographerLabel = ts.value);
-//    _tinySettingRepo.getForKey(TinySettingKey.MODEL_LABEL).then((ts) => this.modelLabel = ts.value);
-  }
+  ContractGenerator(this._tinyContract);
 
   /// flutter section
   Widget buildSignatures(context) =>

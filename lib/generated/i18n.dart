@@ -100,6 +100,7 @@ class S implements WidgetsLocalizations {
   String get item_wording => "Wording";
   String get loading_pdf => "Loading pdf";
   String get location_date_seperator => ", on ";
+  String get model => "Model";
   String get model_release => "Model Release";
   String get modules => "Modules";
   String get navbar_btn_preview => "Preview";
@@ -108,10 +109,12 @@ class S implements WidgetsLocalizations {
   String get no_items_reception => "Create new reception areas";
   String get no_thanks => "No thanks";
   String get ok => "OK";
+  String get parent => "Erziehungsberechtigter";
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
   String get payment_title => "Payment";
   String get payment_was_not_successfull => "Payment was not successfull";
   String get payment_was_successfull => "Payment was successfull";
+  String get photographer => "Fotograf";
   String get plans => "Plans";
   String get preset => "Preset";
   String get reception_area => "Reception area";
@@ -141,6 +144,7 @@ class S implements WidgetsLocalizations {
   String get title_wording => "Wording";
   String get try_again_or_write_me_an_email => "Try again or write me an email!";
   String get use_as_template => "Use as template";
+  String get witness => "Zeuge";
   String get witnessed_by => "Witnessed by";
 }
 
@@ -154,6 +158,8 @@ class de_model extends S {
   String get cancel => "Abbrechen";
   @override
   String get dateFormatPattern => "dd.MM.yyyy";
+  @override
+  String get parent => "Erziehungsberechtigter";
   @override
   String get btn_add_address => "Adresse hinzufügen";
   @override
@@ -182,6 +188,8 @@ class de_model extends S {
   String get title_add_reception => "Aufnahmebereich hinzufügen";
   @override
   String get hint_mail => "E-Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Kauf";
   @override
@@ -351,6 +359,8 @@ class de_model extends S {
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "gelöscht";
   @override
   String get ok => "OK";
@@ -382,6 +392,8 @@ class de_model extends S {
   String get dateTimeFormatPattern => "dd.MM.yyyy HH:mm";
   @override
   String get btn_add_mail => "E-Mail hinzufügen";
+  @override
+  String get witness => "Zeuge";
   @override
   String get hint_birthday => "Geburtstag";
   @override
@@ -401,6 +413,8 @@ class en_writer extends S {
   @override
   String get dateFormatPattern => "yyyy-MM-dd";
   @override
+  String get parent => "Erziehungsberechtigter";
+  @override
   String get btn_add_address => "Add Address";
   @override
   String get hint_company => "Company";
@@ -428,6 +442,8 @@ class en_writer extends S {
   String get title_add_reception => "Add reception area";
   @override
   String get hint_mail => "Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Payment";
   @override
@@ -601,6 +617,8 @@ class en_writer extends S {
   @override
   String get no_items_presets => "Create or import presets";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "Dismissed";
   @override
   String get ok => "OK";
@@ -633,6 +651,8 @@ class en_writer extends S {
   @override
   String get btn_add_mail => "Add Mail";
   @override
+  String get witness => "Zeuge";
+  @override
   String get hint_birthday => "Birthday";
   @override
   String get title_wording => "Wording";
@@ -650,6 +670,8 @@ class de extends S {
   String get cancel => "Abbrechen";
   @override
   String get dateFormatPattern => "dd.MM.yyyy";
+  @override
+  String get parent => "Erziehungsberechtigter";
   @override
   String get btn_add_address => "Adresse hinzufügen";
   @override
@@ -678,6 +700,8 @@ class de extends S {
   String get title_add_reception => "Aufnahmebereich hinzufügen";
   @override
   String get hint_mail => "E-Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Kauf";
   @override
@@ -847,6 +871,8 @@ class de extends S {
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "gelöscht";
   @override
   String get ok => "OK";
@@ -879,6 +905,8 @@ class de extends S {
   @override
   String get btn_add_mail => "E-Mail hinzufügen";
   @override
+  String get witness => "Zeuge";
+  @override
   String get hint_birthday => "Geburtstag";
   @override
   String get title_wording => "Wording";
@@ -896,6 +924,8 @@ class en_model extends S {
   String get cancel => "Cancel";
   @override
   String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get parent => "Erziehungsberechtigter";
   @override
   String get btn_add_address => "Add Address";
   @override
@@ -924,6 +954,8 @@ class en_model extends S {
   String get title_add_reception => "Add reception area";
   @override
   String get hint_mail => "Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Payment";
   @override
@@ -1097,6 +1129,8 @@ class en_model extends S {
   @override
   String get no_items_presets => "Create or import presets";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "Dismissed";
   @override
   String get ok => "OK";
@@ -1128,6 +1162,8 @@ class en_model extends S {
   String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
   @override
   String get btn_add_mail => "Add Mail";
+  @override
+  String get witness => "Zeuge";
   @override
   String get hint_birthday => "Birthday";
   @override
@@ -1151,6 +1187,8 @@ class nl_model extends S {
   @override
   String get dateFormatPattern => "yyyy-MM-dd";
   @override
+  String get parent => "Erziehungsberechtigter";
+  @override
   String get btn_add_address => "Voeg adres toe";
   @override
   String get hint_company => "Bedrijf";
@@ -1178,6 +1216,8 @@ class nl_model extends S {
   String get title_add_reception => "Ontvangstgebied toevoegen";
   @override
   String get hint_mail => "Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Payment";
   @override
@@ -1347,6 +1387,8 @@ class nl_model extends S {
   @override
   String get no_items_presets => "Voorinstellingen maken of importeren";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "ontslagen";
   @override
   String get ok => "OK";
@@ -1379,6 +1421,8 @@ class nl_model extends S {
   @override
   String get btn_add_mail => "Mail toevoegen";
   @override
+  String get witness => "Zeuge";
+  @override
   String get hint_birthday => "Verjaardag";
   @override
   String get title_wording => "bewoordingen";
@@ -1396,6 +1440,8 @@ class de_writer extends S {
   String get cancel => "Abbrechen";
   @override
   String get dateFormatPattern => "dd.MM.yyyy";
+  @override
+  String get parent => "Erziehungsberechtigter";
   @override
   String get btn_add_address => "Adresse hinzufügen";
   @override
@@ -1424,6 +1470,8 @@ class de_writer extends S {
   String get title_add_reception => "Aufnahmebereich hinzufügen";
   @override
   String get hint_mail => "E-Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Kauf";
   @override
@@ -1593,6 +1641,8 @@ class de_writer extends S {
   @override
   String get no_items_presets => "Erstellen oder importieren Sie eine neue Vorlage";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "gelöscht";
   @override
   String get ok => "OK";
@@ -1625,6 +1675,8 @@ class de_writer extends S {
   @override
   String get btn_add_mail => "E-Mail hinzufügen";
   @override
+  String get witness => "Zeuge";
+  @override
   String get hint_birthday => "Geburtstag";
   @override
   String get title_wording => "Wording";
@@ -1642,6 +1694,8 @@ class nl_writer extends S {
   String get cancel => "annuleren";
   @override
   String get dateFormatPattern => "yyyy-MM-dd";
+  @override
+  String get parent => "Erziehungsberechtigter";
   @override
   String get btn_add_address => "Voeg adres toe";
   @override
@@ -1670,6 +1724,8 @@ class nl_writer extends S {
   String get title_add_reception => "Ontvangstgebied toevoegen";
   @override
   String get hint_mail => "Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Payment";
   @override
@@ -1839,6 +1895,8 @@ class nl_writer extends S {
   @override
   String get no_items_presets => "Voorinstellingen maken of importeren";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "ontslagen";
   @override
   String get ok => "OK";
@@ -1870,6 +1928,8 @@ class nl_writer extends S {
   String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
   @override
   String get btn_add_mail => "Mail toevoegen";
+  @override
+  String get witness => "Zeuge";
   @override
   String get hint_birthday => "Verjaardag";
   @override
@@ -1889,6 +1949,8 @@ class nl extends S {
   @override
   String get dateFormatPattern => "yyyy-MM-dd";
   @override
+  String get parent => "Erziehungsberechtigter";
+  @override
   String get btn_add_address => "Voeg adres toe";
   @override
   String get hint_company => "Bedrijf";
@@ -1916,6 +1978,8 @@ class nl extends S {
   String get title_add_reception => "Ontvangstgebied toevoegen";
   @override
   String get hint_mail => "Mail";
+  @override
+  String get model => "Model";
   @override
   String get payment_title => "Payment";
   @override
@@ -2085,6 +2149,8 @@ class nl extends S {
   @override
   String get no_items_presets => "Voorinstellingen maken of importeren";
   @override
+  String get photographer => "Fotograf";
+  @override
   String get scaff_deleted => "ontslagen";
   @override
   String get ok => "OK";
@@ -2116,6 +2182,8 @@ class nl extends S {
   String get dateTimeFormatPattern => "yyyy-MM-dd uu: mm";
   @override
   String get btn_add_mail => "Mail toevoegen";
+  @override
+  String get witness => "Zeuge";
   @override
   String get hint_birthday => "Verjaardag";
   @override

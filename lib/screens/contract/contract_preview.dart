@@ -27,20 +27,10 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
   final TinyState _tinyState;
   TinyContract _tinyContract;
 
-  // todo get from database
-  String photographerLabel, modelLabel, parentLabel, witnessLabel, shootingSubject;
-
   static const TextStyle _personSmallStyle = TextStyle( color: CupertinoColors.activeBlue, fontSize: 16 );
   static const TextStyle _personLargeStyle = TextStyle( fontSize: 18, fontWeight: FontWeight.bold );
 
-  _ContractPreviewWidgetState(this._tinyState) {
-    photographerLabel = "Fotograf";
-    modelLabel = "Model";
-    shootingSubject = "Betreff";
-    parentLabel = "Erziehungsberechtigter";
-    witnessLabel = "Zeuge";
-    shootingSubject = "Betreff";
-  }
+  _ContractPreviewWidgetState(this._tinyState);
 
 
   Widget _addressBuilder(context, index, persons, cb) => Column(
@@ -94,7 +84,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
       Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
         _tinyContract.photographer != null ? Column(
           children: <Widget>[
-            Text(photographerLabel, style: _personLargeStyle),
+            Text(S.of(context).photographer, style: _personLargeStyle),
             _addressSelectionButton(context, _tinyContract.photographer, (sel) => setState(() => _tinyContract.selectedPhotographerAddress = sel), Column(children: <Widget>[
               Text(_tinyContract.photographer.displayName, style: _personSmallStyle),
               Text(_tinyContract.selectedPhotographerAddress.street, style: _personSmallStyle),
@@ -107,7 +97,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
 
         _tinyContract.model != null ? Column(
           children: <Widget>[
-            Text(modelLabel, style: _personLargeStyle),
+            Text(S.of(context).model, style: _personLargeStyle),
             _addressSelectionButton(context, _tinyContract.model, (sel) => setState(() => _tinyContract.selectedModelAddress = sel), Column(children: <Widget>[
               Text(_tinyContract.model.displayName, style: _personSmallStyle),
               Text(_tinyContract.selectedModelAddress.street, style: _personSmallStyle),
@@ -119,7 +109,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
 
 
         _tinyContract.parent != null ? Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text(parentLabel, style: _personLargeStyle),
+          Text(S.of(context).parent, style: _personLargeStyle),
           _addressSelectionButton(context, _tinyContract.parent, (sel) => setState(() => _tinyContract.selectedParentAddress = sel), Column(children: <Widget>[
             Text(_tinyContract.parent.displayName, style: _personSmallStyle),
             Text(_tinyContract.selectedParentAddress.street, style: _personSmallStyle),
@@ -128,7 +118,7 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
           ],), ), ]) : Container(),
 
         _tinyContract.witness != null ? Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text(witnessLabel, style: _personLargeStyle),
+          Text(S.of(context).witness, style: _personLargeStyle),
           _addressSelectionButton(context, _tinyContract.witness, (sel) => setState(() => _tinyContract.selectedWitnessAddress = sel), Column(children: <Widget>[
             Text(_tinyContract.witness.displayName, style: _personSmallStyle),
             Text(_tinyContract.selectedWitnessAddress.street, style: _personSmallStyle),
