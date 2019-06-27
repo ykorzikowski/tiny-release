@@ -1,1 +1,11 @@
+TinyRelease is an app to create and manage your model releases. Its ready to use for little agencies, models and photographers.
+You can create, sign and export the contracts on the go to make the process transparent for all.
 
+Free Features:
+- Import Contacts
+- Import Contract Presets
+
+Pro Features:
+- PDF Generation
+- Unlimited Contract creation
+-

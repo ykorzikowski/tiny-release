@@ -236,7 +236,7 @@ class de_model extends S {
   @override
   String get preset => "Vorschau";
   @override
-  String get subscription => "Subscription";
+  String get subscription => "Abonnement";
   @override
   String get location_date_seperator => ", den ";
   @override
@@ -246,7 +246,7 @@ class de_model extends S {
   @override
   String get no_thanks => "Nein Danke";
   @override
-  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.";
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige TinyRelease Vorlage.";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
@@ -374,7 +374,7 @@ class de_model extends S {
   @override
   String get use_as_template => "Als Vorlage";
   @override
-  String get title_contracts => "Vertrtäge";
+  String get title_contracts => "Verträge";
   @override
   String get hint_subtitle => "Untertitel";
   @override
@@ -762,7 +762,7 @@ class de extends S {
   @override
   String get no_thanks => "Nein Danke";
   @override
-  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.";
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige TinyRelease Vorlage.";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override
@@ -1538,7 +1538,7 @@ class de_writer extends S {
   @override
   String get no_thanks => "Nein Danke";
   @override
-  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.";
+  String get the_file_you_specified_is_not_a_valid_paperflavor => "Die ausgewählte Datei is keine gültige TinyRelease Vorlage.";
   @override
   String get choose_parent => "Gesetzl. Vertretung\n wählen";
   @override

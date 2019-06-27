@@ -13,7 +13,7 @@
   "hint_location": "Location",
   "shooting_subject": "Betreff",
   "choose_date": "Wähle Aufnahmedatum",
-  "title_contracts": "Vertrtäge",
+  "title_contracts": "Verträge",
   "title_add": "Hinzufügen",
   "create_new_contract": "Erstellen Sie einen neuen Vertrag",
   "scaff_deleted": "gelöscht",
@@ -117,10 +117,10 @@
   "no_thanks": "Nein Danke",
   "import_preset_from_file": "Aus Datei importieren",
   "error_while_importing": "Fehler beim Importieren",
-  "the_file_you_specified_is_not_a_valid_paperflavor": "Die ausgewählte Datei is keine gültige PaperFlavor Vorlage.",
+  "the_file_you_specified_is_not_a_valid_paperflavor": "Die ausgewählte Datei is keine gültige TinyRelease Vorlage.",
   "photographer": "Fotograf",
   "model": "Model",
   "parent": "Erziehungsberechtigter",
   "witness": "Zeuge",
-  "subscription": "Subscription"
+  "subscription": "Abonnement"
 }

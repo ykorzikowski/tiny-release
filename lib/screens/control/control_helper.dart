@@ -43,10 +43,6 @@ class ControlHelper {
       case 2:
         return NavRoutes.RECEPTION_LIST;
       case 3:
-        return NavRoutes.LAYOUT_LIST;
-      case 4:
-        return NavRoutes.SETTINGS;
-      case 5:
         return NavRoutes.PAYMENT;
     }
     return null;

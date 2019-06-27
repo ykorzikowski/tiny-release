@@ -130,7 +130,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   Widget _buildPermissionDeniedDialog() => CupertinoAlertDialog(
     title: Text("Permission Denied"),
-    content: Text("If you want to use this feature, you have to give PaperFlavor access to your contacts. "),
+    content: Text("If you want to use this feature, you have to give TinyRelease access to your contacts. "),
     actions: <Widget>[
       CupertinoDialogAction(
         child: Text(S.of(context).ok),
