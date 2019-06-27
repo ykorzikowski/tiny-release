@@ -10,8 +10,8 @@ class Parser {
   Map<String, dynamic> modelMap, photographerMap, parentMap, witnessMap, contractMap;
 
   Parser(this.tinyContract, ctx) {
-    modelMap = TinyPeople.toMap(tinyContract.model);
-    photographerMap = TinyPeople.toMap(tinyContract.photographer);
+    modelMap = tinyContract.model != null ? TinyPeople.toMap(tinyContract.model) : Map();
+    photographerMap = tinyContract.photographer != null ? TinyPeople.toMap(tinyContract.photographer) : Map();
     parentMap = tinyContract.parent != null ? TinyPeople.toMap(tinyContract.parent) : Map();
     witnessMap = tinyContract.witness != null ? TinyPeople.toMap(tinyContract.model) : Map();
     contractMap = TinyContract.toMap(tinyContract);
@@ -26,7 +26,10 @@ class Parser {
   }
 
   TinyPreset parsePreset() {
-    var _parsedPreset = TinyPreset.fromMap( TinyPreset.toMap(tinyContract.preset) );
+    var _parsedPreset = tinyContract.preset != null ? TinyPreset.fromMap( TinyPreset.toMap(tinyContract.preset) ) : null;
+    if (_parsedPreset == null) {
+      return null;
+    }
 
     for (var value in _parsedPreset.paragraphs) {
       value.title = _parseString(value.title);

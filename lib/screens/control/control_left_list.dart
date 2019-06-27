@@ -24,7 +24,6 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     CupertinoIcons.collections_solid,
     CupertinoIcons.photo_camera_solid,
     CupertinoIcons.create_solid,
-    CupertinoIcons.settings_solid,
     CupertinoIcons.shopping_cart
   ];
 
@@ -34,7 +33,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).item_settings, "Subscription"];
+    var items =  [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).item_layout, S.of(context).subscription];
 
     widget.controlState.inControlWidget = true;
     return

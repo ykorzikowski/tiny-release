@@ -27,6 +27,7 @@ import 'package:paperflavor/util/nav_routes.dart';
 class TinyState {
 
   Function tinyEditCallback;
+  Function contractPreviewCallback;
 
   /// callbacks for people widgets
   PeopleImportCallback peopleImportCallback;

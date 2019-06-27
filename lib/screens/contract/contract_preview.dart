@@ -128,10 +128,18 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
 
       ],);
 
+
+  void _setPresetState() {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
     _tinyContract.preset = Parser(_tinyContract, context).parsePreset();
+    _tinyState.contractPreviewCallback = _setPresetState;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(

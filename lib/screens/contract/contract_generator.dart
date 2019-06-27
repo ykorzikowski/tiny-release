@@ -14,9 +14,6 @@ class ContractGenerator {
   static const TextStyle _personSmallStyle = TextStyle( fontSize: 16 );
   static const TextStyle _personLargeStyle = TextStyle( fontSize: 18, fontWeight: FontWeight.bold );
 
-  // todo get from database
-  String photographerLabel, modelLabel, parentLabel, witnessLabel, shootingSubject;
-
   ContractGenerator(this._tinyContract);
 
   /// flutter section
@@ -89,7 +86,7 @@ class ContractGenerator {
         Expanded(
           flex: 3,
           child: Column( mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-            Text(photographerLabel, style: _personLargeStyle),
+            Text(S.of(context).photographer, style: _personLargeStyle),
             Text(_tinyContract.photographer.displayName, style: _personSmallStyle),
             Text(_tinyContract.selectedPhotographerAddress.street, style: _personSmallStyle),
             Text(_tinyContract.selectedPhotographerAddress.postcode + " " +
@@ -104,14 +101,14 @@ class ContractGenerator {
         Expanded(
           flex: 3,
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Text(modelLabel, style: _personLargeStyle),
+            Text(S.of(context).model, style: _personLargeStyle),
             Text(_tinyContract.model.displayName, style: _personSmallStyle),
             Text(_tinyContract.selectedModelAddress.street, style: _personSmallStyle),
             Text(_tinyContract.selectedModelAddress.postcode + " " +
                 _tinyContract.selectedModelAddress.city, style: _personSmallStyle),
             _tinyContract.parent != null ? Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               Divider(),
-              Text(parentLabel, style: _personLargeStyle),
+              Text(S.of(context).parent, style: _personLargeStyle),
               Text(_tinyContract.parent.displayName, style: _personSmallStyle),
               Text(_tinyContract.selectedParentAddress.street, style: _personSmallStyle),
               Text(_tinyContract.selectedParentAddress.postcode + " " +
@@ -119,7 +116,7 @@ class ContractGenerator {
             ],) : Container(),
             _tinyContract.witness != null ? Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               Divider(),
-              Text(witnessLabel, style: _personLargeStyle),
+              Text(S.of(context).witness, style: _personLargeStyle),
               Text(_tinyContract.witness.displayName, style: _personSmallStyle),
               Text(_tinyContract.selectedWitnessAddress.street, style: _personSmallStyle),
               Text(_tinyContract.selectedWitnessAddress.postcode + " " +

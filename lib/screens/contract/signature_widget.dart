@@ -130,8 +130,8 @@ class _SignatureWidgetState extends State<SignatureWidget> {
               child: SizedBox(height: 150, child: sig)),
           ListTile(
               trailing: _buildSignatureSubtext(),
-              leading: !_tinyContract.isLocked ? _buildSignatureDeleteButton(onDelete) : Container(),
-              title: Text(name, overflow: TextOverflow.ellipsis,),
+              title: !_tinyContract.isLocked ? _buildSignatureDeleteButton(onDelete) : Container(),
+              leading: Text(name, overflow: TextOverflow.ellipsis,),
           ),
         ],
       );

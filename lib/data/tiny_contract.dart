@@ -55,7 +55,7 @@ class TinyContract extends TinyDBO {
 
     var receptions = List();
     for (TinyReception ts in tinyContract.receptions ?? []) {
-      settings.add(TinyReception.toMap(ts));
+      receptions.add(TinyReception.toMap(ts));
     }
 
     return {

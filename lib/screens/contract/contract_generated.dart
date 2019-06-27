@@ -64,9 +64,11 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
         transitionBetweenRoutes: false,
         middle: _tinyContract.isLocked ? Text(S.of(context).finished_contract) : Text(S.of(context).finish_contract) ,
         trailing: !_tinyContract.isLocked ? _buildNavBarButton() : Text(""),),
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: _buildPageContent()),);
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: _buildPageContent()),
+      ),);
   }
 
   Widget _buildPageContent() => Column(
@@ -105,7 +107,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
                 /// signatures
                 SignatureWidget(_tinyState),
 
-                _tinyContract.isLocked ? _buildCompletedHint : Container(),
+                _tinyContract.isLocked ? _buildCompletedHint() : Container(),
               ],
             ),
           ),),

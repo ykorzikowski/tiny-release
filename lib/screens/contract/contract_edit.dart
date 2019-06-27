@@ -74,16 +74,22 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   @override
+  void setState(fn) {
+    super.setState(fn);
+    _tinyState.contractPreviewCallback != null ? _tinyState.contractPreviewCallback() : null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           heroTag: 'contract',
           transitionBetweenRoutes: false,
           middle: Text(S.of(context).add_contract),
-          trailing: CupertinoButton(
+          trailing: !BaseUtil.isLargeScreen(context) ? CupertinoButton(
             padding: EdgeInsets.all(13),
             child: Text(S.of(context).navbar_btn_preview),
-            onPressed: _validContract() ? _onPreviewPressed : null,),),
+            onPressed: _validContract() ? _onPreviewPressed : null,) : null,),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
           body: SafeArea(

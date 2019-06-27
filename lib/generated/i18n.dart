@@ -128,6 +128,7 @@ class S implements WidgetsLocalizations {
   String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting date";
   String get shooting_subject => "Subject";
+  String get subscription => "Subscription";
   String get subscriptions => "Subscriptions";
   String get thanks_for_supporting_me => "Thanks for supporting me!";
   String get the_file_you_specified_is_not_a_valid_paperflavor => "The file you specified is not a valid tiny release preset.";
@@ -234,6 +235,8 @@ class de_model extends S {
   String get hint_description => "Beschreibung";
   @override
   String get preset => "Vorschau";
+  @override
+  String get subscription => "Subscription";
   @override
   String get location_date_seperator => ", den ";
   @override
@@ -488,6 +491,8 @@ class en_writer extends S {
   String get hint_description => "Description";
   @override
   String get preset => "Preset";
+  @override
+  String get subscription => "Subscription";
   @override
   String get location_date_seperator => ", on ";
   @override
@@ -747,6 +752,8 @@ class de extends S {
   @override
   String get preset => "Vorschau";
   @override
+  String get subscription => "Subscription";
+  @override
   String get location_date_seperator => ", den ";
   @override
   String get hint_city => "Stad";
@@ -1000,6 +1007,8 @@ class en_model extends S {
   String get hint_description => "Description";
   @override
   String get preset => "Preset";
+  @override
+  String get subscription => "Subscription";
   @override
   String get location_date_seperator => ", on ";
   @override
@@ -1263,6 +1272,8 @@ class nl_model extends S {
   @override
   String get preset => "Vooraf ingesteld";
   @override
+  String get subscription => "Subscription";
+  @override
   String get location_date_seperator => ", op ";
   @override
   String get hint_city => "stad";
@@ -1516,6 +1527,8 @@ class de_writer extends S {
   String get hint_description => "Beschreibung";
   @override
   String get preset => "Vorschau";
+  @override
+  String get subscription => "Subscription";
   @override
   String get location_date_seperator => ", den ";
   @override
@@ -1771,6 +1784,8 @@ class nl_writer extends S {
   @override
   String get preset => "Vooraf ingesteld";
   @override
+  String get subscription => "Subscription";
+  @override
   String get location_date_seperator => ", op ";
   @override
   String get hint_city => "stad";
@@ -2024,6 +2039,8 @@ class nl extends S {
   String get hint_description => "Omschrijving";
   @override
   String get preset => "Vooraf ingesteld";
+  @override
+  String get subscription => "Subscription";
   @override
   String get location_date_seperator => ", op ";
   @override

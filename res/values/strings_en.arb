@@ -123,5 +123,6 @@
   "photographer": "Fotograf",
   "model": "Model",
   "parent": "Erziehungsberechtigter",
-  "witness": "Zeuge"
+  "witness": "Zeuge",
+  "subscription": "Subscription"
 }
