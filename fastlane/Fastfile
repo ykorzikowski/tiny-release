@@ -15,9 +15,9 @@
 
 # default_platform(:android)
 
-json_key = "../android_signing/google_service_apikey.json"
-app_name = "de.korzikowski.tinyrelease"
-username = "business.apple@korzikowski.de"
+json_key = CredentialsManager::AppfileConfig.try_fetch_value(:json_key)
+app_name = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+username = CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
 build_id = CredentialsManager::AppfileConfig.try_fetch_value(:build_id)
 
 platform :android do
