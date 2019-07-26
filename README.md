@@ -1,8 +1,15 @@
-# paperflavor
+# tinyrelease
 
 create model releases
 
 [![Build Status](https://drone.korzikowski.de/api/badges/ykorzikowski/paperflavor/status.svg)](https://drone.korzikowski.de/ykorzikowski/paperflavor)
+
+## After checkout
+```
+flutter upgrade
+flutter doctor
+fastlane update_fastlane 
+```
 
 ## Generate l10n
 Managed by https://github.com/long1eu/flutter_i18n

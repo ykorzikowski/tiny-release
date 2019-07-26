@@ -15,10 +15,10 @@
 
 # default_platform(:android)
 
-json_key = CredentialsManager::AppfileConfig.try_fetch_value(:json_key)
-app_name = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-username = CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
-build_id = CredentialsManager::AppfileConfig.try_fetch_value(:build_id)
+json_key = "../android_signing/google_service_apikey.json"
+app_name = "de.korzikowski.tinyrelease"
+username = "business.apple@korzikowski.de"
+build_id = ENV["BUILD_ID"]
 
 platform :android do
   desc "Deploy a new version to the Google Play Alpha"
@@ -80,7 +80,7 @@ platform :ios do
         Dir.chdir "ios" do
             upload_to_testflight(
               skip_waiting_for_build_processing: true,
-              username: "business.apple@korzikowski.de")
+              username: app_name)
         end
     end
   end
@@ -97,13 +97,31 @@ platform :ios do
     end
     build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
         Dir.chdir "ios" do
+            deliver
             upload_to_app_store(
                   submit_for_review: true,
                   automatic_release: true,
                   force: true,
                   skip_waiting_for_build_processing: true,
                   ipa: "Runner.ipa",
-                  username: "business.apple@korzikowski.de")
+                  username: app_name)
+    end
+  end
+end
+
+# upload metadata
+lane :meta do
+  Dir.chdir ".." do
+    #Dir.chdir "ios" do
+    #  deliver
+    #end
+    Dir.chdir "android" do
+      upload_to_play_store(
+          json_key: json_key,
+          package_name: app_name,
+          skip_upload_apk: true,
+          skip_upload_aab: true
+      )
     end
   end
 end
@@ -114,8 +132,10 @@ lane :screenshots do
     sh("screenshots")
     Dir.chdir "ios/fastlane/screenshots" do
         sh("cp -R locales/* ./")
-        sh("cp -R en-GB/*.png de-DE/")
-        sh("cp -R en-GB/*.png nl-NL/")
+        # TODO: Check if screenshots fix worked
+        sh("mv *-* output/")
+        # sh("cp -R en-GB/*.png de-DE/")
+        # sh("cp -R en-GB/*.png nl-NL/")
     end
     Dir.chdir "ios/fastlane" do
 	frame_screenshots

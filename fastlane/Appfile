@@ -1,4 +1,3 @@
  app_identifier("de.korzikowski.tinyrelease") # The bundle identifier of your app
  apple_id("business.apple@korzikowski.de") # Your Apple email address
  build_id ENV["BUILD_ID"] || "MANUAL"
- json_key("../android_signing/google_service_apikey.json")
