@@ -12,6 +12,8 @@
 Preview.html
 ios/fastlane/screenshots/output/
 fastlane/metadata/android/
+fastlane/metadata/output
+*Screenshots/
 
 # IntelliJ related
 *.iml

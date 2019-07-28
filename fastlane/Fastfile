@@ -108,15 +108,19 @@ end
 # upload metadata
 lane :meta do
   Dir.chdir ".." do
-    Dir.chdir "ios" do
-      deliver(
-        username: username,
-        screenshots_path: "fastlane/screenshots/output",
-        skip_binary_upload: true
-      )
-    end
+    #Dir.chdir "ios" do
+    #  deliver(
+    #    username: username,
+    #    screenshots_path: "fastlane/screenshots/output",
+    #    skip_binary_upload: true
+    #  )
+    #end
     Dir.chdir "android" do
+      sh("rm -rf fastlane/metadata/output")
+      sh("mkdir fastlane/metadata/output")
+      sh("cp -R fastlane/metadata/*-* fastlane/metadata/output")
       upload_to_play_store(
+          metadata_path: "./fastlane/metadata/output",
           json_key: json_key,
           package_name: app_name,
           skip_upload_apk: true,
@@ -126,7 +130,7 @@ lane :meta do
   end
 end
 
-# generate screenshots on machine
+# generate screenshots on machine and aggregates them into fastlane/metadata
 lane :screenshots do
   Dir.chdir ".." do
     sh("screenshots")
@@ -137,17 +141,8 @@ lane :screenshots do
         sh("cp -R locales/* output/")
         sh("cp Framefile.json background.jpg output/")
     end
-    Dir.chdir "ios/fastlane" do
-	    frame_screenshots(
-	      path: "./fastlane/screenshots/output"
-	    )
-    end
-  end
-end
-
-# generate screenshots on machine
-lane :frames do
-  Dir.chdir ".." do
+    sh("cp -R fastlane/metadata/android/* fastlane/metadata")
+    sh("rm -rf fastlane/metadata/android/")
     Dir.chdir "ios/fastlane" do
 	    frame_screenshots(
 	      path: "./fastlane/screenshots/output"
