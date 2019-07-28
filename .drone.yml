@@ -6,14 +6,14 @@ name: build
 steps:
 
   - name: widget-test
-    image: cirrusci/flutter
+    image: ykorzikowski/android-build-box
     depends_on: [ clone ]
     commands:
       - flutter test
 
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
-    image: cirrusci/flutter
+    image: ykorzikowski/android-build-box
     depends_on: [ clone, widget-test ]
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
@@ -30,6 +30,9 @@ trigger:
     - feature/*
 
 volumes:
+  - name: ~/.pub-cache
+    host:
+      path: /srv/docker/volumes/pubspec_tmp
   - name: android_signing
     host:
       path: /srv/drone/android_signing
@@ -48,7 +51,7 @@ steps:
     when:
       ref:
         - refs/tags/v*
-    image: mingc/android-build-box
+    image: ykorzikowski/android-build-box
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
     depends_on: [ clone ]
