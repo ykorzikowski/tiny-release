@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         FlavorS.delegate,
         FallbackCupertinoLocalisationsDelegate(),
         //DefaultCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],

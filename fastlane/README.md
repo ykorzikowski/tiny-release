@@ -25,6 +25,11 @@ fastlane meta
 fastlane screenshots
 ```
 
+### frames
+```
+fastlane frames
+```
+
 
 ----
 

@@ -8,15 +8,15 @@ staging: /tmp/screenshots
 # A list of locales supported by the app
 locales:
   - en-GB
-#  - de-DE disabled due flutter driver bug - remember to add copy directive to fastfile when adding more
-#  - nl-NL
+  - de-DE
+  - nl-NL
 
 # A list of devices to emulate
 devices:
   ios:
-    - iPhone X
-    #    - iPhone 7 Plus
-    - iPad Pro (12.9-inch) (2nd generation)
+    iPhone X:
+    iPad Pro (12.9-inch) (2nd generation):
+  #    - iPhone 7 Plus
   #   "iPhone 6",
   #   "iPhone 6 Plus",
   #   "iPhone 5",
@@ -24,7 +24,8 @@ devices:
   #   "iPad Retina",
   #   "iPad Pro"
   android:
-#    - Nexus 6P
+    Nexus 6P:
+#    Nexus 9:
 #    - Nexus 5X
 
 # Frame screenshots

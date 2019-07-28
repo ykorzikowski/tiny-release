@@ -10,6 +10,8 @@
 .history
 .svn/
 Preview.html
+ios/fastlane/screenshots/output/
+fastlane/metadata/android/
 
 # IntelliJ related
 *.iml

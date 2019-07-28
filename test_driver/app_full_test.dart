@@ -2,8 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:screenshots/config.dart';
-import 'package:screenshots/capture_screen.dart';
+import 'package:screenshots/screenshots.dart';
 
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -238,7 +237,7 @@ Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
   await isPresent(find.byValueKey('signature_photographer'), driver);
 
   // todo draw signature
-  await screenshot(driver, screenshotConfig, 'contract_signature_popup');
+  // await screenshot(driver, screenshotConfig, 'contract_signature_popup');
 
   var pageBack = find.pageBack();
   if (await isPresent(pageBack, driver)) {
@@ -263,10 +262,13 @@ void main() {
     FlutterDriver driver;
 
     // init screenshots map
-    final Map screenshotConfig = Config().config;
+    final Map screenshotConfig = Config().configInfo;
 
     // Connect to the Flutter driver before running any tests
     setUpAll(() async {
+      //final Map screenshotsEnv = await Config().screenshotsEnv;
+      //screenshotsEnv.forEach((k, v) => print(k + " - " + v));
+
       driver = await FlutterDriver.connect();
     });
 

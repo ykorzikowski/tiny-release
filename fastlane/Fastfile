@@ -18,13 +18,12 @@
 json_key = "../android_signing/google_service_apikey.json"
 app_name = "de.korzikowski.tinyrelease"
 username = "business.apple@korzikowski.de"
-build_id = ENV["BUILD_ID"]
+build_id = ENV["BUILD_ID"] || "MANUAL"
 
 platform :android do
   desc "Deploy a new version to the Google Play Alpha"
   lane :alpha do
     changelog_from_git_commits
-    build_id = ENV["BUILD_ID"]
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
@@ -42,7 +41,6 @@ platform :android do
   desc "Deploy a new version to the Google Play Production"
   lane :release do
     # Return the number of commits in current git branch
-    build_id = ENV["BUILD_ID"]
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
@@ -60,7 +58,6 @@ end
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    build_id = ENV["BUILD_ID"]
     changelog_from_git_commits
     cocoapods(
       podfile: "ios/Podfile"
@@ -88,7 +85,6 @@ platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
     # Return the number of commits in current git branch
-    build_id = ENV["BUILD_ID"]
     changelog_from_git_commits
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
@@ -104,7 +100,7 @@ platform :ios do
                   force: true,
                   skip_waiting_for_build_processing: true,
                   ipa: "Runner.ipa",
-                  username: app_name)
+                  username: username)
     end
   end
 end
@@ -112,9 +108,13 @@ end
 # upload metadata
 lane :meta do
   Dir.chdir ".." do
-    #Dir.chdir "ios" do
-    #  deliver
-    #end
+    Dir.chdir "ios" do
+      deliver(
+        username: username,
+        screenshots_path: "fastlane/screenshots/output",
+        skip_binary_upload: true
+      )
+    end
     Dir.chdir "android" do
       upload_to_play_store(
           json_key: json_key,
@@ -131,14 +131,27 @@ lane :screenshots do
   Dir.chdir ".." do
     sh("screenshots")
     Dir.chdir "ios/fastlane/screenshots" do
-        sh("cp -R locales/* ./")
-        # TODO: Check if screenshots fix worked
+        sh("rm -rf output/")
+        sh("mkdir output")
         sh("mv *-* output/")
-        # sh("cp -R en-GB/*.png de-DE/")
-        # sh("cp -R en-GB/*.png nl-NL/")
+        sh("cp -R locales/* output/")
+        sh("cp Framefile.json background.jpg output/")
     end
     Dir.chdir "ios/fastlane" do
-	frame_screenshots
+	    frame_screenshots(
+	      path: "./fastlane/screenshots/output"
+	    )
+    end
+  end
+end
+
+# generate screenshots on machine
+lane :frames do
+  Dir.chdir ".." do
+    Dir.chdir "ios/fastlane" do
+	    frame_screenshots(
+	      path: "./fastlane/screenshots/output"
+	    )
     end
   end
 end
