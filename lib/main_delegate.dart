@@ -8,6 +8,7 @@ import 'package:paperflavor/generated/flavor_i18n.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/screens/contract/contract_list.dart';
 import 'package:paperflavor/screens/control/control_master.dart';
+import 'package:paperflavor/util/paywall.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 
 void mainDelegate() => runApp(MyApp());

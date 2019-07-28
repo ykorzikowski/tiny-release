@@ -1,10 +1,11 @@
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/util/paywall.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
@@ -23,12 +24,12 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
   _SubscriptionListWidgetState();
 
   PagewiseLoadController moduleController, subscriptionController;
-  PayWall _payWall = PayWall();
+  final PayWall _payWall = PayWall.getSingleton();
 
   @override
   void initState() {
-    super.initState();
     _payWall.initSubscriptionService(); // async is not allowed on initState() directly
+    super.initState();
   }
 
   @override
@@ -39,16 +40,16 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var productsForSale = _payWall.getProductsForSale();
+
     moduleController = PagewiseLoadController(
         pageSize: 10,
-        pageFuture: (pageIndex) =>
-            _payWall.getItems()
+        pageFuture: (pageIndex) => productsForSale
     );
 
     subscriptionController = PagewiseLoadController(
         pageSize: 10,
-        pageFuture: (pageIndex) =>
-            _payWall.getSubscriptions()
+        pageFuture: (pageIndex) => productsForSale
     );
 
     return CupertinoPageScaffold(
@@ -67,16 +68,16 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
   }
 
   // build subscription items
-  Widget _itemBuilder(ctx, wrapper, _) {
+  Widget _itemBuilder(ctx, productDetailWrapper, _) {
     VoidCallback onSubscription = () =>
-      _payWall.pay(wrapper.iapItem.productId, () {
+      _payWall.pay(productDetailWrapper.productDetail, () {
         _showSubscriptionSuccessDialog(ctx);
       }, (error) {
         _showSubscriptionFailedDialog(ctx);
       });
-    Widget priceTag = _buildPrice(wrapper.iapItem);
+    Widget priceTag = _buildPrice(productDetailWrapper.productDetail);
 
-    if ( wrapper.purchased ) {
+    if ( productDetailWrapper.purchased ) {
       onSubscription = null;
       priceTag = Icon(CupertinoIcons.check_mark_circled_solid, color: CupertinoColors.activeBlue);
     }
@@ -84,12 +85,12 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
     return
       ExpandablePanel(
         header: ListTile(
-          key: Key(wrapper.iapItem.productId),
-          leading: _getIcon(wrapper.iapItem.productId),
-          title: Text(wrapper.iapItem.title),
+          key: Key(productDetailWrapper.productDetail.id),
+          leading: _getIcon(productDetailWrapper.productDetail.id),
+          title: Text(productDetailWrapper.productDetail.title),
           trailing: CupertinoButton(padding: EdgeInsets.all(13), child: priceTag, onPressed: onSubscription),
         ),
-        expanded: _buildDescription(wrapper.iapItem),
+        expanded: _buildDescription(productDetailWrapper.productDetail),
       );
   }
 
@@ -167,16 +168,22 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
 
   _headerStyle() => TextStyle( fontSize: 24);
 
-  Widget _buildPrice(IAPItem iap) {
-    TextStyle normalPriceStyle = TextStyle();
-    String normalPriceText = iap.price;
-    String specialPrice;
-    var widgets = List<Widget>();
-    normalPriceText = iap.localizedPrice;
+  String _getSpecialPrice(ProductDetails productDetail) {
+    return Platform.isAndroid ? productDetail.skuDetail.introductoryPrice : productDetail.skProduct.introductoryPrice.priceLocale;
+  }
 
-    if ( iap.introductoryPrice.isNotEmpty) {
+  String _getSubscriptionPeriod(ProductDetails productDetails) {
+    return Platform.isAndroid ? productDetails.skuDetail.subscriptionPeriod : productDetails.skProduct.subscriptionPeriod.numberOfUnits;
+  }
+
+  Widget _buildPrice(ProductDetails productDetail) {
+    TextStyle normalPriceStyle = TextStyle();
+    String normalPriceText = productDetail.price;
+    String specialPrice =  _getSpecialPrice(productDetail);
+    var widgets = List<Widget>();
+
+    if ( specialPrice.isNotEmpty) {
       normalPriceStyle = TextStyle(decoration: TextDecoration.lineThrough);
-      specialPrice = iap.introductoryPrice;
     }
 
     widgets.add(Text(normalPriceText, style: normalPriceStyle,),);
@@ -184,10 +191,11 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
       widgets.add(Text(specialPrice),);
     }
 
+    String subscriptionPeriod = _getSubscriptionPeriod(productDetail);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        iap.subscriptionPeriodAndroid.isNotEmpty ? _subDurationWidget(iap.subscriptionPeriodAndroid) : Container(),
+        subscriptionPeriod.isNotEmpty ? _subDurationWidget(subscriptionPeriod) : Container(),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: widgets,),
@@ -211,11 +219,11 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
       );
 
 
-  Widget _buildDescription(IAPItem iap) =>
+  Widget _buildDescription(ProductDetails productDetails) =>
       Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(iap.description, softWrap: true, style: TextStyle(color: CupertinoColors.inactiveGray)),
+          Text(productDetails.description, softWrap: true, style: TextStyle(color: CupertinoColors.inactiveGray)),
         ],);
 
   /// dialog confirmations

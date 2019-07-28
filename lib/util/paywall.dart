@@ -1,20 +1,53 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/util/nav_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 typedef ErrorCallback = void Function(String error);
 typedef SuccessCallback = void Function();
 
+abstract class PayWallInterface {
+
+  Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf);
+  Future<List<ProductDetails>> getProductsForSale();
+  void restore();
+
+  void pay(ProductDetails productDetails, SuccessCallback cbs, ErrorCallback cbf);
+  void initSubscriptionService();
+  void endSubscriptionService();
+}
 
 /// this class contains features to check payment status and do payments
-class PayWall {
+class PayWall implements PayWallInterface {
+  StreamSubscription<List<PurchaseDetails>> _subscription;
+
+  Map<String, ErrorCallback> _errorCallbacks = Map();
+  Map<String, SuccessCallback> _successCallbacks = Map();
+
   static const PAY_ABO = "tinyr_abo";
   static PayWall _singleton = PayWall();
 
-  static PayWall getShared() {
+  final Set<String>_productIds = Platform.isAndroid
+      ? {
+    PayFeature.PAY_ABO_MONTH,
+    PayFeature.PAY_ABO_YEAR,
+    PayFeature.PAY_PDF_EXPORT,
+    PayFeature.PAY_UNLIMITED_PEOPLE,
+    PayFeature.PAY_UNLIMITED_CONTRACTS,
+  }
+      : {
+    PayFeature.PAY_ABO_MONTH,
+    PayFeature.PAY_ABO_YEAR,
+    PayFeature.PAY_PDF_EXPORT,
+    PayFeature.PAY_UNLIMITED_PEOPLE,
+    PayFeature.PAY_UNLIMITED_CONTRACTS,
+  };
+
+  static PayWall getSingleton() {
     return _singleton;
   }
 
@@ -28,13 +61,13 @@ class PayWall {
     return null;
   }
 
-  static String getText(String pf, ctx) => pf.startsWith(PAY_ABO)
+  static String _getText(String pf, ctx) => pf.startsWith(PAY_ABO)
       ? S.of(ctx).dialog_pay_for_subscription
       : S.of(ctx).dialog_pay_for_subscription_or_feature;
 
   static Widget getSubscriptionDialog(pf, ctx) => CupertinoAlertDialog(
     title: Text(S.of(ctx).dialog_title_pro_feature),
-    content: Text(getText(pf, ctx)),
+    content: Text(_getText(pf, ctx)),
     actions: <Widget>[
       CupertinoDialogAction(child: Text(S.of(ctx).ok), onPressed: () {
         Navigator.of(ctx).pushNamed(NavRoutes.PAYMENT);
@@ -46,28 +79,46 @@ class PayWall {
     ],
   );
 
-  final List<String>_productLists = Platform.isAndroid
-      ? [
-        PayFeature.PAY_ABO_MONTH,
-        PayFeature.PAY_ABO_YEAR,
-        PayFeature.PAY_PDF_EXPORT,
-        PayFeature.PAY_UNLIMITED_PEOPLE,
-        PayFeature.PAY_UNLIMITED_CONTRACTS,
-        ]
-      : [
-        PayFeature.PAY_ABO_MONTH,
-        PayFeature.PAY_ABO_YEAR,
-        PayFeature.PAY_PDF_EXPORT,
-        PayFeature.PAY_UNLIMITED_PEOPLE,
-        PayFeature.PAY_UNLIMITED_CONTRACTS,
-  ];
-
   initSubscriptionService() async {
-    await FlutterInappPurchase.initConnection;
+    final Stream purchaseUpdates =
+        InAppPurchaseConnection.instance.purchaseUpdatedStream;
+    _subscription = purchaseUpdates.listen((purchases) {
+      _handlePurchaseUpdates(purchases);
+    });
   }
 
   endSubscriptionService() async {
-    await FlutterInappPurchase.endConnection;
+    _subscription.cancel();
+  }
+
+  _handlePurchaseUpdates(List<PurchaseDetails> purchases) {
+
+    for(PurchaseDetails purchase in purchases) {
+      if (Platform.isIOS) {
+        // Mark that you've delivered the purchase. Only the App Store requires
+        // this final confirmation.
+        InAppPurchaseConnection.instance.completePurchase(purchase);
+      }
+
+      if ( purchase.status == PurchaseStatus.purchased ) {
+        _successCallbacks[purchase.productID]();
+        _savePurchaseInPrefs(purchase.productID, true);
+        _successCallbacks.remove(purchase.productID);
+      }
+
+      if( purchase.status == PurchaseStatus.error ) {
+        _errorCallbacks[purchase.productID](purchase.error.message);
+        _errorCallbacks.remove(purchase.productID);
+      }
+
+    }
+
+  }
+
+  _savePurchaseInPrefs(key, value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool(key, value);
   }
 
   /// check if user has payed for item or abo
@@ -75,88 +126,88 @@ class PayWall {
   /// cbs - callback success
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
-    if ( Platform.isIOS ) {
-      cbs();
-      return true;
-    }
-    bool hasAlreadyPaid = await FlutterInappPurchase.checkSubscribed(sku: pf) ?? false;
-    bool hasAbo = await FlutterInappPurchase.checkSubscribed(sku: PayFeature.PAY_ABO_MONTH) ?? false || await FlutterInappPurchase.checkSubscribed(sku: PayFeature.PAY_ABO_YEAR) ?? false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    hasAlreadyPaid || hasAbo ? cbs() : cbf('you shall not pass');
+    // TODO: check that prefs is updated
 
-    return hasAlreadyPaid || hasAbo;
+    prefs.getBool("paywall_" + pf) || prefs.getBool("paywall_subscription") ? cbs() : cbf('you shall not pass');
+
+    return prefs.getBool("paywall_" + pf) || prefs.getBool("paywall_subscription");
   }
 
   /// pay for feature
   /// cbs - callback success
   /// cbf - callback failure
-  void pay(String pf, SuccessCallback cbs, ErrorCallback cbf) async{
-    await initSubscriptionService();
+  void pay(ProductDetails productDetails, SuccessCallback cbs, ErrorCallback cbf) async{
+    final PurchaseParam purchaseParam = PurchaseParam(productDetails: productDetails);
 
-    print('Prepare for purchasing $pf');
+    _errorCallbacks.putIfAbsent(productDetails.id, () => cbf);
+    _successCallbacks.putIfAbsent(productDetails.id, () => cbs);
 
-    try {
-      PurchasedItem purchased;
-      if ( pf.startsWith(PAY_ABO) ) {
-        purchased = await FlutterInappPurchase.buySubscription(pf);
-      } else {
-        purchased = await FlutterInappPurchase.buyProduct(pf);
-      }
-
-      print(purchased.toString());
-    } catch(error) {
-      cbf(error.toString());
-    } finally {
-      await endSubscriptionService();
-    }
+    InAppPurchaseConnection.instance.buyNonConsumable(purchaseParam: purchaseParam);
   }
 
-  IAPItem getItemForFeature(pf, List<IAPItem> items) {
-    for (var value in items) {
-      if ( value.productId == pf) {
-        return value;
-      }
-    }
-    return null;
+  Future<List<ProductDetailWrapper>> getWrappedProductsForSale() async {
+    List<ProductDetails> productsForSale = await getProductsForSale();
+    Map<String, ProductDetailWrapper> productsForSaleWrapped = Map();
+    QueryPurchaseDetailsResponse queryPastPurchases = await _queryPastPurchases();
+
+    productsForSale.forEach((pd) => productsForSaleWrapped.putIfAbsent(pd.id, () => ProductDetailWrapper(pd, false)));
+
+    queryPastPurchases.pastPurchases.forEach((purchase) => productsForSaleWrapped[purchase.productID].purchased = true);
+
+    return productsForSaleWrapped.values;
   }
 
-  Future<List<IAPItemWrapper>> getItems () async {
-    List<IAPItem> subscriptions = await FlutterInappPurchase.getProducts(_productLists);
-
-
-    var returnList = List<IAPItemWrapper>();
-    for ( var iap in subscriptions ) {
-      var bool = await checkIfPaid(iap.productId, (){}, (error){});
-      returnList.add(IAPItemWrapper(iap, bool));
+    Future<List<ProductDetails>> getProductsForSale() async {
+    final ProductDetailsResponse response = await InAppPurchaseConnection.instance.queryProductDetails(_productIds);
+    if (response.notFoundIDs.isNotEmpty) {
+      print("Following productIds not found in store: ");
+      print(response.notFoundIDs);
     }
+    List<ProductDetails> products = response.productDetails;
 
-    return returnList;
+    return products;
   }
 
-  Future<List<IAPItemWrapper>> getSubscriptions () async {
-    List<IAPItem> subscriptions = await FlutterInappPurchase.getSubscriptions(_productLists);
-
-    var returnList = List<IAPItemWrapper>();
-    for ( var iap in subscriptions ) {
-      var bool = await checkIfPaid(iap.productId, (){}, (error){});
-      returnList.add(IAPItemWrapper(iap, bool));
+  Future<QueryPurchaseDetailsResponse> _queryPastPurchases() async {
+    final QueryPurchaseDetailsResponse response = await InAppPurchaseConnection.instance.queryPastPurchases();
+    if (response.error != null) {
+      // Handle the error.
     }
 
-    return returnList;
+    return response;
   }
 
   /// restore payments
-  void restore() {
-    // todo restore
+  Future restore() async {
+    final QueryPurchaseDetailsResponse response = await _queryPastPurchases();
+    for (PurchaseDetails purchase in response.pastPurchases) {
+      _verifyPurchase(purchase);  // Verify the purchase following the best practices for each storefront.
+      _deliverPurchase(purchase); // Deliver the purchase to the user in your app.
+      if (Platform.isIOS) {
+        // Mark that you've delivered the purchase. Only the App Store requires
+        // this final confirmation.
+        InAppPurchaseConnection.instance.completePurchase(purchase);
+      }
+    }
+  }
+
+  void _verifyPurchase(purchase) {
+
+  }
+
+  void _deliverPurchase(purchase) {
+
   }
 
 }
 
-class IAPItemWrapper {
-  IAPItem iapItem;
+class ProductDetailWrapper {
+  ProductDetails productDetail;
   bool purchased;
 
-  IAPItemWrapper(this.iapItem, this.purchased);
+  ProductDetailWrapper(this.productDetail, this.purchased);
 }
 
 class PayFeature {
