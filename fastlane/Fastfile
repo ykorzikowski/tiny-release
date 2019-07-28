@@ -108,13 +108,13 @@ end
 # upload metadata
 lane :meta do
   Dir.chdir ".." do
-    #Dir.chdir "ios" do
-    #  deliver(
-    #    username: username,
-    #    screenshots_path: "fastlane/screenshots/output",
-    #    skip_binary_upload: true
-    #  )
-    #end
+    Dir.chdir "ios" do
+      deliver(
+        username: username,
+        screenshots_path: "fastlane/screenshots/output",
+        skip_binary_upload: true
+      )
+    end
     Dir.chdir "android" do
       sh("rm -rf fastlane/metadata/output")
       sh("mkdir fastlane/metadata/output")
