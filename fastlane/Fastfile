@@ -77,7 +77,7 @@ platform :ios do
         Dir.chdir "ios" do
             upload_to_testflight(
               skip_waiting_for_build_processing: true,
-              username: app_name)
+              username: username)
         end
     end
   end
