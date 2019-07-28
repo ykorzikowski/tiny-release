@@ -15,9 +15,6 @@ fastlane update_fastlane
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
 
-## mac buildserver vnc
-`ssh -L 5900:localhost:5900 dev.engineerservices.de`
-
 ## git tagging
 ### testflight
 There is a branch called `testflight`. This branch contains an old master which is safe for a testflight release. 
@@ -33,27 +30,19 @@ Release versions will get a tag.
 git tag -a v1.0
 ```
 
-## releasing
+## prepare release
 
-
+### prepare meta
 ```
-# generate screenshots
+# generate screenshots & upload meta
 fastlane screenshots
+fastlane meta
 
 fastlane android release
 fastlane ios release
 ```
 
 ## manual
-### deliver ios meta + screenshots
-```
-# ios
-cd ios
-
-# commit screenshots and metadata
-fastlane deliver
-
-```
 
 ## testing
 ### screenshots
