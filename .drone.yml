@@ -6,14 +6,14 @@ name: build
 steps:
 
   - name: widget-test
-    image: mingc/android-build-box
+    image: mingc/android-build-box:latest
     depends_on: [ clone ]
     commands:
       - flutter test
 
   # build when pushed on master or feature branch but not when version tagged
   - name: android-build
-    image: mingc/android-build-box
+    image: mingc/android-build-box:latest
     depends_on: [ clone, widget-test ]
     environment:
       BUILD_ID: ${DRONE_BUILD_NUMBER}
