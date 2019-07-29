@@ -13,8 +13,8 @@
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
-        <string>de</string>
-        <string>nl</string>
+		<string>de</string>
+		<string>nl</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>TinyRelease</string>
@@ -28,8 +28,16 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Required for taking image.</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>Not used.</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Not used.</string>
+    <key>NSMotionUsageDescription</key>
+    <string>Not used.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Not used.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Used to make a photo for your new contact</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Required for importing contacts.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

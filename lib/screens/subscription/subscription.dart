@@ -23,7 +23,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
 
   _SubscriptionListWidgetState();
 
-  PagewiseLoadController moduleController, subscriptionController;
+  PagewiseLoadController moduleController;
   final PayWall _payWall = PayWall.getSingleton();
 
   @override
@@ -40,14 +40,9 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var productsForSale = _payWall.getProductsForSale();
+    var productsForSale = _payWall.getWrappedProductsForSale();
 
     moduleController = PagewiseLoadController(
-        pageSize: 10,
-        pageFuture: (pageIndex) => productsForSale
-    );
-
-    subscriptionController = PagewiseLoadController(
         pageSize: 10,
         pageFuture: (pageIndex) => productsForSale
     );
@@ -83,15 +78,18 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
     }
 
     return
-      ExpandablePanel(
-        header: ListTile(
+      ListTile(
           key: Key(productDetailWrapper.productDetail.id),
+          isThreeLine: true,
           leading: _getIcon(productDetailWrapper.productDetail.id),
           title: Text(productDetailWrapper.productDetail.title),
-          trailing: CupertinoButton(padding: EdgeInsets.all(13), child: priceTag, onPressed: onSubscription),
-        ),
-        expanded: _buildDescription(productDetailWrapper.productDetail),
-      );
+          subtitle: Column(
+            children: <Widget>[
+              _buildDescription(productDetailWrapper.productDetail),
+              Align(alignment: Alignment.centerRight, child: CupertinoButton(padding: EdgeInsets.all(13), child: priceTag, onPressed: onSubscription))
+            ],
+          )
+        );
   }
 
   /// sections
@@ -101,17 +99,13 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
         children: <Widget>[
           Divider(),
           Text(S.of(context).plans, style: _headerStyle(),),
-          _buildSubscriptionList(),
+          _buildModuleList(),
         ],
       );
 
   Widget _getAndroidSubscriptionContent() =>
       Column(
         children: <Widget>[
-          Divider(),
-          Text(S.of(context).subscriptions, style: _headerStyle(),),
-          _buildSubscriptionList(),
-
           Divider(),
           Text(S.of(context).modules, style: _headerStyle(),),
           _buildModuleList(),
@@ -134,22 +128,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
       );
 
   /// build lists
-
-  /// used on android, android differs on subs and normal ip purchases
-  Widget _buildSubscriptionList() =>
-      PagewiseListView(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        showRetry: false,
-        padding: EdgeInsets.only(top: 10.0),
-        itemBuilder: this._itemBuilder,
-        pageLoadController: this.subscriptionController,
-        noItemsFoundBuilder: (context) {
-          return Text(S.of(context).error_subscriptions,
-              style: TextStyle(color: CupertinoColors.inactiveGray));
-        },
-      );
-
+  ///
   Widget _buildModuleList() =>
       PagewiseListView(
         physics: const NeverScrollableScrollPhysics(),
@@ -187,7 +166,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
     }
 
     widgets.add(Text(normalPriceText, style: normalPriceStyle,),);
-    if ( specialPrice != null ) {
+    if ( specialPrice != null && specialPrice.isNotEmpty ) {
       widgets.add(Text(specialPrice),);
     }
 
@@ -219,12 +198,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
       );
 
 
-  Widget _buildDescription(ProductDetails productDetails) =>
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(productDetails.description, softWrap: true, style: TextStyle(color: CupertinoColors.inactiveGray)),
-        ],);
+  Widget _buildDescription(ProductDetails productDetails) => Text(productDetails.description, softWrap: true, style: TextStyle(color: CupertinoColors.inactiveGray));
 
   /// dialog confirmations
 

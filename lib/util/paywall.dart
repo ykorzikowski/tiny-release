@@ -156,7 +156,7 @@ class PayWall implements PayWallInterface {
 
     queryPastPurchases.pastPurchases.forEach((purchase) => productsForSaleWrapped[purchase.productID].purchased = true);
 
-    return productsForSaleWrapped.values;
+    return productsForSaleWrapped.values.toList();
   }
 
     Future<List<ProductDetails>> getProductsForSale() async {

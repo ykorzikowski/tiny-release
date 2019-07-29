@@ -38,7 +38,7 @@ dependencies:
   expandable: 2.0.0
   http:
   file_picker: 1.2.0
-  permission_handler: ^3.0.0
+  permission_handler: ^3.2.1+1
   mockito: ^4.0.0
   path_provider: 1.1.0
 
