@@ -6,9 +6,9 @@ import 'package:sentry/sentry.dart';
 import 'constants.dart';
 import 'main_delegate.dart';
 
-final SentryClient _sentry = SentryClient(dsn: "https://4b5466bcabc64aa9911bc3fd959149c1:fe6ff0c7dec34ac6846d862bffb054fa@crash.korzikowski.de//3");
+final SentryClient _sentry = SentryClient(dsn: "https://4b5466bcabc64aa9911bc3fd959149c1@crash.korzikowski.de/3");
 
-void main() {
+Future<Null> main() {
   Constants.setEnvironment(Environment.WHITELABEL);
 
   // This captures errors reported by the Flutter framework.

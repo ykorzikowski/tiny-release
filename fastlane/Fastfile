@@ -27,7 +27,7 @@ platform :android do
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
-      sh("flutter", "build", "apk", "--build-number=#{build_id}")
+      sh("flutter", "build", "apk", "--build-number=#{build_id}", "--release")
     end
     upload_to_play_store(
       track: 'alpha',
@@ -45,7 +45,7 @@ platform :android do
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
-      sh("flutter", "build", "apk", "--build-number=#{build_id}")
+      sh("flutter", "build", "apk", "--build-number=#{build_id}", "--release")
     end
     upload_to_play_store(
       track: 'production',
@@ -65,7 +65,7 @@ platform :ios do
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
-      sh("flutter", "build", "ios", "--build-number=#{build_id}")
+      sh("flutter", "build", "ios", "--build-number=#{build_id}", "--release")
     end
     build_ios_app(
         workspace: "ios/Runner.xcworkspace",
