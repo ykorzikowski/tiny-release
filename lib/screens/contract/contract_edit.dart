@@ -299,8 +299,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     setState(() {
       _tinyContract.photographer = item;
       _tinyContract.selectedPhotographerAddress = item.postalAddresses[0];
+      Navigator.pop(context);
     });
-    Navigator.pop(context);
   }
 
   _onPhotographerTrash() {
