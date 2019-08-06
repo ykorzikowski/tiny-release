@@ -129,8 +129,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
       CupertinoButton(
         child:
           Text(S.of(context).btn_add_paragrpah, key: Key('btn_add_paragraph'),),
-        onPressed: () =>
-            setState(() => _addParagraph(_tinyPreset.paragraphs.length+1)),
+        onPressed: () => _addParagraph(_tinyPreset.paragraphs.length+1),
       );
 
   _buildSortParagraphsButton() => CupertinoButton(
