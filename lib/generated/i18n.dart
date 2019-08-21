@@ -240,7 +240,7 @@ class de_model extends S {
   @override
   String get location_date_seperator => ", den ";
   @override
-  String get hint_city => "Stad";
+  String get hint_city => "Stadt";
   @override
   String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
@@ -756,7 +756,7 @@ class de extends S {
   @override
   String get location_date_seperator => ", den ";
   @override
-  String get hint_city => "Stad";
+  String get hint_city => "Stadt";
   @override
   String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
@@ -1532,7 +1532,7 @@ class de_writer extends S {
   @override
   String get location_date_seperator => ", den ";
   @override
-  String get hint_city => "Stad";
+  String get hint_city => "Stadt";
   @override
   String get hint_completed_contracts => "Bereits abgeschlossene Verträge können nicht mehr bearbeitet werden";
   @override
