@@ -297,9 +297,9 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   _onPhotographerTap(people, item, context) {
     setState(() {
+      Navigator.pop(context);
       _tinyContract.photographer = item;
       _tinyContract.selectedPhotographerAddress = item.postalAddresses[0];
-      Navigator.pop(context);
     });
   }
 
@@ -310,12 +310,12 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   _onModelTap(people, item, context) {
+    Navigator.pop(context);
     setState(() {
       _tinyContract.model = item;
       _tinyContract.selectedModelAddress =
       item.postalAddresses[0];
     });
-    Navigator.pop(context);
   }
 
   _onModelTrash() {
@@ -325,11 +325,11 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   _onParentTap(people, item, context) {
+    Navigator.pop(context);
     setState(() {
       _tinyContract.parent = item;
       _tinyContract.selectedParentAddress = item.postalAddresses[0];
     });
-    Navigator.pop(context);
   }
 
   _onParentTrash() {
@@ -337,11 +337,11 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   _onWitnessTap(people, item, context) {
+    Navigator.pop(context);
     setState(() {
       _tinyContract.witness = item;
       _tinyContract.selectedWitnessAddress = item.postalAddresses[0];
     });
-    Navigator.pop(context);
   }
 
   _onWitnessTrash() {
@@ -434,10 +434,10 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
       PresetListWidget(
         tinyState: _tinyState,
         onPresetTap: (item, context) {
+          Navigator.of(context).pop();
           setState(() {
             _tinyContract.preset = item;
           });
-          Navigator.of(context).pop();
         },);
 
   _buildPresetSelection() =>
@@ -517,8 +517,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
               .of(context)
               .select_date_ok, key: Key('btn_ok'),),
           onPressed: () {
-            setState(() => _tinyContract.date = selectedDate.toIso8601String());
             Navigator.of(context).pop();
+            setState(() => _tinyContract.date = selectedDate.toIso8601String());
           },
         ),
         middle: Text(S.of(context).choose_date),
