@@ -127,13 +127,18 @@ class PayWall implements PayWallInterface {
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool hasBoughtFeature = _nullMeansFalse(prefs.getBool("paywall_" + pf));
+    bool hasSubscription =  _nullMeansFalse(prefs.getBool("paywall_subscription"));
+    bool hasPaid = hasBoughtFeature || hasSubscription;
 
     // TODO: check that prefs is updated
 
-    prefs.getBool("paywall_" + pf) || prefs.getBool("paywall_subscription") ? cbs() : cbf('you shall not pass');
+    hasPaid ? cbs() : cbf('you shall not pass');
 
-    return prefs.getBool("paywall_" + pf) || prefs.getBool("paywall_subscription");
+    return hasPaid;
   }
+
+  bool _nullMeansFalse(bool) => bool == null ? false : bool;
 
   /// pay for feature
   /// cbs - callback success
@@ -159,7 +164,7 @@ class PayWall implements PayWallInterface {
     return productsForSaleWrapped.values.toList();
   }
 
-    Future<List<ProductDetails>> getProductsForSale() async {
+  Future<List<ProductDetails>> getProductsForSale() async {
     final ProductDetailsResponse response = await InAppPurchaseConnection.instance.queryProductDetails(_productIds);
     if (response.notFoundIDs.isNotEmpty) {
       print("Following productIds not found in store: ");
