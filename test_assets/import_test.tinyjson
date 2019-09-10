@@ -6,7 +6,7 @@
 	"paragraphs": [{
 			"title": "Aufnahmen",
 			"position": 0,
-			"content": "Zwischen #model.firstname# #model.lastname#, nachfolgend Model genannt, und #photographer.firstname# #photographer.lastname#, nachfolgend Fotograf genannt, wird folgender Vertrag geschlossen:\n Es wird vereinbart, dass das Model für Aufnahmen dem Fotografen zur Verfügung steht und folgende Aufnahmen hergestellt werden: #contract.shootingareas# am Shootingort #contract.city#. Die Aufnahmen werden am #contract.date# angefertigt. "
+			"content": "Zwischen #model.givenName# #model.familyName#, nachfolgend Model genannt, und #photographer.givenName# #photographer.familyName#, nachfolgend Fotograf genannt, wird folgender Vertrag geschlossen:\n Es wird vereinbart, dass das Model für Aufnahmen dem Fotografen zur Verfügung steht und folgende Aufnahmen hergestellt werden: #contract.shootingareas# am Shootingort #contract.location#. Die Aufnahmen werden am #contract.date# angefertigt. "
 		},
 		{
 			"title": "Veröffentlichungsrecht",
