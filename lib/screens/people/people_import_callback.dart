@@ -2,6 +2,7 @@ import 'dart:io' as Io;
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
 import 'package:paperflavor/data/tiny_people.dart';
 import 'package:paperflavor/screens/people/people_list.dart';
 import 'package:paperflavor/util/base_util.dart';
@@ -82,14 +83,29 @@ class PeopleImportCallback {
     return wait;
   }
 
-  void onPeopleTap(item, context) {
-    // keep type id of dbo created before import
-    TinyPeople beforeImportDBO = _controlState.curDBO;
-    item.type = beforeImportDBO.type;
-    if( item.avatar != null ) BaseUtil.storeFile('people', 'png', Io.File(item.avatar)).then((file) => item.avatar = file.path);
+  void copyAvatarFromTempToDocuments(item, context) {
+    if (item.avatar == null) {
+      return null;
+    }
+
+    BaseUtil.storeFile('people', 'png', Io.File(item.avatar))
+        .then((file) {
+          item.avatar = file.path;
+          onAvatarSaved(item, context);
+        });
+  }
+
+  void onAvatarSaved(item, context) {
     _controlState.curDBO = item;
     _controlState.tinyEditCallback();
 
     Navigator.pop(context);
+  }
+
+  void onPeopleTap(item, context) {
+    // keep type id of dbo created before import
+    TinyPeople beforeImportDBO = _controlState.curDBO;
+    item.type = beforeImportDBO.type;
+    copyAvatarFromTempToDocuments(item, context);
   }
 }
