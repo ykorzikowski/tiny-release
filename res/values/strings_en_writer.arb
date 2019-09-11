@@ -124,5 +124,8 @@
   "model": "Model",
   "parent": "Erziehungsberechtigter",
   "witness": "Zeuge",
-  "subscription": "Subscription"
+  "subscription": "Subscription",
+  "restore_purchases": "Restore Purchases",
+  "purchases_has_been_restored": "Purchases has been restored!",
+  "restore_successfull": "Restore successfull!"
 }

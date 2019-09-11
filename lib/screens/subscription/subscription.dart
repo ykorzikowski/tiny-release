@@ -112,6 +112,28 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
         ],
       );
 
+  Widget _buildPurchasesRestoredPopup(context) =>
+      CupertinoAlertDialog(
+        title: Text(S.of(context).purchases_has_been_restored),
+        content: Text(S.of(context).restore_successfull),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text(S
+                .of(context)
+                .ok),
+            onPressed: () =>
+                Navigator.of(context).pop(
+                ),
+          )
+        ],
+      );
+
+  void _onBtnRestorePurchasesPressed() {
+    _payWall.restore().then((val) =>
+        showCupertinoModalPopup(
+            context: context, builder: _buildPurchasesRestoredPopup));
+  }
+
   Widget _getSubscriptionContent() =>
       SingleChildScrollView(
         child: Column(
@@ -120,7 +142,10 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
               padding: const EdgeInsets.all(8.0),
               child: Text(S.of(context).payment_introduction_text, softWrap: true,),
             ),
-
+            CupertinoButton(
+              child: Text(S.of(context).restore_purchases,),
+              onPressed: _onBtnRestorePurchasesPressed,
+            ),
             Platform.isAndroid
                 ? _getAndroidSubscriptionContent()
                 : _getIosSubscriptionContent(),

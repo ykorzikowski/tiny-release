@@ -202,8 +202,15 @@ class PayWall implements PayWallInterface {
 
   }
 
-  void _deliverPurchase(purchase) {
-
+  Future _deliverPurchase(PurchaseDetails purchase) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var productId;
+    if (purchase.productID == PAY_ABO) {
+      productId = "subscription";
+    } else {
+      productId = purchase.productID;
+    }
+    prefs.setBool("paywall_$productId", true);
   }
 
 }

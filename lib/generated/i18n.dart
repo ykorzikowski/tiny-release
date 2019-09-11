@@ -117,8 +117,11 @@ class S implements WidgetsLocalizations {
   String get photographer => "Fotograf";
   String get plans => "Plans";
   String get preset => "Preset";
+  String get purchases_has_been_restored => "Purchases has been restored!";
   String get reception_area => "Reception area";
   String get represented_by => "Represented by";
+  String get restore_purchases => "Restore Purchases";
+  String get restore_successfull => "Restore successfull!";
   String get scaff_deleted => "Dismissed";
   String get select_address => "Select address";
   String get select_birthday => "Select Birthday";
@@ -205,6 +208,8 @@ class de_model extends S {
   String get btn_import_contacts => "Aus Kontakten importieren";
   @override
   String get selected_preset => "Ausgewählte Vorlage";
+  @override
+  String get restore_successfull => "Restore successfull!";
   @override
   String get select_birthday => "Geburtstag wählen";
   @override
@@ -302,6 +307,8 @@ class de_model extends S {
   @override
   String get contract_images => "Anzahl Bilder";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Aufnahmebereiche";
   @override
   String get subscriptions => "Abonnements";
@@ -339,6 +346,8 @@ class de_model extends S {
   String get select_address => "Addresse wählen";
   @override
   String get birthday => "Geburtstag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
   @override
@@ -462,6 +471,8 @@ class en_writer extends S {
   @override
   String get selected_preset => "Selected preset";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Select Birthday";
   @override
   String get btn_save => "Save";
@@ -560,6 +571,8 @@ class en_writer extends S {
   @override
   String get contract_images => "Images count";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Reception Areas";
   @override
   String get subscriptions => "Subscriptions";
@@ -597,6 +610,8 @@ class en_writer extends S {
   String get select_address => "Select address";
   @override
   String get birthday => "Birthday";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Phone";
   @override
@@ -722,6 +737,8 @@ class de extends S {
   @override
   String get selected_preset => "Ausgewählte Vorlage";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Geburtstag wählen";
   @override
   String get btn_save => "Speichern";
@@ -818,6 +835,8 @@ class de extends S {
   @override
   String get contract_images => "Anzahl Bilder";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Aufnahmebereiche";
   @override
   String get subscriptions => "Abonnements";
@@ -855,6 +874,8 @@ class de extends S {
   String get select_address => "Addresse wählen";
   @override
   String get birthday => "Geburtstag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
   @override
@@ -978,6 +999,8 @@ class en_model extends S {
   @override
   String get selected_preset => "Selected preset";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Select Birthday";
   @override
   String get btn_save => "Save";
@@ -1076,6 +1099,8 @@ class en_model extends S {
   @override
   String get contract_images => "Images count";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Reception Areas";
   @override
   String get subscriptions => "Subscriptions";
@@ -1113,6 +1138,8 @@ class en_model extends S {
   String get select_address => "Select address";
   @override
   String get birthday => "Birthday";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Phone";
   @override
@@ -1242,6 +1269,8 @@ class nl_model extends S {
   @override
   String get selected_preset => "Geselecteerde preset";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Selecteer verjaardag";
   @override
   String get btn_save => "Opslaan";
@@ -1338,6 +1367,8 @@ class nl_model extends S {
   @override
   String get contract_images => "Afbeeldingen tellen";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Ontvangstgebieden";
   @override
   String get subscriptions => "Subscriptions";
@@ -1375,6 +1406,8 @@ class nl_model extends S {
   String get select_address => "Selecteer adres";
   @override
   String get birthday => "Verjaardag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefoon";
   @override
@@ -1498,6 +1531,8 @@ class de_writer extends S {
   @override
   String get selected_preset => "Ausgewählte Vorlage";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Geburtstag wählen";
   @override
   String get btn_save => "Speichern";
@@ -1594,6 +1629,8 @@ class de_writer extends S {
   @override
   String get contract_images => "Anzahl Bilder";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Aufnahmebereiche";
   @override
   String get subscriptions => "Abonnements";
@@ -1631,6 +1668,8 @@ class de_writer extends S {
   String get select_address => "Addresse wählen";
   @override
   String get birthday => "Geburtstag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
   @override
@@ -1754,6 +1793,8 @@ class nl_writer extends S {
   @override
   String get selected_preset => "Geselecteerde preset";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Selecteer verjaardag";
   @override
   String get btn_save => "Opslaan";
@@ -1850,6 +1891,8 @@ class nl_writer extends S {
   @override
   String get contract_images => "Afbeeldingen tellen";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Ontvangstgebieden";
   @override
   String get subscriptions => "Subscriptions";
@@ -1887,6 +1930,8 @@ class nl_writer extends S {
   String get select_address => "Selecteer adres";
   @override
   String get birthday => "Verjaardag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefoon";
   @override
@@ -2010,6 +2055,8 @@ class nl extends S {
   @override
   String get selected_preset => "Geselecteerde preset";
   @override
+  String get restore_successfull => "Restore successfull!";
+  @override
   String get select_birthday => "Selecteer verjaardag";
   @override
   String get btn_save => "Opslaan";
@@ -2106,6 +2153,8 @@ class nl extends S {
   @override
   String get contract_images => "Afbeeldingen tellen";
   @override
+  String get purchases_has_been_restored => "Purchases has been restored!";
+  @override
   String get item_reception => "Ontvangstgebieden";
   @override
   String get subscriptions => "Subscriptions";
@@ -2143,6 +2192,8 @@ class nl extends S {
   String get select_address => "Selecteer adres";
   @override
   String get birthday => "Verjaardag";
+  @override
+  String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefoon";
   @override
