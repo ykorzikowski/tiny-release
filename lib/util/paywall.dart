@@ -103,7 +103,7 @@ class PayWall implements PayWallInterface {
 
       if ( purchase.status == PurchaseStatus.purchased ) {
         _successCallbacks[purchase.productID]();
-        _savePurchaseInPrefs(purchase.productID, true);
+        _deliverPurchase(purchase);
         _successCallbacks.remove(purchase.productID);
       }
 
