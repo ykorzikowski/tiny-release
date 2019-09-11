@@ -33,6 +33,11 @@ class TinyPeople extends TinyDBO {
     return _tinyPeople;
   }
 
+  bool get hasAvatar {
+    print("avatar is $avatar");
+    return avatar != null && avatar != "";
+  }
+
   @override
   String get displayName => this.givenName + " " + this.familyName;
 

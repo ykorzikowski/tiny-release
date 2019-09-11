@@ -69,7 +69,7 @@ class ContractPdfGenerator {
           ],),
       ),
       Expanded(
-        child: _tinyContract.model.avatar != null ? _getPdfImage(pdfDoc, _tinyContract.model.avatar, width: 150, height: 150) : Container(),
+        child: _tinyContract.model.hasAvatar ? _getPdfImage(pdfDoc, _tinyContract.model.avatar, width: 150, height: 150) : Container(),
       ),
       Expanded(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: <Widget>[
