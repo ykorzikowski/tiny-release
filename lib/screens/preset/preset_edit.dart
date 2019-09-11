@@ -1,5 +1,8 @@
 
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -156,11 +159,13 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
         ],
       ));
 
-  _importPresetFile() async {
-    String path = await FilePicker.getFilePath(type: FileType.ANY, fileExtension: 'tinyjson');
+  _importPreset(Future<String> futurePath) async {
+    var path = await futurePath;
+
     if ( path == '' ) {
       return;
     }
+
     var parser = PresetJSONParser(path, _onImportError);
     var tinyPreset = await parser.map();
     if ( tinyPreset == null ) {
@@ -172,10 +177,24 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     });
   }
 
+  _importPresetFile() async {
+    await _importPreset(FilePicker.getFilePath(type: FileType.ANY, fileExtension: 'tinyjson'));
+  }
+
+  _importDefaultPreset() async {
+    String loadDefaultPresetAsString = await BaseUtil.loadDefaultPresetAsString();
+    Future<File> tempFile = BaseUtil.storeTempBlobUint8("default-preset", "tinyjson", utf8.encode(loadDefaultPresetAsString));
+    await _importPreset(tempFile.then((f) => f.path));
+  }
+
   _getImportButton() => CupertinoButton(
     child: Text(S.of(context).import_preset_from_file),
     onPressed: _importPresetFile,
   );
+
+  _getLoadDefaultButton() => CupertinoButton(
+    child: Text("Import example"),
+    onPressed: _importDefaultPreset);
 
   /// get paragraphs widgets
   List< Widget > _buildParagraphWidgets() {
@@ -288,6 +307,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
           _buildParagraphAddButton(),
           _buildSortParagraphsButton(),
           _getImportButton(),
+          _getLoadDefaultButton(),
         ],),
       ];
 }

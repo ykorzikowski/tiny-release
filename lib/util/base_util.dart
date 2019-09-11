@@ -2,6 +2,7 @@ import 'dart:io' as Io;
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +20,10 @@ import 'package:paperflavor/generated/i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseUtil {
+
+  static Future<String> loadDefaultPresetAsString() async {
+    return await rootBundle.loadString('assets/import_test.tinyjson');
+  }
 
   static bool nullMeansTrue(bool) => bool == null ? true : bool;
 
