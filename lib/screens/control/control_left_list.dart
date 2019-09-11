@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:paperflavor/dialogs/allow_reporting_dialog.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/tiny_state.dart';
@@ -19,13 +20,15 @@ class ControlLeftListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ControlLeftListWidget> {
   String versionText = "";
+  String errorReportingText = "";
   List items;
 
   var icons = const [
     CupertinoIcons.person_solid,
     CupertinoIcons.collections_solid,
     CupertinoIcons.photo_camera_solid,
-    CupertinoIcons.shopping_cart
+    CupertinoIcons.shopping_cart,
+    CupertinoIcons.clear_circled_solid
   ];
 
   bool _isSelected(int pos) {
@@ -33,10 +36,10 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   }
 
   List _getItems(context) {
-    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription];
+    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting];
   }
 
-  Widget _buildListItem(context, position) {
+  Widget _buildListItem(context, position, onTap) {
     return Container(
       decoration: new BoxDecoration (
         color: _isSelected(position)
@@ -45,9 +48,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
       ),
       child: ListTile(
         key: Key("control_$position"),
-        onTap: () {
-          widget.onItemSelected(position);
-        },
+        onTap: () => onTap(context, position),
         leading: Icon(icons[position]),
         title: Text(items[position],
           style: TextStyle(
@@ -58,19 +59,30 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
       ),);
   }
 
+  _onItemSelectedCallback(context, pos) {
+    widget.onItemSelected(pos);
+  }
+
+  _openTrackingPopup(context, pos) {
+    showCupertinoModalPopup(context: context, builder: AllowReportingDialog().buildDialog);
+  }
+
    List _buildList(context) {
     var widgets = List<Widget>();
 
-    for (var i = 0; i < items.length; i++) {
-      widgets.add(_buildListItem(context, i));
-    }
+    widgets.add(_buildListItem(context, 0, _onItemSelectedCallback));
+    widgets.add(_buildListItem(context, 1, _onItemSelectedCallback));
+    widgets.add(_buildListItem(context, 2, _onItemSelectedCallback));
+    widgets.add(_buildListItem(context, 3, _onItemSelectedCallback));
+    widgets.add(_buildListItem(context, 4, _openTrackingPopup));
 
     return widgets;
   }
 
   List _getControlWidgets(context) {
     var widgets = _buildList(context);
-    widgets.add(Text(versionText, style: TextStyle(color: CupertinoColors.inactiveGray),),);
+    widgets.add(Text("current version is $versionText", style: TextStyle(color: CupertinoColors.inactiveGray),),);
+    widgets.add(Text("error reporting is $errorReportingText", style: TextStyle(color: CupertinoColors.inactiveGray),),);
     return widgets;
   }
 
@@ -78,6 +90,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   Widget build(BuildContext context) {
     items = _getItems(context);
     BaseUtil.getVersionString().then((str) => setState(() => versionText = str));
+    BaseUtil.errorReportingIsAllowed.then((allowed) => allowed ? errorReportingText = "allowed" : errorReportingText = "not allowed");
 
     widget.controlState.inControlWidget = true;
     return

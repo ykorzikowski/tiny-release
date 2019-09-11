@@ -22,6 +22,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get add_contract => "Add Contract";
+  String get allow => "Allow";
   String get and => "and";
   String get birthday => "Birthday";
   String get brn_save => "Save";
@@ -55,12 +56,14 @@ class S implements WidgetsLocalizations {
   String get create_new_contract => "Create a new contract";
   String get dateFormatPattern => "yyyy-MM-dd";
   String get dateTimeFormatPattern => "yyyy-MM-dd hh:mm";
+  String get decline => "Decline";
   String get delete_contract => "Delete Contract?";
   String get dialog_back => "Back";
   String get dialog_delete => "Delete";
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   String get dialog_pay_for_subscription_or_feature => "To use this feature, you can buy this single feature or pay for a monthly/yearly subscription";
   String get dialog_title_pro_feature => "Pro Feature";
+  String get error_reporting => "Error Reporting";
   String get error_subscriptions => "Error while fetching subscriptions";
   String get error_while_importing => "Error while importing";
   String get finish_contract => "Finish Contract";
@@ -175,6 +178,8 @@ class de_model extends S {
   @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
   @override
   String get hint_title => "Titel";
@@ -190,6 +195,8 @@ class de_model extends S {
   String get choose_date => "Wähle Aufnahmedatum";
   @override
   String get title_add_reception => "Aufnahmebereich hinzufügen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "E-Mail";
   @override
@@ -347,6 +354,8 @@ class de_model extends S {
   @override
   String get birthday => "Geburtstag";
   @override
+  String get allow => "Allow";
+  @override
   String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
@@ -437,6 +446,8 @@ class en_writer extends S {
   @override
   String get chose_brithday => "Chose brithday";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Title";
@@ -452,6 +463,8 @@ class en_writer extends S {
   String get choose_date => "Choose shooting date";
   @override
   String get title_add_reception => "Add reception area";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "Mail";
   @override
@@ -611,6 +624,8 @@ class en_writer extends S {
   @override
   String get birthday => "Birthday";
   @override
+  String get allow => "Allow";
+  @override
   String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Phone";
@@ -703,6 +718,8 @@ class de extends S {
   @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
   @override
   String get hint_title => "Titel";
@@ -718,6 +735,8 @@ class de extends S {
   String get choose_date => "Wähle Aufnahmedatum";
   @override
   String get title_add_reception => "Aufnahmebereich hinzufügen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "E-Mail";
   @override
@@ -875,6 +894,8 @@ class de extends S {
   @override
   String get birthday => "Geburtstag";
   @override
+  String get allow => "Allow";
+  @override
   String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
@@ -965,6 +986,8 @@ class en_model extends S {
   @override
   String get chose_brithday => "Chose brithday";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Title";
@@ -980,6 +1003,8 @@ class en_model extends S {
   String get choose_date => "Choose shooting date";
   @override
   String get title_add_reception => "Add reception area";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "Mail";
   @override
@@ -1138,6 +1163,8 @@ class en_model extends S {
   String get select_address => "Select address";
   @override
   String get birthday => "Birthday";
+  @override
+  String get allow => "Allow";
   @override
   String get restore_purchases => "Restore Purchases";
   @override
@@ -1235,6 +1262,8 @@ class nl_model extends S {
   @override
   String get chose_brithday => "Ik koos voor brithday";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Titel";
@@ -1250,6 +1279,8 @@ class nl_model extends S {
   String get choose_date => "Kies opnamedatum";
   @override
   String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "Mail";
   @override
@@ -1407,6 +1438,8 @@ class nl_model extends S {
   @override
   String get birthday => "Verjaardag";
   @override
+  String get allow => "Allow";
+  @override
   String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefoon";
@@ -1497,6 +1530,8 @@ class de_writer extends S {
   @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
   @override
   String get hint_title => "Titel";
@@ -1512,6 +1547,8 @@ class de_writer extends S {
   String get choose_date => "Wähle Aufnahmedatum";
   @override
   String get title_add_reception => "Aufnahmebereich hinzufügen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "E-Mail";
   @override
@@ -1669,6 +1706,8 @@ class de_writer extends S {
   @override
   String get birthday => "Geburtstag";
   @override
+  String get allow => "Allow";
+  @override
   String get restore_purchases => "Restore Purchases";
   @override
   String get hint_phone => "Telefon";
@@ -1759,6 +1798,8 @@ class nl_writer extends S {
   @override
   String get chose_brithday => "Ik koos voor brithday";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Titel";
@@ -1774,6 +1815,8 @@ class nl_writer extends S {
   String get choose_date => "Kies opnamedatum";
   @override
   String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "Mail";
   @override
@@ -1930,6 +1973,8 @@ class nl_writer extends S {
   String get select_address => "Selecteer adres";
   @override
   String get birthday => "Verjaardag";
+  @override
+  String get allow => "Allow";
   @override
   String get restore_purchases => "Restore Purchases";
   @override
@@ -2021,6 +2066,8 @@ class nl extends S {
   @override
   String get chose_brithday => "Ik koos voor brithday";
   @override
+  String get error_reporting => "Error Reporting";
+  @override
   String get dialog_pay_for_subscription => "To use this feature, you have to pay monthly/yearly for a subscription";
   @override
   String get hint_title => "Titel";
@@ -2036,6 +2083,8 @@ class nl extends S {
   String get choose_date => "Kies opnamedatum";
   @override
   String get title_add_reception => "Ontvangstgebied toevoegen";
+  @override
+  String get decline => "Decline";
   @override
   String get hint_mail => "Mail";
   @override
@@ -2192,6 +2241,8 @@ class nl extends S {
   String get select_address => "Selecteer adres";
   @override
   String get birthday => "Verjaardag";
+  @override
+  String get allow => "Allow";
   @override
   String get restore_purchases => "Restore Purchases";
   @override

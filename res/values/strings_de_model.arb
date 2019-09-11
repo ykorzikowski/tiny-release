@@ -125,5 +125,8 @@
   "subscription": "Abonnement",
   "restore_purchases": "Restore Purchases",
   "purchases_has_been_restored": "Purchases has been restored!",
-  "restore_successfull": "Restore successfull!"
+  "restore_successfull": "Restore successfull!",
+  "error_reporting": "Error Reporting",
+  "decline": "Decline",
+  "allow": "Allow"
 }

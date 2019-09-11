@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:paperflavor/generated/i18n.dart';
+import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/nav_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -127,8 +128,8 @@ class PayWall implements PayWallInterface {
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasBoughtFeature = _nullMeansFalse(prefs.getBool("paywall_" + pf));
-    bool hasSubscription =  _nullMeansFalse(prefs.getBool("paywall_subscription"));
+    bool hasBoughtFeature = BaseUtil.nullMeansFalse(prefs.getBool("paywall_" + pf));
+    bool hasSubscription =  BaseUtil.nullMeansFalse(prefs.getBool("paywall_subscription"));
     bool hasPaid = hasBoughtFeature || hasSubscription;
 
     // TODO: check that prefs is updated
@@ -138,7 +139,6 @@ class PayWall implements PayWallInterface {
     return hasPaid;
   }
 
-  bool _nullMeansFalse(bool) => bool == null ? false : bool;
 
   /// pay for feature
   /// cbs - callback success
