@@ -128,5 +128,6 @@
   "restore_successfull": "Restore successfull!",
   "error_reporting": "Error Reporting",
   "decline": "Decline",
-  "allow": "Allow"
+  "allow": "Allow",
+  "import_example": "Import example"
 }

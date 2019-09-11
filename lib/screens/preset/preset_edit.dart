@@ -193,7 +193,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   );
 
   _getLoadDefaultButton() => CupertinoButton(
-    child: Text("Import example"),
+    child: Text(S.of(context).import_example),
     onPressed: _importDefaultPreset);
 
   /// get paragraphs widgets

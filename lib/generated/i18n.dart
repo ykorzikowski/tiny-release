@@ -92,6 +92,7 @@ class S implements WidgetsLocalizations {
   String get hint_street => "Street";
   String get hint_subtitle => "Subtitle";
   String get hint_title => "Title";
+  String get import_example => "Import example";
   String get import_preset_from_file => "Import from file";
   String get in_reception_areas => "In reception areas";
   String get item_has_relations => "This item has relations to a contract. Delete the contract first.";
@@ -386,6 +387,8 @@ class de_model extends S {
   @override
   String get ok => "OK";
   @override
+  String get import_example => "Import example";
+  @override
   String get title_add_preset => "Vorlage hinzufügen";
   @override
   String get delete_contract => "Vertrag löschen?";
@@ -658,6 +661,8 @@ class en_writer extends S {
   @override
   String get ok => "OK";
   @override
+  String get import_example => "Import example";
+  @override
   String get title_add_preset => "Add Preset";
   @override
   String get delete_contract => "Delete Contract?";
@@ -718,7 +723,7 @@ class de extends S {
   @override
   String get chose_brithday => "Geburtstag auswählen";
   @override
-  String get error_reporting => "Error Reporting";
+  String get error_reporting => "Telemetriedaten senden";
   @override
   String get dialog_pay_for_subscription => "Diese Funktion benötigt ein aktives Abonnement";
   @override
@@ -736,7 +741,7 @@ class de extends S {
   @override
   String get title_add_reception => "Aufnahmebereich hinzufügen";
   @override
-  String get decline => "Decline";
+  String get decline => "Ablehnen";
   @override
   String get hint_mail => "E-Mail";
   @override
@@ -756,7 +761,7 @@ class de extends S {
   @override
   String get selected_preset => "Ausgewählte Vorlage";
   @override
-  String get restore_successfull => "Restore successfull!";
+  String get restore_successfull => "Wiederherstellung erfolgreich!";
   @override
   String get select_birthday => "Geburtstag wählen";
   @override
@@ -854,7 +859,7 @@ class de extends S {
   @override
   String get contract_images => "Anzahl Bilder";
   @override
-  String get purchases_has_been_restored => "Purchases has been restored!";
+  String get purchases_has_been_restored => "Käufe wurden wiederhergestellt!";
   @override
   String get item_reception => "Aufnahmebereiche";
   @override
@@ -894,9 +899,9 @@ class de extends S {
   @override
   String get birthday => "Geburtstag";
   @override
-  String get allow => "Allow";
+  String get allow => "Erlauben";
   @override
-  String get restore_purchases => "Restore Purchases";
+  String get restore_purchases => "Käufe wiederherstellen";
   @override
   String get hint_phone => "Telefon";
   @override
@@ -925,6 +930,8 @@ class de extends S {
   String get scaff_deleted => "gelöscht";
   @override
   String get ok => "OK";
+  @override
+  String get import_example => "Beispiel laden";
   @override
   String get title_add_preset => "Vorlage hinzufügen";
   @override
@@ -1198,6 +1205,8 @@ class en_model extends S {
   @override
   String get ok => "OK";
   @override
+  String get import_example => "Import example";
+  @override
   String get title_add_preset => "Add Preset";
   @override
   String get delete_contract => "Delete Contract?";
@@ -1470,6 +1479,8 @@ class nl_model extends S {
   @override
   String get ok => "OK";
   @override
+  String get import_example => "Import example";
+  @override
   String get title_add_preset => "Preset toevoegen";
   @override
   String get delete_contract => "Contract verwijderen?";
@@ -1737,6 +1748,8 @@ class de_writer extends S {
   String get scaff_deleted => "gelöscht";
   @override
   String get ok => "OK";
+  @override
+  String get import_example => "Import example";
   @override
   String get title_add_preset => "Vorlage hinzufügen";
   @override
@@ -2006,6 +2019,8 @@ class nl_writer extends S {
   @override
   String get ok => "OK";
   @override
+  String get import_example => "Import example";
+  @override
   String get title_add_preset => "Preset toevoegen";
   @override
   String get delete_contract => "Contract verwijderen?";
@@ -2273,6 +2288,8 @@ class nl extends S {
   String get scaff_deleted => "ontslagen";
   @override
   String get ok => "OK";
+  @override
+  String get import_example => "Import example";
   @override
   String get title_add_preset => "Preset toevoegen";
   @override

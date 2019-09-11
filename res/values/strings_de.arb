@@ -123,10 +123,11 @@
   "parent": "Erziehungsberechtigter",
   "witness": "Zeuge",
   "subscription": "Subscription",
-  "restore_purchases": "Restore Purchases",
-  "purchases_has_been_restored": "Purchases has been restored!",
-  "restore_successfull": "Restore successfull!",
-  "error_reporting": "Error Reporting",
-  "decline": "Decline",
-  "allow": "Allow"
+  "restore_purchases": "Käufe wiederherstellen",
+  "purchases_has_been_restored": "Käufe wurden wiederhergestellt!",
+  "restore_successfull": "Wiederherstellung erfolgreich!",
+  "error_reporting": "Telemetriedaten senden",
+  "decline": "Ablehnen",
+  "allow": "Erlauben",
+  "import_example": "Beispiel laden"
 }
