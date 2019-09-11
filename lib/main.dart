@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:package_info/package_info.dart';
+import 'package:paperflavor/util/base_util.dart';
 import 'package:sentry/sentry.dart';
 import 'package:device_info/device_info.dart';
 
@@ -88,13 +89,11 @@ Future<SentryResponse> _captureException({
   @required dynamic exception,
   dynamic stackTrace,
 }) async {
-  PackageInfo info = await PackageInfo.fromPlatform();
-
   final Event event = new Event(
     exception: exception,
     stackTrace: stackTrace,
     extra: await _getDeviceExtra(),
-    release: '${info.version}_${info.buildNumber}',
+    release: await BaseUtil.getVersionString(),
   );
   return _sentry.capture(event: event);
 }

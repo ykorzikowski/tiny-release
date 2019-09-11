@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paperflavor/data/repo/tiny_people_repo.dart';
 import 'package:paperflavor/data/repo/tiny_layout_repo.dart';
@@ -17,6 +18,12 @@ import 'package:paperflavor/data/tiny_reception.dart';
 import 'package:paperflavor/generated/i18n.dart';
 
 class BaseUtil {
+
+  static Future<String> getVersionString() async {
+    PackageInfo info = await PackageInfo.fromPlatform();
+
+    return '${info.version}_${info.buildNumber}';
+  }
 
   static Future<Io.File> storeFile(String prefix, String suffix, Io.File file) async {
     final directory = await getApplicationDocumentsDirectory();
