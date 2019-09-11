@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sentry/sentry.dart';
+import 'package:device_info/device_info.dart';
 
 import 'constants.dart';
 import 'main_delegate.dart';
@@ -60,10 +63,39 @@ Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     return;
   } else {
     // Send the Exception and Stacktrace to Sentry in Production mode.
-    _sentry.captureException(
+    await _captureException(
       exception: error,
       stackTrace: stackTrace,
     );
   }
+}
+
+_getDeviceExtra() async {
+  final DeviceInfoPlugin info = DeviceInfoPlugin();
+
+  Map<String, dynamic> extra = {};
+  if (Platform.isAndroid) {
+    extra['device_info'] = await info.androidInfo;
+  }
+  else if (Platform.isIOS) {
+    extra['device_info'] = await info.iosInfo;
+  }
+
+  return extra;
+}
+
+Future<SentryResponse> _captureException({
+  @required dynamic exception,
+  dynamic stackTrace,
+}) async {
+  PackageInfo info = await PackageInfo.fromPlatform();
+
+  final Event event = new Event(
+    exception: exception,
+    stackTrace: stackTrace,
+    extra: await _getDeviceExtra(),
+    release: '${info.version}_${info.buildNumber}',
+  );
+  return _sentry.capture(event: event);
 }
 
