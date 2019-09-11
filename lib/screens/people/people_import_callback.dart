@@ -1,4 +1,5 @@
 import 'dart:io' as Io;
+import 'dart:typed_data';
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,10 @@ class PeopleImportCallback {
 
   PeopleImportCallback( this._controlState );
 
+  static bool isValidImage(Uint8List img) {
+    return img != null && img.isNotEmpty;
+  }
+
   static Future<TinyPeople> mapContactToPeople( Contact contact ) async {
     var tinyPeople = new TinyPeople();
 
@@ -26,7 +31,7 @@ class PeopleImportCallback {
     tinyPeople.company = contact.company;
     tinyPeople.jobTitle = contact.jobTitle;
     tinyPeople.displayName = contact.displayName;
-    tinyPeople.avatar = contact.avatar != null ? (await BaseUtil.storeTempBlobUint8('people', 'png', contact.avatar)).path : null;
+    tinyPeople.avatar = isValidImage(contact.avatar) ? (await BaseUtil.storeTempBlobUint8('people', 'png', contact.avatar)).path : null;
 
     tinyPeople.emails = contact.emails.map((i) {
       TinyPeopleItem tinyItem = new TinyPeopleItem();
