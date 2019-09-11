@@ -27,13 +27,13 @@ platform :android do
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
-      sh("flutter", "build", "apk", "--build-number=#{build_id}", "--release")
+      sh("flutter", "build", "appbundle", "--build-number=#{build_id}")
     end
     upload_to_play_store(
       track: 'alpha',
       json_key: json_key,
       package_name: app_name,
-      apk: "build/app/outputs/apk/release/app-release.apk",
+      aab: "build/app/outputs/bundle/release/app.aab",
       skip_upload_screenshots: true,
       skip_upload_images: true)
   end
@@ -45,11 +45,11 @@ platform :android do
     Dir.chdir ".." do
       sh("flutter", "packages", "get")
       sh("flutter", "clean")
-      sh("flutter", "build", "apk", "--build-number=#{build_id}", "--release")
+      sh("flutter", "build", "appbundle", "--build-number=#{build_id}")
     end
     upload_to_play_store(
       track: 'production',
-      apk: "#build/app/outputs/apk/release/app-release.apk",
+      aab: "build/app/outputs/bundle/release/app.aab",
       skip_upload_screenshots: true,
       skip_upload_images: true)
   end
