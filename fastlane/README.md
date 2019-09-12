@@ -29,9 +29,9 @@ fastlane screenshots
 ----
 
 ## Android
-### android alpha
+### android testing
 ```
-fastlane android alpha
+fastlane android testing
 ```
 Deploy a new version to the Google Play Alpha
 ### android release
@@ -43,9 +43,9 @@ Deploy a new version to the Google Play Production
 ----
 
 ## iOS
-### ios beta
+### ios testing
 ```
-fastlane ios beta
+fastlane ios testing
 ```
 Push a new beta build to TestFlight
 ### ios release
