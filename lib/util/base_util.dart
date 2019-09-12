@@ -25,16 +25,6 @@ class BaseUtil {
     return await rootBundle.loadString('assets/import_test.tinyjson');
   }
 
-  static bool nullMeansTrue(bool) => bool == null ? true : bool;
-
-  static bool nullMeansFalse(bool) => bool == null ? false : bool;
-
-  static Future<bool> get errorReportingIsAllowed async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    return BaseUtil.nullMeansFalse(prefs.getBool("user_reporting"));
-  }
-
   static Future<String> getVersionString() async {
     PackageInfo info = await PackageInfo.fromPlatform();
 

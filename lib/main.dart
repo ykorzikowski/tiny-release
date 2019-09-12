@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info/package_info.dart';
 import 'package:paperflavor/util/base_util.dart';
+import 'package:paperflavor/util/prefs.dart';
 import 'package:sentry/sentry.dart';
 import 'package:device_info/device_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,7 +53,7 @@ bool get isInDebugMode {
 Future<void> _reportError(dynamic error, dynamic stackTrace) async {
   // Print the exception to the console.
   print('Caught error: $error');
-  if (isInDebugMode || !(await BaseUtil.errorReportingIsAllowed)) {
+  if (isInDebugMode || !(await Prefs.errorReportingIsAllowed)) {
     // Print the full stacktrace in debug mode.
     print(stackTrace);
     return;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:paperflavor/dialogs/allow_reporting_dialog.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/util/base_util.dart';
+import 'package:paperflavor/util/prefs.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 
 typedef Null ItemSelectedCallback(int value);
@@ -90,7 +91,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   Widget build(BuildContext context) {
     items = _getItems(context);
     BaseUtil.getVersionString().then((str) => setState(() => versionText = str));
-    BaseUtil.errorReportingIsAllowed.then((allowed) => allowed ? errorReportingText = "allowed" : errorReportingText = "not allowed");
+    Prefs.errorReportingIsAllowed.then((allowed) => allowed ? errorReportingText = "allowed" : errorReportingText = "not allowed");
 
     widget.controlState.inControlWidget = true;
     return

@@ -6,6 +6,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 typedef ErrorCallback = void Function(String error);
@@ -128,8 +129,8 @@ class PayWall implements PayWallInterface {
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasBoughtFeature = BaseUtil.nullMeansFalse(prefs.getBool("paywall_" + pf));
-    bool hasSubscription =  BaseUtil.nullMeansFalse(prefs.getBool("paywall_subscription"));
+    bool hasBoughtFeature = Prefs.nullMeansFalse(prefs.getBool("paywall_" + pf));
+    bool hasSubscription =  Prefs.nullMeansFalse(prefs.getBool("paywall_subscription"));
     bool hasPaid = hasBoughtFeature || hasSubscription;
 
     // TODO: check that prefs is updated
