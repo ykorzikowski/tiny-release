@@ -129,5 +129,6 @@
   "error_reporting": "Telemetriedaten senden",
   "decline": "Ablehnen",
   "allow": "Erlauben",
-  "import_example": "Beispiel laden"
+  "import_example": "Beispiel laden",
+  "on_occurence_of_an_error_the_app_will_report_this": "Tritt ein unerwarteter Fehler auf, so wird die App automatisch anonymisierte Details über diesen Fehler an den Entwickler übermitteln. Für weitere Details siehe Datenschutzbestimmungen. ",
 }

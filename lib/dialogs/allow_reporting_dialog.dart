@@ -13,8 +13,8 @@ class AllowReportingDialog {
 
   Widget buildDialog(context) =>
       CupertinoAlertDialog(
-        title: Text("Allow Error Reporting"),
-        content: Text("On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration."),
+        title: Text(S.of(context).error_reporting),
+        content: Text(S.of(context).on_occurence_of_an_error_the_app_will_report_this),
         actions: <Widget>[
           CupertinoDialogAction(
             child: Text(S.of(context).allow),

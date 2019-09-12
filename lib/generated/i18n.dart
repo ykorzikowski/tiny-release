@@ -113,6 +113,7 @@ class S implements WidgetsLocalizations {
   String get no_items_reception => "Create new reception areas";
   String get no_thanks => "No thanks";
   String get ok => "OK";
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
   String get parent => "Erziehungsberechtigter";
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
   String get payment_title => "Payment";
@@ -348,6 +349,8 @@ class de_model extends S {
   String get modules => "Module";
   @override
   String get select_date_ok => "Wählen";
+  @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
   @override
   String get hint_id_type => "Ausweisart";
   @override
@@ -621,6 +624,8 @@ class en_writer extends S {
   @override
   String get select_date_ok => "OK";
   @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
+  @override
   String get hint_id_type => "ID type";
   @override
   String get select_address => "Select address";
@@ -893,6 +898,8 @@ class de extends S {
   @override
   String get select_date_ok => "Wählen";
   @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "Tritt ein unerwarteter Fehler auf, so wird die App automatisch anonymisierte Details über diesen Fehler an den Entwickler übermitteln. Für weitere Details siehe Datenschutzbestimmungen. ";
+  @override
   String get hint_id_type => "Ausweisart";
   @override
   String get select_address => "Addresse wählen";
@@ -1164,6 +1171,8 @@ class en_model extends S {
   String get modules => "Modules";
   @override
   String get select_date_ok => "OK";
+  @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
   @override
   String get hint_id_type => "ID type";
   @override
@@ -1441,6 +1450,8 @@ class nl_model extends S {
   @override
   String get select_date_ok => "OK";
   @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
+  @override
   String get hint_id_type => "ID Type";
   @override
   String get select_address => "Selecteer adres";
@@ -1710,6 +1721,8 @@ class de_writer extends S {
   String get modules => "Module";
   @override
   String get select_date_ok => "Wählen";
+  @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
   @override
   String get hint_id_type => "Ausweisart";
   @override
@@ -1981,6 +1994,8 @@ class nl_writer extends S {
   @override
   String get select_date_ok => "OK";
   @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
+  @override
   String get hint_id_type => "ID Type";
   @override
   String get select_address => "Selecteer adres";
@@ -2250,6 +2265,8 @@ class nl extends S {
   String get modules => "Modules";
   @override
   String get select_date_ok => "OK";
+  @override
+  String get on_occurence_of_an_error_the_app_will_report_this => "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.";
   @override
   String get hint_id_type => "ID Type";
   @override

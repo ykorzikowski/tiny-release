@@ -10,6 +10,7 @@ import 'package:paperflavor/data/repo/tiny_repo.dart';
 import 'package:paperflavor/data/tiny_contract.dart';
 import 'package:paperflavor/data/tiny_people.dart';
 import 'package:paperflavor/data/tiny_reception.dart';
+import 'package:paperflavor/dialogs/allow_reporting_dialog.dart';
 import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/screens/control/control_helper.dart';
 import 'package:paperflavor/screens/people/people_list.dart';
@@ -17,6 +18,7 @@ import 'package:paperflavor/screens/preset/preset_list.dart';
 import 'package:paperflavor/screens/reception_area/reception_list.dart';
 import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/nav_routes.dart';
+import 'package:paperflavor/util/prefs.dart';
 import 'package:paperflavor/util/tiny_page_wrapper.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 
@@ -65,6 +67,13 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     }
   }
 
+  void _fistLaunchCheck(bool isFirstLaunch, context) {
+    if (isFirstLaunch) {
+      showCupertinoDialog(context: context, builder: AllowReportingDialog().buildDialog);
+      Prefs.setReportingDialogShownOnFirstStart(false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +90,8 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Prefs.reportingDialogShownOnFirstStart.then((b) => _fistLaunchCheck(b, context));
+
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           heroTag: 'contract',

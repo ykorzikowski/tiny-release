@@ -129,5 +129,6 @@
   "error_reporting": "Error Reporting",
   "decline": "Decline",
   "allow": "Allow",
-  "import_example": "Import example"
+  "import_example": "Import example",
+  "on_occurence_of_an_error_the_app_will_report_this": "On occurence of an error, the app will report this error to a server. No user data will be transmitted. For detail, check the privacy declaration.",
 }

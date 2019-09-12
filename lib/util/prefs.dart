@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
 
-  static const String firstLaunch = "first_launch";
+  static const String reportingDialogShown = "reporting_dialog_shown";
   static const String userReporting = "user_reporting";
 
   static bool nullMeansTrue(bool) => bool == null ? true : bool;
@@ -16,16 +16,16 @@ class Prefs {
     return Prefs.nullMeansFalse(prefs.getBool(userReporting));
   }
 
-  static Future<bool> get isFirstLaunch async {
+  static Future<bool> get reportingDialogShownOnFirstStart async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return Prefs.nullMeansFalse(prefs.getBool(firstLaunch));
+    return Prefs.nullMeansTrue(prefs.getBool(reportingDialogShown));
   }
 
-  static setFirstLaunch(bool) async {
+  static setReportingDialogShownOnFirstStart(bool) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setBool(firstLaunch, bool);
+    prefs.setBool(reportingDialogShown, bool);
   }
 
 
