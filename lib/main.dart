@@ -19,7 +19,7 @@ Future<Null> main() {
 
   // This captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
+    if (Prefs.isInDebugMode) {
       // In development mode, simply print to console.
       FlutterError.dumpErrorToConsole(details);
     } else {
@@ -38,22 +38,10 @@ Future<Null> main() {
   });
 }
 
-bool get isInDebugMode {
-  // Assume you're in production mode.
-  bool inDebugMode = false;
-
-  // Assert expressions are only evaluated during development. They are ignored
-  // in production. Therefore, this code only sets `inDebugMode` to true
-  // in a development environment.
-  assert(inDebugMode = true);
-
-  return inDebugMode;
-}
-
 Future<void> _reportError(dynamic error, dynamic stackTrace) async {
   // Print the exception to the console.
   print('Caught error: $error');
-  if (isInDebugMode || !(await Prefs.errorReportingIsAllowed)) {
+  if (Prefs.isInDebugMode || !(await Prefs.errorReportingIsAllowed)) {
     // Print the full stacktrace in debug mode.
     print(stackTrace);
     return;
