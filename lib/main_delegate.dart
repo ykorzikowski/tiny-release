@@ -9,9 +9,12 @@ import 'package:paperflavor/generated/i18n.dart';
 import 'package:paperflavor/screens/contract/contract_list.dart';
 import 'package:paperflavor/screens/control/control_master.dart';
 import 'package:paperflavor/util/paywall.dart';
+import 'package:paperflavor/main.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 
-void mainDelegate() => runApp(MyApp());
+void mainDelegate() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   final TinyState tinyState = new TinyState();
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    FlutterError.onError = getExceptionHandler;
     return MaterialApp(
       localizationsDelegates: [
         FlavorS.delegate,

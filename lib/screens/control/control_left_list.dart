@@ -29,7 +29,8 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     CupertinoIcons.collections_solid,
     CupertinoIcons.photo_camera_solid,
     CupertinoIcons.shopping_cart,
-    CupertinoIcons.clear_circled_solid
+    CupertinoIcons.clear_circled_solid,
+    CupertinoIcons.eye_solid
   ];
 
   bool _isSelected(int pos) {
@@ -37,7 +38,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   }
 
   List _getItems(context) {
-    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting];
+    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting, "Provocate Error"];
   }
 
   Widget _buildListItem(context, position, onTap) {
@@ -64,6 +65,10 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     widget.onItemSelected(pos);
   }
 
+  _provocateError(context, pos) {
+    throw Exception("Provocated Exception for Testing!");
+  }
+
   _openTrackingPopup(context, pos) {
     showCupertinoModalPopup(context: context, builder: AllowReportingDialog().buildDialog);
   }
@@ -76,6 +81,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     widgets.add(_buildListItem(context, 2, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 3, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 4, _openTrackingPopup));
+    if(Prefs.isInDebugMode) widgets.add(_buildListItem(context, 5, _provocateError));
 
     return widgets;
   }
