@@ -56,7 +56,7 @@ void main() {
     testWidgets('PresetWidget save button enabled on complete paragraph and title set', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyPreset.paragraphs.add(Paragraph());
+      tinyPreset.paragraphs.add(Paragraph(position: 0));
       tinyState.curDBO = tinyPreset;
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
 

@@ -90,7 +90,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
       _tinyPreset.description = _textEditControllerBundle.descriptionController.text;
 
       for (var para in _tinyPreset.paragraphs) {
-        _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
+        _ParagraphControllerBundle bundle = _paragraphTextControllers[para.position];
         para.title = bundle.paragraphTitleController.text;
         para.content = bundle.paragraphContentController.text;
       }
