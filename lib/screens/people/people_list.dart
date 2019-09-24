@@ -115,6 +115,9 @@ class _ListWidgetState extends State<PeopleListWidget> {
               noItemsFoundBuilder: (context) {
                 return Text(S.of(context).no_items_people, style: TextStyle(color: CupertinoColors.inactiveGray));
               },
+              errorBuilder: (context, error) {
+                throw Exception(error);
+              },
               pageLoadController: this.pageLoadController,
             ),
           ),),
