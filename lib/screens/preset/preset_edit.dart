@@ -34,7 +34,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   TinyPreset _tinyPreset;
 
   _TextControllerBundle _textEditControllerBundle;
-  final Map<Paragraph, _ParagraphControllerBundle> _paragraphTextControllers = Map();
+  final Map<int, _ParagraphControllerBundle> _paragraphTextControllers = Map();
 
   _PresetEditWidgetState(this._controlState);
 
@@ -78,7 +78,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   }
 
   _initParagraphControllers() {
-    _tinyPreset.paragraphs.forEach((para) => _paragraphTextControllers.putIfAbsent(para, () => _ParagraphControllerBundle(para)));
+    _tinyPreset.paragraphs.forEach((para) => _paragraphTextControllers.putIfAbsent(para.position, () { return _ParagraphControllerBundle(para); }));
     _textEditControllerBundle = _TextControllerBundle(_tinyPreset);
   }
 
@@ -124,7 +124,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
     setState(() {
       var paragraph = Paragraph(position: pos);
       _tinyPreset.paragraphs.add(paragraph);
-      _paragraphTextControllers.putIfAbsent(paragraph, () => _ParagraphControllerBundle(paragraph));
+      _paragraphTextControllers.putIfAbsent(paragraph.position, () { return _ParagraphControllerBundle(paragraph); });
     });
   }
 
@@ -228,7 +228,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   }
 
   Widget _buildParagraphWidget(Paragraph para, index) {
-    _ParagraphControllerBundle bundle = _paragraphTextControllers[para];
+    _ParagraphControllerBundle bundle = _paragraphTextControllers[para.position];
     return Column(children: <Widget>[
       Padding(
         padding: EdgeInsets.all(12.0),

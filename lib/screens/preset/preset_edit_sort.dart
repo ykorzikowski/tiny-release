@@ -36,37 +36,32 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
     for (int i = 0; i < _tinyPreset.paragraphs.length; i++) {
       var para = _tinyPreset.paragraphs[i];
       list.add(
-          ListTile(
-            key: Key(para.hashCode.toString()),
-            trailing: CupertinoButton(
-                padding: EdgeInsets.all(13),
+        Row(
+          key: Key(para.hashCode.toString()),
+          children: <Widget>[
+            CupertinoButton(
                 child: Icon(CupertinoIcons.delete_simple), onPressed: () {
               setState(() {
                 _tinyPreset.paragraphs.remove(para);
               });
               _paragraphRepo.delete(para);
             }),
-            leading: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  child: _getParagraphWidget(para, i+1)
-                ),
-              ],
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.only(right: 13.0),
+                child: _getParagraphWidget(para, i+1),
+              ),
             ),
-          )
-      );
+
+          ],
+        ));
     }
 
     return list;
   }
 
   Widget _getParagraphWidget(Paragraph para, int index) =>
-      Column(children: <Widget>[
-        Text(BaseUtil.getParagraphTitle(context, para, index), style: TextStyle( fontSize: 24 ), ),
-        Text(para.content, textAlign: TextAlign.left,)
-      ]
-      );
+      Text(BaseUtil.getParagraphTitle(context, para, index), style: TextStyle( fontSize: 24 ), overflow: TextOverflow.ellipsis,);
 
   @override
   Widget build(BuildContext context) {

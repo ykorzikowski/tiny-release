@@ -1,3 +1,5 @@
+import 'package:sentry/sentry.dart';
+
 abstract class TinyDBO {
 
   TinyDBO({this.id, this.displayName});
