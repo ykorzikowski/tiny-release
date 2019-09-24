@@ -363,7 +363,11 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                                 maximumYear: DateTime.now().year,
                                 minimumYear: 1900,
                                 initialDateTime: _tinyPeople.birthday != null ? DateTime.parse(_tinyPeople.birthday) : DateTime.now(),
-                                onDateTimeChanged: (t) => _tinyPeople.birthday = t.toIso8601String(),
+                                onDateTimeChanged: (t) {
+                                  setState(() {
+                                    _tinyPeople.birthday = t.toIso8601String();
+                                  });
+                                },
                               ),
                             )
 
