@@ -136,6 +136,7 @@ class S implements WidgetsLocalizations {
   String get share_pdf => "Share PDF";
   String get shooting_date => "Shooting date";
   String get shooting_subject => "Subject";
+  String get show_license_info => "Show License Info";
   String get subscription => "Subscription";
   String get subscriptions => "Subscriptions";
   String get thanks_for_supporting_me => "Thanks for supporting me!";
@@ -287,6 +288,8 @@ class $de_model extends S {
   String get item_settings => "Einstellungen";
   @override
   String get hint_postcode => "PLZ";
+  @override
+  String get show_license_info => "Show License Info";
   @override
   String get choose_model => "Model wählen";
   @override
@@ -559,6 +562,8 @@ class $en_writer extends S {
   String get item_settings => "Settings";
   @override
   String get hint_postcode => "Postcode";
+  @override
+  String get show_license_info => "Show License Info";
   @override
   String get choose_model => "Choose Model";
   @override
@@ -836,6 +841,8 @@ class $de extends S {
   @override
   String get hint_postcode => "PLZ";
   @override
+  String get show_license_info => "Über diese App";
+  @override
   String get choose_model => "Model wählen";
   @override
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs either power users. It's possbile to use this app for free. If you want to use the extended features, you can buy the modules separately or pay for a subscription monthly.";
@@ -1107,6 +1114,8 @@ class $en_model extends S {
   String get item_settings => "Settings";
   @override
   String get hint_postcode => "Postcode";
+  @override
+  String get show_license_info => "Show License Info";
   @override
   String get choose_model => "Choose Model";
   @override
@@ -1388,6 +1397,8 @@ class $nl_model extends S {
   @override
   String get hint_postcode => "Postcode";
   @override
+  String get show_license_info => "Show License Info";
+  @override
   String get choose_model => "Kies Model";
   @override
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
@@ -1659,6 +1670,8 @@ class $de_writer extends S {
   String get item_settings => "Einstellungen";
   @override
   String get hint_postcode => "PLZ";
+  @override
+  String get show_license_info => "Show License Info";
   @override
   String get choose_model => "Model wählen";
   @override
@@ -1932,6 +1945,8 @@ class $nl_writer extends S {
   @override
   String get hint_postcode => "Postcode";
   @override
+  String get show_license_info => "Show License Info";
+  @override
   String get choose_model => "Kies Model";
   @override
   String get payment_introduction_text => "Developing and distributing this app takes time and costs money. I want to make a fair deal with hobby photographs and power users. It's possbile to use this app for free. If you want to use the extendet features, you can buy the modules seperately or buy a subscription which is payed monthly.";
@@ -2203,6 +2218,8 @@ class $nl extends S {
   String get item_settings => "instellingen";
   @override
   String get hint_postcode => "Postcode";
+  @override
+  String get show_license_info => "Show License Info";
   @override
   String get choose_model => "Kies Model";
   @override

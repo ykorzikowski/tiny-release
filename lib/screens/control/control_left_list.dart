@@ -30,6 +30,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     CupertinoIcons.photo_camera_solid,
     CupertinoIcons.shopping_cart,
     CupertinoIcons.clear_circled_solid,
+    CupertinoIcons.book_solid,
     CupertinoIcons.eye_solid
   ];
 
@@ -38,7 +39,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   }
 
   List _getItems(context) {
-    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting, "Provocate Error"];
+    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting, S.of(context).show_license_info, "Provocate Error"];
   }
 
   Widget _buildListItem(context, position, onTap) {
@@ -73,6 +74,17 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     showCupertinoModalPopup(context: context, builder: AllowReportingDialog().buildDialog);
   }
 
+  _openAboutDialog(context, pos) {
+    BaseUtil.getVersionString().then((versionStr) {
+      showAboutDialog(
+          context: context,
+          applicationLegalese: "(c) 2019 Yannik Korzikowski",
+          applicationVersion: versionStr,
+          applicationIcon: Image.asset('assets/icon/icon.png', height: 48.0,));
+    });
+
+  }
+
    List _buildList(context) {
     var widgets = List<Widget>();
 
@@ -81,7 +93,8 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     widgets.add(_buildListItem(context, 2, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 3, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 4, _openTrackingPopup));
-    if(Prefs.isInDebugMode) widgets.add(_buildListItem(context, 5, _provocateError));
+    widgets.add(_buildListItem(context, 5, _openAboutDialog));
+    if(Prefs.isInDebugMode) widgets.add(_buildListItem(context, 6, _provocateError));
 
     return widgets;
   }
