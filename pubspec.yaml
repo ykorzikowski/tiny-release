@@ -20,8 +20,8 @@ dependencies:
   flutter_cupertino_localizations: ^1.0.1
   contacts_service: ^0.3.2
   image_picker: ^0.5.0+3
-  image: 2.1.4
-  image_cropper: 1.0.0
+  image: ^2.1.4
+  image_cropper: ^1.0.0
   sqflite: ^1.1.5
   flutter_pagewise: ^1.2.3
   flutter_tags: ^0.1.8
@@ -37,19 +37,20 @@ dependencies:
   screenshots: ^2.0.2+1
   expandable: ^2.0.0
   http: ^0.12.0+2
-  file_picker: 1.2.0
+  file_picker: ^1.2.0
   permission_handler: ^3.2.1+1
-  mockito: ^4.0.0
-  path_provider: 1.1.0
+  path_provider: ^1.1.0
   sentry: ^2.2.0
-  device_info: 0.4.0+2
-  package_info: 0.4.0+6
+  device_info: ^0.4.0+2
+  package_info: ^0.4.0+6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  mockito: ^4.0.0
+  dependency_validator: ^1.0.0
   intl_translation: ^0.17.1
   flutter_launcher_icons: ^0.7.2
   test:
