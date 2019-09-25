@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info/package_info.dart';
+import 'package:paperflavor/util/screen_size_check.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paperflavor/data/repo/tiny_people_repo.dart';
 import 'package:paperflavor/data/repo/tiny_layout_repo.dart';
@@ -70,7 +71,7 @@ class BaseUtil {
   }
 
   static bool isLargeScreen(context) {
-    return MediaQuery.of(context).size.width > 600;
+    return DeviceCheck.get().isTablet;
   }
 
   static TinyRepo getRepoForDataType( final TinyDBO tinyDBO ) {
