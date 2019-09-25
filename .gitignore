@@ -14,6 +14,7 @@ ios/fastlane/screenshots/output/
 fastlane/metadata/android/
 fastlane/metadata/output
 *Screenshots/
+ios/Flutter/flutter_export_environment.sh
 
 # IntelliJ related
 *.iml
