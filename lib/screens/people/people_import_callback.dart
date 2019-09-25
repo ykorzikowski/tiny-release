@@ -90,7 +90,8 @@ class PeopleImportCallback {
 
   void copyAvatarFromTempToDocuments(item, context) {
     if (item.avatar == null) {
-      return null;
+      onAvatarSaved(item, context);
+      return;
     }
 
     BaseUtil.storeFile('people', 'png', Io.File(item.avatar))
