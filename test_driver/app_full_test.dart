@@ -7,7 +7,7 @@ import 'package:screenshots/screenshots.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-Future _addPreset(FlutterDriver driver, Map screenshotConfig) async {
+Future _addPreset(FlutterDriver driver, screenshotConfig) async {
   // go to Settings
   var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
@@ -63,7 +63,7 @@ Future _addPreset(FlutterDriver driver, Map screenshotConfig) async {
   }
 }
 
-Future _addPerson(FlutterDriver driver, Map screenshotConfig) async {
+Future _addPerson(FlutterDriver driver, screenshotConfig) async {
   // go to Settings
   var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
@@ -130,7 +130,7 @@ Future _addPerson(FlutterDriver driver, Map screenshotConfig) async {
   }
 }
 
-Future _addReception(FlutterDriver driver, Map screenshotConfig) async {
+Future _addReception(FlutterDriver driver, screenshotConfig) async {
   // go to Settings
   var tapBar = find.byValueKey('tab_bar_settings');
   await driver.tap(tapBar);
@@ -155,7 +155,7 @@ Future _addReception(FlutterDriver driver, Map screenshotConfig) async {
   }
 }
 
-Future _addContract(FlutterDriver driver, Map screenshotConfig) async {
+Future _addContract(FlutterDriver driver, screenshotConfig) async {
   // go to Settings
   var tapBar = find.byValueKey('tab_bar_add');
   await driver.tap(tapBar);
@@ -262,7 +262,7 @@ void main() {
     FlutterDriver driver;
 
     // init screenshots map
-    final Map screenshotConfig = Config().configInfo;
+    final screenshotConfig = Config();
 
     // Connect to the Flutter driver before running any tests
     setUpAll(() async {

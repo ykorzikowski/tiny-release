@@ -68,7 +68,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   }
 
   void _fistLaunchCheck(bool isFirstLaunch, context) {
-    if (isFirstLaunch) {
+    if (isFirstLaunch && !Prefs.isInDebugMode) {
       showCupertinoDialog(context: context, builder: AllowReportingDialog().buildDialog);
       Prefs.setReportingDialogShownOnFirstStart(false);
     }

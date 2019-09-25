@@ -9,22 +9,23 @@ staging: /tmp/screenshots
 locales:
   - en-GB
   - de-DE
-  - nl-NL
+#  - nl-NL
 
 # A list of devices to emulate
 devices:
   ios:
-    iPhone X:
-    iPad Pro (12.9-inch) (2nd generation):
+    iPhone 11 Pro Max: #6,5"
+    iPhone 8 Plus: #5,6"
+    iPad Pro (12.9-inch) (3rd generation):
+    #iPad Pro (12.9-inch) (2nd generation):
   #    - iPhone 7 Plus
-  #   "iPhone 6",
-  #   "iPhone 6 Plus",
-  #   "iPhone 5",
+  #  iPhone 6 Plus:
+  #  iPhone 7 Plus:
   #   "iPhone 4s",
   #   "iPad Retina",
   #   "iPad Pro"
   android:
-    Nexus 6P:
+#    Nexus 6P:
 #    Nexus 9:
 #    - Nexus 5X
 
