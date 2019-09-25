@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: FlavorS.delegate.supportedLocales,
       localeResolutionCallback: FlavorS.delegate.resolution(fallback: const Locale('en', '')),
-      title: 'Flutter Code Sample for material.AppBar.actions',
+      title: 'TinyRelease',
       routes: tinyState.routes,
       theme: ThemeData(
         primarySwatch: Colors.blue,
