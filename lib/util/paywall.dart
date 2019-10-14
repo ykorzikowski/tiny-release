@@ -129,16 +129,19 @@ class PayWall implements PayWallInterface {
   /// cbs - callback success
   /// cbf - callback failure
   Future<bool> checkIfPaid(pf, SuccessCallback cbs, ErrorCallback cbf) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasBoughtFeature = Prefs.nullMeansFalse(prefs.getBool("paywall_" + pf));
-    bool hasSubscription =  Prefs.nullMeansFalse(prefs.getBool("paywall_subscription"));
-    bool hasPaid = hasBoughtFeature || hasSubscription;
+    cbs();
+    return true;
 
-    // TODO: check that prefs is updated
-
-    hasPaid ? cbs() : cbf('you shall not pass');
-
-    return hasPaid;
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    bool hasBoughtFeature = Prefs.nullMeansFalse(prefs.getBool("paywall_" + pf));
+//    bool hasSubscription =  Prefs.nullMeansFalse(prefs.getBool("paywall_subscription"));
+//    bool hasPaid = hasBoughtFeature || hasSubscription;
+//
+//    // TODO: check that prefs is updated
+//
+//    hasPaid ? cbs() : cbf('you shall not pass');
+//
+//    return hasPaid;
   }
 
 

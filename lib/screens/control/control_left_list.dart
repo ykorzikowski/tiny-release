@@ -28,7 +28,6 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     CupertinoIcons.person_solid,
     CupertinoIcons.collections_solid,
     CupertinoIcons.photo_camera_solid,
-    CupertinoIcons.shopping_cart,
     CupertinoIcons.clear_circled_solid,
     CupertinoIcons.book_solid,
     CupertinoIcons.eye_solid
@@ -39,7 +38,7 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
   }
 
   List _getItems(context) {
-    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).subscription, S.of(context).error_reporting, S.of(context).show_license_info, "Provocate Error"];
+    return [S.of(context).item_people, S.of(context).item_preset, S.of(context).item_reception, S.of(context).error_reporting, S.of(context).show_license_info, "Provocate Error"];
   }
 
   Widget _buildListItem(context, position, onTap) {
@@ -91,10 +90,9 @@ class _ListWidgetState extends State<ControlLeftListWidget> {
     widgets.add(_buildListItem(context, 0, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 1, _onItemSelectedCallback));
     widgets.add(_buildListItem(context, 2, _onItemSelectedCallback));
-    widgets.add(_buildListItem(context, 3, _onItemSelectedCallback));
-    widgets.add(_buildListItem(context, 4, _openTrackingPopup));
-    widgets.add(_buildListItem(context, 5, _openAboutDialog));
-    if(Prefs.isInDebugMode) widgets.add(_buildListItem(context, 6, _provocateError));
+    widgets.add(_buildListItem(context, 3, _openTrackingPopup));
+    widgets.add(_buildListItem(context, 4, _openAboutDialog));
+    if(Prefs.isInDebugMode) widgets.add(_buildListItem(context, 5, _provocateError));
 
     return widgets;
   }
