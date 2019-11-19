@@ -8,6 +8,7 @@ import 'package:paperflavor/data/tiny_people.dart';
 import 'package:paperflavor/screens/people/people_list.dart';
 import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/tiny_state.dart';
+import 'package:path/path.dart' as path;
 
 class PeopleImportCallback {
 
@@ -94,9 +95,9 @@ class PeopleImportCallback {
       return;
     }
 
-    BaseUtil.storeFile('people', 'png', Io.File(item.avatar))
+    BaseUtil.storeFile('people', 'png', BaseUtil.getFileSync(item.avatar))
         .then((file) {
-          item.avatar = file.path;
+          item.avatar = path.basename(file.path);
           onAvatarSaved(item, context);
         });
   }

@@ -132,7 +132,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
           ),
         ) : null,
         backgroundImage: tinyPeople.avatar != null ? new FileImage(
-            Io.File(tinyPeople.avatar)) : null,
+            BaseUtil.getFileSync(tinyPeople.avatar)) : null,
         radius: 32.0,
       );
 

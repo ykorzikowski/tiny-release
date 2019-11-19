@@ -13,6 +13,7 @@ import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/nav_routes.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 import 'dart:ui' as ui;
+import 'package:path/path.dart' as path;
 
 class SignatureWidget extends StatefulWidget {
 
@@ -259,7 +260,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   }
 
   _getImg(TinySignature sig) {
-    return Container(height: 150, child: Image.file(Io.File(sig.path)));
+    return Container(height: 150, child: Image.file(BaseUtil.getFileSync(sig.path)));
   }
 
   List<Widget> _buildSignatureImageSection() {
@@ -290,7 +291,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
     if (sig != null) {
       return TinySignature(
           contractId: contractId,
-          path: (await BaseUtil.storeBlobUint8('signature', 'png', sig)).path
+          path: path.basename((await BaseUtil.storeBlobUint8('signature', 'png', sig)).path)
       );
     }
     return null;

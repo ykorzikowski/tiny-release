@@ -184,7 +184,7 @@ class ContractPdfGenerator {
   }
 
   Widget _getPdfImage(pdfDoc, url, {int width: 0, int height: 0, scale: 1}) {
-    var fileImg = img.decodeImage(Io.File(url).readAsBytesSync());
+    var fileImg = img.decodeImage(BaseUtil.getFileSync(url).readAsBytesSync());
 
     if ( width == 0 ) width = (fileImg.width / scale).round();
     if ( height == 0 ) height = (fileImg.height / scale).round();

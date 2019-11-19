@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info/package_info.dart';
+import 'package:paperflavor/util/local_path_singleton.dart';
 import 'package:paperflavor/util/screen_size_check.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paperflavor/data/repo/tiny_people_repo.dart';
@@ -18,7 +19,6 @@ import 'package:paperflavor/data/tiny_layout.dart';
 import 'package:paperflavor/data/tiny_preset.dart';
 import 'package:paperflavor/data/tiny_reception.dart';
 import 'package:paperflavor/generated/i18n.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseUtil {
 
@@ -32,27 +32,34 @@ class BaseUtil {
     return '${info.version}_${info.buildNumber}';
   }
 
-  static Future<Io.File> storeFile(String prefix, String suffix, Io.File file) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path;
+  static Io.File getFileSync(String filename) {
+    var localPath = LocalPath().localPath;
+    return new Io.File('$localPath/$filename');
+  }
 
-    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
+  static Future<Io.File> getFile(String filename) async {
+    var localPath = LocalPath().localPath;
+
+    return new Io.File('$localPath/$filename');
+  }
+
+  static Future<Io.File> storeFile(String prefix, String suffix, Io.File file) async {
+    var localPath = LocalPath().localPath;
+    return new Io.File('$localPath/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         file.readAsBytesSync());
   }
 
   static Future<Io.File> storeBlobUint8( String prefix, String suffix, Uint8List byteData) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path;
+    var localPath = LocalPath().localPath;
 
-    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
+    return new Io.File('$localPath/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         byteData);
   }
 
   static Future<Io.File> storeTempBlobUint8( String prefix, String suffix, Uint8List byteData) async {
-    final directory = await getTemporaryDirectory();
-    final path = directory.path;
+    var localPath = LocalPath().localPath;
 
-    return new Io.File('$path/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
+    return new Io.File('$localPath/$prefix-${DateTime.now().toUtc().toIso8601String()}.$suffix').writeAsBytes(
         byteData);
   }
 

@@ -96,7 +96,7 @@ class ContractGenerator {
         Expanded(
           flex: 3,
           child: _tinyContract.model.avatar != null ? Image.file(
-            Io.File(_tinyContract.model.avatar), fit: BoxFit.scaleDown, height: 150,) : Container(),
+            BaseUtil.getFileSync(_tinyContract.model.avatar), fit: BoxFit.scaleDown, height: 150,) : Container(),
         ),
         Expanded(
           flex: 3,

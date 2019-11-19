@@ -43,7 +43,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
                       color: Colors.white,
                     ),
                   ) : null,
-                  backgroundImage: tinyPeople.avatar != null ? new FileImage(Io.File(tinyPeople.avatar)) : null,
+                  backgroundImage: tinyPeople.avatar != null ? new FileImage(BaseUtil.getFileSync(tinyPeople.avatar)) : null,
                   radius: 32.0,
                 ),
               ),

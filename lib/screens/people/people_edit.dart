@@ -12,6 +12,7 @@ import 'package:paperflavor/util/base_util.dart';
 import 'package:paperflavor/util/tiny_state.dart';
 import 'package:paperflavor/util/nav_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as path;
 
 typedef Null ItemSelectedCallback(int value);
 
@@ -225,7 +226,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
     );
     if ( croppedFile != null ) {
       BaseUtil.storeFile("people_", 'png', croppedFile).then((file) => setState((){
-        _tinyPeople.avatar = file.path;
+        _tinyPeople.avatar = path.basename(file.path);
       }));
     }
   }

@@ -34,7 +34,7 @@ class PeopleListWidget extends StatefulWidget {
           ),
         ) : null,
         backgroundImage: entry?.avatar != null
-            ? new FileImage(Io.File(entry.avatar))
+            ? new FileImage(BaseUtil.getFileSync(entry.avatar))
             : null,
         radius: 32.0,
       );
