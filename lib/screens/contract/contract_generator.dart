@@ -45,7 +45,7 @@ class ContractGenerator {
   static buildParagraphs(context, tinyContract) {
     var widgetList = List<Widget>();
     for (int i = 0; i < tinyContract.preset.paragraphs.length; i++) {
-      var paragraph  =tinyContract.preset.paragraphs[i];
+      var paragraph = tinyContract.preset.paragraphs[i];
       widgetList.add(Text(BaseUtil.getParagraphTitle(context, paragraph, (i+1)), style: TextStyle( fontSize: 24 ),));
       widgetList.add(Text(paragraph.content));
     }

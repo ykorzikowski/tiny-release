@@ -165,7 +165,10 @@ class _ContractPreviewWidgetState extends State<ContractPreviewWidget> {
                   Divider(),
 
                   /// paragraphs
-                  Column(children: ContractGenerator.buildParagraphs(context, _tinyContract),)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(children: ContractGenerator.buildParagraphs(context, _tinyContract),),
+                  )
 
                 ] ),
             ),
