@@ -39,87 +39,74 @@ class ContractPdfGenerator {
 
     var widgetList = List<Widget>();
     widgetList.add(buildPdfContractHeader(buildContext, doc.document));
-    widgetList.add(buildPdfShootingInformationSection(buildContext));
+    widgetList.add(Padding(padding: EdgeInsets.only(top: 14.0), child: buildPdfShootingInformationSection(buildContext)));
     widgetList.addAll(buildPdfParagraphs(buildContext));
-    widgetList.add(buildPdfSignatures(buildContext, doc.document));
+    widgetList.add(Padding(padding: EdgeInsets.only(top: 14.0), child: buildPdfSignatures(buildContext, doc.document)));
 
     doc.addPage(MultiPage(
       pageFormat: PdfPageFormat.a4,
-      crossAxisAlignment: CrossAxisAlignment.start,
       build: (context) => widgetList,
     ));
     return doc;
   }
 
+  Widget buildPeopleSection(label, people, address) {
+    return Column(mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text(label, style: _personPdfLargeStyle),
+        Text(people.displayName,
+            style: _personPdfSmallStyle),
+        Text(address.street,
+            style: _personPdfSmallStyle),
+        Text(
+            address.postcode + " " +
+                address.city,
+            style: _personPdfSmallStyle),
+      ],);
+  }
+
   Widget buildPdfContractHeader(context, pdfDoc) =>
     GridView(crossAxisCount: 3, childAspectRatio: 1.0, children: <Widget>[
       Expanded(
-        child: Column(mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(photographerLabel, style: _personPdfLargeStyle),
-            Text(_tinyContract.photographer.displayName,
-                style: _personPdfSmallStyle),
-            Text(_tinyContract.selectedPhotographerAddress.street,
-                style: _personPdfSmallStyle),
-            Text(
-                _tinyContract.selectedPhotographerAddress.postcode + " " +
-                    _tinyContract.selectedPhotographerAddress.city,
-                style: _personPdfSmallStyle),
-          ],),
+        child: buildPeopleSection(photographerLabel, _tinyContract.photographer, _tinyContract.selectedPhotographerAddress)
       ),
       Expanded(
-        child: _tinyContract.model.hasAvatar ? _getPdfImage(pdfDoc, _tinyContract.model.avatar, width: 150, height: 150) : Container(),
+        child: _tinyContract.model.hasAvatar ? _getPdfImage(pdfDoc, _tinyContract.model.avatar) : Container(),
       ),
       Expanded(
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text(modelLabel, style: _personPdfLargeStyle),
-          Text(
-              _tinyContract.model.displayName, style: _personPdfSmallStyle),
-          Text(_tinyContract.selectedModelAddress.street,
-              style: _personPdfSmallStyle),
-          Text(_tinyContract.selectedModelAddress.postcode + " " +
-              _tinyContract.selectedModelAddress.city,
-              style: _personPdfSmallStyle),
-          _tinyContract.parent != null ? Column(
-            mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Text(parentLabel, style: _personPdfLargeStyle),
-            Text(_tinyContract.parent.displayName,
-                style: _personPdfSmallStyle),
-            Text(_tinyContract.selectedParentAddress.street,
-                style: _personPdfSmallStyle),
-            Text(_tinyContract.selectedParentAddress.postcode + " " +
-                _tinyContract.selectedParentAddress.city,
-                style: _personPdfSmallStyle),
-          ],) : Container(),
-          _tinyContract.witness != null ? Column(
-            mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Text(witnessLabel, style: _personPdfLargeStyle),
-            Text(_tinyContract.witness.displayName,
-                style: _personPdfSmallStyle),
-            Text(_tinyContract.selectedWitnessAddress.street,
-                style: _personPdfSmallStyle),
-            Text(_tinyContract.selectedWitnessAddress.postcode + " " +
-                _tinyContract.selectedWitnessAddress.city,
-                style: _personPdfSmallStyle),
-          ],) : Container(),
-        ],),
+        child: Padding(
+          padding: EdgeInsets.only(left: 14.0),
+            child: Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: <Widget>[
+              buildPeopleSection(modelLabel, _tinyContract.model, _tinyContract.selectedModelAddress),
+              _tinyContract.parent != null ? buildPeopleSection(parentLabel, _tinyContract.parent, _tinyContract.selectedParentAddress) : Container(),
+              _tinyContract.witness != null ? buildPeopleSection(witnessLabel, _tinyContract.witness, _tinyContract.selectedWitnessAddress) : Container(),
+            ],),
+         )
       )
     ]);
 
-  Widget buildPdfShootingInformationSection(context) => Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-    Text(S.of(context).shooting_subject + doppelPinkt + _tinyContract.displayName),
-    Text(S.of(context).shooting_date + doppelPinkt + BaseUtil.getLocalFormattedDate(context, _tinyContract.date)),
-    _tinyContract.receptions != null ? Text(S.of(context).reception_area + doppelPinkt + _getReceptionString()) : Container(),
-  ],);
-
+  Widget buildPdfShootingInformationSection(context) =>
+      Column(mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(S.of(context).shooting_subject + doppelPinkt + _tinyContract.displayName,
+              style: _personPdfSmallStyle),
+          Text(S.of(context).shooting_date + doppelPinkt + BaseUtil.getLocalFormattedDate(context, _tinyContract.date),
+              style: _personPdfSmallStyle),
+          _tinyContract.receptions != null ? Text(S.of(context).reception_area + doppelPinkt + _tinyContract.receptionsToString(),
+              style: _personPdfSmallStyle) : Container(),
+        ],);
 
   List<Widget> buildPdfParagraphs(context) {
     var widgetList = List<Widget>();
     for (int i = 0; i < _tinyContract.preset.paragraphs.length; i++) {
       var paragraph  = _tinyContract.preset.paragraphs[i];
-      widgetList.add(Header(level: 1, textStyle: _personPdfLargeStyle, text: BaseUtil.getParagraphTitle(context, paragraph, (i+1)),));
-      widgetList.add(Paragraph(style: _textStyle, text: paragraph.content));
+      widgetList.add(
+          Column(children: [
+            Header(level: 1, textStyle: _personPdfLargeStyle, text: BaseUtil.getParagraphTitle(context, paragraph, (i+1)),),
+            Text(paragraph.content, style: _textStyle)
+      ]));
     }
     _tinyContract.preset.paragraphs.forEach((paragraph) {
     });
@@ -142,46 +129,31 @@ class ContractPdfGenerator {
       );
 
   Widget _wrapPdfSignature(context, pdfDoc, TinySignature sig, name) =>
-      Column(
-        mainAxisSize: MainAxisSize.min,
+      Column(mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          // location
+          Padding(padding: EdgeInsets.all(8.0),
+            child: Text(_tinyContract.location + S.of(context).location_date_seperator + BaseUtil.getLocalFormattedDate(context, DateTime.now().toIso8601String()),
+                style: _textStyle),),
+
+          // signature
           Padding(padding: EdgeInsets.all(8.0),
             child: Container( height: 50, child: sig != null ?
               _getPdfImage(pdfDoc, sig.path, scale: 3) :
-              Container())),
-          FittedBox(fit: BoxFit.fill, child:
-          Container(
-            decoration: BoxDecoration( border: BoxBorder(top: true)),
-            child: Row(children: <Widget>[
-              Padding(padding: EdgeInsets.all(8.0),
-                child: Text(name, style: _textStyle,),),
-              Padding(padding: EdgeInsets.all(8.0),
-                child: Text(_tinyContract.location + S.of(context).location_date_seperator +
-                    BaseUtil.getLocalFormattedDate(
-                        context, DateTime.now().toIso8601String()),
-                    style: _textStyle),),
+              Container(height: 50))),
+
+          // signature line & name
+          FittedBox(fit: BoxFit.fill,
+              child: Container(
+                decoration: BoxDecoration( border: BoxBorder(top: true)),
+                child: Row(children: <Widget>[
+                  Padding(padding: EdgeInsets.all(8.0),
+                    child: Text(name, style: _textStyle,),),
             ]),
           )
           ),
         ],
       );
-
-  String _getReceptionString() {
-    String rec = "";
-
-    var iterator = _tinyContract.receptions.iterator;
-    bool hasNext = iterator.moveNext();
-    while ( hasNext ) {
-      rec += iterator.current.displayName;
-      hasNext = iterator.moveNext();
-      if ( hasNext ) {
-        rec += ", ";
-      }
-
-    }
-
-    return rec;
-  }
 
   Widget _getPdfImage(pdfDoc, url, {int width: 0, int height: 0, scale: 1}) {
     var fileImg = img.decodeImage(BaseUtil.getFileSync(url).readAsBytesSync());
