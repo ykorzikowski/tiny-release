@@ -14,7 +14,7 @@ ios/fastlane/screenshots/output/
 fastlane/metadata/android/
 fastlane/metadata/output
 *Screenshots/
-ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/flutter_export_environment.sh
 
 # IntelliJ related
 *.iml
@@ -68,7 +68,6 @@ build/
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/Flutter/flutter_export_environment.sh
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
