@@ -272,7 +272,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
                 child: _tinyPeople.avatar == null ? Icon(CupertinoIcons.add, color: CupertinoColors.white,) : Container(),
                 backgroundImage: _tinyPeople.avatar == null
                     ? null
-                    : new FileImage(File(_tinyPeople.avatar)),
+                    : new FileImage(BaseUtil.getFileSync(_tinyPeople.avatar)),
                 backgroundColor: CupertinoColors.activeBlue,
                 radius: 32.0,
               ),

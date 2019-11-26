@@ -1,4 +1,5 @@
 import 'dart:io' as Io;
+import 'package:path/path.dart';
 import 'dart:typed_data';
 
 import 'package:contacts_service/contacts_service.dart';
@@ -32,7 +33,7 @@ class PeopleImportCallback {
     tinyPeople.company = contact.company;
     tinyPeople.jobTitle = contact.jobTitle;
     tinyPeople.displayName = contact.displayName;
-    tinyPeople.avatar = isValidImage(contact.avatar) ? (await BaseUtil.storeTempBlobUint8('people', 'png', contact.avatar)).path : null;
+    tinyPeople.avatar = isValidImage(contact.avatar) ? basename((await BaseUtil.storeTempBlobUint8('people', 'png', contact.avatar)).path) : null;
 
     tinyPeople.emails = contact.emails.map((i) {
       TinyPeopleItem tinyItem = new TinyPeopleItem();
@@ -113,6 +114,6 @@ class PeopleImportCallback {
     // keep type id of dbo created before import
     TinyPeople beforeImportDBO = _controlState.curDBO;
     item.type = beforeImportDBO.type;
-    copyAvatarFromTempToDocuments(item, context);
+    onAvatarSaved(item, context);
   }
 }
