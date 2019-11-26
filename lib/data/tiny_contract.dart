@@ -19,6 +19,21 @@ class TinyContract extends TinyDBO {
 
   TinyContract( {id, displayName, this.preset, this.photographer, this.model, this.parent, this.witness, this.imagesCount, this.settings, this.location, this.date, this.isLocked} ) : super(id: id, displayName: displayName);
 
+  String receptionsToString() {
+    var iterator = receptions.iterator;
+    iterator.moveNext();
+
+    String result = "";
+    while ( iterator.current != null ) {
+      result += iterator.current.displayName;
+      if (iterator.moveNext()) {
+        result += ", ";
+      }
+    }
+
+    return result;
+  }
+
   TinyContract.fromMap(Map<String, dynamic> m) {
     id = m["id"];
     displayName = m["displayName"];

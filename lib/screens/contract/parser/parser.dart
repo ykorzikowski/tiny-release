@@ -60,6 +60,10 @@ class Parser {
           str = str.replaceAll(_wrapPlaceholder(placeholder), parentMap[last]?.toString() ?? "");
           break;
         case ParserConfig.CONTRACT:
+          if(placeholder == ParserConfig.CONTRACT_SHOOTINGAREAS) {
+            str = str.replaceAll(_wrapPlaceholder(placeholder), tinyContract.receptionsToString());
+            break;
+          }
           str = str.replaceAll(_wrapPlaceholder(placeholder), contractMap[last]?.toString() ?? "");
           break;
       }

@@ -26,7 +26,7 @@
 		{
 			"title": "Bereitstellung",
 			"position": 4,
-			"content": "Das Model bekommt nach dem Shooting #contract.numberOfImages# bearbeitete Bilder zur unter §2 vereinbarten Verwendung zur Verfügung gestellt. Das Model bekommt, nachdem die Bilder ausgewählt und bearbeitet wurden, einen Link per E-Mail zugesandt, über welchen die Bilder angesehen und heruntergeladen werden können. \n\n"
+			"content": "Das Model bekommt nach dem Shooting #contract.imagesCount# bearbeitete Bilder zur unter §2 vereinbarten Verwendung zur Verfügung gestellt. Das Model bekommt, nachdem die Bilder ausgewählt und bearbeitet wurden, einen Link per E-Mail zugesandt, über welchen die Bilder angesehen und heruntergeladen werden können. \n\n"
 		},
 		{
 			"title": "Datenschutz",
