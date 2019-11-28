@@ -36,6 +36,10 @@
     <string>Not used.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>Not used.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Not used.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Not used.</string>
     <key>NSCameraUsageDescription</key>
     <string>Used to make a photo for your new contact</string>
 	<key>NSContactsUsageDescription</key>
