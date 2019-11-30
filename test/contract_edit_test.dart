@@ -15,7 +15,7 @@ void main() {
     testWidgets('ContractEdit PeopleBadge present', (WidgetTester tester) async {
       // given
       var tinyContract = new TinyContract();
-      tinyState.curDBO = tinyContract;
+      tinyState.currentlyShownContract = tinyContract;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: ContractEditWidget(
@@ -31,7 +31,7 @@ void main() {
     testWidgets('ContractEdit WitnessBadge is expanded', (WidgetTester tester) async {
       // given
       var tinyContract = new TinyContract();
-      tinyState.curDBO = tinyContract;
+      tinyState.currentlyShownContract = tinyContract;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: ContractEditWidget(
@@ -48,7 +48,7 @@ void main() {
     testWidgets('ContractEdit ParentBadge is expanded', (WidgetTester tester) async {
       // given
       var tinyContract = new TinyContract();
-      tinyState.curDBO = tinyContract;
+      tinyState.currentlyShownContract = tinyContract;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: ContractEditWidget(

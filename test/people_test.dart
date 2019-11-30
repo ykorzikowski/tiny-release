@@ -14,7 +14,7 @@ void main() {
     testWidgets('PeopleEditWidget save button disabled on missing givenName', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PeopleEditWidget(tinyState)));
       await tester.pump();
 
@@ -28,7 +28,7 @@ void main() {
     testWidgets('PeopleEditWidget save button disabled on missing familyName', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget( child: PeopleEditWidget(tinyState) ));
@@ -42,7 +42,7 @@ void main() {
     testWidgets('PeopleEditWidget save button enabled on missing saved', (WidgetTester tester) async {
       // given
       var tinyPeople = TinyPeople.factory();
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget( child: PeopleEditWidget(tinyState) ));
@@ -62,7 +62,7 @@ void main() {
       var tinyPeople = TinyPeople.factory();
       tinyPeople.postalAddresses.add(TinyAddress());
       tinyPeople.postalAddresses.add(TinyAddress());
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PeopleEditWidget(tinyState)));
@@ -75,7 +75,7 @@ void main() {
       // given
       var tinyPeople = TinyPeople.factory();
       tinyPeople.emails.add(TinyPeopleItem());
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PeopleEditWidget(tinyState)));
@@ -88,7 +88,7 @@ void main() {
       // given
       var tinyPeople = TinyPeople.factory();
       tinyPeople.phones.add(TinyPeopleItem());
-      tinyState.curDBO = tinyPeople;
+      tinyState.currentlyShownPeople = tinyPeople;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PeopleEditWidget(tinyState)));

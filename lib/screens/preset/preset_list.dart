@@ -74,7 +74,7 @@ class _PresetListWidgetState extends State<PresetListWidget> {
   _onAddPresetPressed() {
     var _tinyPreset = TinyPreset();
     _tinyPreset.paragraphs = List();
-    _controlState.curDBO = _tinyPreset;
+    _controlState.currentlyShownPreset = _tinyPreset;
     Navigator.of(context).pushNamed(NavRoutes.PRESET_EDIT);
   }
 

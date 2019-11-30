@@ -21,7 +21,7 @@ class PeopleListCallback {
   }
 
   void onPeopleTap(item, context) {
-    _controlState.curDBO = item;
+    _controlState.currentlyShownPeople = item;
 
     Navigator.of(context).pushNamed(NavRoutes.PEOPLE_PREVIEW);
   }

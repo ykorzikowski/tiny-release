@@ -52,7 +52,7 @@ class _ListWidgetState extends State<ReceptionListWidget> {
           popoverWidth: 250,
           popoverBuild: (context) {
             _tinyReception = TinyReception();
-            _controlState.curDBO = _tinyReception;
+            _controlState.currentlyShownReception = _tinyReception;
             return Column(
               children: <Widget>[
                 ListTile(

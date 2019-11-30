@@ -43,7 +43,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   final TinyContractRepo _tinyContractRepo = TinyContractRepo();
 
   _SignatureWidgetState(this._tinyState){
-    _tinyContract = _tinyState.curDBO;
+    _tinyContract = _tinyState.currentlyShownContract;
   }
 
   @override
@@ -74,7 +74,7 @@ class _SignatureWidgetState extends State<SignatureWidget> {
 
             _tinyContract.isLocked = true;
             await _tinyContractRepo.save(_tinyContract);
-            _tinyState.curDBO = _tinyContract;
+            _tinyState.currentlyShownContract = _tinyContract;
 
             Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
             Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED);

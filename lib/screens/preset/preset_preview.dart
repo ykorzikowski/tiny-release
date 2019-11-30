@@ -24,7 +24,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
   TinyPreset _tinyPreset;
 
   _PresetPreviewWidgetState(this._controlState) {
-    _tinyPreset = _controlState.curDBO;
+    _tinyPreset = _controlState.currentlyShownPreset;
   }
 
   _getParagraphWidgets() {
@@ -98,7 +98,7 @@ class _PresetPreviewWidgetState extends State<PresetPreviewWidget> {
   }
 
   String getText() {
-    TinyPreset curDBO = _controlState.curDBO;
+    TinyPreset curDBO = _controlState.currentlyShownPreset;
     if ( curDBO.paragraphs == null) {
       return "NULL";
     }

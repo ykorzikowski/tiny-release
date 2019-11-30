@@ -14,7 +14,7 @@ void main() {
     testWidgets('PresetWidget save button disabled on missing title', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
@@ -27,7 +27,7 @@ void main() {
     testWidgets('PresetWidget save button disabled on missing paragraph', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
 
       // then
@@ -42,7 +42,7 @@ void main() {
       // given
       var tinyPreset = TinyPreset.factory();
       tinyPreset.paragraphs.add(Paragraph());
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
 
       // then
@@ -57,7 +57,7 @@ void main() {
       // given
       var tinyPreset = TinyPreset.factory();
       tinyPreset.paragraphs.add(Paragraph(position: 0));
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));
 
       // then
@@ -73,7 +73,7 @@ void main() {
     testWidgets('PresetWidget paragraph added on "btn_add_paragraph"', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
 
       // then
       await tester.pumpWidget(TestUtils.makeTestableWidget(child: PresetEditWidget(tinyState)));

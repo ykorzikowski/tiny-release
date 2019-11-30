@@ -31,7 +31,7 @@ void main() {
     testWidgets('PresetList preset is listed', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       TinyPresetRepo tinyPresetRepo = _getMockedPresetRepo();
       TinyContractRepo tinyContractRepo = TinyContractRepo();
       Function onPresetTap = (){};
@@ -53,7 +53,7 @@ void main() {
     testWidgets('PresetList add button is there', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       TinyPresetRepo tinyPresetRepo = _getMockedPresetRepo();
       TinyContractRepo tinyContractRepo = TinyContractRepo();
       Function onPresetTap = (){};

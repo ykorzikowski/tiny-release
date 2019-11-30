@@ -8,6 +8,7 @@ void main() {
   test('Parser replace model', () {
     // given
     final TinyContract tinyContract = TinyContract.fromMap(Map());
+    tinyContract.receptions = List();
     tinyContract.model = TinyPeople( givenName: 'First', familyName: 'Last', emails: List(), postalAddresses: List(), phones: List() );
     tinyContract.photographer = TinyPeople.factory();
     tinyContract.preset = TinyPreset(paragraphs: [
@@ -27,6 +28,7 @@ void main() {
   test('Parser replace contract', () {
     // given
     final TinyContract tinyContract = TinyContract.fromMap(Map());
+    tinyContract.receptions = List();
     tinyContract.imagesCount = 42;
     tinyContract.location = 'location';
     tinyContract.model = TinyPeople.factory();
@@ -48,6 +50,7 @@ void main() {
   test('Parser test parser does not change text when no match found', () {
     // given
     final TinyContract tinyContract = TinyContract.fromMap(Map());
+    tinyContract.receptions = List();
     tinyContract.imagesCount = 42;
     tinyContract.location = 'location';
     tinyContract.model = TinyPeople.factory();

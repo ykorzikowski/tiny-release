@@ -100,7 +100,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   void initState() {
     super.initState();
 
-    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+    _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.currentlyShownPeople ) );
     if (_tinyPeople.postalAddresses.length < 1) _tinyPeople.postalAddresses.add(TinyAddress());
 
     _initControllers();
@@ -118,7 +118,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
   _onPeopleImportPressed() {
     _tinyState.tinyEditCallback = () {
       setState(() {
-        _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.curDBO ) );
+        _tinyPeople = TinyPeople.fromMap( TinyPeople.toMap (_tinyState.currentlyShownPeople ) );
         _initControllers();
       });
     };
@@ -154,7 +154,7 @@ class _PeopleEditWidgetState extends State<PeopleEditWidget> {
 
   _onPeopleSave() {
     new TinyPeopleRepo().save(_tinyPeople);
-    _tinyState.curDBO = _tinyPeople;
+    _tinyState.currentlyShownPeople = _tinyPeople;
     Navigator.of(context).pop();
   }
 

@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:paperflavor/data/tiny_contract.dart';
 import 'package:paperflavor/data/tiny_dbo.dart';
+import 'package:paperflavor/data/tiny_people.dart';
+import 'package:paperflavor/data/tiny_preset.dart';
+import 'package:paperflavor/data/tiny_reception.dart';
 import 'package:paperflavor/screens/contract/contract_edit.dart';
 import 'package:paperflavor/screens/contract/contract_generated.dart';
 import 'package:paperflavor/screens/contract/contract_list.dart';
 import 'package:paperflavor/screens/contract/contract_master.dart';
 import 'package:paperflavor/screens/contract/contract_preview.dart';
 import 'package:paperflavor/screens/control/control_master.dart';
-import 'package:paperflavor/screens/layout/layout_edit.dart';
-import 'package:paperflavor/screens/layout/layout_list.dart';
-import 'package:paperflavor/screens/layout/layout_preview.dart';
 import 'package:paperflavor/screens/subscription/subscription.dart';
 import 'package:paperflavor/screens/people/people_edit.dart';
 import 'package:paperflavor/screens/people/people_import_callback.dart';
@@ -40,7 +41,13 @@ class TinyState {
   int selectedControlItem = 0;
 
   /// the current selected data item
-  TinyDBO curDBO;
+  TinyPeople currentlyShownPeople;
+
+  TinyPreset currentlyShownPreset;
+
+  TinyReception currentlyShownReception;
+
+  TinyContract currentlyShownContract;
 
   /// returns if user is currently in control widget
   bool inControlWidget = false;
@@ -66,7 +73,7 @@ class TinyState {
           PresetListWidget(
               tinyState: this,
               onPresetTap: (item, context) {
-                this.curDBO = item;
+                this.currentlyShownPreset = item;
 
                 Navigator.of(context).pushNamed(NavRoutes.PRESET_PREVIEW);
               }),
@@ -76,10 +83,6 @@ class TinyState {
       NavRoutes.PRESET_PARAGRAPH_EDIT: (context) => PresetParagraphSortWidget(this),
 
       NavRoutes.RECEPTION_LIST: (context) => ReceptionListWidget(this, (){}),
-
-      NavRoutes.LAYOUT_LIST: (context) => LayoutListWidget(this),
-      NavRoutes.LAYOUT_PREVIEW: (context) => LayoutPreviewWidget(this),
-      NavRoutes.LAYOUT_EDIT: (context) => LayoutEditWidget(this),
 
       NavRoutes.SETTINGS: (context) => SettingsWidget(this),
 

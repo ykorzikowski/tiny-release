@@ -75,7 +75,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   _createNewContract() {
     var _tinyContract = TinyContract();
     _tinyContract.isLocked = false;
-    _controlState.curDBO = _tinyContract;
+    _controlState.currentlyShownContract = _tinyContract;
     BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
   }
 
@@ -104,7 +104,7 @@ class _ContractListWidgetState extends State<ContractListWidget> {
   }
 
   _onContractTap(entry) {
-    _controlState.curDBO = entry;
+    _controlState.currentlyShownContract = entry;
     entry.isLocked ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_GENERATED) :
     BaseUtil.isLargeScreen(context) ? Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER) : Navigator.of(context).pushNamed(NavRoutes.CONTRACT_EDIT);
   }

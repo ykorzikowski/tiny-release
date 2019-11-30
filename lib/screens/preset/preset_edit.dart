@@ -42,7 +42,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   void initState() {
     super.initState();
 
-    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.currentlyShownPreset ) );
 
     _initParagraphControllers();
   }
@@ -73,7 +73,7 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
 
   _onPresetSavePressed() {
     _tinyPresetRepo.save(_tinyPreset);
-    _controlState.curDBO = _tinyPreset;
+    _controlState.currentlyShownPreset = _tinyPreset;
     Navigator.of(context).pop();
   }
 
@@ -138,9 +138,9 @@ class _PresetEditWidgetState extends State<PresetEditWidget> {
   _buildSortParagraphsButton() => CupertinoButton(
     child: Text(S.of(context).change_order_title),
     onPressed: validPreset() ? () {
-      _controlState.curDBO = _tinyPreset;
+      _controlState.currentlyShownPreset = _tinyPreset;
       _controlState.tinyEditCallback = () {
-        _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+        _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.currentlyShownPreset ) );
       };
       Navigator.of(context).pushNamed(NavRoutes.PRESET_PARAGRAPH_EDIT);
     } : null,

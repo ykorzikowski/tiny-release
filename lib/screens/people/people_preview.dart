@@ -27,7 +27,7 @@ class _PeoplePreviewWidgetState extends State<PeoplePreviewWidget> {
   TinyPeople tinyPeople;
 
   _PeoplePreviewWidgetState(this.peopleTypeState) {
-    tinyPeople = peopleTypeState.curDBO;
+    tinyPeople = peopleTypeState.currentlyShownPeople;
   }
 
   Widget imageAndNameSection() =>

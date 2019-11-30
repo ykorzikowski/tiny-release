@@ -48,7 +48,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
   _ContractGeneratedWidgetState(this._tinyState);
 
   void _init() {
-    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.curDBO));
+    _tinyContract = TinyContract.fromMap(TinyContract.toMap(_tinyState.currentlyShownContract));
     _contractPdfGenerator = ContractPdfGenerator(_tinyContract);
     _contractGenerator = ContractGenerator(_tinyContract);
     _tinyContract.preset = Parser(_tinyContract, context).parsePreset();
@@ -120,7 +120,7 @@ class _ContractGeneratedWidgetState extends State<ContractGeneratedWidget> {
       padding: EdgeInsets.all(10),
       onPressed: () {
         //todo: edit contract
-        _tinyState.curDBO = _tinyContract;
+        _tinyState.currentlyShownContract = _tinyContract;
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed(NavRoutes.CONTRACT_MASTER);
       });

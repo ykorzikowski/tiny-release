@@ -55,7 +55,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
   bool _enabledParent = false;
 
   _ContractEditWidgetState(this._tinyState, this._tinyContractRepo) {
-    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_tinyState.curDBO ) );
+    _tinyContract = TinyContract.fromMap( TinyContract.toMap (_tinyState.currentlyShownContract ) );
 
     if( _tinyContractRepo == null ) {
       _tinyContractRepo = new TinyContractRepo();
@@ -286,7 +286,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
     _tags.forEach((tag) => recs.add(TinyReception(id: tag.id, displayName: tag.title)));
     _tinyContract.receptions = recs;
     _tinyContractRepo.save(_tinyContract);
-    _tinyState.curDBO = _tinyContract;
+    _tinyState.currentlyShownContract = _tinyContract;
   }
 
   _onGenerateContractPressed() {
@@ -301,7 +301,7 @@ class _ContractEditWidgetState extends State<ContractEditWidget> {
 
   _onPreviewPressed() {
     _tinyContractRepo.save(_tinyContract);
-    _tinyState.curDBO = _tinyContract;
+    _tinyState.currentlyShownContract = _tinyContract;
     Navigator.of(context).popUntil((route) => !Navigator.of(context).canPop());
     Navigator.of(context, rootNavigator: true).pushNamed(NavRoutes.CONTRACT_PREVIEW);
   }

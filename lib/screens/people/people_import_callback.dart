@@ -104,7 +104,7 @@ class PeopleImportCallback {
   }
 
   void onAvatarSaved(item, context) {
-    _controlState.curDBO = item;
+    _controlState.currentlyShownPeople = item;
     _controlState.tinyEditCallback();
 
     Navigator.pop(context);
@@ -112,7 +112,7 @@ class PeopleImportCallback {
 
   void onPeopleTap(item, context) {
     // keep type id of dbo created before import
-    TinyPeople beforeImportDBO = _controlState.curDBO;
+    TinyPeople beforeImportDBO = _controlState.currentlyShownPeople;
     item.type = beforeImportDBO.type;
     onAvatarSaved(item, context);
   }

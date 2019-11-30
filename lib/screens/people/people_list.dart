@@ -70,7 +70,7 @@ class _ListWidgetState extends State<PeopleListWidget> {
 
   _createNewPerson() {
     var _tinyPeople = TinyPeople.factory();
-    _controlState.curDBO = _tinyPeople;
+    _controlState.currentlyShownPeople = _tinyPeople;
     Navigator.of(context).pushNamed(NavRoutes.PEOPLE_EDIT);
   }
 

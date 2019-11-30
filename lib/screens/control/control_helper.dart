@@ -25,15 +25,6 @@ class ControlHelper {
     }
   }
 
-  static void handleSaveButton( final TinyState tinyState, final NavigatorState navigatorState ) {
-    final TinyDBO curDBO = tinyState.curDBO;
-    TinyRepo repoForDataType = BaseUtil.getRepoForDataType(curDBO);
-    repoForDataType.save(curDBO);
-
-    navigatorState.popUntil((route) => !navigatorState.canPop());
-    navigatorState.pushNamed(NavRoutes.PEOPLE_LIST);
-  }
-
   static String getControlRouteByIndex( final int index ) {
     switch (index) {
       case 0:

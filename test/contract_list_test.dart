@@ -31,7 +31,7 @@ void main() {
     testWidgets('ContractList contract is listed on large screen', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       TinyContractRepo tinyContractRepo = MockTinyContractRepo();
 
       // return one preset on getAll invocation
@@ -61,7 +61,7 @@ void main() {
     testWidgets('PresetList add button is there', (WidgetTester tester) async {
       // given
       var tinyPreset = TinyPreset.factory();
-      tinyState.curDBO = tinyPreset;
+      tinyState.currentlyShownPreset = tinyPreset;
       TinyContractRepo tinyContractRepo = MockTinyContractRepo();
       when(tinyContractRepo.getAll(any, any)).thenAnswer((_) => Future.value(List()));
 

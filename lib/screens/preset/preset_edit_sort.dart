@@ -27,7 +27,7 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
   final ParagraphRepo _paragraphRepo = ParagraphRepo();
 
   _PresetParagraphSortWidgetState(this._controlState) {
-    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.curDBO ) );
+    _tinyPreset = TinyPreset.fromMap( TinyPreset.toMap (_controlState.currentlyShownPreset ) );
   }
 
    _getParagraphWidgets() {
@@ -77,7 +77,7 @@ class _PresetParagraphSortWidgetState extends State<PresetParagraphSortWidget> {
             _tinyPresetRepo.save(_tinyPreset);
             Navigator.of(context).pop();
             setState(() {
-              _controlState.curDBO = _tinyPreset;
+              _controlState.currentlyShownPreset = _tinyPreset;
               _controlState.tinyEditCallback();
             });
           }),),
