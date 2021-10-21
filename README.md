@@ -1,5 +1,7 @@
 # tinyrelease
 
+project is not longer maintained! (21.10.2021)
+
 create model releases
 
 [![Build Status](https://drone.korzikowski.de/api/badges/ykorzikowski/paperflavor/status.svg)](https://drone.korzikowski.de/ykorzikowski/paperflavor)
@@ -10,7 +12,7 @@ flutter upgrade
 flutter doctor
 fastlane update_fastlane 
 ```
-
+T
 ## Generate l10n
 Managed by https://github.com/long1eu/flutter_i18n
 For iOS, edit Info.plist when adding a new language
@@ -79,4 +81,4 @@ avdmanager create avd -n test -k "system-images;android-27;google_apis;x86"
 ```
 
 ### flutter driver
-tests stored in `test_driver`dir. Can be run by command `flutter drive --target=test_driver/app_full.dart -dEngi`
+Ttests stored in `test_driver`dir. Can be run by command `flutter drive --target=test_driver/app_full.dart -dEngi`
